@@ -82,4 +82,16 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>Python基础--字符串</title>
+    <url>/2024/09/21/Python-%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h1 id="Python基础之字符串"><a href="#Python基础之字符串" class="headerlink" title="Python基础之字符串"></a>Python基础之字符串</h1>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python基础</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
 </search>
