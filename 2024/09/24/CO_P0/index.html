@@ -1,187 +1,199 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>Hello World</title>
-    <url>/2024/09/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>北航计算机组成P0课下 | Trash Bin for Chi</title><meta name="author" content="Chi,23371265@buaa.edu.cn"><meta name="copyright" content="Chi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="北航计算机组成原理P0课下P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正P0.Q1 CRC校验码 读完了题目感觉题目和校验没什么关系教程已经有了明显的提示，使用4位模2运算电路拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类似行波进位器的电路 子电路定义如下(:sob:英语不好轻喷 )   定义接口 方向 描述    div[2:0] I 上一次$mo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="北航计算机组成P0课下">
+<meta property="og:url" content="http://kie-chi.github.io/2024/09/24/CO_P0/index.html">
+<meta property="og:site_name" content="Trash Bin for Chi">
+<meta property="og:description" content="北航计算机组成原理P0课下P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正P0.Q1 CRC校验码 读完了题目感觉题目和校验没什么关系教程已经有了明显的提示，使用4位模2运算电路拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类似行波进位器的电路 子电路定义如下(:sob:英语不好轻喷 )   定义接口 方向 描述    div[2:0] I 上一次$mo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png">
+<meta property="article:published_time" content="2024-09-24T08:45:28.799Z">
+<meta property="article:modified_time" content="2024-09-24T14:51:42.900Z">
+<meta property="article:author" content="Chi">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"><link rel="shortcut icon" href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/wifi_fav.ico"><link rel="canonical" href="http://kie-chi.github.io/2024/09/24/CO_P0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"LAX3O9LZW6","apiKey":"bf885597c6928e6be2e67de57f38f2bd","indexName":"my-hexo-blog","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":730,"position":"top","messagePrev":"我已经","messageNext":"天没有更新这篇文章了,如果您觉得过时了可以看看主页哦~"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Chi","link":"链接: ","source":"来源: Trash Bin for Chi","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '北航计算机组成P0课下',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-24 22:51:42'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-<p>the information is here</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GA</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, gender, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.gender = gender</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;name:<span class="subst">&#123;name&#125;</span>,gender:<span class="subst">&#123;gender&#125;</span>,age:<span class="subst">&#123;age&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> deap <span class="keyword">import</span> base,tools,algorithms,creator</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># import random</span></span><br><span class="line"></span><br><span class="line">IND_NUM = <span class="number">30</span> <span class="comment"># 30位编码，[-5,5]，精度是8位</span></span><br><span class="line">POP_NUM = <span class="number">100</span> <span class="comment"># 种群总个体数量</span></span><br><span class="line">OFS_MAX = <span class="number">50</span> <span class="comment"># 后代最大值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">individual</span>):</span><br><span class="line">    num = <span class="built_in">int</span>(<span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> individual]),<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> (-<span class="number">5</span> + (<span class="number">10</span> * num)/(<span class="number">2</span>**<span class="number">30</span> - <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">eval</span>(<span class="params">individual</span>):</span><br><span class="line">    x = decode(individual)</span><br><span class="line">    <span class="keyword">return</span> ((np.square(x) + x) * np.cos(<span class="number">2</span> * x) + np.square(x) + x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">creator.create(<span class="string">&quot;FitnessMin&quot;</span>,base.Fitness,weights=(-<span class="number">1.0</span>,))</span><br><span class="line">creator.create(<span class="string">&quot;Individual&quot;</span>,<span class="built_in">list</span>,fitness = creator.FitnessMin)</span><br><span class="line"></span><br><span class="line">toolbox = base.Toolbox()</span><br><span class="line">toolbox.register(<span class="string">&quot;attribute&quot;</span>,np.random.randint,<span class="number">0</span>,<span class="number">2</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;individual&quot;</span>, tools.initRepeat, creator.Individual, toolbox.attribute, n=IND_NUM)</span><br><span class="line">toolbox.register(<span class="string">&quot;population&quot;</span>, tools.initRepeat, <span class="built_in">list</span>, toolbox.individual)</span><br><span class="line">pop = toolbox.population(n=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">toolbox.register(<span class="string">&quot;evaluate&quot;</span>, <span class="built_in">eval</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;select&quot;</span>, tools.selTournament, <span class="number">3</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mate&quot;</span>, tools.cxUniform, indpb=<span class="number">0.5</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mutate&quot;</span>, tools.mutFlipBit, indpb=<span class="number">0.5</span>)</span><br><span class="line"><span class="comment"># tools.mutFlipBit()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stats = tools.Statistics(key=<span class="keyword">lambda</span> x: x.fitness.values)</span><br><span class="line">stats.register(<span class="string">&quot;avg&quot;</span>, np.mean)</span><br><span class="line">stats.register(<span class="string">&quot;std&quot;</span>, np.std)</span><br><span class="line">stats.register(<span class="string">&quot;min&quot;</span>, np.<span class="built_in">min</span>)</span><br><span class="line">stats.register(<span class="string">&quot;max&quot;</span>, np.<span class="built_in">max</span>)</span><br><span class="line"></span><br><span class="line">resultPop, logbook = algorithms.eaSimple(pop, toolbox, cxpb=<span class="number">0.5</span>, mutpb=<span class="number">0.2</span>, ngen=POP_NUM, stats=stats, verbose=<span class="literal">False</span>)</span><br><span class="line">logbook.header = <span class="string">&#x27;gen&#x27;</span>,<span class="string">&#x27;nevals&#x27;</span>,<span class="string">&#x27;avg&#x27;</span>,<span class="string">&#x27;std&#x27;</span>,<span class="string">&#x27;min&#x27;</span>,<span class="string">&#x27;max&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(logbook)    </span><br></pre></td></tr></table></figure>
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
 
-<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
-  pie
-    title Key elements in Product X
-    &quot;Calcium&quot; : 42.96
-    &quot;Potassium&quot; : 50.05
-    &quot;Magnesium&quot; : 10.01
-    &quot;Iron&quot; :  5
-  </pre></div>
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
 
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 7 || hour >= 19
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
 
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><ul>
-<li>我有一个好点子<div class="tabs" id="test4-"><ul class="nav-tabs no-default"><button type="button" class="tab " data-href="test4--1">第一个Tab</button><button type="button" class="tab " data-href="test4--2"><i class="fab fa-apple-pay" style="text-align: center;"></i></button><button type="button" class="tab " data-href="test4--3"><i class="fas fa-bomb"></i>炸弹</button></ul><div class="tab-contents"><div class="tab-item-content" id="test4--1"><p><strong>tab名字为第一个Tab</strong></p></div><div class="tab-item-content" id="test4--2"><p><strong>只有图标 没有Tab名字</strong></p></div><div class="tab-item-content" id="test4--3"><p><strong>名字+icon</strong></p></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></li>
-</ul>
-<p>作者: Jerry<br>連結: <a href="https://butterfly.js.org/posts/4aa8abbe/">https://butterfly.js.org/posts/4aa8abbe/</a><br>來源: Butterfly<br>著作權歸作者所有。商業轉載請聯繫作者獲得授權，非商業轉載請註明出處。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
 
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<div class="flink"><div class="flink-name">友情链接</div><div class="flink-desc">那些人，那些事</div> <div class="flink-list">
-          <div class="flink-list-item">
-            <a href="https://jerryc.me/" title="JerryC" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://jerryc.me/img/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="JerryC" />
-              </div>
-              <div class="flink-item-name">JerryC</div> 
-              <div class="flink-item-desc" title="今日事,今日毕">今日事,今日毕</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://hexo.io/zh-tw/" title="Hexo" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Hexo" />
-              </div>
-              <div class="flink-item-name">Hexo</div> 
-              <div class="flink-item-desc" title="快速、简单且强大的网志框架">快速、简单且强大的网志框架</div>
-            </a>
-          </div></div><div class="flink-name">网站</div><div class="flink-desc">值得推荐的网站</div> <div class="flink-list">
-          <div class="flink-list-item">
-            <a href="https://www.youtube.com/" title="Youtube" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Youtube" />
-              </div>
-              <div class="flink-item-name">Youtube</div> 
-              <div class="flink-item-desc" title="视频网站">视频网站</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://www.weibo.com/" title="Weibo" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Weibo" />
-              </div>
-              <div class="flink-item-name">Weibo</div> 
-              <div class="flink-item-desc" title="中国最大社交分享平台">中国最大社交分享平台</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://twitter.com/" title="Twitter" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Twitter" />
-              </div>
-              <div class="flink-item-name">Twitter</div> 
-              <div class="flink-item-desc" title="社交分享平台">社交分享平台</div>
-            </a>
-          </div></div></div>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Python基础--字符串</title>
-    <url>/2024/09/21/Python-%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h1 id="Python基础之字符串"><a href="#Python基础之字符串" class="headerlink" title="Python基础之字符串"></a>Python基础之字符串</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><font face="宋体">
-&nbsp;&nbsp;随着计算机发展日益加快，就算对于非计算机专业人士也通过键盘、鼠标等IO组件与计算机进行沟通。我们手指的每一次敲击，都传送给计算机输入某个“字符”的信号，字符与字符串不仅是编程语言的基本组成元素，更是我们与计算机交流的桥梁
-<br>
-&nbsp;&nbsp;对于<mark class="hl-label blue">Python</mark> 这门现代编程语言，字符串的操作也是重中之重，接下来让我们一起学习有关字符串的内容吧
-</font>
-
-<h2 id="什么是字符串"><a href="#什么是字符串" class="headerlink" title="什么是字符串"></a>什么是字符串</h2><h3 id="字符串的创建"><a href="#字符串的创建" class="headerlink" title="字符串的创建"></a>字符串的创建</h3><ul>
-<li>对于较早的C语言等，字符一般而言指<code>acsii</code>规定的128个字符，包括英文字母、数字、一些控制字符，而由这些字符组成的一串字符被形象地称作字符串<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line"><span class="type">char</span> str[<span class="number">10</span>] = <span class="string">&quot;abcde&quot;</span>;</span><br></pre></td></tr></table></figure></li>
-<li>而<code>Python3</code>采用了号称万国码的<code>Unicode</code>字符集，可以表示包括中文、阿拉伯文等多国文字在内的若干字符，当然通过<code>Python</code>内置的编码、解码函数可以实现<code>utf-8</code>、<code>ascii</code>等其他编码方式之间的互相转换，当然这是后话了<br><strong>这里放一个编码的链接</strong></li>
-<li>在<code>Python</code>中没有字符和字符串的明显区别，字符串可以使用<code>&#39;</code>或者<code>&quot;</code>定义，甚至对于多行字符串，可以使用<code>&quot;&quot;&quot;</code>或者<code>&#39;&#39;&#39;</code>来包含多行文本而不用在字符串间换行位置使用换行符<code>\n</code>，甚至允许使用<code>\</code>来拼接多行字符串为一行<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Python中没有字符和字符串的区分</span></span><br><span class="line">char_one = <span class="string">&#x27;a&#x27;</span></span><br><span class="line">char_two = <span class="string">&quot;a&quot;</span></span><br><span class="line">chars = <span class="string">&#x27;abcde&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(char_one)</span><br><span class="line"><span class="built_in">print</span>(char_two)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多行字符串</span></span><br><span class="line">lines = <span class="string">&quot;&quot;&quot;this is a long string</span></span><br><span class="line"><span class="string">that spans multiple lines&quot;&quot;&quot;</span></span><br><span class="line">lines_single = <span class="string">&#x27;&#x27;&#x27;this is also a long </span></span><br><span class="line"><span class="string">string</span></span><br><span class="line"><span class="string">that spans mutiple lines too&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(lines)</span><br><span class="line"><span class="built_in">print</span>(lines_single)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拼接多行字符</span></span><br><span class="line">new_lines = <span class="string">&quot;this is a long string&quot;</span>\</span><br><span class="line">            <span class="string">&quot;that over&quot;</span>\</span><br><span class="line">            <span class="string">&quot;multiple lines&quot;</span></span><br><span class="line"><span class="built_in">print</span>(new_lines)</span><br></pre></td></tr></table></figure>
-<details class="toggle" ><summary class="toggle-button" style="">输出内容</summary><div class="toggle-content"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">a</span><br><span class="line">a</span><br><span class="line">this is a long string</span><br><span class="line">that spans multiple lines</span><br><span class="line">this is also a long string</span><br><span class="line">that spans multiple lines</span><br><span class="line">this is a long string that over multiple lines</span><br></pre></td></tr></table></figure>
-</div></details></li>
-</ul>
-<hr>
-<h3 id="字符串不可变性"><a href="#字符串不可变性" class="headerlink" title="字符串不可变性"></a>字符串不可变性</h3><ul>
-<li>在<code>Python</code>中所有数据都是通过引用传递与使用的，这意味着我们一般只管理指向数据的引用（<del>大概是Python不用写数据类型的原因之一</del>），传递数据一般也只是传递数据的引用而非数据本身(除深浅拷贝外) <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 简单数据类型</span></span><br><span class="line">a = <span class="number">12</span></span><br><span class="line">b = a <span class="comment"># b接收的是a的引用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复杂数据类型</span></span><br><span class="line">str_a = <span class="string">&quot;1234&quot;</span></span><br><span class="line">str_b = str_a <span class="comment"># 同理接收的是引用 </span></span><br></pre></td></tr></table></figure></li>
-<li>这时，小熊饼干突然想修改<code>str_b</code>的值便加入了一系列指令<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;展示修改前地址:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(str_a))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(str_b))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;展示修改前值:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(str_a)</span><br><span class="line"><span class="built_in">print</span>(str_b)</span><br><span class="line"></span><br><span class="line">str_b += <span class="string">&quot;5&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;展示修改后地址:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(str_a))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(str_b))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;展示修改后值:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(str_a)</span><br><span class="line"><span class="built_in">print</span>(str_b)</span><br></pre></td></tr></table></figure>
-<details class="toggle" ><summary class="toggle-button" style="">运行结果</summary><div class="toggle-content"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">展示修改前地址:</span><br><span class="line">140123456789056</span><br><span class="line">140123456789056</span><br><span class="line">展示修改前值:</span><br><span class="line">1234</span><br><span class="line">1234</span><br><span class="line">展示修改后地址:</span><br><span class="line">140123456789056</span><br><span class="line">342453543545131</span><br><span class="line">1234</span><br><span class="line">12345</span><br></pre></td></tr></table></figure></div></details>
-我们惊奇地发现<code>str_b</code>指向的地址在修改前后发生了变化，这是因为字符串是一种<mark class="hl-label red">不可变类型</mark> ，任何针对字符串<strong>内容</strong>的改变都是不被允许的，所以我们进行修改<code>str_b</code>的操作<code>str_b += &quot;5&quot;</code>时，<code>Python</code>直接创建了一个新的变量<code>&quot;12345&quot;</code>然后将这个变量的地址赋给<code>str_b</code><details class="toggle" ><summary class="toggle-button" style="">什么是可变类型呢</summary><div class="toggle-content"><p>对于<code>str</code>、<code>tuple</code>、<code>byte</code>等<strong>不可变类型</strong>数据，一旦创立就无法修改其内容，而对于<code>list</code>、<code>dict</code>等<strong>可变类型</strong>我们允许在创立后继续修改其内容，如下</p>
-<ul>
-<li>甲方要求小熊饼干写一个复制一份<code>list</code>的Python文件，于是他写下如下代码<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">list_a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">list_b = list_a</span><br></pre></td></tr></table></figure>
-就在他写完时，甲方要求他在复制的副本中加入其他几个元素，睡眼朦胧的小熊饼干草草地写完了代码，没想到第二天代码出了问题，原始数据<code>list</code>遭到篡改，小熊饼干因此下岗了，呜呜呜<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;打印修改前地址:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(list_a))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(list_b))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;打印修改前值:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(list_a)</span><br><span class="line"><span class="built_in">print</span>(list_b)</span><br><span class="line"></span><br><span class="line">list_b.append(<span class="number">5</span>)</span><br><span class="line">list_b.append(<span class="number">6</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;打印修改后地址:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(list_a))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(list_b))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;打印修改后值:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(list_a)</span><br><span class="line"><span class="built_in">print</span>(list_b)</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">打印修改前地址:</span><br><span class="line">140123456789056</span><br><span class="line">140123456789056</span><br><span class="line">打印修改前值:</span><br><span class="line">[1, 2, 3, 4]</span><br><span class="line">[1, 2, 3, 4]</span><br><span class="line">打印修改后地址:</span><br><span class="line">140123456789056</span><br><span class="line">140123456789056</span><br><span class="line">打印修改后值:</span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br></pre></td></tr></table></figure>
-<font color = red>$Attention:$</font>小熊饼干通过赋值手段使<code>list_a</code>和<code>list_b</code>指向同一对象，又因为<code>list</code>类型是<strong>可变类型</strong>，所以对于其内容的修改是被允许的，这时我们可以通过<code>list_a</code>或者<code>list_b</code>中的某一个引用修改原对象内容，也就导致指向该对象的所有引用的“值”同时变化</li>
-</ul>
-</div></details></li>
-</ul>
-<hr>
-<h3 id="字符串的简单操作"><a href="#字符串的简单操作" class="headerlink" title="字符串的简单操作"></a>字符串的简单操作</h3><h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>如果你曾经学习过C语言，一定记得字符串(字符数组)使用下标索引的场景（<del>熟悉而美好</del>，那么当然，<code>Python</code>提供了更为强大的索引功能</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">chars = <span class="string">&quot;abcdefg&quot;</span></span><br><span class="line">char = chars[<span class="number">0</span>] <span class="comment"># a</span></span><br><span class="line">char = chars[<span class="number">4</span>] <span class="comment"># d</span></span><br><span class="line">char = chars[-<span class="number">1</span>] <span class="comment"># g</span></span><br><span class="line">char = chars[-<span class="number">2</span>] <span class="comment"># f</span></span><br></pre></td></tr></table></figure>
-<p>不仅提供了正向索引还有反向的，以后获得尾部的某些字符就轻松多了</p>
-<h4 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h4><p>Python中提供的一种相较于一般索引更加高级的索引方式，可以灵活地处理字符串一般格式为<code>str[start:end:step]</code></p>
-<ul>
-<li><code>start</code>：切片的起始索引值，缺省为字符串开头</li>
-<li><code>end</code>：切片的结束索引值（不包括），缺省为字符串结束后（即包括字符串最后一个字符）</li>
-<li><code>step</code>：切片的步长，默认为1  <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 正向索引</span></span><br><span class="line">test_str = <span class="string">&quot;人生苦短,我用Python&quot;</span></span><br><span class="line">chars = test_str[<span class="number">1</span>:<span class="number">3</span>] <span class="comment"># &quot;生苦&quot;</span></span><br><span class="line">chars = test_str[:<span class="number">6</span>] <span class="comment"># &quot;人生苦短,我&quot;</span></span><br><span class="line">chars = test_str[<span class="number">6</span>:] <span class="comment"># &quot;用Python&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 整段切片</span></span><br><span class="line">chars = test_str[:] <span class="comment"># &quot;人生苦短,我用Python&quot;</span></span><br><span class="line">chars = test_str[::<span class="number">2</span>] <span class="comment"># &quot;人苦，用yhn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 倒排索引(雾</span></span><br><span class="line">chars = test_str[::-<span class="number">1</span>] <span class="comment"># &quot;nohtyP用我,短苦生人&quot;</span></span><br><span class="line">chars = test_str[<span class="number">5</span>:<span class="number">1</span>:-<span class="number">1</span>] <span class="comment"># &quot;我,短苦&quot;</span></span><br><span class="line">chars = test_str[:-<span class="number">7</span>:-<span class="number">1</span>] <span class="comment"># ”nohtyP“</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<hr>
-<h2 id="str类"><a href="#str类" class="headerlink" title="str类"></a>str类</h2><p>相信学习过任何一门具有面向对象特性的编程语言的同学对这个词都不会陌生，简而言之，在面向对象设计中，万物都为“对象”；具有相同属性和行为的一群对象分为一个“类”，这个类抽象出对象群体共同的特性（属性）和行为（方法）</p>
-<ul>
-<li>在这里，各种不同的字符串都是对象，他们共同构成了类<code>str</code>，因为他们有某些共同的特性，如编码方式，有可以对所有字符串对象使用的方法，如查找子串，请你跟随小熊饼干，一起学习blog中讲解的第一个类<code>str</code></li>
-<li>因为某些原因，我们将构造方法和一些魔术方法放在后续内容中介绍，敬请关注</li>
-</ul>
-<h3 id="内置方法（普通）"><a href="#内置方法（普通）" class="headerlink" title="内置方法（普通）"></a>内置方法（普通）</h3><h4 id="大小写转换"><a href="#大小写转换" class="headerlink" title="大小写转换"></a>大小写转换</h4><ul>
-<li><code>str.upper()</code><ul>
-<li>将字符串内所有字符转为大写</li>
-</ul>
-</li>
-<li><code>str.lower()</code><ul>
-<li>将字符串内所有字符转为小写</li>
-</ul>
-</li>
-<li><code>str.capitalize()</code><ul>
-<li>将字符串首字母大写</li>
-</ul>
-</li>
-<li><code>str.title()</code><ul>
-<li>将字符串每个单词首字母大写<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">chars = <span class="string">&quot;hello, world&quot;</span></span><br><span class="line">chars_upper = chars.upper()</span><br><span class="line">chars_lower = chars.lower()</span><br><span class="line">chars_cap = chars.capitalize()</span><br><span class="line">chars_title = chars.title()</span><br><span class="line"><span class="built_in">print</span>(chars_upper)</span><br><span class="line"><span class="built_in">print</span>(chars_lower)</span><br><span class="line"><span class="built_in">print</span>(chars_cap)</span><br><span class="line"><span class="built_in">print</span>(chars_title)</span><br></pre></td></tr></table></figure>
-<div class="hide-block"><button type="button" class="hide-button" style="">查看输出内容
-    </button><div class="hide-content"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">HELLO, WORLD</span><br><span class="line">hello, world</span><br><span class="line">Hello, world</span><br><span class="line">Hello, World</span><br></pre></td></tr></table></figure>
-</div></div></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h4 id="去除字符"><a href="#去除字符" class="headerlink" title="去除字符"></a>去除字符</h4><ul>
-<li><code>str.strip()</code><ul>
-<li>从字符串左右去除所给字符串中的所有字符，缺省为空去除空白字符</li>
-</ul>
-</li>
-<li><code>str.rstrip()</code><ul>
-<li>从字符串右去除所给字符串中的所有字符，缺省为空去除空白字符</li>
-</ul>
-</li>
-<li><code>str.lstrip()</code><ul>
-<li>从字符串左去除所给字符串中的所有字符，缺省为空去除空白字符</li>
-</ul>
-</li>
-<li>都只会去除连续匹配的字符，若有不匹配，则立即停止<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.strip())  </span><br><span class="line"><span class="built_in">print</span>(s.strip(<span class="string">&quot; h&quot;</span>))  </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.lstrip()) </span><br><span class="line"><span class="built_in">print</span>(s.lstrip(<span class="string">&quot; h&quot;</span>)) </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.rstrip()) </span><br><span class="line"><span class="built_in">print</span>(s.rstrip(<span class="string">&quot; o&quot;</span>))  </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;abc123cba&quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.strip(<span class="string">&quot;abc&quot;</span>))</span><br></pre></td></tr></table></figure>
-<div class="hide-block"><button type="button" class="hide-button" style="">查看输出内容
-    </button><div class="hide-content"><p>空格使用下滑线表示</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hello</span><br><span class="line">ello</span><br><span class="line">hello____</span><br><span class="line">ello___</span><br><span class="line">___hello</span><br><span class="line">___hell</span><br><span class="line">123   </span><br></pre></td></tr></table></figure>
-</div></div></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python基础</tag>
-        <tag>字符串</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>北航计算机组成P0课下</title>
-    <url>/2024/09/24/CO_P0/</url>
-    <content><![CDATA[<h1 id="北航计算机组成原理P0课下"><a href="#北航计算机组成原理P0课下" class="headerlink" title="北航计算机组成原理P0课下"></a>北航计算机组成原理P0课下</h1><h3 id="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"><a href="#P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正" class="headerlink" title="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"></a>P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</h3><h2 id="P0-Q1-CRC校验码"><a href="#P0-Q1-CRC校验码" class="headerlink" title="P0.Q1 CRC校验码"></a>P0.Q1 CRC校验码</h2><ul>
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fas-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Trash Bin for Chi"><img class="site-icon" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"/><span class="site-name">Trash Bin for Chi</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fas-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">北航计算机组成P0课下</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-24T08:45:28.799Z" title="发表于 2024-09-24 16:45:28">2024-09-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-24T14:51:42.900Z" title="更新于 2024-09-24 22:51:42">2024-09-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E8%AF%BE%E4%B8%8B%E5%A4%8D%E4%B9%A0/">课下复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="北航计算机组成P0课下"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="北航计算机组成原理P0课下"><a href="#北航计算机组成原理P0课下" class="headerlink" title="北航计算机组成原理P0课下"></a>北航计算机组成原理P0课下</h1><h3 id="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"><a href="#P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正" class="headerlink" title="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"></a>P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</h3><h2 id="P0-Q1-CRC校验码"><a href="#P0-Q1-CRC校验码" class="headerlink" title="P0.Q1 CRC校验码"></a>P0.Q1 CRC校验码</h2><ul>
 <li><del>读完了题目感觉题目和校验没什么关系</del><br>教程已经有了明显的提示，使用<strong>4位模2运算电路</strong>拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类似行波进位器的电路<ul>
 <li>子电路定义如下(:sob:英语不好轻喷 )<table>
 <thead>
@@ -598,13 +610,124 @@
 </ul>
 <hr>
 <h2 id="P0-推荐题目"><a href="#P0-推荐题目" class="headerlink" title="P0.推荐题目"></a>P0.推荐题目</h2><p>好，但是现在还没出</p>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>课下复习</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-</search>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://Kie-Chi.github.io">Chi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://kie-chi.github.io/2024/09/24/CO_P0/">http://kie-chi.github.io/2024/09/24/CO_P0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Kie-Chi.github.io" target="_blank">Trash Bin for Chi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></div><div class="post_share"><div class="social-share" data-image="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助一杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/09/21/Python-%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python基础--字符串"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python基础--字符串</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Chi</div><div class="author-info__description">这个人很懒，这里什么都没有留下</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kie-Chi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kie-Chi" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xchi_xikai@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/Kie-Chi/my_co_repo" target="_blank" title="Code"><i class="fa-solid fa-code" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">懒人刷新处</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%97%E8%88%AA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86P0%E8%AF%BE%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text">北航计算机组成原理P0课下</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P0%E8%AF%BE%E4%B8%8B%E5%81%9A%E9%A2%98%E7%9A%84%E4%B8%80%E4%BA%9B%E5%88%86%E4%BA%AB%EF%BC%8C%E6%80%9D%E8%B7%AF%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%98%AF%E6%9C%80%E4%BD%B3%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF%EF%BC%8C%E6%95%AC%E8%AF%B7%E5%A4%A7%E5%AE%B6%E6%96%A7%E6%AD%A3"><span class="toc-number">1.0.1.</span> <span class="toc-text">P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q1-CRC%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">P0.Q1 CRC校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q2-%E5%AE%9E%E7%8E%B0GRF"><span class="toc-number">1.2.</span> <span class="toc-text">P0.Q2 实现GRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q3-%E5%AF%BC%E8%88%AA"><span class="toc-number">1.3.</span> <span class="toc-text">P0.Q3 导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q4-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">P0.Q4 正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-%E9%99%84%E5%8A%A0%E9%A2%98-ftoi"><span class="toc-number">1.5.</span> <span class="toc-text">P0.附加题 ftoi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-%E6%8E%A8%E8%8D%90%E9%A2%98%E7%9B%AE"><span class="toc-number">1.6.</span> <span class="toc-text">P0.推荐题目</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/24/CO_P0/" title="北航计算机组成P0课下">北航计算机组成P0课下</a><time datetime="2024-09-24T08:45:28.799Z" title="发表于 2024-09-24 16:45:28">2024-09-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/21/Python-%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python基础--字符串">Python基础--字符串</a><time datetime="2024-09-21T13:00:00.000Z" title="发表于 2024-09-21 21:00:00">2024-09-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/10/hello-world/" title="Hello World">Hello World</a><time datetime="2024-09-10T13:20:15.990Z" title="发表于 2024-09-10 21:20:15">2024-09-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Chi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="true" data-text="Ok!,Good!,Great!,Amazing!,Excellent!,Crazy!,Unbelievable" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.65.0/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js?v=4.13.0"></script></div></div></body></html>
