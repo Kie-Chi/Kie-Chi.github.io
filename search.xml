@@ -492,7 +492,79 @@
 <li>在这里，各种不同的字符串都是对象，他们共同构成了类<code>str</code>，因为他们有某些共同的特性，如编码方式，有可以对所有字符串对象使用的方法，如查找子串，请你跟随小熊饼干，一起学习blog中讲解的第一个类<code>str</code></li>
 <li>因为某些原因，我们将构造方法和一些魔术方法放在后续内容中介绍，敬请关注</li>
 </ul>
-<h3 id="内置方法（普通）"><a href="#内置方法（普通）" class="headerlink" title="内置方法（普通）"></a>内置方法（普通）</h3><h4 id="大小写转换"><a href="#大小写转换" class="headerlink" title="大小写转换"></a>大小写转换</h4><ul>
+<h3 id="内置方法（普通）"><a href="#内置方法（普通）" class="headerlink" title="内置方法（普通）"></a>内置方法（普通）</h3><h4 id="去除字符-熟练掌握"><a href="#去除字符-熟练掌握" class="headerlink" title="去除字符(熟练掌握)"></a>去除字符(熟练掌握)</h4><ul>
+<li><code>str.strip(sub_string)</code><ul>
+<li>从字符串左右去除所给字符串中的所有字符，缺省为空去除空白字符</li>
+</ul>
+</li>
+<li><code>str.rstrip(sub_string)</code><ul>
+<li>从字符串右去除所给字符串中的所有字符，缺省为空去除空白字符</li>
+</ul>
+</li>
+<li><code>str.lstrip(sub_string)</code><ul>
+<li>从字符串左去除所给字符串中的所有字符，缺省为空去除空白字符</li>
+</ul>
+</li>
+<li>都只会去除连续匹配的字符，若有不匹配，则立即停止<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.strip())  </span><br><span class="line"><span class="built_in">print</span>(s.strip(<span class="string">&quot; h&quot;</span>))  </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.lstrip()) </span><br><span class="line"><span class="built_in">print</span>(s.lstrip(<span class="string">&quot; h&quot;</span>)) </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.rstrip()) </span><br><span class="line"><span class="built_in">print</span>(s.rstrip(<span class="string">&quot; o&quot;</span>))  </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;abc123cba&quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.strip(<span class="string">&quot;abc&quot;</span>))</span><br></pre></td></tr></table></figure>
+<div class="hide-block"><button type="button" class="hide-button" style="">查看输出内容
+    </button><div class="hide-content"><p>空格使用下滑线表示</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hello</span><br><span class="line">ello</span><br><span class="line">hello____</span><br><span class="line">ello___</span><br><span class="line">___hello</span><br><span class="line">___hell</span><br><span class="line">123   </span><br></pre></td></tr></table></figure>
+</div></div></li>
+</ul>
+<hr>
+<h4 id="查找与计数-熟练掌握"><a href="#查找与计数-熟练掌握" class="headerlink" title="查找与计数(熟练掌握)"></a>查找与计数(熟练掌握)</h4><ul>
+<li><code>str.find(sub_string)</code><ul>
+<li>从字符串<strong>左端</strong>开始查找，返回第一个匹配子串的索引值，没有<strong>返回-1</strong></li>
+</ul>
+</li>
+<li><code>str.rfind(sub_string)</code><ul>
+<li>从字符串<strong>右端</strong>开始查找，返回第一个匹配子串的索引值，没有<strong>返回-1</strong></li>
+</ul>
+</li>
+<li><code>str.index(sub_string)</code><ul>
+<li>从字符串<strong>左端</strong>开始查找，返回第一个匹配子串的索引值，没有<strong>抛出异常</strong></li>
+</ul>
+</li>
+<li><code>str.rindex(sub_string)</code><ul>
+<li>从字符串<strong>右端</strong>开始查找，返回第一个匹配子串的索引值，没有<strong>抛出异常</strong></li>
+</ul>
+</li>
+<li><code>str.count(sub_string, [start, end])</code><ul>
+<li><code>[]</code>在函数注解中代表可有可无的参数</li>
+<li>计算子串在这个字符串中出现的次数，可指定计数区间</li>
+</ul>
+</li>
+<li><code>in &amp;&amp; not in</code><ul>
+<li>对于字符串这种可迭代对象可以使用<code>Python</code>内置的操作符判断一个元素是否在这个对象中<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">chars = <span class="string">&quot;hello, Python! I love Python ! We all use Python&quot;</span></span><br><span class="line"><span class="built_in">print</span>(chars.find(<span class="string">&quot;Python&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(chars.rfind(<span class="string">&quot;Python&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(chars.index(<span class="string">&quot;Python&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(chars.index(<span class="string">&quot;Python&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(chars.count(<span class="string">&quot;Python&quot;</span>, <span class="number">0</span>, <span class="built_in">len</span>(chars)))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Python&quot;</span> <span class="keyword">in</span> chars)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Chi&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> chars)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(chars.index(<span class="string">&quot;Chi&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(chars.find(<span class="string">&quot;Chi&quot;</span>))</span><br></pre></td></tr></table></figure>
+<div class="hide-block"><button type="button" class="hide-button" style="">查看输出内容
+    </button><div class="hide-content"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">7</span><br><span class="line">42</span><br><span class="line">7</span><br><span class="line">7</span><br><span class="line">3</span><br><span class="line">True</span><br><span class="line">True</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;D:\Pycharm_code\math_and_\test.py&quot;</span>, line 8, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="built_in">print</span>(chars.index(<span class="string">&quot;Chi&quot;</span>))</span><br><span class="line">ValueError: substring not found</span><br></pre></td></tr></table></figure>
+</div></div></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="实用-熟练掌握"><a href="#实用-熟练掌握" class="headerlink" title="实用(熟练掌握)"></a>实用(熟练掌握)</h4><ul>
+<li><code>str.replace(string1, string2)</code><ul>
+<li>将字符串中的全部<code>string1</code>都替换为<code>string2</code></li>
+</ul>
+</li>
+<li><code>str.split(base, [count])</code><ul>
+<li>将字符串按照<code>base</code>为基准分为不同的字符串，分割的次数可以显式地给出，优先从左到右，返回一个字符串列表</li>
+</ul>
+</li>
+<li><code>str.join(itereable)</code><ul>
+<li>将可迭代对象(可以先理解为数组、元组这些有基本元素的类型，字符串也是了)，将其中的元素直接使用<code>str</code>连接拼接为一个更长的字符串<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">chars = <span class="string">&quot;Python and language C&quot;</span></span><br><span class="line"><span class="built_in">print</span>(chars.replace(<span class="string">&quot;language C&quot;</span>, <span class="string">&quot;Python&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(chars.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(chars.split(<span class="string">&quot; &quot;</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;*&quot;</span>.join(chars))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&amp;&quot;</span>.join(chars.split(<span class="string">&quot; &quot;</span>)))</span><br></pre></td></tr></table></figure>
+<div class="hide-block"><button type="button" class="hide-button" style="">查看输出内容
+    </button><div class="hide-content"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Python and Python</span><br><span class="line">[<span class="string">&#x27;Python&#x27;</span>, <span class="string">&#x27;and&#x27;</span>, <span class="string">&#x27;language&#x27;</span>, <span class="string">&#x27;C&#x27;</span>]</span><br><span class="line">[<span class="string">&#x27;Python&#x27;</span>, <span class="string">&#x27;and&#x27;</span>, <span class="string">&#x27;language C&#x27;</span>]</span><br><span class="line">P*y*t*h*o*n* *a*n*d* *l*a*n*g*u*a*g*e* *C</span><br><span class="line">Python&amp;and&amp;language&amp;C</span><br></pre></td></tr></table></figure>
+</div></div>
+<div class="note info simple"><p>字符串不可修改，所以如果需要对字符串进行操作记得用变量接收哦</p>
+</div>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">chars = chars.split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">new_chars = chars.split(<span class="string">&quot; &quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="大小写转换-了解即可"><a href="#大小写转换-了解即可" class="headerlink" title="大小写转换(了解即可)"></a>大小写转换(了解即可)</h4><ul>
 <li><code>str.upper()</code><ul>
 <li>将字符串内所有字符转为大写</li>
 </ul>
@@ -514,25 +586,56 @@
 </li>
 </ul>
 <hr>
-<h4 id="去除字符"><a href="#去除字符" class="headerlink" title="去除字符"></a>去除字符</h4><ul>
-<li><code>str.strip()</code><ul>
-<li>从字符串左右去除所给字符串中的所有字符，缺省为空去除空白字符</li>
+<h4 id="特判-了解即可"><a href="#特判-了解即可" class="headerlink" title="特判(了解即可)"></a>特判(了解即可)</h4><ul>
+<li>不咋用，因为我都有正则了还要什么自行车？</li>
+<li><code>str.isalpha()</code><ul>
+<li>是否全是英文字母</li>
 </ul>
 </li>
-<li><code>str.rstrip()</code><ul>
-<li>从字符串右去除所给字符串中的所有字符，缺省为空去除空白字符</li>
+<li><code>str.isspace()</code><ul>
+<li>是否全为空白符</li>
 </ul>
 </li>
-<li><code>str.lstrip()</code><ul>
-<li>从字符串左去除所给字符串中的所有字符，缺省为空去除空白字符</li>
+<li><code>str.isupper()</code><ul>
+<li>是否全为大写字母</li>
 </ul>
 </li>
-<li>都只会去除连续匹配的字符，若有不匹配，则立即停止<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.strip())  </span><br><span class="line"><span class="built_in">print</span>(s.strip(<span class="string">&quot; h&quot;</span>))  </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.lstrip()) </span><br><span class="line"><span class="built_in">print</span>(s.lstrip(<span class="string">&quot; h&quot;</span>)) </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;  hello  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.rstrip()) </span><br><span class="line"><span class="built_in">print</span>(s.rstrip(<span class="string">&quot; o&quot;</span>))  </span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;abc123cba&quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.strip(<span class="string">&quot;abc&quot;</span>))</span><br></pre></td></tr></table></figure>
-<div class="hide-block"><button type="button" class="hide-button" style="">查看输出内容
-    </button><div class="hide-content"><p>空格使用下滑线表示</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hello</span><br><span class="line">ello</span><br><span class="line">hello____</span><br><span class="line">ello___</span><br><span class="line">___hello</span><br><span class="line">___hell</span><br><span class="line">123   </span><br></pre></td></tr></table></figure>
-</div></div></li>
+<li><code>str.islower()</code><ul>
+<li>是否全为小写字母</li>
 </ul>
+</li>
+<li><code>str.istitle()</code><ul>
+<li>是否是标题格式，单词第一个大写</li>
+</ul>
+</li>
+<li><code>str.isdecimal()</code><ul>
+<li>是否是十进制阿拉伯数字，不包含其他任何形式的数字</li>
+</ul>
+</li>
+<li><code>str.isdigit()</code><ul>
+<li>比上面更广，可以包含上标数字、罗马数字、全角数字</li>
+</ul>
+</li>
+<li><code>str.isnumeric()</code><ul>
+<li>比上面更广，甚至可以识别中文数字和分数数字</li>
+</ul>
+</li>
+<li><code>str.isalnum()</code><ul>
+<li>是否全为字母和数字</li>
+<li>字母不限于英文字母，还有各国语言字母</li>
+<li>数字不识别分数</li>
+</ul>
+</li>
+<li><code>str.startswith()</code><ul>
+<li>以什么指定字符串开头</li>
+</ul>
+</li>
+<li><code>str.endswith()</code><ul>
+<li>以什么指定字符串结尾</li>
+</ul>
+</li>
+</ul>
+<hr>
 ]]></content>
       <categories>
         <category>Python</category>
