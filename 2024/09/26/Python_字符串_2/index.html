@@ -1,0 +1,569 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python基础--字符串(二) | Trash Bin for Chi</title><meta name="author" content="Chi,23371265@buaa.edu.cn"><meta name="copyright" content="Chi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Python基础–字符串(二)前言请确保你已经有一定的Python基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(是因为笔者太懒才没有一次性写完的)，完全不了解的小伙伴们也不用慌，移步Python基础--字符串(一) 格式化字符串%传统式 你是否看过这些特殊的字符串%s，%d呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础--字符串(二)">
+<meta property="og:url" content="https://kie-chi.github.io/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/index.html">
+<meta property="og:site_name" content="Trash Bin for Chi">
+<meta property="og:description" content="Python基础–字符串(二)前言请确保你已经有一定的Python基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(是因为笔者太懒才没有一次性写完的)，完全不了解的小伙伴们也不用慌，移步Python基础--字符串(一) 格式化字符串%传统式 你是否看过这些特殊的字符串%s，%d呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg">
+<meta property="article:published_time" content="2024-09-26T08:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-27T15:13:13.812Z">
+<meta property="article:author" content="Chi">
+<meta property="article:tag" content="Python基础">
+<meta property="article:tag" content="字符串">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg"><link rel="shortcut icon" href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/wifi_fav.ico"><link rel="canonical" href="https://kie-chi.github.io/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"LAX3O9LZW6","apiKey":"bf885597c6928e6be2e67de57f38f2bd","indexName":"my-hexo-blog","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":730,"position":"top","messagePrev":"我已经","messageNext":"天没有更新这篇文章了,如果您觉得过时了可以看看主页哦~"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Chi","link":"链接: ","source":"来源: Trash Bin for Chi","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python基础--字符串(二)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-27 23:13:13'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 7 || hour >= 19
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fas-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Trash Bin for Chi"><img class="site-icon" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"/><span class="site-name">Trash Bin for Chi</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fas-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python基础--字符串(二)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-26T08:00:00.000Z" title="发表于 2024-09-26 16:00:00">2024-09-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-27T15:13:13.812Z" title="更新于 2024-09-27 23:13:13">2024-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python基础--字符串(二)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
+<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
+</ul>
+<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
+<li><code>%s</code><ul>
+<li>适用于为字符串占位，<del>我本来就是啊</del></li>
+</ul>
+</li>
+<li><code>%d</code><ul>
+<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
+</ul>
+</li>
+<li><code>%f</code><ul>
+<li>适用于为浮点数占位</li>
+</ul>
+</li>
+<li><code>.precision</code><ul>
+<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
+</ul>
+</li>
+<li><code>flags</code><ul>
+<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
+<li><code>0</code>，补充前导0</li>
+<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
+<li><code> </code>，方便正数与负数对齐</li>
+<li><code>+</code>，数字补齐符号</li>
+</ul>
+</li>
+<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> 1234 +1234
+-1234 -1234
+  12,  34,  3.10
+12  ,34  ,3.10  
+0012,0234,003.10
+12  ,234 ,3.10  
+</code></pre>
+<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
+<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
+<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
+<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
+<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>利用键值对传入参数，则括号中必须使用key值<ul>
+<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+</ul>
+</li>
+<li>利用键值对和位置进行复杂传参<ul>
+<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
+<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
+<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
+<li><code>fill</code><ul>
+<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
+</ul>
+</li>
+<li><code>align</code><ul>
+<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
+</ul>
+</li>
+<li><code>sign</code><ul>
+<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>最小宽度，默认为字符串长度</li>
+</ul>
+</li>
+<li><code>precision</code><ul>
+<li>控制小数的精度范围，默认是小数点后六位</li>
+</ul>
+</li>
+<li><code>type</code><ul>
+<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code>1___ 000002 $$$$11$$$$
+0012          3     34    
+</code></pre>
+<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
+<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
+<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
+<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>line= &#39;this is a test string&#39;
+a=3
+__123.34000___
+</code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Kie-Chi.github.io">Chi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kie-chi.github.io/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/">https://kie-chi.github.io/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Kie-Chi.github.io" target="_blank">Trash Bin for Chi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python%E5%9F%BA%E7%A1%80/">Python基础</a><a class="post-meta__tags" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a></div><div class="post_share"><div class="social-share" data-image="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助一杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/09/24/CO_P0/" title="北航计算机组成P0课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">北航计算机组成P0课下</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/28/CO_P1/" title="北航计算机组成P1课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">北航计算机组成P1课下</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-21</div><div class="title">Python基础--字符串(一)</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Chi</div><div class="author-info__description">这个人很懒，这里什么都没有留下</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kie-Chi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kie-Chi" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xchi_xikai@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/Kie-Chi/my_co_repo" target="_blank" title="Code"><i class="fa-solid fa-code" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">懒人刷新处</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python%E5%9F%BA%E7%A1%80%E2%80%93%E5%AD%97%E7%AC%A6%E4%B8%B2-%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">Python基础–字符串(二)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.2.</span> <span class="toc-text">格式化字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">%传统式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">常用的格式化字符串</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#format"><span class="toc-number">1.2.2.</span> <span class="toc-text">format</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">默认格式化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#format-spec"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">format_spec</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#f-string"><span class="toc-number">1.3.</span> <span class="toc-text">f-string</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/09/28/CO_P1/" title="北航计算机组成P1课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P1课下"/></a><div class="content"><a class="title" href="/2024/09/28/CO_P1/" title="北航计算机组成P1课下">北航计算机组成P1课下</a><time datetime="2024-09-28T12:00:00.000Z" title="发表于 2024-09-28 20:00:00">2024-09-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/" title="Python基础--字符串(二)"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python基础--字符串(二)"/></a><div class="content"><a class="title" href="/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/" title="Python基础--字符串(二)">Python基础--字符串(二)</a><time datetime="2024-09-26T08:00:00.000Z" title="发表于 2024-09-26 16:00:00">2024-09-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/24/CO_P0/" title="北航计算机组成P0课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P0课下"/></a><div class="content"><a class="title" href="/2024/09/24/CO_P0/" title="北航计算机组成P0课下">北航计算机组成P0课下</a><time datetime="2024-09-24T12:00:00.000Z" title="发表于 2024-09-24 20:00:00">2024-09-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python基础--字符串(一)"/></a><div class="content"><a class="title" href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a><time datetime="2024-09-21T13:00:00.000Z" title="发表于 2024-09-21 21:00:00">2024-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/10/hello-world/" title="Hello World"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2024/09/10/hello-world/" title="Hello World">Hello World</a><time datetime="2024-09-10T13:20:15.990Z" title="发表于 2024-09-10 21:20:15">2024-09-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Chi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: 'Ov23liTVvzPE9besvps5',
+      clientSecret: 'c1345a196978f719c699170e2f7a04939333916e',
+      repo: 'kie-chi.github.io',
+      owner: 'kie-chi',
+      admin: ['kie-chi'],
+      id: 'ee0987b2c8622960fbf0a34ed78cf97c',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/kie-chi/kie-chi.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom && ($dom.innerHTML= result)
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="true" data-text="Ok!,Good!,Great!,Amazing!,Excellent!,Crazy!,Unbelievable" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.65.0/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js?v=4.13.0"></script></div></div></body></html>

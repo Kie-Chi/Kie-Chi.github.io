@@ -447,86 +447,19 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/09/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>the information is here</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GA</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, gender, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.gender = gender</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;name:<span class="subst">&#123;name&#125;</span>,gender:<span class="subst">&#123;gender&#125;</span>,age:<span class="subst">&#123;age&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> deap <span class="keyword">import</span> base,tools,algorithms,creator</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># import random</span></span><br><span class="line"></span><br><span class="line">IND_NUM = <span class="number">30</span> <span class="comment"># 30位编码，[-5,5]，精度是8位</span></span><br><span class="line">POP_NUM = <span class="number">100</span> <span class="comment"># 种群总个体数量</span></span><br><span class="line">OFS_MAX = <span class="number">50</span> <span class="comment"># 后代最大值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">individual</span>):</span><br><span class="line">    num = <span class="built_in">int</span>(<span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> individual]),<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> (-<span class="number">5</span> + (<span class="number">10</span> * num)/(<span class="number">2</span>**<span class="number">30</span> - <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">eval</span>(<span class="params">individual</span>):</span><br><span class="line">    x = decode(individual)</span><br><span class="line">    <span class="keyword">return</span> ((np.square(x) + x) * np.cos(<span class="number">2</span> * x) + np.square(x) + x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">creator.create(<span class="string">&quot;FitnessMin&quot;</span>,base.Fitness,weights=(-<span class="number">1.0</span>,))</span><br><span class="line">creator.create(<span class="string">&quot;Individual&quot;</span>,<span class="built_in">list</span>,fitness = creator.FitnessMin)</span><br><span class="line"></span><br><span class="line">toolbox = base.Toolbox()</span><br><span class="line">toolbox.register(<span class="string">&quot;attribute&quot;</span>,np.random.randint,<span class="number">0</span>,<span class="number">2</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;individual&quot;</span>, tools.initRepeat, creator.Individual, toolbox.attribute, n=IND_NUM)</span><br><span class="line">toolbox.register(<span class="string">&quot;population&quot;</span>, tools.initRepeat, <span class="built_in">list</span>, toolbox.individual)</span><br><span class="line">pop = toolbox.population(n=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">toolbox.register(<span class="string">&quot;evaluate&quot;</span>, <span class="built_in">eval</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;select&quot;</span>, tools.selTournament, <span class="number">3</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mate&quot;</span>, tools.cxUniform, indpb=<span class="number">0.5</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mutate&quot;</span>, tools.mutFlipBit, indpb=<span class="number">0.5</span>)</span><br><span class="line"><span class="comment"># tools.mutFlipBit()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stats = tools.Statistics(key=<span class="keyword">lambda</span> x: x.fitness.values)</span><br><span class="line">stats.register(<span class="string">&quot;avg&quot;</span>, np.mean)</span><br><span class="line">stats.register(<span class="string">&quot;std&quot;</span>, np.std)</span><br><span class="line">stats.register(<span class="string">&quot;min&quot;</span>, np.<span class="built_in">min</span>)</span><br><span class="line">stats.register(<span class="string">&quot;max&quot;</span>, np.<span class="built_in">max</span>)</span><br><span class="line"></span><br><span class="line">resultPop, logbook = algorithms.eaSimple(pop, toolbox, cxpb=<span class="number">0.5</span>, mutpb=<span class="number">0.2</span>, ngen=POP_NUM, stats=stats, verbose=<span class="literal">False</span>)</span><br><span class="line">logbook.header = <span class="string">&#x27;gen&#x27;</span>,<span class="string">&#x27;nevals&#x27;</span>,<span class="string">&#x27;avg&#x27;</span>,<span class="string">&#x27;std&#x27;</span>,<span class="string">&#x27;min&#x27;</span>,<span class="string">&#x27;max&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(logbook)    </span><br></pre></td></tr></table></figure>
-
-<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
-  pie
-    title Key elements in Product X
-    &quot;Calcium&quot; : 42.96
-    &quot;Potassium&quot; : 50.05
-    &quot;Magnesium&quot; : 10.01
-    &quot;Iron&quot; :  5
-  </pre></div>
-
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><ul>
-<li>我有一个好点子<div class="tabs" id="test4-"><ul class="nav-tabs no-default"><button type="button" class="tab " data-href="test4--1">第一个Tab</button><button type="button" class="tab " data-href="test4--2"><i class="fab fa-apple-pay" style="text-align: center;"></i></button><button type="button" class="tab " data-href="test4--3"><i class="fas fa-bomb"></i>炸弹</button></ul><div class="tab-contents"><div class="tab-item-content" id="test4--1"><p><strong>tab名字为第一个Tab</strong></p></div><div class="tab-item-content" id="test4--2"><p><strong>只有图标 没有Tab名字</strong></p></div><div class="tab-item-content" id="test4--3"><p><strong>名字+icon</strong></p></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></li>
+    <title>北航计算机组成P1课下</title>
+    <url>/2024/09/28/CO_P1/</url>
+    <content><![CDATA[<h1 id="北航计算机组成原理P1课下"><a href="#北航计算机组成原理P1课下" class="headerlink" title="北航计算机组成原理P1课下"></a>北航计算机组成原理P1课下</h1><ul>
+<li>这是</li>
 </ul>
-<p>作者: Jerry<br>連結: <a href="https://butterfly.js.org/posts/4aa8abbe/">https://butterfly.js.org/posts/4aa8abbe/</a><br>來源: Butterfly<br>著作權歸作者所有。商業轉載請聯繫作者獲得授權，非商業轉載請註明出處。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<div class="flink"><div class="flink-name">友情链接</div><div class="flink-desc">那些人，那些事</div> <div class="flink-list">
-          <div class="flink-list-item">
-            <a href="https://jerryc.me/" title="JerryC" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://jerryc.me/img/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="JerryC" />
-              </div>
-              <div class="flink-item-name">JerryC</div> 
-              <div class="flink-item-desc" title="今日事,今日毕">今日事,今日毕</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://hexo.io/zh-tw/" title="Hexo" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Hexo" />
-              </div>
-              <div class="flink-item-name">Hexo</div> 
-              <div class="flink-item-desc" title="快速、简单且强大的网志框架">快速、简单且强大的网志框架</div>
-            </a>
-          </div></div><div class="flink-name">网站</div><div class="flink-desc">值得推荐的网站</div> <div class="flink-list">
-          <div class="flink-list-item">
-            <a href="https://www.youtube.com/" title="Youtube" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Youtube" />
-              </div>
-              <div class="flink-item-name">Youtube</div> 
-              <div class="flink-item-desc" title="视频网站">视频网站</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://www.weibo.com/" title="Weibo" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Weibo" />
-              </div>
-              <div class="flink-item-name">Weibo</div> 
-              <div class="flink-item-desc" title="中国最大社交分享平台">中国最大社交分享平台</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://twitter.com/" title="Twitter" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Twitter" />
-              </div>
-              <div class="flink-item-name">Twitter</div> 
-              <div class="flink-item-desc" title="社交分享平台">社交分享平台</div>
-            </a>
-          </div></div></div>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
   </entry>
   <entry>
     <title>Python基础--字符串(一)</title>
@@ -743,6 +676,209 @@
 </ul>
 </li>
 </ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python基础</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/09/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>the information is here</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GA</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, gender, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.gender = gender</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;name:<span class="subst">&#123;name&#125;</span>,gender:<span class="subst">&#123;gender&#125;</span>,age:<span class="subst">&#123;age&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> deap <span class="keyword">import</span> base,tools,algorithms,creator</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># import random</span></span><br><span class="line"></span><br><span class="line">IND_NUM = <span class="number">30</span> <span class="comment"># 30位编码，[-5,5]，精度是8位</span></span><br><span class="line">POP_NUM = <span class="number">100</span> <span class="comment"># 种群总个体数量</span></span><br><span class="line">OFS_MAX = <span class="number">50</span> <span class="comment"># 后代最大值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">individual</span>):</span><br><span class="line">    num = <span class="built_in">int</span>(<span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> individual]),<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> (-<span class="number">5</span> + (<span class="number">10</span> * num)/(<span class="number">2</span>**<span class="number">30</span> - <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">eval</span>(<span class="params">individual</span>):</span><br><span class="line">    x = decode(individual)</span><br><span class="line">    <span class="keyword">return</span> ((np.square(x) + x) * np.cos(<span class="number">2</span> * x) + np.square(x) + x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">creator.create(<span class="string">&quot;FitnessMin&quot;</span>,base.Fitness,weights=(-<span class="number">1.0</span>,))</span><br><span class="line">creator.create(<span class="string">&quot;Individual&quot;</span>,<span class="built_in">list</span>,fitness = creator.FitnessMin)</span><br><span class="line"></span><br><span class="line">toolbox = base.Toolbox()</span><br><span class="line">toolbox.register(<span class="string">&quot;attribute&quot;</span>,np.random.randint,<span class="number">0</span>,<span class="number">2</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;individual&quot;</span>, tools.initRepeat, creator.Individual, toolbox.attribute, n=IND_NUM)</span><br><span class="line">toolbox.register(<span class="string">&quot;population&quot;</span>, tools.initRepeat, <span class="built_in">list</span>, toolbox.individual)</span><br><span class="line">pop = toolbox.population(n=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">toolbox.register(<span class="string">&quot;evaluate&quot;</span>, <span class="built_in">eval</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;select&quot;</span>, tools.selTournament, <span class="number">3</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mate&quot;</span>, tools.cxUniform, indpb=<span class="number">0.5</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mutate&quot;</span>, tools.mutFlipBit, indpb=<span class="number">0.5</span>)</span><br><span class="line"><span class="comment"># tools.mutFlipBit()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stats = tools.Statistics(key=<span class="keyword">lambda</span> x: x.fitness.values)</span><br><span class="line">stats.register(<span class="string">&quot;avg&quot;</span>, np.mean)</span><br><span class="line">stats.register(<span class="string">&quot;std&quot;</span>, np.std)</span><br><span class="line">stats.register(<span class="string">&quot;min&quot;</span>, np.<span class="built_in">min</span>)</span><br><span class="line">stats.register(<span class="string">&quot;max&quot;</span>, np.<span class="built_in">max</span>)</span><br><span class="line"></span><br><span class="line">resultPop, logbook = algorithms.eaSimple(pop, toolbox, cxpb=<span class="number">0.5</span>, mutpb=<span class="number">0.2</span>, ngen=POP_NUM, stats=stats, verbose=<span class="literal">False</span>)</span><br><span class="line">logbook.header = <span class="string">&#x27;gen&#x27;</span>,<span class="string">&#x27;nevals&#x27;</span>,<span class="string">&#x27;avg&#x27;</span>,<span class="string">&#x27;std&#x27;</span>,<span class="string">&#x27;min&#x27;</span>,<span class="string">&#x27;max&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(logbook)    </span><br></pre></td></tr></table></figure>
+
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  pie
+    title Key elements in Product X
+    &quot;Calcium&quot; : 42.96
+    &quot;Potassium&quot; : 50.05
+    &quot;Magnesium&quot; : 10.01
+    &quot;Iron&quot; :  5
+  </pre></div>
+
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><ul>
+<li>我有一个好点子<div class="tabs" id="test4-"><ul class="nav-tabs no-default"><button type="button" class="tab " data-href="test4--1">第一个Tab</button><button type="button" class="tab " data-href="test4--2"><i class="fab fa-apple-pay" style="text-align: center;"></i></button><button type="button" class="tab " data-href="test4--3"><i class="fas fa-bomb"></i>炸弹</button></ul><div class="tab-contents"><div class="tab-item-content" id="test4--1"><p><strong>tab名字为第一个Tab</strong></p></div><div class="tab-item-content" id="test4--2"><p><strong>只有图标 没有Tab名字</strong></p></div><div class="tab-item-content" id="test4--3"><p><strong>名字+icon</strong></p></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></li>
+</ul>
+<p>作者: Jerry<br>連結: <a href="https://butterfly.js.org/posts/4aa8abbe/">https://butterfly.js.org/posts/4aa8abbe/</a><br>來源: Butterfly<br>著作權歸作者所有。商業轉載請聯繫作者獲得授權，非商業轉載請註明出處。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<div class="flink"><div class="flink-name">友情链接</div><div class="flink-desc">那些人，那些事</div> <div class="flink-list">
+          <div class="flink-list-item">
+            <a href="https://jerryc.me/" title="JerryC" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://jerryc.me/img/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="JerryC" />
+              </div>
+              <div class="flink-item-name">JerryC</div> 
+              <div class="flink-item-desc" title="今日事,今日毕">今日事,今日毕</div>
+            </a>
+          </div>
+          <div class="flink-list-item">
+            <a href="https://hexo.io/zh-tw/" title="Hexo" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Hexo" />
+              </div>
+              <div class="flink-item-name">Hexo</div> 
+              <div class="flink-item-desc" title="快速、简单且强大的网志框架">快速、简单且强大的网志框架</div>
+            </a>
+          </div></div><div class="flink-name">网站</div><div class="flink-desc">值得推荐的网站</div> <div class="flink-list">
+          <div class="flink-list-item">
+            <a href="https://www.youtube.com/" title="Youtube" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Youtube" />
+              </div>
+              <div class="flink-item-name">Youtube</div> 
+              <div class="flink-item-desc" title="视频网站">视频网站</div>
+            </a>
+          </div>
+          <div class="flink-list-item">
+            <a href="https://www.weibo.com/" title="Weibo" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Weibo" />
+              </div>
+              <div class="flink-item-name">Weibo</div> 
+              <div class="flink-item-desc" title="中国最大社交分享平台">中国最大社交分享平台</div>
+            </a>
+          </div>
+          <div class="flink-list-item">
+            <a href="https://twitter.com/" title="Twitter" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Twitter" />
+              </div>
+              <div class="flink-item-name">Twitter</div> 
+              <div class="flink-item-desc" title="社交分享平台">社交分享平台</div>
+            </a>
+          </div></div></div>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Python基础--字符串(二)</title>
+    <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
+    <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
+<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
+</ul>
+<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
+<li><code>%s</code><ul>
+<li>适用于为字符串占位，<del>我本来就是啊</del></li>
+</ul>
+</li>
+<li><code>%d</code><ul>
+<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
+</ul>
+</li>
+<li><code>%f</code><ul>
+<li>适用于为浮点数占位</li>
+</ul>
+</li>
+<li><code>.precision</code><ul>
+<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
+</ul>
+</li>
+<li><code>flags</code><ul>
+<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
+<li><code>0</code>，补充前导0</li>
+<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
+<li><code> </code>，方便正数与负数对齐</li>
+<li><code>+</code>，数字补齐符号</li>
+</ul>
+</li>
+<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> 1234 +1234
+-1234 -1234
+  12,  34,  3.10
+12  ,34  ,3.10  
+0012,0234,003.10
+12  ,234 ,3.10  
+</code></pre>
+<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
+<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
+<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
+<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
+<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>利用键值对传入参数，则括号中必须使用key值<ul>
+<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+</ul>
+</li>
+<li>利用键值对和位置进行复杂传参<ul>
+<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
+<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
+<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
+<li><code>fill</code><ul>
+<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
+</ul>
+</li>
+<li><code>align</code><ul>
+<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
+</ul>
+</li>
+<li><code>sign</code><ul>
+<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>最小宽度，默认为字符串长度</li>
+</ul>
+</li>
+<li><code>precision</code><ul>
+<li>控制小数的精度范围，默认是小数点后六位</li>
+</ul>
+</li>
+<li><code>type</code><ul>
+<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code>1___ 000002 $$$$11$$$$
+0012          3     34    
+</code></pre>
+<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
+<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
+<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
+<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>line= &#39;this is a test string&#39;
+a=3
+__123.34000___
+</code></pre>
 ]]></content>
       <categories>
         <category>Python</category>
