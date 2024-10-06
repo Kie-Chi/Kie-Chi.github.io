@@ -1,6 +1,833 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>计算机网络--概述</title>
+    <url>/2024/10/04/CN_u1/</url>
+    <content><![CDATA[<h1 id="计算机网络–概述"><a href="#计算机网络–概述" class="headerlink" title="计算机网络–概述"></a>计算机网络–概述</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>国庆好无聊啊，小熊饼干接待完朋友、过完生日之后实在是没有什么事了，但是又不想更新<code>Python</code>，所以他决定开始学习计网</li>
+<li>本栏目仅仅是笔者自学内容，与北京航空航天大学的计网无关，我不是我没有</li>
+</ul>
+<h2 id="什么是计网"><a href="#什么是计网" class="headerlink" title="什么是计网"></a>什么是计网</h2><ul>
+<li>硬件<ul>
+<li><strong>主机</strong>,又称<strong>端系统</strong>可以简单理解我们日常使用的电脑、服务器、手机、各类智能嵌入式系统等，他们处于计算机网络的边缘，所以称为端系统</li>
+<li><strong>通信链路</strong>，像网线、电缆、光纤等物理连接设备，例如可以将两台电脑使用网卡连接，就组成了一个简单的计算机网络</li>
+<li><strong>通信设备</strong>，端系统向计算机网络核心传递信息的中转站，例如集线器、交换机、路由器，通过他们我们可以将若干简单的计算机网络组成复杂的计算机网络</li>
+</ul>
+</li>
+<li>软件<ul>
+<li>可以是在主机运行的应用程序，例如微信、QQ、网盘等，方便用户使用，实现资源共享的程序</li>
+<li>可以是在通信设备中的控制程序，用以控制通信设备传输信息</li>
+</ul>
+</li>
+<li>协议<ul>
+<li>规定计算机网络中的通信规则，利用这种规则封装传递的信息或者解构信息</li>
+</ul>
+</li>
+<li>$Attention$<ul>
+<li>使用集线器可以简单连接某几台设备，缺点是可能导致发送信息之间的冲突</li>
+<li>使用交换机则不会出现信息冲突，不过交换机一般用于构建较小的计算机网络</li>
+<li>使用路由器可以构建计算机网络核心，即各种通路</li>
+</ul>
+</li>
+</ul>
+<p>举一个快递的例子(似乎所有教材都会有一个快递的例子)：快递相当于传递的信息；各个快递终点站、快递驿站相当于端系统；公路、高速、立交桥相当于各种通信链路；快递中转站及仓库可以理解为通信设备；快递公司的运行规则和交通规则相当于协议</p>
+<hr>
+<h2 id="计网的功能"><a href="#计网的功能" class="headerlink" title="计网的功能"></a>计网的功能</h2><ul>
+<li>数据通信<ul>
+<li>实现计算机（端系统）之间的数据传输，是最基本、最重要的功能</li>
+</ul>
+</li>
+<li>资源共享<ul>
+<li>请求服务器处理、网盘、分享视频、应用商店等</li>
+</ul>
+</li>
+<li>分布式处理<ul>
+<li>将某个复杂任务分配给网络中多台计算机处理，提高任务处理效率</li>
+</ul>
+</li>
+<li>提高可靠性<ul>
+<li>网络中各台计算机互为替代，数据冗余备份等操作</li>
+</ul>
+</li>
+<li>复杂均衡<ul>
+<li>网络中多台计算机共同分担繁杂工作，如游戏服务器</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="计网通信"><a href="#计网通信" class="headerlink" title="计网通信"></a>计网通信</h2><h3 id="计网通信方式"><a href="#计网通信方式" class="headerlink" title="计网通信方式"></a>计网通信方式</h3><ul>
+<li>因为在计算机之前已经有电话与发报机等可以传递信息的工具，那么计算机通信方式是否可以参考“前辈”的经验呢？答案是肯定的</li>
+</ul>
+<h4 id="电路交换技术"><a href="#电路交换技术" class="headerlink" title="电路交换技术"></a>电路交换技术</h4><ul>
+<li>曾经的固定电话是通过电话线连接到电路交换器上的，在指定通信方与被通信方之后通过人工或者机器的方式连接实际物理电路，传递消息<ul>
+<li>建立连接（尝试占用资源）</li>
+<li>通信（持续占用通信资源）</li>
+<li>断开连接（归还占用资源）<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_1.png" alt="电路交换示意图"></li>
+</ul>
+</li>
+<li>优缺点分析<ul>
+<li>优点<ul>
+<li>建立了专用的物理电路，两个用户始终占用线路资源，数据传输速度快</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>建立&#x2F;释放连接需要额外的时间开销，等待通信时间可能过长</li>
+<li>线路被通信双方占用，利用率差</li>
+<li>线路的分配灵活性差（线路单一）</li>
+<li>不支持差错控制，无法更改或者发现通信的错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>由于电路交换技术适合少频次大量数据的场景，一般的计算机通信常常是高频次少量数据的传递，所以计算机通信方式不适合<strong>直接沿用</strong>电路交换技术（为什么是直接沿用呢？）</li>
+</ul>
+<h4 id="报文交换技术"><a href="#报文交换技术" class="headerlink" title="报文交换技术"></a>报文交换技术</h4><ul>
+<li>发报机通过线路连接到报文转发机上，通过对信息头部加入地址信息，由转发机自动向目的地转发，而不需要实际地接线<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_2.png" alt="报文交换示意图"></li>
+<li>优缺点分析<ul>
+<li>优点<ul>
+<li>不用占用通信双方中地资源，利用率高</li>
+<li>无需建立连接，线路可以灵活分配</li>
+<li>交换节点时可以“差错控制”</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>报文长度不定，报文交换机地存储空间难以规定大小</li>
+<li>长报文存储转发的时间开销大，缓存开销大</li>
+<li>长报文的纠错困难，重发的代价大</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>由于对长报文的传输支持困难，所以计算机通信方式也没有沿用报文交换技术，而是在报文交换技术的基础上改进而成的分组交换技术</li>
+</ul>
+<h4 id="分组交换技术"><a href="#分组交换技术" class="headerlink" title="分组交换技术"></a>分组交换技术</h4><ul>
+<li>将长报文分为若干段，称为分组(Packet)然后我们的传递最小单位由报文变成分组<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_3.png" alt="分组交换示意图"></li>
+<li>优缺点分析<ul>
+<li>优点<ul>
+<li>同报文交换技术</li>
+<li>存储转发的时间开销小，缓存开销小</li>
+<li>不易出错，且重传的代价小</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>控制信息占比增加</li>
+<li>存储转发时延依旧存在</li>
+<li>发送的各个分组存在顺序问题，可能导致混乱</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="虚电路交换技术"><a href="#虚电路交换技术" class="headerlink" title="虚电路交换技术"></a>虚电路交换技术</h4><ul>
+<li>对于分组交换技术可能出现的顺序问题，虚电路技术提供了一种方式解决（沿用了电路交换技术的策略）<ul>
+<li>建立连接（没有实际电路，仅作规划路径使用）</li>
+<li>通信（分组按照顺序以构建好的路线传递，通信双方不用占用线路）</li>
+<li>释放连接<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_4.png" alt="虚电路交换示意图"></li>
+</ul>
+</li>
+<li>优缺点分析<ul>
+<li>优点<ul>
+<li>同分组交换技术优点</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>同分组交换技术缺点</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><ul>
+<li>对于上述电路交换技术、报文交换技术、分组交换技术进行性能的分析<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_5.png" alt="时序图"><br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_6.png" alt="性能分析对比图"></li>
+</ul>
+<hr>
+<h2 id="计网分类"><a href="#计网分类" class="headerlink" title="计网分类"></a>计网分类</h2><h3 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h3><ul>
+<li>广域网(Wide Area Network)<ul>
+<li>范围大，跨省、跨国、跨洲</li>
+</ul>
+</li>
+<li>城域网(Metropolitan Area Network)<ul>
+<li>范围较大，一个或几个相邻的城市</li>
+<li>通信技术采用“以太网技术”，常并入局域网范畴讨论</li>
+</ul>
+</li>
+<li>局域网(Local Area Network)<ul>
+<li>范围稍小，学校&#x2F;企业&#x2F;家庭等</li>
+<li>通信技术采用“以太网技术”</li>
+</ul>
+</li>
+<li>个域网(Personal Area Network)<ul>
+<li>范围小，家庭&#x2F;个人</li>
+<li>常使用无线技术将个人设备连接起来的网络，因此也被称为无线个域网(WPAN)</li>
+</ul>
+</li>
+</ul>
+<h3 id="传输技术"><a href="#传输技术" class="headerlink" title="传输技术"></a>传输技术</h3><ul>
+<li>广播式网络<ul>
+<li>计算机发送数据分组时，广播范围内的所有计算机都会收到该分组，通过检查分组地址决定是否接受分组</li>
+</ul>
+</li>
+<li>点对点网络<ul>
+<li>精确地发向某个计算机</li>
+</ul>
+</li>
+</ul>
+<h3 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h3><ul>
+<li>总线形结构<ul>
+<li>数据采取广播式技术，存在“总线争用”的现象</li>
+<li>集线器连接的设备</li>
+</ul>
+</li>
+<li>环形结构<ul>
+<li>数据广播式传播但是，可以通过“令牌”指定当前发送数据的计算机，即拿到“令牌”者可以控制总线的数据，从而解决“总线争用的问题”</li>
+<li>令牌环网</li>
+</ul>
+</li>
+<li>星形结构<ul>
+<li>由中央设备实现各个设备的“点对点”传输，不存在“总线争用”的现象</li>
+<li>以太网交换机连接的设备</li>
+</ul>
+</li>
+<li>网状结构<ul>
+<li>数据通过各个中间节点逐一存储转发，实现数据“点对点”的传输</li>
+<li>由众多路由器构建的广域网</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用者"><a href="#使用者" class="headerlink" title="使用者"></a>使用者</h3><ul>
+<li>公用网<ul>
+<li>公开的网络，只要向<code>ISP</code>付钱即可</li>
+</ul>
+</li>
+<li>专用网<ul>
+<li>内部使用网络，例如，国家总局、银行等的内网</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="计网性能指标"><a href="#计网性能指标" class="headerlink" title="计网性能指标"></a>计网性能指标</h2><ul>
+<li>信道<ul>
+<li>即信息传输的通道，一般而言我们所说的<strong>通信线路</strong>往往对应着一个发送信道和一个接收信道</li>
+</ul>
+</li>
+<li>速度相关<ul>
+<li>速率，连接在网络的节点的数据沿着信道传输的速率，也称作<strong>数据传输速率</strong>，单位一般为(<code>bps</code> <code>Kbps</code> <code>Mbps</code>)，这里的<code>K</code>是 $10^3$，与计算机组成不同</li>
+<li>带宽<ul>
+<li>含义一，表示一个信道所能传输数据的最大速率，即<strong>最高数据率</strong>，可以有上行带宽和下行带宽</li>
+<li>含义二，表示某个信道允许通过的信号频带范围，单位是<code>Hz</code>，两个含义其实有某些关系哦</li>
+<li>节点间通信的最高速率由带宽和节点性能共同限制</li>
+</ul>
+</li>
+<li>吞吐量<ul>
+<li>单位时间通过某个网络的实际数量，所以要计算上行和下行速率</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>时延相关<ul>
+<li>各种时延<ul>
+<li>发送时延(传输时延)<ul>
+<li>将数据全部传入信道的时间($ \frac{M_{数据大小}} {V_{数据传输速率}} $)</li>
+</ul>
+</li>
+<li>传播时延<ul>
+<li>数据在信道上传输的时间($ \frac{L_{信道长度}} {V_{信号传播速率}} $)</li>
+</ul>
+</li>
+<li>处理时延<ul>
+<li>路由器处理数据的时间(分析首部、查找存储转发表)</li>
+</ul>
+</li>
+<li>排队时延<ul>
+<li>数据入队和出队花费的时间<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_7.jpg" alt="加油站时延示意图"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>时延带宽积<ul>
+<li>$ X_{时延带宽积} &#x3D; T_{传播时延} \times M_{带宽} $</li>
+</ul>
+</li>
+<li>往返时延(Round-Trip Time)<ul>
+<li>从发送方<strong>发送完数据</strong>，到发送方<strong>收到来自接收方的确认</strong>总共经历的时间</li>
+<li>例如，游戏时延即“手机-服务器”的往返时延<code>RTT</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>信道利用率<ul>
+<li>$ \frac{T_{有数据通过}} {T_{有数据通过} + T_{没有数据通过}} $</li>
+<li>信道利用率不能太低，会浪费资源</li>
+<li>信道利用率不能太高，容易导致网络拥塞</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="计网分层"><a href="#计网分层" class="headerlink" title="计网分层"></a>计网分层</h2><ul>
+<li>就如快递链一样，计算机网络中实现传递数据也是需要实现许许多多的功能，例如封装数据、校验数据、解析数据等等各种复杂的功能</li>
+<li>这里给出一些完整功能，可以先尝试理解<ul>
+<li>差错控制：确保数据在传输过程中不会出错</li>
+<li>流量控制：发送端发送数据的速率必须比接收端的接收速率小，来得及接收</li>
+<li>分段与重装：发送端将要发送的数据分解为更小的单位，并且在接收端将其还原</li>
+<li>复用与分用：发送端几个高层会话共同使用一条低层的连接，然后在接收端进行分用</li>
+<li>连接建立与释放：交换数据前先建立一条逻辑连接，数据传输结束后释放</li>
+</ul>
+</li>
+<li>采取分层的策略可以将问题分为各种小问题，以局部实现的策略实现</li>
+</ul>
+<h3 id="常见分层结构"><a href="#常见分层结构" class="headerlink" title="常见分层结构"></a>常见分层结构</h3><ul>
+<li><code>OSI</code>模型<ul>
+<li>考虑的功能更加全面，会出现统一功能出现在多个层面</li>
+<li>法律上的标准</li>
+</ul>
+<ol>
+<li>物理层</li>
+<li>数据链路层</li>
+<li>网络层</li>
+<li>传输层</li>
+<li>会话层</li>
+<li>表示层</li>
+<li>应用层</li>
+</ol>
+</li>
+<li><code>TCP/IP</code>模型<ul>
+<li>结构更加简单，同一功能只会出现在某一个层面</li>
+<li>事实上的标准</li>
+</ul>
+<ol>
+<li>网络接口层</li>
+<li>网络层</li>
+<li>传输层</li>
+<li>应用层</li>
+</ol>
+</li>
+<li>教学模型<ol>
+<li>物理层</li>
+<li>数据链路层</li>
+<li>网络层</li>
+<li>传输层</li>
+<li>应用层<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_8.png" alt="各模型示意图"></li>
+</ol>
+</li>
+<li><strong>实体</strong><ul>
+<li>同处于某一层的活动元素(硬件与软件)被称为第<code>n</code>层的实体，不同节点上的同一层被称为<strong>对等层</strong>，同一层的对应实体被称为<strong>对等实体</strong></li>
+</ul>
+</li>
+<li><strong>协议</strong><ul>
+<li>对等实体的通信规则，约束了对等实体之间的数据传输的要求</li>
+</ul>
+</li>
+<li><strong>接口</strong><ul>
+<li>同一节点相邻两层的实体交换信息的逻辑通道，又称为<strong>服务访问点</strong>(Service Access Point，SAP)</li>
+</ul>
+</li>
+<li><strong>服务</strong><ul>
+<li>同一节点相邻两层中下层为上层提供的功能调用(这里层数小的在下，层数大的在上)</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据传输过程"><a href="#数据传输过程" class="headerlink" title="数据传输过程"></a>数据传输过程</h3><ul>
+<li>原始数据通过多层处理为物理信号传输，在通过多层反处理转换回数据<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u1_9.jpg" alt="数据传输示意图"></li>
+<li>数据定义<ul>
+<li>协议数据单元(Protocol Data Unit)<ul>
+<li>对等层之间传递的消息，第<code>n</code>层的协议数据单元写作<code>n-PDU</code></li>
+</ul>
+</li>
+<li>服务数据单元(Service Data Unit)<ul>
+<li>为完成这一层实体而从上一层传入的数据，第<code>n</code>层的服务数据单元写作<code>n-SDU</code></li>
+</ul>
+</li>
+<li>协议控制信息(Protocol Control Infomation)<ul>
+<li>控制协议操作的信息，第<code>n</code>层的协议控制信息写作<code>n-PCI</code></li>
+</ul>
+</li>
+<li>三者之间的关系<ul>
+<li><code>n-PDU</code> &#x3D; <code>n-PCI</code> + <code>n-SDU</code></li>
+<li><code>n-SDU</code> &#x3D; <code>n-1-PDU</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>协议定义<ul>
+<li>语法<ul>
+<li>数据与控制信息的格式。例如协议控制信息部分占几个字节、每个字节是什么含义、协议的数据部分最多有多少字节</li>
+</ul>
+</li>
+<li>语义<ul>
+<li>需要发送何种控制信息，完成何种动作及作出何种应答，例如发送完数据后接收方是否需要“应答”，以及应答的种类(传输成功、传输失败)</li>
+</ul>
+</li>
+<li>时序<ul>
+<li>执行各种操作的条件、时序关系等，即事件实现顺序的详细说明，例如发送方发送数据后接收方需要立即应答，如果发送方在 10 秒内没有应答，发送方会再次发送数据</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="OSI与TCP-IP"><a href="#OSI与TCP-IP" class="headerlink" title="OSI与TCP/IP"></a><code>OSI</code>与<code>TCP/IP</code></h3><h4 id="OSI模型详述"><a href="#OSI模型详述" class="headerlink" title="OSI模型详述"></a><code>OSI</code>模型详述</h4><ul>
+<li>常见网络设备功能层次<ul>
+<li>主机：<code>#1 ~ #7</code></li>
+<li>集线器：<code>#1</code></li>
+<li>交换机：<code>#1 ~ #2</code></li>
+<li>路由器：<code>#1 ~ #3</code></li>
+<li>物理传输媒体：<code>#0</code></li>
+</ul>
+</li>
+<li>各层详解<ol>
+<li>物理层<ul>
+<li>实现相邻节点<code>bit</code>传输</li>
+<li>定义电路接口参数，形状、尺寸、引脚数等</li>
+<li>定义传输信号含义，例如 5v 代表 1，1v 代表 0，每<code>bit</code>传输的持续时间为 0.1ms</li>
+</ul>
+</li>
+<li>数据链路层<ul>
+<li>保证相邻节点间的链路<strong>逻辑上无差错</strong></li>
+<li>原始数据传入链路层，链路层对长信息<strong>拆分并添加校验位</strong>组成**帧(Frame)**含有多个<code>bit</code>，再将帧陆续传给物理层转化为实际的物理信号传输       </li>
+<li><strong>差错控制</strong>：检错+纠错或者检错+丢弃+重传</li>
+<li><strong>流量控制</strong>：协调相邻节点的帧的传输速率</li>
+</ul>
+</li>
+<li>网络层<ul>
+<li>将分组<strong>从源结点转发至目的结点</strong></li>
+<li><strong>路由选择</strong>：构造并且维护路由表，选择从源结点转向目的结点的最佳路径</li>
+<li><strong>分组转发</strong>：将分组从合适的端口传出</li>
+<li><strong>拥塞控制</strong>：发现网络拥塞，并采取措施缓解拥塞</li>
+<li><strong>网际互联</strong>：由于各个局域网可能采用不同的技术，通过网络层实现异构网络的互联</li>
+<li><strong>差错控制</strong>：校验分组</li>
+<li><strong>流量控制</strong>：协调分组的传输速率</li>
+<li><strong>连接建立与释放</strong>：建立虚电路发送分组</li>
+<li><strong>可靠传输管理</strong>：接收方返回分组确认消息</li>
+</ul>
+</li>
+<li>传输层<ul>
+<li>端到端的通信，即实现<strong>进程到进程</strong>的通信</li>
+<li>多个不同进程的数据通过传输层组合成<strong>报文段</strong>(Segment)</li>
+<li><strong>复用与分用</strong>：发送端的几个高层实体例如微信、QQ 的数据共同组成报文段，复用接下来低层的路线；在接收端将报文段重新拆分为多个端口的数据传入</li>
+<li><strong>差错控制</strong>：校验报文段</li>
+<li><strong>流量控制</strong>：协调报文段段的传输速率</li>
+<li><strong>建立连接与释放</strong>：建立虚电路发送报文段</li>
+<li><strong>可靠传输管理</strong>：接收方返回报文段确认消息</li>
+</ul>
+</li>
+<li>会话层<ul>
+<li>管理进程间的会话</li>
+<li><strong>会话管理</strong>：采用检查点机制，当通信失效时从检查点继续恢复通信</li>
+</ul>
+</li>
+<li>表示层<ul>
+<li>解决不同主机上编码方式不同，数据格式转换还有压缩、解密等</li>
+</ul>
+</li>
+<li>应用层<ul>
+<li>实现特定的网络应用</li>
+<li>各类数据以<strong>报文</strong>(Message)为单位传递</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="TCP-IP模型详述"><a href="#TCP-IP模型详述" class="headerlink" title="TCP/IP模型详述"></a><code>TCP/IP</code>模型详述</h4><ul>
+<li><code>OSI</code>与<code>TCP/IP</code>模型的区别<ul>
+<li><code>OSI.#5~#7</code>与<code>TCP/IP.#4</code><ul>
+<li>数据编码格式转换与会话管理功能并不是对于每个网络应用都需要的，所以可以并入应用层</li>
+<li>对于某些需要这种特定功能的应用，可以采用具有特定功能的协议去完成</li>
+</ul>
+</li>
+<li><code>OSI.#1~#2</code>与<code>TCP/IP.#1</code><ul>
+<li>网络层将分组传递给网络接口层，但是不硬性规定处理或者传输分组的方式</li>
+</ul>
+</li>
+<li><code>OSI.#3</code>与<code>TCP/IP.#2</code><ul>
+<li><code>TCP/IP</code>模型的网络层取消了对于分组检查与控制协调的若干功能，如差错控制、流量控制、连接管理、可靠传输管理</li>
+<li><code>TCP/IP</code>模型的网络层的传输数据不可靠</li>
+<li><code>TCP/IP</code>模型中不需要中间路由器等计算机网络核心管理流量等行为而将各种功能施加在端系统中</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机网络--物理层</title>
+    <url>/2024/10/06/CN_u2/</url>
+    <content><![CDATA[<h1 id="计算机网络–物理层"><a href="#计算机网络–物理层" class="headerlink" title="计算机网络–物理层"></a>计算机网络–物理层</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去</li>
+</ul>
+<h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><ul>
+<li>信源<ul>
+<li>信息的发送方</li>
+</ul>
+</li>
+<li>信宿<ul>
+<li>信息的接收方</li>
+</ul>
+</li>
+<li>信道<ul>
+<li>信息传输的通道</li>
+</ul>
+</li>
+<li>信号<ul>
+<li>数字信号：信号是离散的</li>
+<li>模拟信号：信号是连续的</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><h2 id="在计算机中，我们常常使用一位的二进制-0-1-来表示信号，但是这并不代表着信号只能是一位的二进制-两种-码元-每一个信号都是一个码元，每一个码元都对应一个二进制数-对于一位的信号只有两种码元，我们称为二进制码元；对于两位的信号会有四种码元，我们称为四进制码元。一个信号输出的整个周期被称为信号周期或者码元周期-优缺点-优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息-缺点：需要加强信号功率，并且对信道的要求更高-码元与比特的关系-一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号-X-码元-log-2-K-X-比特-K-为信号的种类数量-速率-波特率：每秒钟传递多少码元-比特率：每秒钟传递多少比特信息"><a href="#在计算机中，我们常常使用一位的二进制-0-1-来表示信号，但是这并不代表着信号只能是一位的二进制-两种-码元-每一个信号都是一个码元，每一个码元都对应一个二进制数-对于一位的信号只有两种码元，我们称为二进制码元；对于两位的信号会有四种码元，我们称为四进制码元。一个信号输出的整个周期被称为信号周期或者码元周期-优缺点-优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息-缺点：需要加强信号功率，并且对信道的要求更高-码元与比特的关系-一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号-X-码元-log-2-K-X-比特-K-为信号的种类数量-速率-波特率：每秒钟传递多少码元-比特率：每秒钟传递多少比特信息" class="headerlink" title="在计算机中，我们常常使用一位的二进制 0&#x2F;1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)- 码元    - 每一个信号都是一个码元，每一个码元都对应一个二进制数    - 对于一位的信号只有两种码元，我们称为二进制码元；对于两位的信号会有四种码元，我们称为四进制码元。一个信号输出的整个周期被称为信号周期或者码元周期    - 优缺点        - 优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息        - 缺点：需要加强信号功率，并且对信道的要求更高- 码元与比特的关系    - 一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号    - $ X_{码元} &#x3D; \log_2 K * X_{比特}$($K$为信号的种类数量)- 速率    - 波特率：每秒钟传递多少码元    - 比特率：每秒钟传递多少比特信息"></a>在计算机中，我们常常使用一位的二进制 0&#x2F;1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)<br>- <strong>码元</strong><br>    - 每一个信号都是一个码元，每一个码元都对应一个二进制数<br>    - 对于一位的信号只有两种码元，我们称为<strong>二进制码元</strong>；对于两位的信号会有四种码元，我们称为<strong>四进制码元</strong>。一个信号输出的整个周期被称为信号周期或者码元周期<br>    - 优缺点<br>        - 优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息<br>        - 缺点：需要加强信号功率，并且对信道的要求更高<br>- <strong>码元</strong>与<strong>比特</strong>的关系<br>    - 一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号<br>    - $ X_{码元} &#x3D; \log_2 K * X_{比特}$($K$为信号的种类数量)<br>- 速率<br>    - 波特率：每秒钟传递多少码元<br>    - 比特率：每秒钟传递多少比特信息</h2><h3 id="信道"><a href="#信道" class="headerlink" title="信道"></a>信道</h3><ul>
+<li><strong>带宽</strong><ul>
+<li>含义一：传输的最大速率</li>
+<li>含义二：允许通过的信号频带范围<br><font color = red> $Attention$</font>:下面为了方便突出两者的联系，取<strong>最高传输速率</strong>表示带宽第一种含义，取<strong>带宽</strong>只表示第二种含义<br>虽然带宽的两种含义看起来毫不相关，但是下面介绍的两个定理都揭示了这两种含义之间的内在联系，在这之前我们先介绍噪声，这个极易影响信息传输的坏家伙</li>
+</ul>
+</li>
+<li><strong>噪声</strong><ul>
+<li>对于在信道中传输的信号有干扰作用，会影响信道的数据传输速率<br>这和我们在学习物理中声音的噪声概念几乎是一致的，都是干扰、妨碍的作用。</li>
+</ul>
+</li>
+<li><strong>奈奎斯特定理</strong>(奈氏准则)<ul>
+<li>对于一个<strong>理想低通信道</strong>(没有噪声、带宽有限的信道)</li>
+<li>$ V_{极限波特率} &#x3D; 2 * X_{带宽}$</li>
+<li>注意<strong>极限波特率</strong>与最高传输速率(默认比特率的转换<br>奈氏准则向我们揭示了<strong>无噪声</strong>情况下最高传输速率与带宽之间的内在联系</li>
+</ul>
+</li>
+<li><strong>香农定理</strong><ul>
+<li>对于一个有噪声、带宽有限的信道</li>
+<li>$ V_{极限比特率} &#x3D; X_{带宽} * \log_2 (1 + S&#x2F;N) $</li>
+<li>$S&#x2F;N$是信噪比，即$\frac{W_{信号的功率}} {W_{噪声的功率}}$</li>
+<li>由于信噪比的值往往很大，所以我们采取另一种记录信噪比的记法，即$ N_{信噪比} &#x3D; 10 * \log_{10} S&#x2F;N $单位是<code>dB</code></li>
+<li>注意是<strong>极限比特率</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="信号变换"><a href="#信号变换" class="headerlink" title="信号变换"></a>信号变换</h3><ul>
+<li>数字信号<ul>
+<li>对于二进制数据与数字信号之间的转换，我们称为<strong>编码与解码</strong></li>
+</ul>
+</li>
+<li>模拟信号<ul>
+<li>对于二进制数据与模拟信号之间的转换，我们称之为<strong>调制与解调</strong><br><strong>变换器</strong>可以将二进制信号转换为物理信号，<strong>反变换器</strong>可以将物理信号转换为二进制信号</li>
+</ul>
+</li>
+<li>变换器<ul>
+<li>有线网络适配器(网卡)：编码-解码器</li>
+<li>光猫：调制-解调器</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h4><h2 id="不归零编码-Non-Return-to-Zero-低-0-高-1，中不变-在每一个信号周期内信号始终不会归零，缺点是要给出时钟线-归零编码-Return-to-Zero-低-0-高-1，中归零-每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号-反向非归零编码-Non-Return-to-Zero-Inverted-起点跳-0-不跳-1，中不变-每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变-曼彻斯特编码-上跳-0-下跳-1，中必变-每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是-0-还是-1-差分曼彻斯特编码-起点跳-0-不跳-1，中必变-与NRZI的区别在于信号周期中间一定会发生跳变-编码方式-自同步能力-浪费带宽｜抗干扰能力｜｜-—–-｜-——-｜-–-｜-—–-｜-非归零编码-无-不浪费-弱-｜归零编码｜有｜浪费｜弱｜｜反向非归零编码｜增加冗余位可支持｜浪费-浪费的是冗余位-｜弱｜｜曼彻斯特编码｜有｜浪费｜强｜｜差分曼彻斯特编码｜有｜浪费｜强｜"><a href="#不归零编码-Non-Return-to-Zero-低-0-高-1，中不变-在每一个信号周期内信号始终不会归零，缺点是要给出时钟线-归零编码-Return-to-Zero-低-0-高-1，中归零-每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号-反向非归零编码-Non-Return-to-Zero-Inverted-起点跳-0-不跳-1，中不变-每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变-曼彻斯特编码-上跳-0-下跳-1，中必变-每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是-0-还是-1-差分曼彻斯特编码-起点跳-0-不跳-1，中必变-与NRZI的区别在于信号周期中间一定会发生跳变-编码方式-自同步能力-浪费带宽｜抗干扰能力｜｜-—–-｜-——-｜-–-｜-—–-｜-非归零编码-无-不浪费-弱-｜归零编码｜有｜浪费｜弱｜｜反向非归零编码｜增加冗余位可支持｜浪费-浪费的是冗余位-｜弱｜｜曼彻斯特编码｜有｜浪费｜强｜｜差分曼彻斯特编码｜有｜浪费｜强｜" class="headerlink" title="- 不归零编码(Non-Return-to-Zero)    - 低 0 高 1，中不变    - 在每一个信号周期内信号始终不会归零，缺点是要给出时钟线- 归零编码(Return-to-Zero)    - 低 0 高 1，中归零    - 每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号- 反向非归零编码(Non-Return-to-Zero-Inverted)    - 起点跳 0 不跳 1，中不变    - 每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变- 曼彻斯特编码    - 上跳 0 下跳 1，中必变    - 每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是 0 还是 1- 差分曼彻斯特编码    - 起点跳 0 不跳 1，中必变    - 与NRZI的区别在于信号周期中间一定会发生跳变 | 编码方式 | 自同步能力 | 浪费带宽｜抗干扰能力｜｜:—–:｜:——-:｜:–:｜:—–:｜| 非归零编码 | 无 | 不浪费 | 弱 |｜归零编码｜有｜浪费｜弱｜｜反向非归零编码｜增加冗余位可支持｜浪费(浪费的是冗余位)｜弱｜｜曼彻斯特编码｜有｜浪费｜强｜｜差分曼彻斯特编码｜有｜浪费｜强｜"></a><img src="/./_image/2024-10-06/4ea2fccdddfb8682a7180e8dfb32a2a5.jpg"><br>- 不归零编码(Non-Return-to-Zero)<br>    - 低 0 高 1，中不变<br>    - 在每一个信号周期内信号始终不会归零，缺点是要给出时钟线<br>- 归零编码(Return-to-Zero)<br>    - 低 0 高 1，中归零<br>    - 每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号<br>- 反向非归零编码(Non-Return-to-Zero-Inverted)<br>    - 起点跳 0 不跳 1，中不变<br>    - 每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变<br>- 曼彻斯特编码<br>    - 上跳 0 下跳 1，中必变<br>    - 每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是 0 还是 1<br>- 差分曼彻斯特编码<br>    - 起点跳 0 不跳 1，中必变<br>    - 与<code>NRZI</code>的区别在于信号周期中间一定会发生跳变<br> | 编码方式 | 自同步能力 | 浪费带宽｜抗干扰能力｜<br>｜:—–:｜:——-:｜:–:｜:—–:｜<br>| 非归零编码 | 无 | 不浪费 | 弱 |<br>｜归零编码｜有｜浪费｜弱｜<br>｜反向非归零编码｜增加冗余位可支持｜浪费(浪费的是冗余位)｜弱｜<br>｜曼彻斯特编码｜有｜浪费｜强｜<br>｜差分曼彻斯特编码｜有｜浪费｜强｜</h2><h4 id="调制方式"><a href="#调制方式" class="headerlink" title="调制方式"></a>调制方式</h4><h2 id="调幅-AM-or-幅移键控-ASK-根据振幅表示信号-有振幅为-1，无振幅为-0-不同码元的振幅不同-调频-FM-or-频移键控-FSK-根据频率表示信号-例如频率低为-0，频率高为-1-不同的码元频率不同-调相-PM-or-相移键控-PSK-根据相位表示信号-例如相位为-0-则为-0，相位为-pi-则为-1-不同的码元相位不同对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式-正交幅度调制-QAM-例如有m种振幅大小与n种频率大小，则共同可以综合出mn种码元"><a href="#调幅-AM-or-幅移键控-ASK-根据振幅表示信号-有振幅为-1，无振幅为-0-不同码元的振幅不同-调频-FM-or-频移键控-FSK-根据频率表示信号-例如频率低为-0，频率高为-1-不同的码元频率不同-调相-PM-or-相移键控-PSK-根据相位表示信号-例如相位为-0-则为-0，相位为-pi-则为-1-不同的码元相位不同对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式-正交幅度调制-QAM-例如有m种振幅大小与n种频率大小，则共同可以综合出mn种码元" class="headerlink" title="- 调幅(AM) or 幅移键控(ASK)    - 根据振幅表示信号    - 有振幅为 1，无振幅为 0    - 不同码元的振幅不同- 调频(FM) or 频移键控(FSK)    - 根据频率表示信号    - 例如频率低为 0，频率高为 1    - 不同的码元频率不同- 调相(PM) or 相移键控(PSK)    - 根据相位表示信号    - 例如相位为 0 则为 0，相位为$\pi$ 则为 1    - 不同的码元相位不同对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式- 正交幅度调制(QAM)    - 例如有m种振幅大小与n种频率大小，则共同可以综合出mn种码元"></a><img src="/./_image/2024-10-06/410644733cf41cd684181f5e0bacea0e.jpg"><br>- 调幅(<code>AM</code>) or 幅移键控(<code>ASK</code>)<br>    - 根据振幅表示信号<br>    - 有振幅为 1，无振幅为 0<br>    - 不同码元的振幅不同<br>- 调频(<code>FM</code>) or 频移键控(<code>FSK</code>)<br>    - 根据频率表示信号<br>    - 例如频率低为 0，频率高为 1<br>    - 不同的码元频率不同<br>- 调相(<code>PM</code>) or 相移键控(<code>PSK</code>)<br>    - 根据相位表示信号<br>    - 例如相位为 0 则为 0，相位为$\pi$ 则为 1<br>    - 不同的码元相位不同<br>对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式<br>- 正交幅度调制(<code>QAM</code>)<br>    - 例如有<code>m</code>种振幅大小与<code>n</code>种频率大小，则共同可以综合出<code>mn</code>种码元</h2><h4 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h4><ul>
+<li>导向型介质：即沿着特定的方向传播，一般而言，有线信号是使用导向型介质<ul>
+<li>双绞线(<code>Twisted Pair</code>)<ul>
+<li>主要构成：两根导线相互绞合而成</li>
+<li>有屏蔽层：<code>Shielded Twisted Pair</code>，无屏蔽层：<code>Unshielded Twisted Pair</code></li>
+<li>抗干扰能力：较好，因为导线绞合以及屏蔽层可以提升抗电磁干扰能力</li>
+</ul>
+</li>
+<li>同轴电缆<ul>
+<li>主要构成：内导体(用于传输信号) + 外导体屏蔽层(用于抗电磁干扰)</li>
+<li>抗干扰能力：好，因为外导体提供电磁屏蔽可以带来良好的抗干扰性</li>
+</ul>
+</li>
+<li>光纤<ul>
+<li>主要构成：纤芯(高折射率) + 包层(低折射率)，利用光的全反射特性让光信号在纤芯内传播</li>
+<li>单模光纤：一根光纤中只有一条光线传播，适合长距离的传播；多模光纤：一根光纤中有多条光线传播，适合短距离的传播</li>
+<li>抗干扰能力：非常好，光信号对电磁干扰不敏感</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非导向型介质：无特定方向传播，一般而言，无线信号是使用非导向型介质<ul>
+<li>无线电波<ul>
+<li>特点：穿透能力强、传播距离长、信号指向型弱</li>
+<li>例如：手机、WIFI 信号</li>
+</ul>
+</li>
+<li>微波<ul>
+<li>特点：频率带宽高、信号指向型强、保密性差(容易被窃听)</li>
+<li>例如：卫星通信</li>
+</ul>
+</li>
+<li>红外通信、激光通信</li>
+</ul>
+</li>
+<li>以太网对有线介质的命名<ul>
+<li>速度 + <code>Base</code> + 介质信息<ul>
+<li><code>10Base5</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 500m</li>
+<li><code>10Base2</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 200m</li>
+<li><code>10BaseF*</code>：10<code>Mbps</code> + 光纤 + *某些其他信息</li>
+<li><code>10BaseT*</code>：10<code>Mbps</code> + 双绞线 + *某些其他信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h4><ul>
+<li><p>中继器(<code>Repeater</code>)</p>
+<ul>
+<li>若规定 0.5V～1V 是低电平，4.5V～5V 是高电平，不符合此标准的信号视为无效</li>
+<li>如果中继器接收了有效的信号会将低电平整形为 1V，将高电平整形为 5V</li>
+<li>仅支持<strong>半双工通信</strong>，中继器连接的两个端口不允许同时发送数据，会导致“冲突”</li>
+</ul>
+</li>
+<li><p>集线器(<code>Hub</code>)</p>
+<ul>
+<li>本质上是多端中继器，集线器将其中一个端口接收到的信号整形再生后，转发到所有的端口中</li>
+<li>集线器各端口连接的结点不可以同时发送数据，会导致“冲突”</li>
+</ul>
+</li>
+<li><p>冲突域</p>
+<ul>
+<li>如果两台主机同时发送数据会导致冲突，则这两台主机处于同一<strong>冲突域</strong>中</li>
+</ul>
+</li>
+<li><p>其他特性</p>
+<ul>
+<li>集线器、中继器不能<strong>“无限串联”</strong><ul>
+<li><code>10Base5</code>遵循<code>5-4-3</code>原则，使用集线器连接<code>10Base5</code>网线时，最多只能串联<strong>5</strong>个网段，使用<strong>4</strong>台集线器，只有<strong>3</strong>个网段可以连接计算机</li>
+</ul>
+</li>
+<li>集线器逻辑上是总线型拓扑结构<ul>
+<li>集线器连接的各个网段会“共享带宽”，集线器的总带宽被连接的各个主机平均分配</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P1课下</title>
+    <url>/2024/09/28/CO_P1/</url>
+    <content><![CDATA[<h1 id="北航计算机组成原理P1课下"><a href="#北航计算机组成原理P1课下" class="headerlink" title="北航计算机组成原理P1课下"></a>北航计算机组成原理P1课下</h1><div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P1课下的相关内容，希望能对你有所帮助</p>
+</div>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><del>发现教程有了，不愧是STAR</del></li>
+<li>在阅读本次P1题解分享之前，我想单独分享一些关于<code>Verilog</code>编写有限状态机的内容(佬跳过，好吗？好的)</li>
+<li>从学习完<code>Verilog</code>到<code>Pre</code>上机之间的很长一段时间，我写<code>Verilog</code>有限状态机都只有一个过程块（<del>可能大概应该有和我一样的同学吧</del>），就像下面这样<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">define</span> S0 2&#x27;b00</span></span><br><span class="line">......</span><br><span class="line"><span class="keyword">module</span> xxx (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    ......</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="comment">//状态转移代码</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//消除锁存器</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在写一些简单的<code>Verilog</code>有限状态机的时候觉得结构简单清晰易懂，怎么写这么舒服，感觉脑子都闲置了下来（bushi，但是遇到像<code>cpu_checker_challenge</code>那样状态多且转移方程复杂的题目，就会显得单一过程块冗长且十分不易<code>debug</code>，几百行代码挤在一个<code>always</code>块中，总感觉像写C语言只写一个<code>main</code>函数</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="重构Verilog结构"><a href="#重构Verilog结构" class="headerlink" title="重构Verilog结构"></a>重构<code>Verilog</code>结构</h3><ul>
+<li>直到我遇见了<code>HDLbits</code>，它向我提供了一种使用<code>Verilog</code>搭建和<code>logisim</code>结构很相似的有限状态机的代码机构，感觉会比一个<code>always</code>块清晰一些？</li>
+<li>首先，解决最大的问题，把<code>always</code>块拆分出来，像<code>logisim</code>一样，我们将代码分出计算次态的状态转移逻辑使用纯组合电路代替  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时钟沿上升，状态转移</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">        state &lt;= <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        state &lt;= next_state;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//计算次态next_state</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(state)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案1</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    out = ......</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案2</span></span><br><span class="line"><span class="keyword">assign</span> out = ......</span><br></pre></td></tr></table></figure>
+<ul>
+<li>诶呀，瞬间感觉代码变得清爽了，结构更加清晰了有没有（<del>没有也不许说</del>）</li>
+</ul>
+</li>
+<li>也许此时你觉得这样不过只是拆了几个<code>always</code>出来，没什么技术含量，那么接下来我们还可以利用新的结构做出一些原本结构做不出来的优化–<strong>简化代码逻辑</strong>与<strong>消除锁存器plus</strong><ul>
+<li>你是否常常遇到这种情况，某个变量多个状态下的变化是一致的，只有极少部分的值改变的不一致<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">1</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+上面只展示一个状态下<code>count</code>变量的转移，如果你有10个状态呢（<del>你真的敢像<code>logisim</code>一样CV吗</del>），但是如果我们使用新结构就可以在<code>always</code>块开始时默认赋值了，节省代码<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    count &lt;= next_count;</span><br><span class="line">    status &lt;= next_status;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">//默认赋值区域</span></span><br><span class="line">    next_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                next_count = <span class="number">1</span>;   </span><br><span class="line">            .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+这得益于我们使用组合逻辑的always块不是非阻塞赋值，可以多次赋值，所以不用像之前一样每个情况都要重复</li>
+<li>同样，通过预先赋初值的办法我们就可以彻底消除锁存器这个bug了，因为锁存器产生原因就是我们没有明确赋值导致<code>Verilog</code>推导出锁存器记录之前的状态（<code>Verilog</code>帮我们默认赋值）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="comment">//缺少else分支</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+新结构的代码没有锁存器问题，但是<font color = red>不要故意不写else，重申，我们只是抑制锁存器plus</font></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="P1-Q5-表达式状态机"><a href="#P1-Q5-表达式状态机" class="headerlink" title="P1.Q5 表达式状态机"></a>P1.Q5 表达式状态机</h2><ul>
+<li>大抵是一道很显然的<code>Moore</code>状态机，只需要判断<code>需要运算符</code>和<code>需要数字</code>两种状态即可，大致的思路如下<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_Q5.png" alt="状态转移图"></li>
+<li>等等，这里的<code>*</code>和正则里面的不是一个啊，这里的是<code>\*</code>，笔者忘改了</li>
+<li>写起来也是顺手啊</li>
+<li>提供一个进阶题(<a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a>)，移步1202-145，加入匹配括号，甚至是多重嵌套括号，思路其实是一致的</li>
+</ul>
+<hr>
+<h2 id="P1-extra-BlockChecker"><a href="#P1-extra-BlockChecker" class="headerlink" title="P1.extra BlockChecker"></a>P1.extra BlockChecker</h2><ul>
+<li>一道好题，<del>但不至于卡我一天吧</del>(<code>&amp;&amp;</code>别再写成<code>||</code>了</li>
+<li>因为我第一个思路因为某些莫名的原因一直没过(手真贱，所以我就换了一个思路，那么我提供两个思路思考</li>
+</ul>
+<h3 id="思路一-多个寄存器"><a href="#思路一-多个寄存器" class="headerlink" title="思路一 多个寄存器"></a>思路一 多个寄存器</h3><ul>
+<li><p><del>好处是状态少，坏处是容易手误</del></p>
+</li>
+<li><p>状态设置思路</p>
+<ul>
+<li>首先设置了四个状态<code>start</code>、<code>word</code>、<code>illegal</code>分别表示空闲状态、匹配单词状态、匹配已经非法状态</li>
+</ul>
+</li>
+<li><p>寄存器变量设置思路</p>
+<table>
+<thead>
+<tr>
+<th align="center">寄存器变量</th>
+<th align="center">位宽</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">num</td>
+<td align="center">32</td>
+<td align="center">保存读入的单词长度(unsigned)</td>
+</tr>
+<tr>
+<td align="center">flag</td>
+<td align="center">33</td>
+<td align="center">保存目前未匹配的begin数量(signed)</td>
+</tr>
+<tr>
+<td align="center">has_begin</td>
+<td align="center">1</td>
+<td align="center">前一个周期是否已经匹配begin成功</td>
+</tr>
+<tr>
+<td align="center">has_end</td>
+<td align="center">1</td>
+<td align="center">前一个周期是否已经匹配end成功</td>
+</tr>
+<tr>
+<td align="center">first</td>
+<td align="center">8</td>
+<td align="center">最近五个周期内第1个周期的字符</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">8</td>
+<td align="center">最近五个周期内第i个周期的字符</td>
+</tr>
+<tr>
+<td align="center">fifth</td>
+<td align="center">8</td>
+<td align="center">这个周期读入的in，即最近五个周期内第5个周期的字符</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>状态转移思路</p>
+<ul>
+<li><code>start</code>状态<ul>
+<li><code>reset</code>生效后回到<code>start</code>状态</li>
+<li>匹配到字母则<code>num</code>自增，且进入状态<code>word</code></li>
+<li>匹配到空格保持原状态</li>
+<li>若匹配到其他的进入<code>illegal</code>状态</li>
+</ul>
+</li>
+<li><code>word</code>状态<ul>
+<li>读入字母，<code>num</code>自增，如果在包括此次<code>in</code>输入共有五个字符时，且<code>first</code> ~ <code>fifth(in)</code>是<code>begin</code>(不区分大小写)，<code>flag</code>加1，设置<code>has_begin</code></li>
+<li>同上，在包含此次<code>in</code>共三个字符时，且<code>third</code> ~ <code>fifth(in)</code>是<code>end</code>(不区分大小写)，<code>flag</code>减1，设置<code>has_end</code></li>
+<li>读入字母，<code>has_begin</code>已经置高，说明前面五个字符已经是<code>begin</code>了，但是又读入一个字母，说明这个单词不是<code>begin</code>了，<code>flag</code>减1</li>
+<li>同上，<code>has_end</code>已经置高了，说明这个单词不是<code>end</code>，<code>flag</code>需要加1</li>
+<li>读入空格，说明单词已经读入完毕，<code>num</code>置0，如果<code>flag</code>此时是-1(<code>0x1ffffffff</code>)，说明先出现了未匹配的<code>end</code>，此时进入<code>illegal</code>状态，等待复位信号否则回到<code>start</code>空闲状态</li>
+<li>读入其他字符进入<code>illegal</code>状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="思路二-多个状态"><a href="#思路二-多个状态" class="headerlink" title="思路二 多个状态"></a>思路二 多个状态</h3><ul>
+<li><del>好处是清晰，没有坏处</del></li>
+<li>状态设置思路<table>
+<thead>
+<tr>
+<th align="center">状态</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">_start</td>
+<td align="center">空闲状态等待空格或者字母</td>
+</tr>
+<tr>
+<td align="center">_b</td>
+<td align="center">匹配到单词b</td>
+</tr>
+<tr>
+<td align="center">_be</td>
+<td align="center">匹配到单词be</td>
+</tr>
+<tr>
+<td align="center">_beg</td>
+<td align="center">匹配到单词beg</td>
+</tr>
+<tr>
+<td align="center">_begi</td>
+<td align="center">匹配到单词begi</td>
+</tr>
+<tr>
+<td align="center">_begin</td>
+<td align="center">匹配到单词begin</td>
+</tr>
+<tr>
+<td align="center">_e</td>
+<td align="center">匹配到单词e</td>
+</tr>
+<tr>
+<td align="center">_en</td>
+<td align="center">匹配到单词en</td>
+</tr>
+<tr>
+<td align="center">_end</td>
+<td align="center">匹配到单词end</td>
+</tr>
+<tr>
+<td align="center">_other</td>
+<td align="center">匹配到其他单词</td>
+</tr>
+</tbody></table>
+</li>
+<li>寄存器设置思路<ul>
+<li>只需要<code>state</code>寄存器保存状态和<code>flag</code>寄存器保存左括号数</li>
+</ul>
+</li>
+<li>状态转移思路<ul>
+<li><code>_start</code>状态<ul>
+<li>复位后回到<code>_start</code>状态等待输入</li>
+<li>如果是字母<code>b</code>进入<code>_b</code>状态</li>
+<li>如果是字母<code>e</code>进入<code>_e</code>状态</li>
+<li>如果是其他字母进入<code>_other</code>状态</li>
+<li>空格保持状态</li>
+</ul>
+</li>
+<li><code>_b</code> ~ <code>_en</code>状态<ul>
+<li>每个都是匹配到某个字母转为下一个状态：<code>_b</code>匹配到字母<code>e</code>转到<code>_be</code></li>
+<li>匹配到其他字母直接转为<code>_other</code></li>
+<li>匹配到空格回到空闲状态</li>
+</ul>
+</li>
+<li><code>_begin</code>与<code>_end</code><ul>
+<li>两个状态特殊在于判断其后是否还有字母，也即到底是完整单词还是其他单词的前缀例如<code>endx</code></li>
+<li>因为前一个状态转移时时默认匹配到了完整单词，例如<code>_begi</code>到<code>_begin</code>是匹配到了<code>begin</code>一个周期的，所以如果后面有其他字母需要调整<code>flag</code>的值</li>
+</ul>
+</li>
+<li><code>_other</code><ul>
+<li>接收到字母保持原态</li>
+<li>接收到空格回到空闲状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="P1推荐题汇总"><a href="#P1推荐题汇总" class="headerlink" title="P1推荐题汇总"></a>P1推荐题汇总</h2><a class="btn-beautify " href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/" 
+  title="P1推荐题汇总"><span>P1推荐题汇总</span></a>
+<p><a href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/">P1推荐题汇总</a></p>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>北航计算机组成P0课下</title>
     <url>/2024/09/24/CO_P0/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理P0课下"><a href="#北航计算机组成原理P0课下" class="headerlink" title="北航计算机组成原理P0课下"></a>北航计算机组成原理P0课下</h1><h3 id="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"><a href="#P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正" class="headerlink" title="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"></a>P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</h3><div class="note warning simple"><p>注意$logisim$的$Appearance$调整</p>
@@ -447,672 +1274,57 @@
       </tags>
   </entry>
   <entry>
-    <title>计算机网络--概述</title>
-    <url>/2024/10/04/CN_u1/</url>
-    <content><![CDATA[<h1 id="计算机网络–概述"><a href="#计算机网络–概述" class="headerlink" title="计算机网络–概述"></a>计算机网络–概述</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>国庆好无聊啊，小熊饼干接待完朋友、过完生日之后实在是没有什么事了，但是又不想更新<code>Python</code>，所以他决定开始学习计网</li>
-<li>本栏目仅仅是笔者自学内容，与北京航空航天大学的计网无关，我不是我没有</li>
-</ul>
-<h2 id="什么是计网"><a href="#什么是计网" class="headerlink" title="什么是计网"></a>什么是计网</h2><ul>
-<li>硬件<ul>
-<li><strong>主机</strong>,又称<strong>端系统</strong>可以简单理解我们日常使用的电脑、服务器、手机、各类智能嵌入式系统等，他们处于计算机网络的边缘，所以称为端系统</li>
-<li><strong>通信链路</strong>，像网线、电缆、光纤等物理连接设备，例如可以将两台电脑使用网卡连接，就组成了一个简单的计算机网络</li>
-<li><strong>通信设备</strong>，端系统向计算机网络核心传递信息的中转站，例如集线器、交换机、路由器，通过他们我们可以将若干简单的计算机网络组成复杂的计算机网络</li>
+    <title>北航计算机组成P1推荐题汇总</title>
+    <url>/2024/09/30/CO_P1_extra/</url>
+    <content><![CDATA[<h1 id="北航计算机组成P1推荐题目汇总"><a href="#北航计算机组成P1推荐题目汇总" class="headerlink" title="北航计算机组成P1推荐题目汇总"></a>北航计算机组成P1推荐题目汇总</h1><h2 id="题目怎么来的"><a href="#题目怎么来的" class="headerlink" title="题目怎么来的"></a>题目怎么来的</h2><ul>
+<li><del>偷来的(搓手手</del></li>
+<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<del>爬虫而生的</del>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure></li>
+<li><code>PieId</code><ul>
+<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
 </ul>
 </li>
-<li>软件<ul>
-<li>可以是在主机运行的应用程序，例如微信、QQ、网盘等，方便用户使用，实现资源共享的程序</li>
-<li>可以是在通信设备中的控制程序，用以控制通信设备传输信息</li>
+<li><code>ProblemId</code><ul>
+<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
+<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
 </ul>
 </li>
-<li>协议<ul>
-<li>规定计算机网络中的通信规则，利用这种规则封装传递的信息或者解构信息</li>
-</ul>
-</li>
-<li>$Attention$<ul>
-<li>使用集线器可以简单连接某几台设备，缺点是可能导致发送信息之间的冲突</li>
-<li>使用交换机则不会出现信息冲突，不过交换机一般用于构建较小的计算机网络</li>
-<li>使用路由器可以构建计算机网络核心，即各种通路</li>
-</ul>
-</li>
-</ul>
-<p>举一个快递的例子(似乎所有教材都会有一个快递的例子)：快递相当于传递的信息；各个快递终点站、快递驿站相当于端系统；公路、高速、立交桥相当于各种通信链路；快递中转站及仓库可以理解为通信设备；快递公司的运行规则和交通规则相当于协议</p>
-<hr>
-<h2 id="计网的功能"><a href="#计网的功能" class="headerlink" title="计网的功能"></a>计网的功能</h2><ul>
-<li>数据通信<ul>
-<li>实现计算机（端系统）之间的数据传输，是最基本、最重要的功能</li>
-</ul>
-</li>
-<li>资源共享<ul>
-<li>请求服务器处理、网盘、分享视频、应用商店等</li>
-</ul>
-</li>
-<li>分布式处理<ul>
-<li>将某个复杂任务分配给网络中多台计算机处理，提高任务处理效率</li>
-</ul>
-</li>
-<li>提高可靠性<ul>
-<li>网络中各台计算机互为替代，数据冗余备份等操作</li>
-</ul>
-</li>
-<li>复杂均衡<ul>
-<li>网络中多台计算机共同分担繁杂工作，如游戏服务器</li>
-</ul>
-</li>
+<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br><a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
 </ul>
 <hr>
-<h2 id="计网通信"><a href="#计网通信" class="headerlink" title="计网通信"></a>计网通信</h2><h3 id="计网通信方式"><a href="#计网通信方式" class="headerlink" title="计网通信方式"></a>计网通信方式</h3><ul>
-<li>因为在计算机之前已经有电话与发报机等可以传递信息的工具，那么计算机通信方式是否可以参考“前辈”的经验呢？答案是肯定的</li>
-</ul>
-<h4 id="电路交换技术"><a href="#电路交换技术" class="headerlink" title="电路交换技术"></a>电路交换技术</h4><ul>
-<li>曾经的固定电话是通过电话线连接到电路交换器上的，在指定通信方与被通信方之后通过人工或者机器的方式连接实际物理电路，传递消息<ul>
-<li>建立连接（尝试占用资源）</li>
-<li>通信（持续占用通信资源）</li>
-<li>断开连接（归还占用资源）<br><img src="/CN_u1_1.png" alt="电路交换示意图"></li>
-</ul>
-</li>
-<li>优缺点分析<ul>
-<li>优点<ul>
-<li>建立了专用的物理电路，两个用户始终占用线路资源，数据传输速度快</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>建立&#x2F;释放连接需要额外的时间开销，等待通信时间可能过长</li>
-<li>线路被通信双方占用，利用率差</li>
-<li>线路的分配灵活性差（线路单一）</li>
-<li>不支持差错控制，无法更改或者发现通信的错误</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>由于电路交换技术适合少频次大量数据的场景，一般的计算机通信常常是高频次少量数据的传递，所以计算机通信方式不适合<strong>直接沿用</strong>电路交换技术（为什么是直接沿用呢？）</li>
-</ul>
-<h4 id="报文交换技术"><a href="#报文交换技术" class="headerlink" title="报文交换技术"></a>报文交换技术</h4><ul>
-<li>发报机通过线路连接到报文转发机上，通过对信息头部加入地址信息，由转发机自动向目的地转发，而不需要实际地接线<br><img src="/CN_u1_2.png" alt="报文交换示意图"></li>
-<li>优缺点分析<ul>
-<li>优点<ul>
-<li>不用占用通信双方中地资源，利用率高</li>
-<li>无需建立连接，线路可以灵活分配</li>
-<li>交换节点时可以“差错控制”</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>报文长度不定，报文交换机地存储空间难以规定大小</li>
-<li>长报文存储转发的时间开销大，缓存开销大</li>
-<li>长报文的纠错困难，重发的代价大</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>由于对长报文的传输支持困难，所以计算机通信方式也没有沿用报文交换技术，而是在报文交换技术的基础上改进而成的分组交换技术</li>
-</ul>
-<h4 id="分组交换技术"><a href="#分组交换技术" class="headerlink" title="分组交换技术"></a>分组交换技术</h4><ul>
-<li>将长报文分为若干段，称为分组(Packet)然后我们的传递最小单位由报文变成分组<br><img src="/CN_u1_3.png" alt="分组交换示意图"></li>
-<li>优缺点分析<ul>
-<li>优点<ul>
-<li>同报文交换技术</li>
-<li>存储转发的时间开销小，缓存开销小</li>
-<li>不易出错，且重传的代价小</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>控制信息占比增加</li>
-<li>存储转发时延依旧存在</li>
-<li>发送的各个分组存在顺序问题，可能导致混乱</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="虚电路交换技术"><a href="#虚电路交换技术" class="headerlink" title="虚电路交换技术"></a>虚电路交换技术</h4><ul>
-<li>对于分组交换技术可能出现的顺序问题，虚电路技术提供了一种方式解决（沿用了电路交换技术的策略）<ul>
-<li>建立连接（没有实际电路，仅作规划路径使用）</li>
-<li>通信（分组按照顺序以构建好的路线传递，通信双方不用占用线路）</li>
-<li>释放连接<br><img src="/CN_u1_4.png" alt="虚电路交换示意图"></li>
-</ul>
-</li>
-<li>优缺点分析<ul>
-<li>优点<ul>
-<li>同分组交换技术优点</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>同分组交换技术缺点</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><ul>
-<li>对于上述电路交换技术、报文交换技术、分组交换技术进行性能的分析<br><img src="/CN_u1_5.png" alt="时序图"><br><img src="/CN_u1_6.png" alt="性能分析对比图"></li>
-</ul>
-<hr>
-<h2 id="计网分类"><a href="#计网分类" class="headerlink" title="计网分类"></a>计网分类</h2><h3 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h3><ul>
-<li>广域网(Wide Area Network)<ul>
-<li>范围大，跨省、跨国、跨洲</li>
-</ul>
-</li>
-<li>城域网(Metropolitan Area Network)<ul>
-<li>范围较大，一个或几个相邻的城市</li>
-<li>通信技术采用“以太网技术”，常并入局域网范畴讨论</li>
-</ul>
-</li>
-<li>局域网(Local Area Network)<ul>
-<li>范围稍小，学校&#x2F;企业&#x2F;家庭等</li>
-<li>通信技术采用“以太网技术”</li>
-</ul>
-</li>
-<li>个域网(Personal Area Network)<ul>
-<li>范围小，家庭&#x2F;个人</li>
-<li>常使用无线技术将个人设备连接起来的网络，因此也被称为无线个域网(WPAN)</li>
-</ul>
-</li>
-</ul>
-<h3 id="传输技术"><a href="#传输技术" class="headerlink" title="传输技术"></a>传输技术</h3><ul>
-<li>广播式网络<ul>
-<li>计算机发送数据分组时，广播范围内的所有计算机都会收到该分组，通过检查分组地址决定是否接受分组</li>
-</ul>
-</li>
-<li>点对点网络<ul>
-<li>精确地发向某个计算机</li>
-</ul>
-</li>
-</ul>
-<h3 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h3><ul>
-<li>总线形结构<ul>
-<li>数据采取广播式技术，存在“总线争用”的现象</li>
-<li>集线器连接的设备</li>
-</ul>
-</li>
-<li>环形结构<ul>
-<li>数据广播式传播但是，可以通过“令牌”指定当前发送数据的计算机，即拿到“令牌”者可以控制总线的数据，从而解决“总线争用的问题”</li>
-<li>令牌环网</li>
-</ul>
-</li>
-<li>星形结构<ul>
-<li>由中央设备实现各个设备的“点对点”传输，不存在“总线争用”的现象</li>
-<li>以太网交换机连接的设备</li>
-</ul>
-</li>
-<li>网状结构<ul>
-<li>数据通过各个中间节点逐一存储转发，实现数据“点对点”的传输</li>
-<li>由众多路由器构建的广域网</li>
-</ul>
-</li>
-</ul>
-<h3 id="使用者"><a href="#使用者" class="headerlink" title="使用者"></a>使用者</h3><ul>
-<li>公用网<ul>
-<li>公开的网络，只要向<code>ISP</code>付钱即可</li>
-</ul>
-</li>
-<li>专用网<ul>
-<li>内部使用网络，例如，国家总局、银行等的内网</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="计网性能指标"><a href="#计网性能指标" class="headerlink" title="计网性能指标"></a>计网性能指标</h2><ul>
-<li>信道<ul>
-<li>即信息传输的通道，一般而言我们所说的<strong>通信线路</strong>往往对应着一个发送信道和一个接收信道</li>
-</ul>
-</li>
-<li>速度相关<ul>
-<li>速率，连接在网络的节点的数据沿着信道传输的速率，也称作<strong>数据传输速率</strong>，单位一般为(<code>bps</code> <code>Kbps</code> <code>Mbps</code>)，这里的<code>K</code>是 $10^3$，与计算机组成不同</li>
-<li>带宽<ul>
-<li>含义一，表示一个信道所能传输数据的最大速率，即<strong>最高数据率</strong>，可以有上行带宽和下行带宽</li>
-<li>含义二，表示某个信道允许通过的信号频带范围，单位是<code>Hz</code>，两个含义其实有某些关系哦</li>
-<li>节点间通信的最高速率由带宽和节点性能共同限制</li>
-</ul>
-</li>
-<li>吞吐量<ul>
-<li>单位时间通过某个网络的实际数量，所以要计算上行和下行速率</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>时延相关<ul>
-<li>各种时延<ul>
-<li>发送时延(传输时延)<ul>
-<li>将数据全部传入信道的时间($ \frac{M_{数据大小}} {V_{数据传输速率}} $)</li>
-</ul>
-</li>
-<li>传播时延<ul>
-<li>数据在信道上传输的时间($ \frac{L_{信道长度}} {V_{信号传播速率}} $)</li>
-</ul>
-</li>
-<li>处理时延<ul>
-<li>路由器处理数据的时间(分析首部、查找存储转发表)</li>
-</ul>
-</li>
-<li>排队时延<ul>
-<li>数据入队和出队花费的时间<img src="/./_image/2024-10-05/81ca04230e5a922a25280cfccee04f61.jpg"></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>时延带宽积<ul>
-<li>$ X_{时延带宽积} &#x3D; T_{传播时延} \times M_{带宽} $</li>
-</ul>
-</li>
-<li>往返时延(Round-Trip Time)<ul>
-<li>从发送方<strong>发送完数据</strong>，到发送方<strong>收到来自接收方的确认</strong>总共经历的时间</li>
-<li>例如，游戏时延即“手机-服务器”的往返时延<code>RTT</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>信道利用率<ul>
-<li>$ \frac{T_{有数据通过}} {T_{有数据通过} + T_{没有数据通过}} $</li>
-<li>信道利用率不能太低，会浪费资源</li>
-<li>信道利用率不能太高，容易导致网络拥塞</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="计网分层"><a href="#计网分层" class="headerlink" title="计网分层"></a>计网分层</h2><ul>
-<li>就如快递链一样，计算机网络中实现传递数据也是需要实现许许多多的功能，例如封装数据、校验数据、解析数据等等各种复杂的功能</li>
-<li>这里给出一些完整功能，可以先尝试理解<ul>
-<li>差错控制：确保数据在传输过程中不会出错</li>
-<li>流量控制：发送端发送数据的速率必须比接收端的接收速率小，来得及接收</li>
-<li>分段与重装：发送端将要发送的数据分解为更小的单位，并且在接收端将其还原</li>
-<li>复用与分用：发送端几个高层会话共同使用一条低层的连接，然后在接收端进行分用</li>
-<li>连接建立与释放：交换数据前先建立一条逻辑连接，数据传输结束后释放</li>
-</ul>
-</li>
-<li>采取分层的策略可以将问题分为各种小问题，以局部实现的策略实现</li>
-</ul>
-<h3 id="常见分层结构"><a href="#常见分层结构" class="headerlink" title="常见分层结构"></a>常见分层结构</h3><ul>
-<li><code>OSI</code>模型<ul>
-<li>考虑的功能更加全面，会出现统一功能出现在多个层面</li>
-<li>法律上的标准</li>
-</ul>
-<ol>
-<li>物理层</li>
-<li>数据链路层</li>
-<li>网络层</li>
-<li>传输层</li>
-<li>会话层</li>
-<li>表示层</li>
-<li>应用层</li>
-</ol>
-</li>
-<li><code>TCP/IP</code>模型<ul>
-<li>结构更加简单，同一功能只会出现在某一个层面</li>
-<li>事实上的标准</li>
-</ul>
-<ol>
-<li>网络接口层</li>
-<li>网络层</li>
-<li>传输层</li>
-<li>应用层</li>
-</ol>
-</li>
-<li>教学模型<ol>
-<li>物理层</li>
-<li>数据链路层</li>
-<li>网络层</li>
-<li>传输层</li>
-<li>应用层</li>
-</ol>
-</li>
-<li><strong>实体</strong><ul>
-<li>同处于某一层的活动元素(硬件与软件)被称为第<code>n</code>层的实体，不同节点上的同一层被称为<strong>对等层</strong>，同一层的对应实体被称为<strong>对等实体</strong></li>
-</ul>
-</li>
-<li><strong>协议</strong><ul>
-<li>对等实体的通信规则，约束了对等实体之间的数据传输的要求</li>
-</ul>
-</li>
-<li><strong>接口</strong><ul>
-<li>同一节点相邻两层的实体交换信息的逻辑通道，又称为<strong>服务访问点</strong>(Service Access Point，SAP)</li>
-</ul>
-</li>
-<li><strong>服务</strong><ul>
-<li>同一节点相邻两层中下层为上层提供的功能调用(这里层数小的在下，层数大的在上)</li>
-</ul>
-</li>
-</ul>
-<h3 id="数据传输过程"><a href="#数据传输过程" class="headerlink" title="数据传输过程"></a>数据传输过程</h3><ul>
-<li>原始数据通过多层处理为物理信号传输，在通过多层反处理转换回数据<br><img src="/./_image/2024-10-05/815195ad09dbf52e2ebbed3f768f3459.jpg"></li>
-<li>数据定义<ul>
-<li>协议数据单元(Protocol Data Unit)<ul>
-<li>对等层之间传递的消息，第<code>n</code>层的协议数据单元写作<code>n-PDU</code></li>
-</ul>
-</li>
-<li>服务数据单元(Service Data Unit)<ul>
-<li>为完成这一层实体而从上一层传入的数据，第<code>n</code>层的服务数据单元写作<code>n-SDU</code></li>
-</ul>
-</li>
-<li>协议控制信息(Protocol Control Infomation)<ul>
-<li>控制协议操作的信息，第<code>n</code>层的协议控制信息写作<code>n-PCI</code></li>
-</ul>
-</li>
-<li>三者之间的关系<ul>
-<li><code>n-PDU</code> &#x3D; <code>n-PCI</code> + <code>n-SDU</code></li>
-<li><code>n-SDU</code> &#x3D; <code>n-1-PDU</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>协议定义<ul>
-<li>语法<ul>
-<li>数据与控制信息的格式。例如协议控制信息部分占几个字节、每个字节是什么含义、协议的数据部分最多有多少字节</li>
-</ul>
-</li>
-<li>语义<ul>
-<li>需要发送何种控制信息，完成何种动作及作出何种应答，例如发送完数据后接收方是否需要“应答”，以及应答的种类(传输成功、传输失败)</li>
-</ul>
-</li>
-<li>时序<ul>
-<li>执行各种操作的条件、时序关系等，即事件实现顺序的详细说明，例如发送方发送数据后接收方需要立即应答，如果发送方在 10 秒内没有应答，发送方会再次发送数据</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="OSI与TCP-IP"><a href="#OSI与TCP-IP" class="headerlink" title="OSI与TCP/IP"></a><code>OSI</code>与<code>TCP/IP</code></h3><h4 id="OSI模型详述"><a href="#OSI模型详述" class="headerlink" title="OSI模型详述"></a><code>OSI</code>模型详述</h4><ul>
-<li>常见网络设备功能层次<ul>
-<li>主机：<code>#1 ~ #7</code></li>
-<li>集线器：<code>#1</code></li>
-<li>交换机：<code>#1 ~ #2</code></li>
-<li>路由器：<code>#1 ~ #3</code></li>
-<li>物理传输媒体：<code>#0</code></li>
-</ul>
-</li>
-<li>各层详解<ol>
-<li>物理层<ul>
-<li>实现相邻节点<code>bit</code>传输</li>
-<li>定义电路接口参数，形状、尺寸、引脚数等</li>
-<li>定义传输信号含义，例如 5v 代表 1，1v 代表 0，每<code>bit</code>传输的持续时间为 0.1ms</li>
-</ul>
-</li>
-<li>数据链路层<ul>
-<li>保证相邻节点间的链路<strong>逻辑上无差错</strong></li>
-<li>原始数据传入链路层，链路层对长信息<strong>拆分并添加校验位</strong>组成**帧(Frame)**含有多个<code>bit</code>，再将帧陆续传给物理层转化为实际的物理信号传输       </li>
-<li><strong>差错控制</strong>：检错+纠错或者检错+丢弃+重传</li>
-<li><strong>流量控制</strong>：协调相邻节点的帧的传输速率</li>
-</ul>
-</li>
-<li>网络层<ul>
-<li>将分组<strong>从源结点转发至目的结点</strong></li>
-<li><strong>路由选择</strong>：构造并且维护路由表，选择从源结点转向目的结点的最佳路径</li>
-<li><strong>分组转发</strong>：将分组从合适的端口传出</li>
-<li><strong>拥塞控制</strong>：发现网络拥塞，并采取措施缓解拥塞</li>
-<li><strong>网际互联</strong>：由于各个局域网可能采用不同的技术，通过网络层实现异构网络的互联</li>
-<li><strong>差错控制</strong>：校验分组</li>
-<li><strong>流量控制</strong>：协调分组的传输速率</li>
-<li><strong>连接建立与释放</strong>：建立虚电路发送分组</li>
-<li><strong>可靠传输管理</strong>：接收方返回分组确认消息</li>
-</ul>
-</li>
-<li>传输层<ul>
-<li>端到端的通信，即实现<strong>进程到进程</strong>的通信</li>
-<li>多个不同进程的数据通过传输层组合成<strong>报文段</strong>(Segment)</li>
-<li><strong>复用与分用</strong>：发送端的几个高层实体例如微信、QQ 的数据共同组成报文段，复用接下来低层的路线；在接收端将报文段重新拆分为多个端口的数据传入</li>
-<li><strong>差错控制</strong>：校验报文段</li>
-<li><strong>流量控制</strong>：协调报文段段的传输速率</li>
-<li><strong>建立连接与释放</strong>：建立虚电路发送报文段</li>
-<li><strong>可靠传输管理</strong>：接收方返回报文段确认消息</li>
-</ul>
-</li>
-<li>会话层<ul>
-<li>管理进程间的会话</li>
-<li><strong>会话管理</strong>：采用检查点机制，当通信失效时从检查点继续恢复通信</li>
-</ul>
-</li>
-<li>表示层<ul>
-<li>解决不同主机上编码方式不同，数据格式转换还有压缩、解密等</li>
-</ul>
-</li>
-<li>应用层<ul>
-<li>实现特定的网络应用</li>
-<li>各类数据以<strong>报文</strong>(Message)为单位传递</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h4 id="TCP-IP模型详述"><a href="#TCP-IP模型详述" class="headerlink" title="TCP/IP模型详述"></a><code>TCP/IP</code>模型详述</h4><ul>
-<li><code>OSI</code>与<code>TCP/IP</code>模型的区别<ul>
-<li><code>OSI.#5~#7</code>与<code>TCP/IP.#4</code><ul>
-<li>数据编码格式转换与会话管理功能并不是对于每个网络应用都需要的，所以可以并入应用层</li>
-<li>对于某些需要这种特定功能的应用，可以采用具有特定功能的协议去完成</li>
-</ul>
-</li>
-<li><code>OSI.#1~#2</code>与<code>TCP/IP.#1</code><ul>
-<li>网络层将分组传递给网络接口层，但是不硬性规定处理或者传输分组的方式</li>
-</ul>
-</li>
-<li><code>OSI.#3</code>与<code>TCP/IP.#2</code><ul>
-<li><code>TCP/IP</code>模型的网络层取消了对于分组检查与控制协调的若干功能，如差错控制、流量控制、连接管理、可靠传输管理</li>
-<li><code>TCP/IP</code>模型的网络层的传输数据不可靠</li>
-<li><code>TCP/IP</code>模型中不需要中间路由器等计算机网络核心管理流量等行为而将各种功能施加在端系统中</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>北航计算机组成P1课下</title>
-    <url>/2024/09/28/CO_P1/</url>
-    <content><![CDATA[<h1 id="北航计算机组成原理P1课下"><a href="#北航计算机组成原理P1课下" class="headerlink" title="北航计算机组成原理P1课下"></a>北航计算机组成原理P1课下</h1><div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P1课下的相关内容，希望能对你有所帮助</p>
-</div>
-
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li><del>发现教程有了，不愧是STAR</del></li>
-<li>在阅读本次P1题解分享之前，我想单独分享一些关于<code>Verilog</code>编写有限状态机的内容(佬跳过，好吗？好的)</li>
-<li>从学习完<code>Verilog</code>到<code>Pre</code>上机之间的很长一段时间，我写<code>Verilog</code>有限状态机都只有一个过程块（<del>可能大概应该有和我一样的同学吧</del>），就像下面这样<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">define</span> S0 2&#x27;b00</span></span><br><span class="line">......</span><br><span class="line"><span class="keyword">module</span> xxx (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    ......</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="comment">//状态转移代码</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//消除锁存器</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="组合电路"><a href="#组合电路" class="headerlink" title="组合电路"></a>组合电路</h2><ul>
+<li>过于简单，仅有提示</li>
+</ul>
+<h3 id="1202-405-FloatType"><a href="#1202-405-FloatType" class="headerlink" title="1202-405 FloatType"></a>1202-405 FloatType</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="1202-202-Comparator"><a href="#1202-202-Comparator" class="headerlink" title="1202-202 Comparator"></a>1202-202 Comparator</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>在写一些简单的<code>Verilog</code>有限状态机的时候觉得结构简单清晰易懂，怎么写这么舒服，感觉脑子都闲置了下来（bushi，但是遇到像<code>cpu_checker_challenge</code>那样状态多且转移方程复杂的题目，就会显得单一过程块冗长且十分不易<code>debug</code>，几百行代码挤在一个<code>always</code>块中，总感觉像写C语言只写一个<code>main</code>函数</li>
+<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
 </ul>
-</li>
-</ul>
-<hr>
-<h3 id="重构Verilog结构"><a href="#重构Verilog结构" class="headerlink" title="重构Verilog结构"></a>重构<code>Verilog</code>结构</h3><ul>
-<li>直到我遇见了<code>HDLbits</code>，它向我提供了一种使用<code>Verilog</code>搭建和<code>logisim</code>结构很相似的有限状态机的代码机构，感觉会比一个<code>always</code>块清晰一些？</li>
-<li>首先，解决最大的问题，把<code>always</code>块拆分出来，像<code>logisim</code>一样，我们将代码分出计算次态的状态转移逻辑使用纯组合电路代替  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时钟沿上升，状态转移</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">        state &lt;= <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        state &lt;= next_state;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//计算次态next_state</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(state)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案1</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    out = ......</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案2</span></span><br><span class="line"><span class="keyword">assign</span> out = ......</span><br></pre></td></tr></table></figure>
+<h3 id="1202-424-Voter"><a href="#1202-424-Voter" class="headerlink" title="1202-424 Voter"></a>1202-424 Voter</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="1202-102-ALU"><a href="#1202-102-ALU" class="headerlink" title="1202-102 ALU"></a>1202-102 ALU</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>诶呀，瞬间感觉代码变得清爽了，结构更加清晰了有没有（<del>没有也不许说</del>）</li>
-</ul>
-</li>
-<li>也许此时你觉得这样不过只是拆了几个<code>always</code>出来，没什么技术含量，那么接下来我们还可以利用新的结构做出一些原本结构做不出来的优化–<strong>简化代码逻辑</strong>与<strong>消除锁存器plus</strong><ul>
-<li>你是否常常遇到这种情况，某个变量多个状态下的变化是一致的，只有极少部分的值改变的不一致<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">1</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-上面只展示一个状态下<code>count</code>变量的转移，如果你有10个状态呢（<del>你真的敢像<code>logisim</code>一样CV吗</del>），但是如果我们使用新结构就可以在<code>always</code>块开始时默认赋值了，节省代码<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    count &lt;= next_count;</span><br><span class="line">    status &lt;= next_status;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">//默认赋值区域</span></span><br><span class="line">    next_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                next_count = <span class="number">1</span>;   </span><br><span class="line">            .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-这得益于我们使用组合逻辑的always块不是非阻塞赋值，可以多次赋值，所以不用像之前一样每个情况都要重复</li>
-<li>同样，通过预先赋初值的办法我们就可以彻底消除锁存器这个bug了，因为锁存器产生原因就是我们没有明确赋值导致<code>Verilog</code>推导出锁存器记录之前的状态（<code>Verilog</code>帮我们默认赋值）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="comment">//缺少else分支</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-新结构的代码没有锁存器问题，但是<font color = red>不要故意不写else，重申，我们只是抑制锁存器plus</font></li>
-</ul>
-</li>
+<li>注意使用拓展位的减法电路实现比较即可</li>
 </ul>
 <hr>
-<h2 id="P1-Q5-表达式状态机"><a href="#P1-Q5-表达式状态机" class="headerlink" title="P1.Q5 表达式状态机"></a>P1.Q5 表达式状态机</h2><ul>
-<li>大抵是一道很显然的<code>Moore</code>状态机，只需要判断<code>需要运算符</code>和<code>需要数字</code>两种状态即可，大致的思路如下<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_Q5.png" alt="状态转移图"></li>
-<li>等等，这里的<code>*</code>和正则里面的不是一个啊，这里的是<code>\*</code>，笔者忘改了</li>
-<li>写起来也是顺手啊</li>
-<li>提供一个进阶题(<a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a>)，移步1202-145，加入匹配括号，甚至是多重嵌套括号，思路其实是一致的</li>
+<h2 id="有限状态机"><a href="#有限状态机" class="headerlink" title="有限状态机"></a>有限状态机</h2><h3 id="1202-334-Drink"><a href="#1202-334-Drink" class="headerlink" title="1202-334 Drink"></a>1202-334 Drink</h3><ul>
+<li><del>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</del></li>
+<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
+<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text"></li>
+<li>提供一个我使用的新结构框架（<del>应该没有泄露源码之嫌</del>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<hr>
-<h2 id="P1-extra-BlockChecker"><a href="#P1-extra-BlockChecker" class="headerlink" title="P1.extra BlockChecker"></a>P1.extra BlockChecker</h2><ul>
-<li>一道好题，<del>但不至于卡我一天吧</del>(<code>&amp;&amp;</code>别再写成<code>||</code>了</li>
-<li>因为我第一个思路因为某些莫名的原因一直没过(手真贱，所以我就换了一个思路，那么我提供两个思路思考</li>
+<h3 id="1202-145-String"><a href="#1202-145-String" class="headerlink" title="1202-145 String"></a>1202-145 String</h3><ul>
+<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
+<li>多重括号的辨别使用一个变量寄存左括号数量即可<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图"></li>
 </ul>
-<h3 id="思路一-多个寄存器"><a href="#思路一-多个寄存器" class="headerlink" title="思路一 多个寄存器"></a>思路一 多个寄存器</h3><ul>
-<li><p><del>好处是状态少，坏处是容易手误</del></p>
-</li>
-<li><p>状态设置思路</p>
-<ul>
-<li>首先设置了四个状态<code>start</code>、<code>word</code>、<code>illegal</code>分别表示空闲状态、匹配单词状态、匹配已经非法状态</li>
+<h3 id="1202-336-IntCheck"><a href="#1202-336-IntCheck" class="headerlink" title="1202-336 IntCheck"></a>1202-336 IntCheck</h3><ul>
+<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
+<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
+<li>第三，不要在小情侣后面码代码<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图"><a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
+  title="查看原图"><span>查看原图</span></a></li>
 </ul>
-</li>
-<li><p>寄存器变量设置思路</p>
-<table>
-<thead>
-<tr>
-<th align="center">寄存器变量</th>
-<th align="center">位宽</th>
-<th align="center">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">num</td>
-<td align="center">32</td>
-<td align="center">保存读入的单词长度(unsigned)</td>
-</tr>
-<tr>
-<td align="center">flag</td>
-<td align="center">33</td>
-<td align="center">保存目前未匹配的begin数量(signed)</td>
-</tr>
-<tr>
-<td align="center">has_begin</td>
-<td align="center">1</td>
-<td align="center">前一个周期是否已经匹配begin成功</td>
-</tr>
-<tr>
-<td align="center">has_end</td>
-<td align="center">1</td>
-<td align="center">前一个周期是否已经匹配end成功</td>
-</tr>
-<tr>
-<td align="center">first</td>
-<td align="center">8</td>
-<td align="center">最近五个周期内第1个周期的字符</td>
-</tr>
-<tr>
-<td align="center">…</td>
-<td align="center">8</td>
-<td align="center">最近五个周期内第i个周期的字符</td>
-</tr>
-<tr>
-<td align="center">fifth</td>
-<td align="center">8</td>
-<td align="center">这个周期读入的in，即最近五个周期内第5个周期的字符</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>状态转移思路</p>
-<ul>
-<li><code>start</code>状态<ul>
-<li><code>reset</code>生效后回到<code>start</code>状态</li>
-<li>匹配到字母则<code>num</code>自增，且进入状态<code>word</code></li>
-<li>匹配到空格保持原状态</li>
-<li>若匹配到其他的进入<code>illegal</code>状态</li>
-</ul>
-</li>
-<li><code>word</code>状态<ul>
-<li>读入字母，<code>num</code>自增，如果在包括此次<code>in</code>输入共有五个字符时，且<code>first</code> ~ <code>fifth(in)</code>是<code>begin</code>(不区分大小写)，<code>flag</code>加1，设置<code>has_begin</code></li>
-<li>同上，在包含此次<code>in</code>共三个字符时，且<code>third</code> ~ <code>fifth(in)</code>是<code>end</code>(不区分大小写)，<code>flag</code>减1，设置<code>has_end</code></li>
-<li>读入字母，<code>has_begin</code>已经置高，说明前面五个字符已经是<code>begin</code>了，但是又读入一个字母，说明这个单词不是<code>begin</code>了，<code>flag</code>减1</li>
-<li>同上，<code>has_end</code>已经置高了，说明这个单词不是<code>end</code>，<code>flag</code>需要加1</li>
-<li>读入空格，说明单词已经读入完毕，<code>num</code>置0，如果<code>flag</code>此时是-1(<code>0x1ffffffff</code>)，说明先出现了未匹配的<code>end</code>，此时进入<code>illegal</code>状态，等待复位信号否则回到<code>start</code>空闲状态</li>
-<li>读入其他字符进入<code>illegal</code>状态</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="思路二-多个状态"><a href="#思路二-多个状态" class="headerlink" title="思路二 多个状态"></a>思路二 多个状态</h3><ul>
-<li><del>好处是清晰，没有坏处</del></li>
-<li>状态设置思路<table>
-<thead>
-<tr>
-<th align="center">状态</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">_start</td>
-<td align="center">空闲状态等待空格或者字母</td>
-</tr>
-<tr>
-<td align="center">_b</td>
-<td align="center">匹配到单词b</td>
-</tr>
-<tr>
-<td align="center">_be</td>
-<td align="center">匹配到单词be</td>
-</tr>
-<tr>
-<td align="center">_beg</td>
-<td align="center">匹配到单词beg</td>
-</tr>
-<tr>
-<td align="center">_begi</td>
-<td align="center">匹配到单词begi</td>
-</tr>
-<tr>
-<td align="center">_begin</td>
-<td align="center">匹配到单词begin</td>
-</tr>
-<tr>
-<td align="center">_e</td>
-<td align="center">匹配到单词e</td>
-</tr>
-<tr>
-<td align="center">_en</td>
-<td align="center">匹配到单词en</td>
-</tr>
-<tr>
-<td align="center">_end</td>
-<td align="center">匹配到单词end</td>
-</tr>
-<tr>
-<td align="center">_other</td>
-<td align="center">匹配到其他单词</td>
-</tr>
-</tbody></table>
-</li>
-<li>寄存器设置思路<ul>
-<li>只需要<code>state</code>寄存器保存状态和<code>flag</code>寄存器保存左括号数</li>
-</ul>
-</li>
-<li>状态转移思路<ul>
-<li><code>_start</code>状态<ul>
-<li>复位后回到<code>_start</code>状态等待输入</li>
-<li>如果是字母<code>b</code>进入<code>_b</code>状态</li>
-<li>如果是字母<code>e</code>进入<code>_e</code>状态</li>
-<li>如果是其他字母进入<code>_other</code>状态</li>
-<li>空格保持状态</li>
-</ul>
-</li>
-<li><code>_b</code> ~ <code>_en</code>状态<ul>
-<li>每个都是匹配到某个字母转为下一个状态：<code>_b</code>匹配到字母<code>e</code>转到<code>_be</code></li>
-<li>匹配到其他字母直接转为<code>_other</code></li>
-<li>匹配到空格回到空闲状态</li>
-</ul>
-</li>
-<li><code>_begin</code>与<code>_end</code><ul>
-<li>两个状态特殊在于判断其后是否还有字母，也即到底是完整单词还是其他单词的前缀例如<code>endx</code></li>
-<li>因为前一个状态转移时时默认匹配到了完整单词，例如<code>_begi</code>到<code>_begin</code>是匹配到了<code>begin</code>一个周期的，所以如果后面有其他字母需要调整<code>flag</code>的值</li>
-</ul>
-</li>
-<li><code>_other</code><ul>
-<li>接收到字母保持原态</li>
-<li>接收到空格回到空闲状态</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="P1推荐题汇总"><a href="#P1推荐题汇总" class="headerlink" title="P1推荐题汇总"></a>P1推荐题汇总</h2><a class="btn-beautify " href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/" 
-  title="P1推荐题汇总"><span>P1推荐题汇总</span></a>
-<p><a href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/">P1推荐题汇总</a></p>
 ]]></content>
       <categories>
         <category>计算机组成原理</category>
-        <category>课下复习</category>
+        <category>推荐题目</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
@@ -1343,145 +1555,6 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P1推荐题汇总</title>
-    <url>/2024/09/30/CO_P1_extra/</url>
-    <content><![CDATA[<h1 id="北航计算机组成P1推荐题目汇总"><a href="#北航计算机组成P1推荐题目汇总" class="headerlink" title="北航计算机组成P1推荐题目汇总"></a>北航计算机组成P1推荐题目汇总</h1><h2 id="题目怎么来的"><a href="#题目怎么来的" class="headerlink" title="题目怎么来的"></a>题目怎么来的</h2><ul>
-<li><del>偷来的(搓手手</del></li>
-<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<del>爬虫而生的</del>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure></li>
-<li><code>PieId</code><ul>
-<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
-</ul>
-</li>
-<li><code>ProblemId</code><ul>
-<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
-<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
-</ul>
-</li>
-<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br><a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
-</ul>
-<hr>
-<h2 id="组合电路"><a href="#组合电路" class="headerlink" title="组合电路"></a>组合电路</h2><ul>
-<li>过于简单，仅有提示</li>
-</ul>
-<h3 id="1202-405-FloatType"><a href="#1202-405-FloatType" class="headerlink" title="1202-405 FloatType"></a>1202-405 FloatType</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h3 id="1202-202-Comparator"><a href="#1202-202-Comparator" class="headerlink" title="1202-202 Comparator"></a>1202-202 Comparator</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
-</ul>
-<h3 id="1202-424-Voter"><a href="#1202-424-Voter" class="headerlink" title="1202-424 Voter"></a>1202-424 Voter</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="1202-102-ALU"><a href="#1202-102-ALU" class="headerlink" title="1202-102 ALU"></a>1202-102 ALU</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>注意使用拓展位的减法电路实现比较即可</li>
-</ul>
-<hr>
-<h2 id="有限状态机"><a href="#有限状态机" class="headerlink" title="有限状态机"></a>有限状态机</h2><h3 id="1202-334-Drink"><a href="#1202-334-Drink" class="headerlink" title="1202-334 Drink"></a>1202-334 Drink</h3><ul>
-<li><del>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</del></li>
-<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
-<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text"></li>
-<li>提供一个我使用的新结构框架（<del>应该没有泄露源码之嫌</del>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-145-String"><a href="#1202-145-String" class="headerlink" title="1202-145 String"></a>1202-145 String</h3><ul>
-<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
-<li>多重括号的辨别使用一个变量寄存左括号数量即可<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图"></li>
-</ul>
-<h3 id="1202-336-IntCheck"><a href="#1202-336-IntCheck" class="headerlink" title="1202-336 IntCheck"></a>1202-336 IntCheck</h3><ul>
-<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
-<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
-<li>第三，不要在小情侣后面码代码<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图"><a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
-  title="查看原图"><span>查看原图</span></a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>推荐题目</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2024/09/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>the information is here</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GA</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, gender, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.gender = gender</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;name:<span class="subst">&#123;name&#125;</span>,gender:<span class="subst">&#123;gender&#125;</span>,age:<span class="subst">&#123;age&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> deap <span class="keyword">import</span> base,tools,algorithms,creator</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># import random</span></span><br><span class="line"></span><br><span class="line">IND_NUM = <span class="number">30</span> <span class="comment"># 30位编码，[-5,5]，精度是8位</span></span><br><span class="line">POP_NUM = <span class="number">100</span> <span class="comment"># 种群总个体数量</span></span><br><span class="line">OFS_MAX = <span class="number">50</span> <span class="comment"># 后代最大值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">individual</span>):</span><br><span class="line">    num = <span class="built_in">int</span>(<span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> individual]),<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> (-<span class="number">5</span> + (<span class="number">10</span> * num)/(<span class="number">2</span>**<span class="number">30</span> - <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">eval</span>(<span class="params">individual</span>):</span><br><span class="line">    x = decode(individual)</span><br><span class="line">    <span class="keyword">return</span> ((np.square(x) + x) * np.cos(<span class="number">2</span> * x) + np.square(x) + x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">creator.create(<span class="string">&quot;FitnessMin&quot;</span>,base.Fitness,weights=(-<span class="number">1.0</span>,))</span><br><span class="line">creator.create(<span class="string">&quot;Individual&quot;</span>,<span class="built_in">list</span>,fitness = creator.FitnessMin)</span><br><span class="line"></span><br><span class="line">toolbox = base.Toolbox()</span><br><span class="line">toolbox.register(<span class="string">&quot;attribute&quot;</span>,np.random.randint,<span class="number">0</span>,<span class="number">2</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;individual&quot;</span>, tools.initRepeat, creator.Individual, toolbox.attribute, n=IND_NUM)</span><br><span class="line">toolbox.register(<span class="string">&quot;population&quot;</span>, tools.initRepeat, <span class="built_in">list</span>, toolbox.individual)</span><br><span class="line">pop = toolbox.population(n=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">toolbox.register(<span class="string">&quot;evaluate&quot;</span>, <span class="built_in">eval</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;select&quot;</span>, tools.selTournament, <span class="number">3</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mate&quot;</span>, tools.cxUniform, indpb=<span class="number">0.5</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mutate&quot;</span>, tools.mutFlipBit, indpb=<span class="number">0.5</span>)</span><br><span class="line"><span class="comment"># tools.mutFlipBit()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stats = tools.Statistics(key=<span class="keyword">lambda</span> x: x.fitness.values)</span><br><span class="line">stats.register(<span class="string">&quot;avg&quot;</span>, np.mean)</span><br><span class="line">stats.register(<span class="string">&quot;std&quot;</span>, np.std)</span><br><span class="line">stats.register(<span class="string">&quot;min&quot;</span>, np.<span class="built_in">min</span>)</span><br><span class="line">stats.register(<span class="string">&quot;max&quot;</span>, np.<span class="built_in">max</span>)</span><br><span class="line"></span><br><span class="line">resultPop, logbook = algorithms.eaSimple(pop, toolbox, cxpb=<span class="number">0.5</span>, mutpb=<span class="number">0.2</span>, ngen=POP_NUM, stats=stats, verbose=<span class="literal">False</span>)</span><br><span class="line">logbook.header = <span class="string">&#x27;gen&#x27;</span>,<span class="string">&#x27;nevals&#x27;</span>,<span class="string">&#x27;avg&#x27;</span>,<span class="string">&#x27;std&#x27;</span>,<span class="string">&#x27;min&#x27;</span>,<span class="string">&#x27;max&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(logbook)    </span><br></pre></td></tr></table></figure>
-
-<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
-  pie
-    title Key elements in Product X
-    &quot;Calcium&quot; : 42.96
-    &quot;Potassium&quot; : 50.05
-    &quot;Magnesium&quot; : 10.01
-    &quot;Iron&quot; :  5
-  </pre></div>
-
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><ul>
-<li>我有一个好点子<div class="tabs" id="test4-"><ul class="nav-tabs no-default"><button type="button" class="tab " data-href="test4--1">第一个Tab</button><button type="button" class="tab " data-href="test4--2"><i class="fab fa-apple-pay" style="text-align: center;"></i></button><button type="button" class="tab " data-href="test4--3"><i class="fas fa-bomb"></i>炸弹</button></ul><div class="tab-contents"><div class="tab-item-content" id="test4--1"><p><strong>tab名字为第一个Tab</strong></p></div><div class="tab-item-content" id="test4--2"><p><strong>只有图标 没有Tab名字</strong></p></div><div class="tab-item-content" id="test4--3"><p><strong>名字+icon</strong></p></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></li>
-</ul>
-<p>作者: Jerry<br>連結: <a href="https://butterfly.js.org/posts/4aa8abbe/">https://butterfly.js.org/posts/4aa8abbe/</a><br>來源: Butterfly<br>著作權歸作者所有。商業轉載請聯繫作者獲得授權，非商業轉載請註明出處。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<div class="flink"><div class="flink-name">友情链接</div><div class="flink-desc">那些人，那些事</div> <div class="flink-list">
-          <div class="flink-list-item">
-            <a href="https://jerryc.me/" title="JerryC" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://jerryc.me/img/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="JerryC" />
-              </div>
-              <div class="flink-item-name">JerryC</div> 
-              <div class="flink-item-desc" title="今日事,今日毕">今日事,今日毕</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://hexo.io/zh-tw/" title="Hexo" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Hexo" />
-              </div>
-              <div class="flink-item-name">Hexo</div> 
-              <div class="flink-item-desc" title="快速、简单且强大的网志框架">快速、简单且强大的网志框架</div>
-            </a>
-          </div></div><div class="flink-name">网站</div><div class="flink-desc">值得推荐的网站</div> <div class="flink-list">
-          <div class="flink-list-item">
-            <a href="https://www.youtube.com/" title="Youtube" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Youtube" />
-              </div>
-              <div class="flink-item-name">Youtube</div> 
-              <div class="flink-item-desc" title="视频网站">视频网站</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://www.weibo.com/" title="Weibo" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Weibo" />
-              </div>
-              <div class="flink-item-name">Weibo</div> 
-              <div class="flink-item-desc" title="中国最大社交分享平台">中国最大社交分享平台</div>
-            </a>
-          </div>
-          <div class="flink-list-item">
-            <a href="https://twitter.com/" title="Twitter" target="_blank">
-              <div class="flink-item-icon">
-                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Twitter" />
-              </div>
-              <div class="flink-item-name">Twitter</div> 
-              <div class="flink-item-desc" title="社交分享平台">社交分享平台</div>
-            </a>
-          </div></div></div>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Python基础--字符串(二)</title>
     <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
     <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
@@ -1601,5 +1674,87 @@ __123.34000___
         <tag>Python基础</tag>
         <tag>字符串</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/09/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>the information is here</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GA</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, gender, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.gender = gender</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;name:<span class="subst">&#123;name&#125;</span>,gender:<span class="subst">&#123;gender&#125;</span>,age:<span class="subst">&#123;age&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> deap <span class="keyword">import</span> base,tools,algorithms,creator</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># import random</span></span><br><span class="line"></span><br><span class="line">IND_NUM = <span class="number">30</span> <span class="comment"># 30位编码，[-5,5]，精度是8位</span></span><br><span class="line">POP_NUM = <span class="number">100</span> <span class="comment"># 种群总个体数量</span></span><br><span class="line">OFS_MAX = <span class="number">50</span> <span class="comment"># 后代最大值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">individual</span>):</span><br><span class="line">    num = <span class="built_in">int</span>(<span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> individual]),<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> (-<span class="number">5</span> + (<span class="number">10</span> * num)/(<span class="number">2</span>**<span class="number">30</span> - <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">eval</span>(<span class="params">individual</span>):</span><br><span class="line">    x = decode(individual)</span><br><span class="line">    <span class="keyword">return</span> ((np.square(x) + x) * np.cos(<span class="number">2</span> * x) + np.square(x) + x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">creator.create(<span class="string">&quot;FitnessMin&quot;</span>,base.Fitness,weights=(-<span class="number">1.0</span>,))</span><br><span class="line">creator.create(<span class="string">&quot;Individual&quot;</span>,<span class="built_in">list</span>,fitness = creator.FitnessMin)</span><br><span class="line"></span><br><span class="line">toolbox = base.Toolbox()</span><br><span class="line">toolbox.register(<span class="string">&quot;attribute&quot;</span>,np.random.randint,<span class="number">0</span>,<span class="number">2</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;individual&quot;</span>, tools.initRepeat, creator.Individual, toolbox.attribute, n=IND_NUM)</span><br><span class="line">toolbox.register(<span class="string">&quot;population&quot;</span>, tools.initRepeat, <span class="built_in">list</span>, toolbox.individual)</span><br><span class="line">pop = toolbox.population(n=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">toolbox.register(<span class="string">&quot;evaluate&quot;</span>, <span class="built_in">eval</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;select&quot;</span>, tools.selTournament, <span class="number">3</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mate&quot;</span>, tools.cxUniform, indpb=<span class="number">0.5</span>)</span><br><span class="line">toolbox.register(<span class="string">&quot;mutate&quot;</span>, tools.mutFlipBit, indpb=<span class="number">0.5</span>)</span><br><span class="line"><span class="comment"># tools.mutFlipBit()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stats = tools.Statistics(key=<span class="keyword">lambda</span> x: x.fitness.values)</span><br><span class="line">stats.register(<span class="string">&quot;avg&quot;</span>, np.mean)</span><br><span class="line">stats.register(<span class="string">&quot;std&quot;</span>, np.std)</span><br><span class="line">stats.register(<span class="string">&quot;min&quot;</span>, np.<span class="built_in">min</span>)</span><br><span class="line">stats.register(<span class="string">&quot;max&quot;</span>, np.<span class="built_in">max</span>)</span><br><span class="line"></span><br><span class="line">resultPop, logbook = algorithms.eaSimple(pop, toolbox, cxpb=<span class="number">0.5</span>, mutpb=<span class="number">0.2</span>, ngen=POP_NUM, stats=stats, verbose=<span class="literal">False</span>)</span><br><span class="line">logbook.header = <span class="string">&#x27;gen&#x27;</span>,<span class="string">&#x27;nevals&#x27;</span>,<span class="string">&#x27;avg&#x27;</span>,<span class="string">&#x27;std&#x27;</span>,<span class="string">&#x27;min&#x27;</span>,<span class="string">&#x27;max&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(logbook)    </span><br></pre></td></tr></table></figure>
+
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  pie
+    title Key elements in Product X
+    &quot;Calcium&quot; : 42.96
+    &quot;Potassium&quot; : 50.05
+    &quot;Magnesium&quot; : 10.01
+    &quot;Iron&quot; :  5
+  </pre></div>
+
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><ul>
+<li>我有一个好点子<div class="tabs" id="test4-"><ul class="nav-tabs no-default"><button type="button" class="tab " data-href="test4--1">第一个Tab</button><button type="button" class="tab " data-href="test4--2"><i class="fab fa-apple-pay" style="text-align: center;"></i></button><button type="button" class="tab " data-href="test4--3"><i class="fas fa-bomb"></i>炸弹</button></ul><div class="tab-contents"><div class="tab-item-content" id="test4--1"><p><strong>tab名字为第一个Tab</strong></p></div><div class="tab-item-content" id="test4--2"><p><strong>只有图标 没有Tab名字</strong></p></div><div class="tab-item-content" id="test4--3"><p><strong>名字+icon</strong></p></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></li>
+</ul>
+<p>作者: Jerry<br>連結: <a href="https://butterfly.js.org/posts/4aa8abbe/">https://butterfly.js.org/posts/4aa8abbe/</a><br>來源: Butterfly<br>著作權歸作者所有。商業轉載請聯繫作者獲得授權，非商業轉載請註明出處。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<div class="flink"><div class="flink-name">友情链接</div><div class="flink-desc">那些人，那些事</div> <div class="flink-list">
+          <div class="flink-list-item">
+            <a href="https://jerryc.me/" title="JerryC" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://jerryc.me/img/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="JerryC" />
+              </div>
+              <div class="flink-item-name">JerryC</div> 
+              <div class="flink-item-desc" title="今日事,今日毕">今日事,今日毕</div>
+            </a>
+          </div>
+          <div class="flink-list-item">
+            <a href="https://hexo.io/zh-tw/" title="Hexo" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Hexo" />
+              </div>
+              <div class="flink-item-name">Hexo</div> 
+              <div class="flink-item-desc" title="快速、简单且强大的网志框架">快速、简单且强大的网志框架</div>
+            </a>
+          </div></div><div class="flink-name">网站</div><div class="flink-desc">值得推荐的网站</div> <div class="flink-list">
+          <div class="flink-list-item">
+            <a href="https://www.youtube.com/" title="Youtube" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Youtube" />
+              </div>
+              <div class="flink-item-name">Youtube</div> 
+              <div class="flink-item-desc" title="视频网站">视频网站</div>
+            </a>
+          </div>
+          <div class="flink-list-item">
+            <a href="https://www.weibo.com/" title="Weibo" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Weibo" />
+              </div>
+              <div class="flink-item-name">Weibo</div> 
+              <div class="flink-item-desc" title="中国最大社交分享平台">中国最大社交分享平台</div>
+            </a>
+          </div>
+          <div class="flink-list-item">
+            <a href="https://twitter.com/" title="Twitter" target="_blank">
+              <div class="flink-item-icon">
+                <img class="no-lightbox" src="https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Twitter" />
+              </div>
+              <div class="flink-item-name">Twitter</div> 
+              <div class="flink-item-desc" title="社交分享平台">社交分享平台</div>
+            </a>
+          </div></div></div>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
 </search>
