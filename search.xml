@@ -864,126 +864,6 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P1推荐题汇总</title>
-    <url>/2024/09/30/CO_P1_extra/</url>
-    <content><![CDATA[<h1 id="北航计算机组成p1推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p1推荐题目汇总"></a> 北航计算机组成P1推荐题目汇总</h1>
-<h2 id="题目怎么来的"><a class="markdownIt-Anchor" href="#题目怎么来的"></a> 题目怎么来的</h2>
-<ul>
-<li><s>偷来的(搓手手</s></li>
-<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<s>爬虫而生的</s>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure>
-</li>
-<li><code>PieId</code>
-<ul>
-<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
-</ul>
-</li>
-<li><code>ProblemId</code>
-<ul>
-<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
-<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
-</ul>
-</li>
-<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br />
-<a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
-</ul>
-<hr />
-<h2 id="组合电路"><a class="markdownIt-Anchor" href="#组合电路"></a> 组合电路</h2>
-<ul>
-<li>过于简单，仅有提示</li>
-</ul>
-<h3 id="1202-405-floattype"><a class="markdownIt-Anchor" href="#1202-405-floattype"></a> 1202-405 FloatType</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h3 id="1202-202-comparator"><a class="markdownIt-Anchor" href="#1202-202-comparator"></a> 1202-202 Comparator</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
-</ul>
-<h3 id="1202-424-voter"><a class="markdownIt-Anchor" href="#1202-424-voter"></a> 1202-424 Voter</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="1202-102-alu"><a class="markdownIt-Anchor" href="#1202-102-alu"></a> 1202-102 ALU</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>注意使用拓展位的减法电路实现比较即可</li>
-</ul>
-<hr />
-<h2 id="有限状态机"><a class="markdownIt-Anchor" href="#有限状态机"></a> 有限状态机</h2>
-<h3 id="1202-334-drink"><a class="markdownIt-Anchor" href="#1202-334-drink"></a> 1202-334 Drink</h3>
-<ul>
-<li><s>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</s></li>
-<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
-<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text" /></li>
-<li>提供一个我使用的新结构框架（<s>应该没有泄露源码之嫌</s>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="1202-145-string"><a class="markdownIt-Anchor" href="#1202-145-string"></a> 1202-145 String</h3>
-<ul>
-<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
-<li>多重括号的辨别使用一个变量寄存左括号数量即可
-<ul>
-<li>string状态没有分开，看起来有一点乱<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图" /></li>
-<li>将带有左括号未匹配时单独分出状态，这样大概不会显得乱吧<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string.png" alt="wty赞助" /></li>
-</ul>
-</li>
-</ul>
-<h3 id="1202-336-intcheck"><a class="markdownIt-Anchor" href="#1202-336-intcheck"></a> 1202-336 IntCheck</h3>
-<ul>
-<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
-<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
-<li>第三，不要在小情侣后面码代码<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图" /></li>
-</ul>
-<a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
-  title="查看原图"><span>查看原图</span></a>]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>推荐题目</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>北航计算机组成P2推荐题汇总</title>
-    <url>/2024/10/09/CO_P2_extra/</url>
-    <content><![CDATA[<h1 id="北航计算机组成p2推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p2推荐题目汇总"></a> 北航计算机组成P2推荐题目汇总</h1>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<ul>
-<li>题目怎么来的就不再赘述，有感兴趣的同学可以走这里 <a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a></li>
-</ul>
-<h2 id="p2推荐题目汇总"><a class="markdownIt-Anchor" href="#p2推荐题目汇总"></a> P2推荐题目汇总</h2>
-<h3 id="1202-35-calculate"><a class="markdownIt-Anchor" href="#1202-35-calculate"></a> 1202-35 calculate</h3>
-<ul>
-<li>
-<p>注意题目要求的是按照<strong>输入的顺序</strong>输出计数的字符，不是按照<code>ascii</code>码表的位置</p>
-</li>
-<li>
-<p>我开了两个数组一个记录26个字母的数量，一个记录出现的顺序(<strong>重复出现的字母不会进行第二遍</strong>)，最后遍历记录出现顺序的数组即可</p>
-</li>
-<li>
-<p>还有一个小小的点：因为样例看起来是一行读入一个字符，实际测评机是一个接一个的字符读入，所以不需要处理<code>\n</code>(我刚开始就处理了，导致报了一个非法读入的错误)</p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.macro read_chr(%chr)</span><br><span class="line">    li $v0, 12</span><br><span class="line">    syscall</span><br><span class="line">    move %chr, $v0</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="1202-52-add"><a class="markdownIt-Anchor" href="#1202-52-add"></a> 1202-52 add</h3>
-<h3 id="1202-53-full_reserved"><a class="markdownIt-Anchor" href="#1202-53-full_reserved"></a> 1202-53 full_reserved</h3>
-<h3 id="1202-329-sum"><a class="markdownIt-Anchor" href="#1202-329-sum"></a> 1202-329 sum</h3>
-<h3 id="1202-330-hanoi"><a class="markdownIt-Anchor" href="#1202-330-hanoi"></a> 1202-330 hanoi</h3>
-<h3 id="1202-415-bsearch"><a class="markdownIt-Anchor" href="#1202-415-bsearch"></a> 1202-415 bsearch</h3>
-<h3 id="1202-416-flower"><a class="markdownIt-Anchor" href="#1202-416-flower"></a> 1202-416 flower</h3>
-<h3 id="1202-419-josef"><a class="markdownIt-Anchor" href="#1202-419-josef"></a> 1202-419 josef</h3>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>推荐题目</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>北航计算机组成P0课下</title>
     <url>/2024/09/24/CO_P0/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理p0课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p0课下"></a> 北航计算机组成原理P0课下</h1>
@@ -1491,6 +1371,423 @@
       </tags>
   </entry>
   <entry>
+    <title>北航计算机组成P1课下</title>
+    <url>/2024/09/28/CO_P1/</url>
+    <content><![CDATA[<h1 id="北航计算机组成原理p1课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p1课下"></a> 北航计算机组成原理P1课下</h1>
+<div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P1课下的相关内容，希望能对你有所帮助</p>
+</div>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<ul>
+<li><s>发现教程有了，不愧是STAR</s></li>
+<li>在阅读本次P1题解分享之前，我想单独分享一些关于<code>Verilog</code>编写有限状态机的内容(佬跳过，好吗？好的)</li>
+<li>从学习完<code>Verilog</code>到<code>Pre</code>上机之间的很长一段时间，我写<code>Verilog</code>有限状态机都只有一个过程块（<s>可能大概应该有和我一样的同学吧</s>），就像下面这样<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">define</span> S0 2&#x27;b00</span></span><br><span class="line">......</span><br><span class="line"><span class="keyword">module</span> xxx (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    ......</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="comment">//状态转移代码</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//消除锁存器</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在写一些简单的<code>Verilog</code>有限状态机的时候觉得结构简单清晰易懂，怎么写这么舒服，感觉脑子都闲置了下来（bushi，但是遇到像<code>cpu_checker_challenge</code>那样状态多且转移方程复杂的题目，就会显得单一过程块冗长且十分不易<code>debug</code>，几百行代码挤在一个<code>always</code>块中，总感觉像写C语言只写一个<code>main</code>函数</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="重构verilog结构"><a class="markdownIt-Anchor" href="#重构verilog结构"></a> 重构<code>Verilog</code>结构</h3>
+<ul>
+<li>直到我遇见了<code>HDLbits</code>，它向我提供了一种使用<code>Verilog</code>搭建和<code>logisim</code>结构很相似的有限状态机的代码机构，感觉会比一个<code>always</code>块清晰一些？</li>
+<li>首先，解决最大的问题，把<code>always</code>块拆分出来，像<code>logisim</code>一样，我们将代码分出计算次态的状态转移逻辑使用纯组合电路代替  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时钟沿上升，状态转移</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">        state &lt;= <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        state &lt;= next_state;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//计算次态next_state</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(state)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案1</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    out = ......</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案2</span></span><br><span class="line"><span class="keyword">assign</span> out = ......</span><br></pre></td></tr></table></figure>
+<ul>
+<li>诶呀，瞬间感觉代码变得清爽了，结构更加清晰了有没有（<s>没有也不许说</s>）</li>
+</ul>
+</li>
+<li>也许此时你觉得这样不过只是拆了几个<code>always</code>出来，没什么技术含量，那么接下来我们还可以利用新的结构做出一些原本结构做不出来的优化–<strong>简化代码逻辑</strong>与<strong>消除锁存器plus</strong>
+<ul>
+<li>你是否常常遇到这种情况，某个变量多个状态下的变化是一致的，只有极少部分的值改变的不一致<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">1</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+上面只展示一个状态下<code>count</code>变量的转移，如果你有10个状态呢（<s>你真的敢像<code>logisim</code>一样CV吗</s>），但是如果我们使用新结构就可以在<code>always</code>块开始时默认赋值了，节省代码<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    count &lt;= next_count;</span><br><span class="line">    status &lt;= next_status;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">//默认赋值区域</span></span><br><span class="line">    next_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                next_count = <span class="number">1</span>;   </span><br><span class="line">            .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+这得益于我们使用组合逻辑的always块不是非阻塞赋值，可以多次赋值，所以不用像之前一样每个情况都要重复</li>
+<li>同样，通过预先赋初值的办法我们就可以彻底消除锁存器这个bug了，因为锁存器产生原因就是我们没有明确赋值导致<code>Verilog</code>推导出锁存器记录之前的状态（<code>Verilog</code>帮我们默认赋值）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="comment">//缺少else分支</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+新结构的代码没有锁存器问题，但是<font color = red>不要故意不写else，重申，我们只是抑制锁存器plus</font></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="p1q5-表达式状态机"><a class="markdownIt-Anchor" href="#p1q5-表达式状态机"></a> P1.Q5 表达式状态机</h2>
+<ul>
+<li>大抵是一道很显然的<code>Moore</code>状态机，只需要判断<code>需要运算符</code>和<code>需要数字</code>两种状态即可，大致的思路如下<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_Q5.png" alt="状态转移图" /></li>
+<li>等等，这里的<code>*</code>和正则里面的不是一个啊，这里的是<code>\*</code>，笔者忘改了</li>
+<li>写起来也是顺手啊</li>
+<li>提供一个进阶题(<a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a>)，移步1202-145，加入匹配括号，甚至是多重嵌套括号，思路其实是一致的</li>
+</ul>
+<hr />
+<h2 id="p1extra-blockchecker"><a class="markdownIt-Anchor" href="#p1extra-blockchecker"></a> P1.extra BlockChecker</h2>
+<ul>
+<li>一道好题，<s>但不至于卡我一天吧</s>(<code>&amp;&amp;</code>别再写成<code>||</code>了</li>
+<li>因为我第一个思路因为某些莫名的原因一直没过(手真贱，所以我就换了一个思路，那么我提供两个思路思考</li>
+</ul>
+<h3 id="思路一-多个寄存器"><a class="markdownIt-Anchor" href="#思路一-多个寄存器"></a> 思路一 多个寄存器</h3>
+<ul>
+<li>
+<p><s>好处是状态少，坏处是容易手误</s></p>
+</li>
+<li>
+<p>状态设置思路</p>
+<ul>
+<li>首先设置了四个状态<code>start</code>、<code>word</code>、<code>illegal</code>分别表示空闲状态、匹配单词状态、匹配已经非法状态</li>
+</ul>
+</li>
+<li>
+<p>寄存器变量设置思路</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">寄存器变量</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">num</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">保存读入的单词长度(unsigned)</td>
+</tr>
+<tr>
+<td style="text-align:center">flag</td>
+<td style="text-align:center">33</td>
+<td style="text-align:center">保存目前未匹配的begin数量(signed)</td>
+</tr>
+<tr>
+<td style="text-align:center">has_begin</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">前一个周期是否已经匹配begin成功</td>
+</tr>
+<tr>
+<td style="text-align:center">has_end</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">前一个周期是否已经匹配end成功</td>
+</tr>
+<tr>
+<td style="text-align:center">first</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">最近五个周期内第1个周期的字符</td>
+</tr>
+<tr>
+<td style="text-align:center">…</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">最近五个周期内第i个周期的字符</td>
+</tr>
+<tr>
+<td style="text-align:center">fifth</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">这个周期读入的in，即最近五个周期内第5个周期的字符</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>状态转移思路</p>
+<ul>
+<li><code>start</code>状态
+<ul>
+<li><code>reset</code>生效后回到<code>start</code>状态</li>
+<li>匹配到字母则<code>num</code>自增，且进入状态<code>word</code></li>
+<li>匹配到空格保持原状态</li>
+<li>若匹配到其他的进入<code>illegal</code>状态</li>
+</ul>
+</li>
+<li><code>word</code>状态
+<ul>
+<li>读入字母，<code>num</code>自增，如果在包括此次<code>in</code>输入共有五个字符时，且<code>first</code> ~ <code>fifth(in)</code>是<code>begin</code>(不区分大小写)，<code>flag</code>加1，设置<code>has_begin</code></li>
+<li>同上，在包含此次<code>in</code>共三个字符时，且<code>third</code> ~ <code>fifth(in)</code>是<code>end</code>(不区分大小写)，<code>flag</code>减1，设置<code>has_end</code></li>
+<li>读入字母，<code>has_begin</code>已经置高，说明前面五个字符已经是<code>begin</code>了，但是又读入一个字母，说明这个单词不是<code>begin</code>了，<code>flag</code>减1</li>
+<li>同上，<code>has_end</code>已经置高了，说明这个单词不是<code>end</code>，<code>flag</code>需要加1</li>
+<li>读入空格，说明单词已经读入完毕，<code>num</code>置0，如果<code>flag</code>此时是-1(<code>0x1ffffffff</code>)，说明先出现了未匹配的<code>end</code>，此时进入<code>illegal</code>状态，等待复位信号否则回到<code>start</code>空闲状态</li>
+<li>读入其他字符进入<code>illegal</code>状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="思路二-多个状态"><a class="markdownIt-Anchor" href="#思路二-多个状态"></a> 思路二 多个状态</h3>
+<ul>
+<li><s>好处是清晰，没有坏处</s></li>
+<li>状态设置思路
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">_start</td>
+<td style="text-align:center">空闲状态等待空格或者字母</td>
+</tr>
+<tr>
+<td style="text-align:center">_b</td>
+<td style="text-align:center">匹配到单词b</td>
+</tr>
+<tr>
+<td style="text-align:center">_be</td>
+<td style="text-align:center">匹配到单词be</td>
+</tr>
+<tr>
+<td style="text-align:center">_beg</td>
+<td style="text-align:center">匹配到单词beg</td>
+</tr>
+<tr>
+<td style="text-align:center">_begi</td>
+<td style="text-align:center">匹配到单词begi</td>
+</tr>
+<tr>
+<td style="text-align:center">_begin</td>
+<td style="text-align:center">匹配到单词begin</td>
+</tr>
+<tr>
+<td style="text-align:center">_e</td>
+<td style="text-align:center">匹配到单词e</td>
+</tr>
+<tr>
+<td style="text-align:center">_en</td>
+<td style="text-align:center">匹配到单词en</td>
+</tr>
+<tr>
+<td style="text-align:center">_end</td>
+<td style="text-align:center">匹配到单词end</td>
+</tr>
+<tr>
+<td style="text-align:center">_other</td>
+<td style="text-align:center">匹配到其他单词</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>寄存器设置思路
+<ul>
+<li>只需要<code>state</code>寄存器保存状态和<code>flag</code>寄存器保存左括号数</li>
+</ul>
+</li>
+<li>状态转移思路
+<ul>
+<li><code>_start</code>状态
+<ul>
+<li>复位后回到<code>_start</code>状态等待输入</li>
+<li>如果是字母<code>b</code>进入<code>_b</code>状态</li>
+<li>如果是字母<code>e</code>进入<code>_e</code>状态</li>
+<li>如果是其他字母进入<code>_other</code>状态</li>
+<li>空格保持状态</li>
+</ul>
+</li>
+<li><code>_b</code> ~ <code>_en</code>状态
+<ul>
+<li>每个都是匹配到某个字母转为下一个状态：<code>_b</code>匹配到字母<code>e</code>转到<code>_be</code></li>
+<li>匹配到其他字母直接转为<code>_other</code></li>
+<li>匹配到空格回到空闲状态</li>
+</ul>
+</li>
+<li><code>_begin</code>与<code>_end</code>
+<ul>
+<li>两个状态特殊在于判断其后是否还有字母，也即到底是完整单词还是其他单词的前缀例如<code>endx</code></li>
+<li>因为前一个状态转移时时默认匹配到了完整单词，例如<code>_begi</code>到<code>_begin</code>是匹配到了<code>begin</code>一个周期的，所以如果后面有其他字母需要调整<code>flag</code>的值</li>
+</ul>
+</li>
+<li><code>_other</code>
+<ul>
+<li>接收到字母保持原态</li>
+<li>接收到空格回到空闲状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="p1推荐题汇总"><a class="markdownIt-Anchor" href="#p1推荐题汇总"></a> P1推荐题汇总</h2>
+<a class="btn-beautify " href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/" 
+  title="P1推荐题汇总"><span>P1推荐题汇总</span></a>
+<p><a href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/">P1推荐题汇总</a></p>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P1推荐题汇总</title>
+    <url>/2024/09/30/CO_P1_extra/</url>
+    <content><![CDATA[<h1 id="北航计算机组成p1推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p1推荐题目汇总"></a> 北航计算机组成P1推荐题目汇总</h1>
+<h2 id="题目怎么来的"><a class="markdownIt-Anchor" href="#题目怎么来的"></a> 题目怎么来的</h2>
+<ul>
+<li><s>偷来的(搓手手</s></li>
+<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<s>爬虫而生的</s>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure>
+</li>
+<li><code>PieId</code>
+<ul>
+<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
+</ul>
+</li>
+<li><code>ProblemId</code>
+<ul>
+<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
+<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
+</ul>
+</li>
+<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br />
+<a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
+</ul>
+<hr />
+<h2 id="组合电路"><a class="markdownIt-Anchor" href="#组合电路"></a> 组合电路</h2>
+<ul>
+<li>过于简单，仅有提示</li>
+</ul>
+<h3 id="1202-405-floattype"><a class="markdownIt-Anchor" href="#1202-405-floattype"></a> 1202-405 FloatType</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="1202-202-comparator"><a class="markdownIt-Anchor" href="#1202-202-comparator"></a> 1202-202 Comparator</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
+</ul>
+<h3 id="1202-424-voter"><a class="markdownIt-Anchor" href="#1202-424-voter"></a> 1202-424 Voter</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="1202-102-alu"><a class="markdownIt-Anchor" href="#1202-102-alu"></a> 1202-102 ALU</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意使用拓展位的减法电路实现比较即可</li>
+</ul>
+<hr />
+<h2 id="有限状态机"><a class="markdownIt-Anchor" href="#有限状态机"></a> 有限状态机</h2>
+<h3 id="1202-334-drink"><a class="markdownIt-Anchor" href="#1202-334-drink"></a> 1202-334 Drink</h3>
+<ul>
+<li><s>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</s></li>
+<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
+<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text" /></li>
+<li>提供一个我使用的新结构框架（<s>应该没有泄露源码之嫌</s>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-145-string"><a class="markdownIt-Anchor" href="#1202-145-string"></a> 1202-145 String</h3>
+<ul>
+<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
+<li>多重括号的辨别使用一个变量寄存左括号数量即可
+<ul>
+<li>string状态没有分开，看起来有一点乱<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图" /></li>
+<li>将带有左括号未匹配时单独分出状态，这样大概不会显得乱吧<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string.png" alt="wty赞助" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="1202-336-intcheck"><a class="markdownIt-Anchor" href="#1202-336-intcheck"></a> 1202-336 IntCheck</h3>
+<ul>
+<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
+<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
+<li>第三，不要在小情侣后面码代码<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图" /></li>
+</ul>
+<a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
+  title="查看原图"><span>查看原图</span></a>]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>推荐题目</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P2推荐题汇总</title>
+    <url>/2024/10/09/CO_P2_extra/</url>
+    <content><![CDATA[<h1 id="北航计算机组成p2推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p2推荐题目汇总"></a> 北航计算机组成P2推荐题目汇总</h1>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<ul>
+<li>题目怎么来的就不再赘述，有感兴趣的同学可以走这里 <a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a></li>
+</ul>
+<h2 id="p2推荐题目汇总"><a class="markdownIt-Anchor" href="#p2推荐题目汇总"></a> P2推荐题目汇总</h2>
+<h3 id="1202-35-calculate"><a class="markdownIt-Anchor" href="#1202-35-calculate"></a> 1202-35 calculate</h3>
+<ul>
+<li>注意题目要求的是按照<strong>输入的顺序</strong>输出计数的字符，不是按照<code>ascii</code>码表的位置</li>
+<li>我开了两个数组一个记录26个字母的数量，一个记录出现的顺序(<strong>重复出现的字母不会进行第二遍</strong>)，最后遍历记录出现顺序的数组即可</li>
+<li>还有一个小小的点：因为样例看起来是一行读入一个字符，实际测评机是一个接一个的字符读入，所以不需要处理<code>\n</code>(我刚开始就处理了，导致报了一个非法读入的错误)  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.macro read_chr(%chr)</span><br><span class="line">    li $v0, 12</span><br><span class="line">    syscall</span><br><span class="line">    move %chr, $v0</span><br><span class="line"></span><br><span class="line">    # 不需要处理字母后面的\n</span><br><span class="line">    # li $v0, 12</span><br><span class="line">    # syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
+</li>
+<li>提供一个有大致思路含详细注解的<code>main</code>模块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">read_int($s0) # 读入字符数n</span><br><span class="line">li $s1, 0 # 目前字母的个数</span><br><span class="line">li $t0, 0 # 设置循环变量i</span><br><span class="line">for_i_begin:</span><br><span class="line">	beq $t0, $s0, for_i_end # 循环终止条件</span><br><span class="line">	read_chr($t1) # 读入字符</span><br><span class="line">	addi $t1, $t1, -97 # 切换回在字母表中的序号</span><br><span class="line">	li $t2, 0 # 循环变量z</span><br><span class="line">	</span><br><span class="line">	for_z_begin: # 用于判断是否出现过这个字符</span><br><span class="line">		beq $t2, $s1, for_z_end # 对目前出现的所有字符遍历 </span><br><span class="line">		sll $t3, $t2, 2 </span><br><span class="line">		lw $t4, buffer($t3) # 读出第$t2个已有字符</span><br><span class="line">		sub $t4, $t4, $t1 # 判断是否为同一个字符</span><br><span class="line">		if_begin_1:</span><br><span class="line">			bne $t4, $zero, if_end_1 # 如果不是则跳转</span><br><span class="line">			j not_for_z_end # 如果是则直接结束这段内容</span><br><span class="line">		if_end_1:</span><br><span class="line">		addi $t2, $t2, 1</span><br><span class="line">		j for_z_begin</span><br><span class="line">	for_z_end:</span><br><span class="line">		sll $t3, $t2, 2 # 存入新读入的字符</span><br><span class="line">		sw $t1, buffer($t3)</span><br><span class="line">		addi $s1, $s1, 1</span><br><span class="line">	not_for_z_end:</span><br><span class="line">	</span><br><span class="line">	sll $t1, $t1, 2 # 找到指定字母的偏移字节</span><br><span class="line">	</span><br><span class="line">	lw $t2, num($t1)</span><br><span class="line">	addi $t2, $t2, 1 # 找到的字母加1</span><br><span class="line">	sw $t2, num($t1)</span><br><span class="line">	</span><br><span class="line">	addi $t0, $t0, 1 # 循环继续条件</span><br><span class="line">	j for_i_begin</span><br><span class="line">for_i_end:</span><br><span class="line"></span><br><span class="line">li $t0, 0 # 设置循环变量j</span><br><span class="line">for_j_begin:</span><br><span class="line">	beq $t0, $s1, for_j_end</span><br><span class="line">	sll $t1, $t0, 2</span><br><span class="line">	lw $t3, buffer($t1) # 读入第j个读入的字母</span><br><span class="line">	</span><br><span class="line">	sll $t1, $t3, 2</span><br><span class="line">	lw $t2, num($t1)</span><br><span class="line">			</span><br><span class="line">	if_begin:</span><br><span class="line">		beq $t2, $zero, if_end</span><br><span class="line">		addi $t3, $t3, 97</span><br><span class="line">		print_chr($t3, $t2)</span><br><span class="line">	if_end:</span><br><span class="line">	</span><br><span class="line">	addi $t0, $t0, 1 # 循环继续条件 </span><br><span class="line">	j for_j_begin</span><br><span class="line">for_j_end:</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-52-add"><a class="markdownIt-Anchor" href="#1202-52-add"></a> 1202-52 add</h3>
+<ul>
+<li>看上去有点麻烦而已，其实完全可以使用一个矩阵接收两次数字完成两次加法(因为所有内存起始值赋值为0)</li>
+<li>最后的转置也只是需要将原来的嵌套<code>for</code>循环中的<strong>先<code>row</code>后<code>col</code></strong> 改为 **先<code>col</code>后<code>row</code>**就可以了</li>
+<li>同样提供一个有大致思路的<code>main</code>模块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">read_in($s0) # 读入n</span><br><span class="line">read_in($s1) # 读入m</span><br><span class="line"></span><br><span class="line">li $s2, 2 # 直接设置读入两次</span><br><span class="line">li $t0, 0 # 设置循环变量i</span><br><span class="line">for_i_begin:</span><br><span class="line">	beq $t0, $s2, for_i_end</span><br><span class="line">	li $t1, 0 # 设置循环变量j</span><br><span class="line">	for_j_begin:</span><br><span class="line">		beq $t1, $s0, for_j_end</span><br><span class="line">		li $t2, 0 # 设置循环变量z</span><br><span class="line">		for_z_begin:</span><br><span class="line">			beq $t2, $s1, for_z_end</span><br><span class="line">			read_in($t3) # 读入矩阵数</span><br><span class="line">			read_martix($t1, $t2, $s1, $t4) # 将矩阵$t1行$t2列的数字读入$t4中</span><br><span class="line">			add $t4, $t4, $t3 # 加入读入的数字</span><br><span class="line">			set_martix($t1, $t2, $s1, $t4) # 将设置好的值放回矩阵中</span><br><span class="line">			addi $t2, $t2, 1 # 循环z继续条件</span><br><span class="line">			j for_z_begin</span><br><span class="line">		for_z_end:</span><br><span class="line">		addi $t1, $t1, 1 # 循环j继续条件</span><br><span class="line">		j for_j_begin</span><br><span class="line">	for_j_end:</span><br><span class="line">	</span><br><span class="line">	addi $t0, $t0, 1 # 循环i继续条件</span><br><span class="line">	j for_i_begin</span><br><span class="line">for_i_end:</span><br><span class="line"></span><br><span class="line">print_str(hint) # 打印题目要求的hint信息</span><br><span class="line">li $t0, 0 # 设置循环变量i</span><br><span class="line">for_i_begin_2:</span><br><span class="line">	beq $t0, $s1, for_i_end_2</span><br><span class="line">	li $t1, 0 # 设置循环变量j</span><br><span class="line">	for_j_begin_2:</span><br><span class="line">		beq $t1, $s0, for_j_end_2</span><br><span class="line">		read_martix($t1, $t0, $s1, $t4) # 读入矩阵</span><br><span class="line">		print_int($t4) # 打印矩阵$t1行$t0列的值</span><br><span class="line">		print_str(space) # 打印空格</span><br><span class="line">		addi $t1, $t1, 1 # 循环j继续条件</span><br><span class="line">		j for_j_begin_2</span><br><span class="line">	for_j_end_2:</span><br><span class="line">		print_str(enter) # 打印换行</span><br><span class="line">	addi $t0, $t0, 1 # 循环i继续条件</span><br><span class="line">	j for_i_begin_2 </span><br><span class="line">for_i_end_2:</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-53-full_reserved"><a class="markdownIt-Anchor" href="#1202-53-full_reserved"></a> 1202-53 full_reserved</h3>
+<ul>
+<li>对于全排列问题(顺序)，可以考虑下面的思路(只想看汇编内容可以跳过，这里主要讲的是全排列是如何写的)
+<ul>
+<li>我们以<code>1234</code>四个数字举例，开头为<code>1</code>和<code>2</code>的情况</li>
+<li><code>1</code>:<code>1234 1243 1324 1342 1423 1432</code></li>
+<li><code>2</code>:<code>2134 2143 2314 2341 2413 2431</code></li>
+<li>可以发现，以某个数字开头的全排列其实是 以<strong>这个数字开头</strong>加上<strong>剩下所有数字按相对大小重新构成的数字队列</strong>的全排列</li>
+<li>例如<code>1</code>与<code>234</code>的全排列构成<code>1234</code>以<code>1</code>开头的全排列;<code>2</code>与<code>134</code>的全排列构成了<code>1234</code>以<code>2</code>开头的全排列，所以就可以写递归程序了(雾)</li>
+<li>所以所给递归程序的<code>symbol</code>全局数组是用来记录这个<strong>开头的数字</strong></li>
+</ul>
+</li>
+<li>题目要求你改写<strong>逆序</strong>的全排列汇编程序
+<ul>
+<li>最方便的思路就是打印的时候不打印<code>array[i]</code>而打印<code>n+1-array[i]</code>这样相当于用<code>n....1</code>来全排列</li>
+<li>当然，如果你理解了这个C语言程序如何运作的，可以将<code>for</code>循环的顺序反过来，从最高位<code>n</code>来开始，思路同上面的讲解思路</li>
+</ul>
+</li>
+<li>仔细考虑入栈出栈情况，如果使用栈传递参数记得开始时就要先出栈，<code>$ra</code>的保留值在任何一个程序的返回点都要弹出，总之<strong>入栈则一定要出栈</strong>(虽然有点像废话，但某些地方真的必须考虑清楚)，切记</li>
+<li>给出一个可以参考的<code>FullArray</code>函数的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">full_array:</span><br><span class="line">    addi $sp, $sp, -8 # 给出一定的栈空间</span><br><span class="line">    sw $a0, 4($sp) # 压栈</span><br><span class="line">    sw $ra 0($sp) </span><br><span class="line">    move $t0, $a0 # t0代表index</span><br><span class="line">    if_begin:</span><br><span class="line">        sltu $t2, $t0, $s0 # 判断index与n的大小</span><br><span class="line">        bne $t2, $zero, if_end</span><br><span class="line">        </span><br><span class="line">        li $t1, 0 # 设置循环变量i</span><br><span class="line">        for_i_begin:</span><br><span class="line">            beq $t1, $s0, for_i_end </span><br><span class="line">            sll $t2, $t1, 2 </span><br><span class="line">            lw $t3, array($t2) # 得到array[i]</span><br><span class="line">            sub $t3, $zero, $t3</span><br><span class="line">            addi $t4, $s0, 1</span><br><span class="line">            add $t3, $t3, $t4 # 得到n+1-array[i]</span><br><span class="line">            print_int($t3) # 打印这个值</span><br><span class="line">            print_str(space) # 打印空格</span><br><span class="line">            addi $t1, $t1, 1 # 循环i继续条件</span><br><span class="line">            j for_i_begin</span><br><span class="line">        for_i_end:</span><br><span class="line">        print_str(enter) # 打印换行</span><br><span class="line">        add $sp, $sp ,8 # 注意出栈，这里可以不用弹出值，但是一定要栈空间减少</span><br><span class="line">        jr $ra # 返回</span><br><span class="line">    if_end:</span><br><span class="line">        </span><br><span class="line">    li $t1, 0 # 设置循环变量j</span><br><span class="line">    for_j_begin:</span><br><span class="line">        beq $t1, $s0, for_j_end</span><br><span class="line">        if_begin_2:</span><br><span class="line">            sll $t2, $t1, 2</span><br><span class="line">            lw $t3, symbol($t2)</span><br><span class="line">            bne $t3, $zero, if_end_2 # 判断symbol[i]是否为0</span><br><span class="line">            </span><br><span class="line">            sll $t2, $t0, 2</span><br><span class="line">            addi $t3, $t1, 1</span><br><span class="line">            sw $t3, array($t2) # 设置array[index] = i + 1这里设置每个子全排列的头部</span><br><span class="line">            </span><br><span class="line">            sll $t2, $t1, 2</span><br><span class="line">            li $t3, 1</span><br><span class="line">            sw $t3, symbol($t2) # 设置i+1已经进入排列</span><br><span class="line">            </span><br><span class="line">            addi $a0, $t0, 1</span><br><span class="line">            addi $sp, $sp, -8</span><br><span class="line">            sw $t0, 4($sp) # 进入函数前先保留参数</span><br><span class="line">            sw $t1, 0($sp)</span><br><span class="line">            jal full_array </span><br><span class="line">            </span><br><span class="line">            lw $t0, 4($sp) # 返回函数后弹出参数</span><br><span class="line">            lw $t1, 0($sp)</span><br><span class="line">            addi $sp, $sp, 8 # 归还栈空间</span><br><span class="line">            </span><br><span class="line">            sll $t2, $t1, 2</span><br><span class="line">            li $t3, 0</span><br><span class="line">            sw $t3, symbol($t2) # 进入新的一个排列，将symbol[i]清空</span><br><span class="line">        if_end_2:</span><br><span class="line">        </span><br><span class="line">        addi $t1, $t1, 1 # 循环j继续条件</span><br><span class="line">        j for_j_begin</span><br><span class="line">    for_j_end:</span><br><span class="line">    addi $sp, $sp, 8 # 将刚开始保留的参数弹出</span><br><span class="line">    lw $a0, -4($sp)</span><br><span class="line">    lw $ra -8($sp)	</span><br><span class="line">    </span><br><span class="line">    jr $ra # 返回</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-329-sum"><a class="markdownIt-Anchor" href="#1202-329-sum"></a> 1202-329 sum</h3>
+<ul>
+<li>大概就是一个变量保留 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">n!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">n</span><span class="mclose">!</span></span></span></span> 的值，一个变量保留 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><mi>i</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">\sum\limits_{i=1}^n i!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.329066em;vertical-align:-0.9776689999999999em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3513970000000004em;"><span style="top:-2.122331em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.0000050000000003em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-3.950005em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9776689999999999em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">i</span><span class="mclose">!</span></span></span></span>，然后进行递推就可以了，千万不要递归啊(雾，大概率会爆吧</li>
+<li>提供一个可参考的<code>main</code>模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read($s0)</span><br><span class="line">    li $s1, 0</span><br><span class="line">    li $s2, 1</span><br><span class="line">    li $t0, 1</span><br><span class="line">    li $s3, 1</span><br><span class="line">    for_start:</span><br><span class="line">        sltu $s3, $s0, $t0</span><br><span class="line">        bne $s3, $zero, for_end</span><br><span class="line">        multu $t0, $s2</span><br><span class="line">        mflo $s2</span><br><span class="line">        addu $s1, $s1, $s2</span><br><span class="line">        addi $t0, $t0, 1</span><br><span class="line">        j for_start</span><br><span class="line">    for_end:</span><br><span class="line">        printU($s1)</span><br><span class="line">        done</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-330-hanoi"><a class="markdownIt-Anchor" href="#1202-330-hanoi"></a> 1202-330 hanoi</h3>
+<ul>
+<li>诶呀，<s>是大一写的递归程序呢</s></li>
+<li>不论是C语言代码的理解和整体程序都没有难点，所以注意的只有压栈弹栈时候小心即可！</li>
+<li>因为函数参数过多，所以我采用了用栈传输参数的思路，所以要更加小心，哪些部分是保存参数、弹出参数，哪些部分是传递参数、接收参数</li>
+<li>本题给出了关于模板字符串的提示，虽然没法用占位符<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">format_str: .asciiz &quot;move disk D from C to C\n&quot;</span><br><span class="line">.macro print(%disk, %from, %to)</span><br><span class="line">    li $t7, 10</span><br><span class="line">    addi $t6, %disk, 48</span><br><span class="line">    sb $t6, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 17</span><br><span class="line">    sb %from, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 22</span><br><span class="line">    sb %to, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    la $a0, format_str</span><br><span class="line">    li $v0, 4</span><br><span class="line">    syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
+</li>
+<li>同样，给出参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入n</span><br><span class="line">    li $t1, 65</span><br><span class="line">    li $t2, 66</span><br><span class="line">    li $t3, 67</span><br><span class="line">    la $sp, stack</span><br><span class="line">    addi $sp, $sp, 800 # 初始化参数与stack</span><br><span class="line">    </span><br><span class="line">    push($t0) # 传参数</span><br><span class="line">    push($t1)</span><br><span class="line">    push($t2)</span><br><span class="line">    push($t3)</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">hanoi:</span><br><span class="line">    pop($t3) # 接收参数</span><br><span class="line">    pop($t2)</span><br><span class="line">    pop($t1)</span><br><span class="line">    pop($t0)</span><br><span class="line">    push($ra) # 保存返回值</span><br><span class="line">    if_begin:</span><br><span class="line">        bne $t0, $zero, if_end</span><br><span class="line">        print($t0, $t1, $t2)</span><br><span class="line">        print($t0, $t2, $t3)</span><br><span class="line">        pop($ra) # 弹返回地址</span><br><span class="line">        jr $ra</span><br><span class="line">    if_end:</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    push($t1)</span><br><span class="line">    push($t2)</span><br><span class="line">    push($t3)</span><br><span class="line"></span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    push($t1)</span><br><span class="line">    push($t2)</span><br><span class="line">    push($t3)</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 取出保留的参数</span><br><span class="line">    pop($t2)</span><br><span class="line">    pop($t1)</span><br><span class="line">    pop($t0)</span><br><span class="line">    print($t0, $t1, $t2)</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保留参数</span><br><span class="line">    push($t1)</span><br><span class="line">    push($t2)</span><br><span class="line">    push($t3)</span><br><span class="line">    </span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    push($t3)</span><br><span class="line">    push($t2)</span><br><span class="line">    push($t1)</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 弹出保存参数</span><br><span class="line">    pop($t2)</span><br><span class="line">    pop($t1)</span><br><span class="line">    pop($t0)</span><br><span class="line">    print($t0, $t2, $t3)</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    push($t1)</span><br><span class="line">    push($t2)</span><br><span class="line">    push($t3)</span><br><span class="line">    </span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    push($t1)</span><br><span class="line">    push($t2)</span><br><span class="line">    push($t3)</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 弹出传递参数</span><br><span class="line">    pop($t2)</span><br><span class="line">    pop($t1)</span><br><span class="line">    pop($t0)</span><br><span class="line">    pop($ra)</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-415-bsearch"><a class="markdownIt-Anchor" href="#1202-415-bsearch"></a> 1202-415 bsearch</h3>
+<ul>
+<li>二分查找！！！</li>
+<li>因为已经给出了C语言参考模板了，没有的话或许有同学会因为不清楚<code>[low,high]</code>还是<code>[low,high)</code>两种查找方式的区别，而写出一些小bug</li>
+<li>注意<code>slt</code>与<code>sltu</code>因为如果查找的<code>key</code>比数组中最小的值还要小的话，那么最后得到的值是-1，但是-1在无符号数中是最大的，会出现死循环哦</li>
+<li>直接给出可参考的模板了<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">binary_search:</span><br><span class="line">    push($s1)</span><br><span class="line">    move $s1, $a0 # key</span><br><span class="line">    li $t0, 0 # low</span><br><span class="line">    addi $t1, $s0, -1 # high</span><br><span class="line">    li $t2, 0 # mid</span><br><span class="line">    </span><br><span class="line">    while_begin:</span><br><span class="line">        slt $t5, $t1, $t0</span><br><span class="line">        bne $t5, $zero, while_end</span><br><span class="line">        </span><br><span class="line">        add $t2, $t0, $t1</span><br><span class="line">        srl $t2, $t2, 1</span><br><span class="line">        </span><br><span class="line">        if_begin:</span><br><span class="line">            sll $t5, $t2, 2</span><br><span class="line">            lw $t6, array($t5)</span><br><span class="line">            sltu $t5, $s1, $t6</span><br><span class="line">            beq $t5, $zero else_if_1</span><br><span class="line">            addi $t1, $t2, -1</span><br><span class="line">            j if_end</span><br><span class="line">        else_if_1:</span><br><span class="line">            sltu $t5, $t6, $s1</span><br><span class="line">            beq $t5, $zero else_if_2</span><br><span class="line">            addi $t0, $t2, 1</span><br><span class="line">            j if_end</span><br><span class="line">        else_if_2:</span><br><span class="line">            li $t5, 1</span><br><span class="line">            print($t5)</span><br><span class="line">            pop($s1)</span><br><span class="line">            jr $ra		</span><br><span class="line">        if_end:</span><br><span class="line">        j while_begin</span><br><span class="line">    while_end:</span><br><span class="line"></span><br><span class="line">    li $t5, 0</span><br><span class="line">    print($t5)</span><br><span class="line">    pop($s1)</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-416-flower"><a class="markdownIt-Anchor" href="#1202-416-flower"></a> 1202-416 flower</h3>
+<ul>
+<li>简单汇编，直接给出可参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入m</span><br><span class="line">    read_in($s0) # 读入n</span><br><span class="line">    </span><br><span class="line">    for_i_begin:</span><br><span class="line">        beq $t0, $s0, for_i_end</span><br><span class="line">        divu $t1, $t0, 100</span><br><span class="line">        </span><br><span class="line">        mul $t2, $t1, 100</span><br><span class="line">        sub $t4, $t0, $t2</span><br><span class="line">        divu $t2, $t4, 10</span><br><span class="line">        </span><br><span class="line">        mul $t3, $t2, 10</span><br><span class="line">        sub $t3, $t4, $t3</span><br><span class="line">        </span><br><span class="line">        mul $t4, $t1, $t1</span><br><span class="line">        mul $t4, $t4, $t1</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t2, $t2</span><br><span class="line">        mul $t5, $t5, $t2</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t3, $t3</span><br><span class="line">        mul $t5, $t5, $t3</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        if_begin:</span><br><span class="line">            bne $t4, $t0, if_end</span><br><span class="line">            print($t0)</span><br><span class="line">        if_end:</span><br><span class="line">        add $t0, $t0, 1</span><br><span class="line">        j for_i_begin</span><br><span class="line">    for_i_end:</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-419-josef"><a class="markdownIt-Anchor" href="#1202-419-josef"></a> 1202-419 josef</h3>
+<ul>
+<li>也是一道大一写的题目呢，<s>小海豚</s></li>
+<li>其实刚开始我想如果暴力数组没过的话就用循环链表了(没想都暴力可以直接过)</li>
+<li>这里主要通过一个数组记录某个编号是否已经被删除了</li>
+<li>计数就是数组下标加一，遇到等于数组长度时自动返回0</li>
+<li>给出一个可以参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read($s0) # 读入人数n</span><br><span class="line">read($s1) # 读入报数m</span><br><span class="line"></span><br><span class="line">li $t0, 0 # 报数的人的编号</span><br><span class="line">li $t1, 0 # 外层循环变量i,将所有人都出局为止</span><br><span class="line">li $t2, 1 # 设置第一次数数</span><br><span class="line">for_start_i:</span><br><span class="line">    beq $t1, $s0, for_end_i # 达到最大人数结束循环</span><br><span class="line">    for_start_j:</span><br><span class="line">        beq $t2, $s1, for_end_j # 达到报数最大值</span><br><span class="line">        while_start:</span><br><span class="line">            addi $t0, $t0, 1 # 向后数数</span><br><span class="line">            bne $t0, $s0, while_else # 如果数到最后一个人之后，返回第一个人</span><br><span class="line">            li $t0, 0</span><br><span class="line">            while_else:</span><br><span class="line">                sll $t4, $t0, 2</span><br><span class="line">                lw $t5, people($t4) # 获得第 $t0 + 1个人是否已经出局</span><br><span class="line">                beq $t5, $zero, while_end # 若没有出局则将结束循环，否则继续查找未出局的人</span><br><span class="line">                j while_start</span><br><span class="line">                while_end:</span><br><span class="line">                    addi $t2, $t2, 1 # 循环继续条件</span><br><span class="line">                    j for_start_j</span><br><span class="line">    for_end_j:</span><br><span class="line">        sll $t4, $t0, 2</span><br><span class="line">        li $t5, 1</span><br><span class="line">        sw $t5, people($t4) # 记录出局的人，置1</span><br><span class="line">        addi $t5, $t0, 1 # 打印出局的人的编号</span><br><span class="line">        print($t5)</span><br><span class="line">        li $t2, 0 # 设置每次j的</span><br><span class="line">        addi $t1, $t1, 1 # 循环继续条件</span><br><span class="line">        j for_start_i</span><br><span class="line">for_end_i:</span><br><span class="line">    done</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>推荐题目</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础--字符串(一)</title>
     <url>/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/</url>
     <content><![CDATA[<h1 id="python基础之字符串一"><a class="markdownIt-Anchor" href="#python基础之字符串一"></a> Python基础之字符串(一)</h1>
@@ -1774,248 +2071,6 @@
       <tags>
         <tag>Python基础</tag>
         <tag>字符串</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>北航计算机组成P1课下</title>
-    <url>/2024/09/28/CO_P1/</url>
-    <content><![CDATA[<h1 id="北航计算机组成原理p1课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p1课下"></a> 北航计算机组成原理P1课下</h1>
-<div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P1课下的相关内容，希望能对你有所帮助</p>
-</div>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<ul>
-<li><s>发现教程有了，不愧是STAR</s></li>
-<li>在阅读本次P1题解分享之前，我想单独分享一些关于<code>Verilog</code>编写有限状态机的内容(佬跳过，好吗？好的)</li>
-<li>从学习完<code>Verilog</code>到<code>Pre</code>上机之间的很长一段时间，我写<code>Verilog</code>有限状态机都只有一个过程块（<s>可能大概应该有和我一样的同学吧</s>），就像下面这样<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">define</span> S0 2&#x27;b00</span></span><br><span class="line">......</span><br><span class="line"><span class="keyword">module</span> xxx (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    ......</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="comment">//状态转移代码</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//消除锁存器</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>在写一些简单的<code>Verilog</code>有限状态机的时候觉得结构简单清晰易懂，怎么写这么舒服，感觉脑子都闲置了下来（bushi，但是遇到像<code>cpu_checker_challenge</code>那样状态多且转移方程复杂的题目，就会显得单一过程块冗长且十分不易<code>debug</code>，几百行代码挤在一个<code>always</code>块中，总感觉像写C语言只写一个<code>main</code>函数</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="重构verilog结构"><a class="markdownIt-Anchor" href="#重构verilog结构"></a> 重构<code>Verilog</code>结构</h3>
-<ul>
-<li>直到我遇见了<code>HDLbits</code>，它向我提供了一种使用<code>Verilog</code>搭建和<code>logisim</code>结构很相似的有限状态机的代码机构，感觉会比一个<code>always</code>块清晰一些？</li>
-<li>首先，解决最大的问题，把<code>always</code>块拆分出来，像<code>logisim</code>一样，我们将代码分出计算次态的状态转移逻辑使用纯组合电路代替  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时钟沿上升，状态转移</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">        state &lt;= <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        state &lt;= next_state;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//计算次态next_state</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(state)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案1</span></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    out = ......</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出逻辑方案2</span></span><br><span class="line"><span class="keyword">assign</span> out = ......</span><br></pre></td></tr></table></figure>
-<ul>
-<li>诶呀，瞬间感觉代码变得清爽了，结构更加清晰了有没有（<s>没有也不许说</s>）</li>
-</ul>
-</li>
-<li>也许此时你觉得这样不过只是拆了几个<code>always</code>出来，没什么技术含量，那么接下来我们还可以利用新的结构做出一些原本结构做不出来的优化–<strong>简化代码逻辑</strong>与<strong>消除锁存器plus</strong>
-<ul>
-<li>你是否常常遇到这种情况，某个变量多个状态下的变化是一致的，只有极少部分的值改变的不一致<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">1</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                count &lt;= <span class="number">0</span>;</span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ......</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-上面只展示一个状态下<code>count</code>变量的转移，如果你有10个状态呢（<s>你真的敢像<code>logisim</code>一样CV吗</s>），但是如果我们使用新结构就可以在<code>always</code>块开始时默认赋值了，节省代码<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    count &lt;= next_count;</span><br><span class="line">    status &lt;= next_status;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">//默认赋值区域</span></span><br><span class="line">    next_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span>(status)</span><br><span class="line">        `S0: <span class="keyword">begin</span>:</span><br><span class="line">            <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">                next_count = <span class="number">1</span>;   </span><br><span class="line">            .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == b) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == c) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span> (in == d) <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                .......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-这得益于我们使用组合逻辑的always块不是非阻塞赋值，可以多次赋值，所以不用像之前一样每个情况都要重复</li>
-<li>同样，通过预先赋初值的办法我们就可以彻底消除锁存器这个bug了，因为锁存器产生原因就是我们没有明确赋值导致<code>Verilog</code>推导出锁存器记录之前的状态（<code>Verilog</code>帮我们默认赋值）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="comment">//缺少else分支</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">    count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (in == a) <span class="keyword">begin</span></span><br><span class="line">        count = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-新结构的代码没有锁存器问题，但是<font color = red>不要故意不写else，重申，我们只是抑制锁存器plus</font></li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="p1q5-表达式状态机"><a class="markdownIt-Anchor" href="#p1q5-表达式状态机"></a> P1.Q5 表达式状态机</h2>
-<ul>
-<li>大抵是一道很显然的<code>Moore</code>状态机，只需要判断<code>需要运算符</code>和<code>需要数字</code>两种状态即可，大致的思路如下<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_Q5.png" alt="状态转移图" /></li>
-<li>等等，这里的<code>*</code>和正则里面的不是一个啊，这里的是<code>\*</code>，笔者忘改了</li>
-<li>写起来也是顺手啊</li>
-<li>提供一个进阶题(<a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a>)，移步1202-145，加入匹配括号，甚至是多重嵌套括号，思路其实是一致的</li>
-</ul>
-<hr />
-<h2 id="p1extra-blockchecker"><a class="markdownIt-Anchor" href="#p1extra-blockchecker"></a> P1.extra BlockChecker</h2>
-<ul>
-<li>一道好题，<s>但不至于卡我一天吧</s>(<code>&amp;&amp;</code>别再写成<code>||</code>了</li>
-<li>因为我第一个思路因为某些莫名的原因一直没过(手真贱，所以我就换了一个思路，那么我提供两个思路思考</li>
-</ul>
-<h3 id="思路一-多个寄存器"><a class="markdownIt-Anchor" href="#思路一-多个寄存器"></a> 思路一 多个寄存器</h3>
-<ul>
-<li>
-<p><s>好处是状态少，坏处是容易手误</s></p>
-</li>
-<li>
-<p>状态设置思路</p>
-<ul>
-<li>首先设置了四个状态<code>start</code>、<code>word</code>、<code>illegal</code>分别表示空闲状态、匹配单词状态、匹配已经非法状态</li>
-</ul>
-</li>
-<li>
-<p>寄存器变量设置思路</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">寄存器变量</th>
-<th style="text-align:center">位宽</th>
-<th style="text-align:center">功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">num</td>
-<td style="text-align:center">32</td>
-<td style="text-align:center">保存读入的单词长度(unsigned)</td>
-</tr>
-<tr>
-<td style="text-align:center">flag</td>
-<td style="text-align:center">33</td>
-<td style="text-align:center">保存目前未匹配的begin数量(signed)</td>
-</tr>
-<tr>
-<td style="text-align:center">has_begin</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">前一个周期是否已经匹配begin成功</td>
-</tr>
-<tr>
-<td style="text-align:center">has_end</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">前一个周期是否已经匹配end成功</td>
-</tr>
-<tr>
-<td style="text-align:center">first</td>
-<td style="text-align:center">8</td>
-<td style="text-align:center">最近五个周期内第1个周期的字符</td>
-</tr>
-<tr>
-<td style="text-align:center">…</td>
-<td style="text-align:center">8</td>
-<td style="text-align:center">最近五个周期内第i个周期的字符</td>
-</tr>
-<tr>
-<td style="text-align:center">fifth</td>
-<td style="text-align:center">8</td>
-<td style="text-align:center">这个周期读入的in，即最近五个周期内第5个周期的字符</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>状态转移思路</p>
-<ul>
-<li><code>start</code>状态
-<ul>
-<li><code>reset</code>生效后回到<code>start</code>状态</li>
-<li>匹配到字母则<code>num</code>自增，且进入状态<code>word</code></li>
-<li>匹配到空格保持原状态</li>
-<li>若匹配到其他的进入<code>illegal</code>状态</li>
-</ul>
-</li>
-<li><code>word</code>状态
-<ul>
-<li>读入字母，<code>num</code>自增，如果在包括此次<code>in</code>输入共有五个字符时，且<code>first</code> ~ <code>fifth(in)</code>是<code>begin</code>(不区分大小写)，<code>flag</code>加1，设置<code>has_begin</code></li>
-<li>同上，在包含此次<code>in</code>共三个字符时，且<code>third</code> ~ <code>fifth(in)</code>是<code>end</code>(不区分大小写)，<code>flag</code>减1，设置<code>has_end</code></li>
-<li>读入字母，<code>has_begin</code>已经置高，说明前面五个字符已经是<code>begin</code>了，但是又读入一个字母，说明这个单词不是<code>begin</code>了，<code>flag</code>减1</li>
-<li>同上，<code>has_end</code>已经置高了，说明这个单词不是<code>end</code>，<code>flag</code>需要加1</li>
-<li>读入空格，说明单词已经读入完毕，<code>num</code>置0，如果<code>flag</code>此时是-1(<code>0x1ffffffff</code>)，说明先出现了未匹配的<code>end</code>，此时进入<code>illegal</code>状态，等待复位信号否则回到<code>start</code>空闲状态</li>
-<li>读入其他字符进入<code>illegal</code>状态</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="思路二-多个状态"><a class="markdownIt-Anchor" href="#思路二-多个状态"></a> 思路二 多个状态</h3>
-<ul>
-<li><s>好处是清晰，没有坏处</s></li>
-<li>状态设置思路
-<table>
-<thead>
-<tr>
-<th style="text-align:center">状态</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">_start</td>
-<td style="text-align:center">空闲状态等待空格或者字母</td>
-</tr>
-<tr>
-<td style="text-align:center">_b</td>
-<td style="text-align:center">匹配到单词b</td>
-</tr>
-<tr>
-<td style="text-align:center">_be</td>
-<td style="text-align:center">匹配到单词be</td>
-</tr>
-<tr>
-<td style="text-align:center">_beg</td>
-<td style="text-align:center">匹配到单词beg</td>
-</tr>
-<tr>
-<td style="text-align:center">_begi</td>
-<td style="text-align:center">匹配到单词begi</td>
-</tr>
-<tr>
-<td style="text-align:center">_begin</td>
-<td style="text-align:center">匹配到单词begin</td>
-</tr>
-<tr>
-<td style="text-align:center">_e</td>
-<td style="text-align:center">匹配到单词e</td>
-</tr>
-<tr>
-<td style="text-align:center">_en</td>
-<td style="text-align:center">匹配到单词en</td>
-</tr>
-<tr>
-<td style="text-align:center">_end</td>
-<td style="text-align:center">匹配到单词end</td>
-</tr>
-<tr>
-<td style="text-align:center">_other</td>
-<td style="text-align:center">匹配到其他单词</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>寄存器设置思路
-<ul>
-<li>只需要<code>state</code>寄存器保存状态和<code>flag</code>寄存器保存左括号数</li>
-</ul>
-</li>
-<li>状态转移思路
-<ul>
-<li><code>_start</code>状态
-<ul>
-<li>复位后回到<code>_start</code>状态等待输入</li>
-<li>如果是字母<code>b</code>进入<code>_b</code>状态</li>
-<li>如果是字母<code>e</code>进入<code>_e</code>状态</li>
-<li>如果是其他字母进入<code>_other</code>状态</li>
-<li>空格保持状态</li>
-</ul>
-</li>
-<li><code>_b</code> ~ <code>_en</code>状态
-<ul>
-<li>每个都是匹配到某个字母转为下一个状态：<code>_b</code>匹配到字母<code>e</code>转到<code>_be</code></li>
-<li>匹配到其他字母直接转为<code>_other</code></li>
-<li>匹配到空格回到空闲状态</li>
-</ul>
-</li>
-<li><code>_begin</code>与<code>_end</code>
-<ul>
-<li>两个状态特殊在于判断其后是否还有字母，也即到底是完整单词还是其他单词的前缀例如<code>endx</code></li>
-<li>因为前一个状态转移时时默认匹配到了完整单词，例如<code>_begi</code>到<code>_begin</code>是匹配到了<code>begin</code>一个周期的，所以如果后面有其他字母需要调整<code>flag</code>的值</li>
-</ul>
-</li>
-<li><code>_other</code>
-<ul>
-<li>接收到字母保持原态</li>
-<li>接收到空格回到空闲状态</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="p1推荐题汇总"><a class="markdownIt-Anchor" href="#p1推荐题汇总"></a> P1推荐题汇总</h2>
-<a class="btn-beautify " href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/" 
-  title="P1推荐题汇总"><span>P1推荐题汇总</span></a>
-<p><a href="https://kie-chi.github.io/2024/09/30/CO_P1_extra/">P1推荐题汇总</a></p>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>课下复习</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
       </tags>
   </entry>
   <entry>
