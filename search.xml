@@ -1,6 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>计算机网络--物理层</title>
+    <url>/2024/10/06/CN_u2/</url>
+    <content><![CDATA[<h1 id="计算机网络物理层"><a class="markdownIt-Anchor" href="#计算机网络物理层"></a> 计算机网络–物理层</h1>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<ul>
+<li>在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去</li>
+</ul>
+<h2 id="通信基础"><a class="markdownIt-Anchor" href="#通信基础"></a> 通信基础</h2>
+<ul>
+<li>信源
+<ul>
+<li>信息的发送方</li>
+</ul>
+</li>
+<li>信宿
+<ul>
+<li>信息的接收方</li>
+</ul>
+</li>
+<li>信道
+<ul>
+<li>信息传输的通道</li>
+</ul>
+</li>
+<li>信号
+<ul>
+<li>数字信号：信号是离散的</li>
+<li>模拟信号：信号是连续的</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="信号"><a class="markdownIt-Anchor" href="#信号"></a> 信号</h3>
+<ul>
+<li>在计算机中，我们常常使用一位的二进制 0/1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)</li>
+<li><strong>码元</strong>
+<ul>
+<li>每一个信号都是一个码元，每一个码元都对应一个二进制数</li>
+<li>对于一位的信号只有两种码元，我们称为<strong>二进制码元</strong>；对于两位的信号会有四种码元，我们称为<strong>四进制码元</strong>。一个信号输出的整个周期被称为信号周期或者码元周期</li>
+<li>优缺点
+<ul>
+<li>优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息</li>
+<li>缺点：需要加强信号功率，并且对信道的要求更高</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>码元</strong>与<strong>比特</strong>的关系
+<ul>
+<li>一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号</li>
+<li>$ X_{码元} = \log_2 K * X_{比特}<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>K$为信号的种类数量)</li>
+</ul>
+</li>
+<li>速率
+<ul>
+<li>波特率：每秒钟传递多少码元</li>
+<li>比特率：每秒钟传递多少比特信息</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="信道"><a class="markdownIt-Anchor" href="#信道"></a> 信道</h3>
+<ul>
+<li><strong>带宽</strong>
+<ul>
+<li>含义一：传输的最大速率</li>
+<li>含义二：允许通过的信号频带范围<br />
+<font color = red> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Attention</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span></font>:下面为了方便突出两者的联系，取<strong>最高传输速率</strong>表示带宽第一种含义，取<strong>带宽</strong>只表示第二种含义<br />
+<br><br />
+虽然带宽的两种含义看起来毫不相关，但是下面介绍的两个定理都揭示了这两种含义之间的内在联系，在这之前我们先介绍噪声，这个极易影响信息传输的坏家伙</li>
+</ul>
+</li>
+<li><strong>噪声</strong>
+<ul>
+<li>对于在信道中传输的信号有干扰作用，会影响信道的数据传输速率<br />
+这和我们在学习物理中声音的噪声概念几乎是一致的，都是干扰、妨碍的作用。</li>
+</ul>
+</li>
+<li><strong>奈奎斯特定理</strong>(奈氏准则)
+<ul>
+<li>对于一个<strong>理想低通信道</strong>(没有噪声、带宽有限的信道)</li>
+<li>$ V_{极限波特率} = 2 * X_{带宽}$</li>
+<li>注意<strong>极限波特率</strong>与最高传输速率(默认比特率的转换<br />
+奈氏准则向我们揭示了<strong>无噪声</strong>情况下最高传输速率与带宽之间的内在联系</li>
+</ul>
+</li>
+<li><strong>香农定理</strong>
+<ul>
+<li>对于一个有噪声、带宽有限的信道</li>
+<li>$ V_{极限比特率} = X_{带宽} * \log_2 (1 + S/N) $</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi mathvariant="normal">/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">S/N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>是信噪比，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>W</mi><mtext>信号的功率</mtext></msub><msub><mi>W</mi><mtext>噪声的功率</mtext></msub></mfrac></mrow><annotation encoding="application/x-tex">\frac{W_{信号的功率}} {W_{噪声的功率}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3339409999999998em;vertical-align:-0.44530499999999995em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8886359999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">噪</span><span class="mord cjk_fallback mtight">声</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.410305em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">信</span><span class="mord cjk_fallback mtight">号</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44530499999999995em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+<li>由于信噪比的值往往很大，所以我们采取另一种记录信噪比的记法，即$ N_{信噪比} = 10 * \log_{10} S/N $单位是<code>dB</code></li>
+<li>注意是<strong>极限比特率</strong></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="信号变换"><a class="markdownIt-Anchor" href="#信号变换"></a> 信号变换</h3>
+<ul>
+<li>数字信号
+<ul>
+<li>对于二进制数据与数字信号之间的转换，我们称为<strong>编码与解码</strong></li>
+</ul>
+</li>
+<li>模拟信号
+<ul>
+<li>对于二进制数据与模拟信号之间的转换，我们称之为<strong>调制与解调</strong><br />
+<strong>变换器</strong>可以将二进制信号转换为物理信号，<strong>反变换器</strong>可以将物理信号转换为二进制信号</li>
+</ul>
+</li>
+<li>变换器
+<ul>
+<li>有线网络适配器(网卡)：编码-解码器</li>
+<li>光猫：调制-解调器</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="编码方式"><a class="markdownIt-Anchor" href="#编码方式"></a> 编码方式</h4>
+<ul>
+<li>不归零编码(Non-Return-to-Zero)
+<ul>
+<li>低 0 高 1，中不变</li>
+<li>在每一个信号周期内信号始终不会归零，缺点是要给出时钟线</li>
+</ul>
+</li>
+<li>归零编码(Return-to-Zero)
+<ul>
+<li>低 0 高 1，中归零</li>
+<li>每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号</li>
+</ul>
+</li>
+<li>反向非归零编码(Non-Return-to-Zero-Inverted)
+<ul>
+<li>起点跳 0 不跳 1，中不变</li>
+<li>每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变</li>
+</ul>
+</li>
+<li>曼彻斯特编码
+<ul>
+<li>上跳 0 下跳 1，中必变</li>
+<li>每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是 0 还是 1</li>
+</ul>
+</li>
+<li>差分曼彻斯特编码
+<ul>
+<li>起点跳 0 不跳 1，中必变</li>
+<li>与<code>NRZI</code>的区别在于信号周期中间一定会发生跳变<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_1.jpg" alt="编码方式示意图" /><br />
+| 编码方式 | 自同步能力 | 浪费带宽 | 抗干扰能力 |<br />
+| :-----: | :-------: | :—😐 :-----: |<br />
+| 非归零编码 | 无 | 不浪费 | 弱 |<br />
+| 归零编码|有 | 浪费 | 弱 |<br />
+| 反向非归零编码 | 增加冗余位可支持 | 浪费(浪费的是冗余位) | 弱 |<br />
+| 曼彻斯特编码 | 有 | 浪费 | 强 |<br />
+| 差分曼彻斯特编码 | 有 | 浪费 | 强 |</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="调制方式"><a class="markdownIt-Anchor" href="#调制方式"></a> 调制方式</h4>
+<ul>
+<li>调幅(<code>AM</code>) or 幅移键控(<code>ASK</code>)
+<ul>
+<li>根据振幅表示信号</li>
+<li>有振幅为 1，无振幅为 0</li>
+<li>不同码元的振幅不同</li>
+</ul>
+</li>
+<li>调频(<code>FM</code>) or 频移键控(<code>FSK</code>)
+<ul>
+<li>根据频率表示信号</li>
+<li>例如频率低为 0，频率高为 1</li>
+<li>不同的码元频率不同</li>
+</ul>
+</li>
+<li>调相(<code>PM</code>) or 相移键控(<code>PSK</code>)
+<ul>
+<li>根据相位表示信号</li>
+<li>例如相位为 0 则为 0，相位为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> 则为 1</li>
+<li>不同的码元相位不同<br />
+对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式</li>
+</ul>
+</li>
+<li>正交幅度调制(<code>QAM</code>)
+<ul>
+<li>例如有<code>m</code>种振幅大小与<code>n</code>种频率大小，则共同可以综合出<code>mn</code>种码元<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_2.jpg" alt="调制方式示意图" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="传输介质"><a class="markdownIt-Anchor" href="#传输介质"></a> 传输介质</h4>
+<ul>
+<li>导向型介质：即沿着特定的方向传播，一般而言，有线信号是使用导向型介质
+<ul>
+<li>双绞线(<code>Twisted Pair</code>)
+<ul>
+<li>主要构成：两根导线相互绞合而成</li>
+<li>有屏蔽层：<code>Shielded Twisted Pair</code>，无屏蔽层：<code>Unshielded Twisted Pair</code></li>
+<li>抗干扰能力：较好，因为导线绞合以及屏蔽层可以提升抗电磁干扰能力</li>
+</ul>
+</li>
+<li>同轴电缆
+<ul>
+<li>主要构成：内导体(用于传输信号) + 外导体屏蔽层(用于抗电磁干扰)</li>
+<li>抗干扰能力：好，因为外导体提供电磁屏蔽可以带来良好的抗干扰性</li>
+</ul>
+</li>
+<li>光纤
+<ul>
+<li>主要构成：纤芯(高折射率) + 包层(低折射率)，利用光的全反射特性让光信号在纤芯内传播</li>
+<li>单模光纤：一根光纤中只有一条光线传播，适合长距离的传播；多模光纤：一根光纤中有多条光线传播，适合短距离的传播</li>
+<li>抗干扰能力：非常好，光信号对电磁干扰不敏感</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非导向型介质：无特定方向传播，一般而言，无线信号是使用非导向型介质
+<ul>
+<li>无线电波
+<ul>
+<li>特点：穿透能力强、传播距离长、信号指向型弱</li>
+<li>例如：手机、WIFI 信号</li>
+</ul>
+</li>
+<li>微波
+<ul>
+<li>特点：频率带宽高、信号指向型强、保密性差(容易被窃听)</li>
+<li>例如：卫星通信</li>
+</ul>
+</li>
+<li>红外通信、激光通信</li>
+</ul>
+</li>
+<li>以太网对有线介质的命名
+<ul>
+<li>速度 + <code>Base</code> + 介质信息
+<ul>
+<li><code>10Base5</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 500m</li>
+<li><code>10Base2</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 200m</li>
+<li><code>10BaseF*</code>：10<code>Mbps</code> + 光纤 + *某些其他信息</li>
+<li><code>10BaseT*</code>：10<code>Mbps</code> + 双绞线 + *某些其他信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="物理层设备"><a class="markdownIt-Anchor" href="#物理层设备"></a> 物理层设备</h4>
+<ul>
+<li>
+<p>中继器(<code>Repeater</code>)</p>
+<ul>
+<li>若规定 0.5V～1V 是低电平，4.5V～5V 是高电平，不符合此标准的信号视为无效</li>
+<li>如果中继器接收了有效的信号会将低电平整形为 1V，将高电平整形为 5V</li>
+<li>仅支持<strong>半双工通信</strong>，中继器连接的两个端口不允许同时发送数据，会导致“冲突”</li>
+</ul>
+</li>
+<li>
+<p>集线器(<code>Hub</code>)</p>
+<ul>
+<li>本质上是多端中继器，集线器将其中一个端口接收到的信号整形再生后，转发到所有的端口中</li>
+<li>集线器各端口连接的结点不可以同时发送数据，会导致“冲突”</li>
+</ul>
+</li>
+<li>
+<p>冲突域</p>
+<ul>
+<li>如果两台主机同时发送数据会导致冲突，则这两台主机处于同一<strong>冲突域</strong>中</li>
+</ul>
+</li>
+<li>
+<p>其他特性</p>
+<ul>
+<li>集线器、中继器不能**“无限串联”**
+<ul>
+<li><code>10Base5</code>遵循<code>5-4-3</code>原则，使用集线器连接<code>10Base5</code>网线时，最多只能串联<strong>5</strong>个网段，使用<strong>4</strong>台集线器，只有<strong>3</strong>个网段可以连接计算机</li>
+</ul>
+</li>
+<li>集线器逻辑上是总线型拓扑结构
+<ul>
+<li>集线器连接的各个网段会“共享带宽”，集线器的总带宽被连接的各个主机平均分配</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机网络--概述</title>
     <url>/2024/10/04/CN_u1/</url>
     <content><![CDATA[<h1 id="计算机网络概述"><a class="markdownIt-Anchor" href="#计算机网络概述"></a> 计算机网络–概述</h1>
@@ -553,303 +850,6 @@
 <li><code>TCP/IP</code>模型的网络层取消了对于分组检查与控制协调的若干功能，如差错控制、流量控制、连接管理、可靠传输管理</li>
 <li><code>TCP/IP</code>模型的网络层的传输数据不可靠</li>
 <li><code>TCP/IP</code>模型中不需要中间路由器等计算机网络核心管理流量等行为而将各种功能施加在端系统中</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络--物理层</title>
-    <url>/2024/10/06/CN_u2/</url>
-    <content><![CDATA[<h1 id="计算机网络物理层"><a class="markdownIt-Anchor" href="#计算机网络物理层"></a> 计算机网络–物理层</h1>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<ul>
-<li>在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去</li>
-</ul>
-<h2 id="通信基础"><a class="markdownIt-Anchor" href="#通信基础"></a> 通信基础</h2>
-<ul>
-<li>信源
-<ul>
-<li>信息的发送方</li>
-</ul>
-</li>
-<li>信宿
-<ul>
-<li>信息的接收方</li>
-</ul>
-</li>
-<li>信道
-<ul>
-<li>信息传输的通道</li>
-</ul>
-</li>
-<li>信号
-<ul>
-<li>数字信号：信号是离散的</li>
-<li>模拟信号：信号是连续的</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="信号"><a class="markdownIt-Anchor" href="#信号"></a> 信号</h3>
-<ul>
-<li>在计算机中，我们常常使用一位的二进制 0/1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)</li>
-<li><strong>码元</strong>
-<ul>
-<li>每一个信号都是一个码元，每一个码元都对应一个二进制数</li>
-<li>对于一位的信号只有两种码元，我们称为<strong>二进制码元</strong>；对于两位的信号会有四种码元，我们称为<strong>四进制码元</strong>。一个信号输出的整个周期被称为信号周期或者码元周期</li>
-<li>优缺点
-<ul>
-<li>优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息</li>
-<li>缺点：需要加强信号功率，并且对信道的要求更高</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>码元</strong>与<strong>比特</strong>的关系
-<ul>
-<li>一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号</li>
-<li>$ X_{码元} = \log_2 K * X_{比特}<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>K$为信号的种类数量)</li>
-</ul>
-</li>
-<li>速率
-<ul>
-<li>波特率：每秒钟传递多少码元</li>
-<li>比特率：每秒钟传递多少比特信息</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="信道"><a class="markdownIt-Anchor" href="#信道"></a> 信道</h3>
-<ul>
-<li><strong>带宽</strong>
-<ul>
-<li>含义一：传输的最大速率</li>
-<li>含义二：允许通过的信号频带范围<br />
-<font color = red> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Attention</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span></font>:下面为了方便突出两者的联系，取<strong>最高传输速率</strong>表示带宽第一种含义，取<strong>带宽</strong>只表示第二种含义<br />
-<br><br />
-虽然带宽的两种含义看起来毫不相关，但是下面介绍的两个定理都揭示了这两种含义之间的内在联系，在这之前我们先介绍噪声，这个极易影响信息传输的坏家伙</li>
-</ul>
-</li>
-<li><strong>噪声</strong>
-<ul>
-<li>对于在信道中传输的信号有干扰作用，会影响信道的数据传输速率<br />
-这和我们在学习物理中声音的噪声概念几乎是一致的，都是干扰、妨碍的作用。</li>
-</ul>
-</li>
-<li><strong>奈奎斯特定理</strong>(奈氏准则)
-<ul>
-<li>对于一个<strong>理想低通信道</strong>(没有噪声、带宽有限的信道)</li>
-<li>$ V_{极限波特率} = 2 * X_{带宽}$</li>
-<li>注意<strong>极限波特率</strong>与最高传输速率(默认比特率的转换<br />
-奈氏准则向我们揭示了<strong>无噪声</strong>情况下最高传输速率与带宽之间的内在联系</li>
-</ul>
-</li>
-<li><strong>香农定理</strong>
-<ul>
-<li>对于一个有噪声、带宽有限的信道</li>
-<li>$ V_{极限比特率} = X_{带宽} * \log_2 (1 + S/N) $</li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi mathvariant="normal">/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">S/N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>是信噪比，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>W</mi><mtext>信号的功率</mtext></msub><msub><mi>W</mi><mtext>噪声的功率</mtext></msub></mfrac></mrow><annotation encoding="application/x-tex">\frac{W_{信号的功率}} {W_{噪声的功率}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3339409999999998em;vertical-align:-0.44530499999999995em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8886359999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">噪</span><span class="mord cjk_fallback mtight">声</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.410305em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">信</span><span class="mord cjk_fallback mtight">号</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44530499999999995em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
-<li>由于信噪比的值往往很大，所以我们采取另一种记录信噪比的记法，即$ N_{信噪比} = 10 * \log_{10} S/N $单位是<code>dB</code></li>
-<li>注意是<strong>极限比特率</strong></li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="信号变换"><a class="markdownIt-Anchor" href="#信号变换"></a> 信号变换</h3>
-<ul>
-<li>数字信号
-<ul>
-<li>对于二进制数据与数字信号之间的转换，我们称为<strong>编码与解码</strong></li>
-</ul>
-</li>
-<li>模拟信号
-<ul>
-<li>对于二进制数据与模拟信号之间的转换，我们称之为<strong>调制与解调</strong><br />
-<strong>变换器</strong>可以将二进制信号转换为物理信号，<strong>反变换器</strong>可以将物理信号转换为二进制信号</li>
-</ul>
-</li>
-<li>变换器
-<ul>
-<li>有线网络适配器(网卡)：编码-解码器</li>
-<li>光猫：调制-解调器</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="编码方式"><a class="markdownIt-Anchor" href="#编码方式"></a> 编码方式</h4>
-<ul>
-<li>不归零编码(Non-Return-to-Zero)
-<ul>
-<li>低 0 高 1，中不变</li>
-<li>在每一个信号周期内信号始终不会归零，缺点是要给出时钟线</li>
-</ul>
-</li>
-<li>归零编码(Return-to-Zero)
-<ul>
-<li>低 0 高 1，中归零</li>
-<li>每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号</li>
-</ul>
-</li>
-<li>反向非归零编码(Non-Return-to-Zero-Inverted)
-<ul>
-<li>起点跳 0 不跳 1，中不变</li>
-<li>每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变</li>
-</ul>
-</li>
-<li>曼彻斯特编码
-<ul>
-<li>上跳 0 下跳 1，中必变</li>
-<li>每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是 0 还是 1</li>
-</ul>
-</li>
-<li>差分曼彻斯特编码
-<ul>
-<li>起点跳 0 不跳 1，中必变</li>
-<li>与<code>NRZI</code>的区别在于信号周期中间一定会发生跳变<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_1.jpg" alt="编码方式示意图" /><br />
-| 编码方式 | 自同步能力 | 浪费带宽 | 抗干扰能力 |<br />
-| :-----: | :-------: | :—😐 :-----: |<br />
-| 非归零编码 | 无 | 不浪费 | 弱 |<br />
-| 归零编码|有 | 浪费 | 弱 |<br />
-| 反向非归零编码 | 增加冗余位可支持 | 浪费(浪费的是冗余位) | 弱 |<br />
-| 曼彻斯特编码 | 有 | 浪费 | 强 |<br />
-| 差分曼彻斯特编码 | 有 | 浪费 | 强 |</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="调制方式"><a class="markdownIt-Anchor" href="#调制方式"></a> 调制方式</h4>
-<ul>
-<li>调幅(<code>AM</code>) or 幅移键控(<code>ASK</code>)
-<ul>
-<li>根据振幅表示信号</li>
-<li>有振幅为 1，无振幅为 0</li>
-<li>不同码元的振幅不同</li>
-</ul>
-</li>
-<li>调频(<code>FM</code>) or 频移键控(<code>FSK</code>)
-<ul>
-<li>根据频率表示信号</li>
-<li>例如频率低为 0，频率高为 1</li>
-<li>不同的码元频率不同</li>
-</ul>
-</li>
-<li>调相(<code>PM</code>) or 相移键控(<code>PSK</code>)
-<ul>
-<li>根据相位表示信号</li>
-<li>例如相位为 0 则为 0，相位为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> 则为 1</li>
-<li>不同的码元相位不同<br />
-对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式</li>
-</ul>
-</li>
-<li>正交幅度调制(<code>QAM</code>)
-<ul>
-<li>例如有<code>m</code>种振幅大小与<code>n</code>种频率大小，则共同可以综合出<code>mn</code>种码元<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_2.jpg" alt="调制方式示意图" /></li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="传输介质"><a class="markdownIt-Anchor" href="#传输介质"></a> 传输介质</h4>
-<ul>
-<li>导向型介质：即沿着特定的方向传播，一般而言，有线信号是使用导向型介质
-<ul>
-<li>双绞线(<code>Twisted Pair</code>)
-<ul>
-<li>主要构成：两根导线相互绞合而成</li>
-<li>有屏蔽层：<code>Shielded Twisted Pair</code>，无屏蔽层：<code>Unshielded Twisted Pair</code></li>
-<li>抗干扰能力：较好，因为导线绞合以及屏蔽层可以提升抗电磁干扰能力</li>
-</ul>
-</li>
-<li>同轴电缆
-<ul>
-<li>主要构成：内导体(用于传输信号) + 外导体屏蔽层(用于抗电磁干扰)</li>
-<li>抗干扰能力：好，因为外导体提供电磁屏蔽可以带来良好的抗干扰性</li>
-</ul>
-</li>
-<li>光纤
-<ul>
-<li>主要构成：纤芯(高折射率) + 包层(低折射率)，利用光的全反射特性让光信号在纤芯内传播</li>
-<li>单模光纤：一根光纤中只有一条光线传播，适合长距离的传播；多模光纤：一根光纤中有多条光线传播，适合短距离的传播</li>
-<li>抗干扰能力：非常好，光信号对电磁干扰不敏感</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>非导向型介质：无特定方向传播，一般而言，无线信号是使用非导向型介质
-<ul>
-<li>无线电波
-<ul>
-<li>特点：穿透能力强、传播距离长、信号指向型弱</li>
-<li>例如：手机、WIFI 信号</li>
-</ul>
-</li>
-<li>微波
-<ul>
-<li>特点：频率带宽高、信号指向型强、保密性差(容易被窃听)</li>
-<li>例如：卫星通信</li>
-</ul>
-</li>
-<li>红外通信、激光通信</li>
-</ul>
-</li>
-<li>以太网对有线介质的命名
-<ul>
-<li>速度 + <code>Base</code> + 介质信息
-<ul>
-<li><code>10Base5</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 500m</li>
-<li><code>10Base2</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 200m</li>
-<li><code>10BaseF*</code>：10<code>Mbps</code> + 光纤 + *某些其他信息</li>
-<li><code>10BaseT*</code>：10<code>Mbps</code> + 双绞线 + *某些其他信息</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="物理层设备"><a class="markdownIt-Anchor" href="#物理层设备"></a> 物理层设备</h4>
-<ul>
-<li>
-<p>中继器(<code>Repeater</code>)</p>
-<ul>
-<li>若规定 0.5V～1V 是低电平，4.5V～5V 是高电平，不符合此标准的信号视为无效</li>
-<li>如果中继器接收了有效的信号会将低电平整形为 1V，将高电平整形为 5V</li>
-<li>仅支持<strong>半双工通信</strong>，中继器连接的两个端口不允许同时发送数据，会导致“冲突”</li>
-</ul>
-</li>
-<li>
-<p>集线器(<code>Hub</code>)</p>
-<ul>
-<li>本质上是多端中继器，集线器将其中一个端口接收到的信号整形再生后，转发到所有的端口中</li>
-<li>集线器各端口连接的结点不可以同时发送数据，会导致“冲突”</li>
-</ul>
-</li>
-<li>
-<p>冲突域</p>
-<ul>
-<li>如果两台主机同时发送数据会导致冲突，则这两台主机处于同一<strong>冲突域</strong>中</li>
-</ul>
-</li>
-<li>
-<p>其他特性</p>
-<ul>
-<li>集线器、中继器不能**“无限串联”**
-<ul>
-<li><code>10Base5</code>遵循<code>5-4-3</code>原则，使用集线器连接<code>10Base5</code>网线时，最多只能串联<strong>5</strong>个网段，使用<strong>4</strong>台集线器，只有<strong>3</strong>个网段可以连接计算机</li>
-</ul>
-</li>
-<li>集线器逻辑上是总线型拓扑结构
-<ul>
-<li>集线器连接的各个网段会“共享带宽”，集线器的总带宽被连接的各个主机平均分配</li>
 </ul>
 </li>
 </ul>
@@ -1453,6 +1453,99 @@
       </tags>
   </entry>
   <entry>
+    <title>北航计算机组成P2推荐题汇总</title>
+    <url>/2024/10/09/CO_P2_extra/</url>
+    <content><![CDATA[<h1 id="北航计算机组成p2推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p2推荐题目汇总"></a> 北航计算机组成P2推荐题目汇总</h1>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<ul>
+<li>题目怎么来的就不再赘述，有感兴趣的同学可以走这里 <a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a></li>
+</ul>
+<h2 id="p2推荐题目汇总"><a class="markdownIt-Anchor" href="#p2推荐题目汇总"></a> P2推荐题目汇总</h2>
+<h3 id="1202-35-calculate"><a class="markdownIt-Anchor" href="#1202-35-calculate"></a> 1202-35 calculate</h3>
+<ul>
+<li>注意题目要求的是按照<strong>输入的顺序</strong>输出计数的字符，不是按照<code>ascii</code>码表的位置</li>
+<li>我开了两个数组一个记录26个字母的数量，一个记录出现的顺序(<strong>重复出现的字母不会进行第二遍</strong>)，最后遍历记录出现顺序的数组即可</li>
+<li>还有一个小小的点：因为样例看起来是一行读入一个字符，实际测评机是一个接一个的字符读入，所以不需要处理<code>\n</code>(我刚开始就处理了，导致报了一个非法读入的错误)  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.macro read_chr(%chr)</span><br><span class="line">    li $v0, 12</span><br><span class="line">    syscall</span><br><span class="line">    move %chr, $v0</span><br><span class="line"></span><br><span class="line">    # 不需要处理字母后面的\n</span><br><span class="line">    # li $v0, 12</span><br><span class="line">    # syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
+</li>
+<li>提供一个有处理是否有重复输入的代码块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">	for_z_begin: # 用于判断是否出现过这个字符</span><br><span class="line">		beq $t2, $s1, for_z_end # 对目前出现的所有字符遍历 </span><br><span class="line">		sll $t3, $t2, 2 </span><br><span class="line">		lw $t4, buffer($t3) # 读出第$t2个已有字符</span><br><span class="line">		sub $t4, $t4, $t1 # 判断是否为同一个字符</span><br><span class="line">		if_begin_1:</span><br><span class="line">			bne $t4, $zero, if_end_1 # 如果不是则跳转</span><br><span class="line">			j not_for_z_end # 如果是则直接结束这段内容</span><br><span class="line">		if_end_1:</span><br><span class="line">		addi $t2, $t2, 1</span><br><span class="line">		j for_z_begin</span><br><span class="line">	for_z_end:</span><br><span class="line">		sll $t3, $t2, 2 # 存入新读入的字符</span><br><span class="line">		sw $t1, buffer($t3)</span><br><span class="line">		addi $s1, $s1, 1</span><br><span class="line">	not_for_z_end:</span><br><span class="line">	</span><br><span class="line">	sll $t1, $t1, 2 # 找到指定字母的偏移字节</span><br><span class="line">	</span><br><span class="line">	lw $t2, num($t1)</span><br><span class="line">	addi $t2, $t2, 1 # 找到的字母加1</span><br><span class="line">	sw $t2, num($t1)</span><br><span class="line">	</span><br><span class="line">	addi $t0, $t0, 1 # 循环继续条件</span><br><span class="line">	j for_i_begin</span><br><span class="line">for_i_end:</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-52-add"><a class="markdownIt-Anchor" href="#1202-52-add"></a> 1202-52 add</h3>
+<ul>
+<li>看上去有点麻烦而已，其实完全可以使用一个矩阵接收两次数字完成两次加法(因为所有内存起始值赋值为0)</li>
+<li>最后的转置也只是需要将原来的嵌套<code>for</code>循环中的<strong>先<code>row</code>后<code>col</code></strong> 改为 **先<code>col</code>后<code>row</code>**就可以了</li>
+<li>同样提供一个有大致思路的<code>main</code>模块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">read_in($s0) # 读入n</span><br><span class="line">read_in($s1) # 读入m</span><br><span class="line"></span><br><span class="line">li $s2, 2 # 直接设置读入两次</span><br><span class="line">li $t0, 0 # 设置循环变量i</span><br><span class="line"># 双重for循环读入</span><br><span class="line"></span><br><span class="line">print_str(hint) # 打印题目要求的hint信息</span><br><span class="line"># 双重for循环打印</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-53-full_reserved"><a class="markdownIt-Anchor" href="#1202-53-full_reserved"></a> 1202-53 full_reserved</h3>
+<ul>
+<li>对于全排列问题(顺序)，可以考虑下面的思路(只想看汇编内容可以跳过，这里主要讲的是全排列是如何写的)
+<ul>
+<li>我们以<code>1234</code>四个数字举例，开头为<code>1</code>和<code>2</code>的情况</li>
+<li><code>1</code>:<code>1234 1243 1324 1342 1423 1432</code></li>
+<li><code>2</code>:<code>2134 2143 2314 2341 2413 2431</code></li>
+<li>可以发现，以某个数字开头的全排列其实是 以<strong>这个数字开头</strong>加上<strong>剩下所有数字按相对大小重新构成的数字队列</strong>的全排列</li>
+<li>例如<code>1</code>与<code>234</code>的全排列构成<code>1234</code>以<code>1</code>开头的全排列;<code>2</code>与<code>134</code>的全排列构成了<code>1234</code>以<code>2</code>开头的全排列，所以就可以写递归程序了(雾)</li>
+<li>所以所给递归程序的<code>symbol</code>全局数组是用来记录这个<strong>开头的数字</strong></li>
+</ul>
+</li>
+<li>题目要求你改写<strong>逆序</strong>的全排列汇编程序
+<ul>
+<li>最方便的思路就是打印的时候不打印<code>array[i]</code>而打印<code>n+1-array[i]</code>这样相当于用<code>n....1</code>来全排列</li>
+<li>当然，如果你理解了这个C语言程序如何运作的，可以将<code>for</code>循环的顺序反过来，从最高位<code>n</code>来开始，思路同上面的讲解思路</li>
+</ul>
+</li>
+<li>仔细考虑入栈出栈情况，如果使用栈传递参数记得开始时就要先出栈，<code>$ra</code>的保留值在任何一个程序的返回点都要弹出，总之<strong>入栈则一定要出栈</strong>(虽然有点像废话，但某些地方真的必须考虑清楚)，切记</li>
+<li>给出一个可以参考的<code>FullArray</code>函数的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">full_array:</span><br><span class="line">    addi $sp, $sp, -8 # 给出一定的栈空间</span><br><span class="line">    sw $a0, 4($sp) # 压栈</span><br><span class="line">    sw $ra 0($sp) </span><br><span class="line">    move $t0, $a0 # t0代表index</span><br><span class="line">    if_begin:</span><br><span class="line">        sltu $t2, $t0, $s0 # 判断index与n的大小</span><br><span class="line">        bne $t2, $zero, if_end</span><br><span class="line">        </span><br><span class="line">        li $t1, 0 # 设置循环变量i</span><br><span class="line">        for_i_begin:</span><br><span class="line">            beq $t1, $s0, for_i_end </span><br><span class="line">            sll $t2, $t1, 2 </span><br><span class="line">            lw $t3, array($t2) # 得到array[i]</span><br><span class="line">            sub $t3, $zero, $t3</span><br><span class="line">            addi $t4, $s0, 1</span><br><span class="line">            add $t3, $t3, $t4 # 得到n+1-array[i]</span><br><span class="line">            print_int($t3) # 打印这个值</span><br><span class="line">            print_str(space) # 打印空格</span><br><span class="line">            addi $t1, $t1, 1 # 循环i继续条件</span><br><span class="line">            j for_i_begin</span><br><span class="line">        for_i_end:</span><br><span class="line">        print_str(enter) # 打印换行</span><br><span class="line">        add $sp, $sp ,8 # 注意出栈，这里可以不用弹出值，但是一定要栈空间减少</span><br><span class="line">        jr $ra # 返回</span><br><span class="line">    if_end:</span><br><span class="line">        </span><br><span class="line">    # else执行的for循环递归</span><br><span class="line">    addi $sp, $sp, 8 # 将刚开始保留的参数弹出</span><br><span class="line">    lw $a0, -4($sp)</span><br><span class="line">    lw $ra -8($sp)	</span><br><span class="line">    </span><br><span class="line">    jr $ra # 返回</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-329-sum"><a class="markdownIt-Anchor" href="#1202-329-sum"></a> 1202-329 sum</h3>
+<ul>
+<li>大概就是一个变量保留 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">n!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">n</span><span class="mclose">!</span></span></span></span> 的值，一个变量保留 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><mi>i</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">\sum\limits_{i=1}^n i!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.329066em;vertical-align:-0.9776689999999999em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3513970000000004em;"><span style="top:-2.122331em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.0000050000000003em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-3.950005em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9776689999999999em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">i</span><span class="mclose">!</span></span></span></span>，然后进行递推就可以了，千万不要递归啊(雾，大概率会爆吧</li>
+<li>提供一个可参考的<code>main</code>模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read($s0)</span><br><span class="line">    li $s1, 0</span><br><span class="line">    li $s2, 1</span><br><span class="line">    li $t0, 1</span><br><span class="line">    li $s3, 1</span><br><span class="line">    for_start:</span><br><span class="line">        sltu $s3, $s0, $t0</span><br><span class="line">        bne $s3, $zero, for_end</span><br><span class="line">        multu $t0, $s2</span><br><span class="line">        mflo $s2</span><br><span class="line">        addu $s1, $s1, $s2</span><br><span class="line">        addi $t0, $t0, 1</span><br><span class="line">        j for_start</span><br><span class="line">    for_end:</span><br><span class="line">        printU($s1)</span><br><span class="line">        done</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-330-hanoi"><a class="markdownIt-Anchor" href="#1202-330-hanoi"></a> 1202-330 hanoi</h3>
+<ul>
+<li>诶呀，<s>是大一写的递归程序呢</s></li>
+<li>不论是C语言代码的理解和整体程序都没有难点，所以注意的只有压栈弹栈时候小心即可！</li>
+<li>因为函数参数过多，所以我采用了用栈传输参数的思路，所以要更加小心，哪些部分是保存参数、弹出参数，哪些部分是传递参数、接收参数</li>
+<li>本题给出了关于模板字符串的提示，虽然没法用占位符<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">format_str: .asciiz &quot;move disk D from C to C\n&quot;</span><br><span class="line">.macro print(%disk, %from, %to)</span><br><span class="line">    li $t7, 10</span><br><span class="line">    addi $t6, %disk, 48</span><br><span class="line">    sb $t6, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 17</span><br><span class="line">    sb %from, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 22</span><br><span class="line">    sb %to, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    la $a0, format_str</span><br><span class="line">    li $v0, 4</span><br><span class="line">    syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
+</li>
+<li>同样，给出参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入n</span><br><span class="line">    li $t1, 65</span><br><span class="line">    li $t2, 66</span><br><span class="line">    li $t3, 67</span><br><span class="line">    la $sp, stack</span><br><span class="line">    addi $sp, $sp, 800 # 初始化参数与stack</span><br><span class="line">    </span><br><span class="line">    push($t0) # 传参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">hanoi:</span><br><span class="line">    pop($t3) # 接收参数</span><br><span class="line">    ...</span><br><span class="line">    push($ra) # 保存返回值</span><br><span class="line">    if_begin:</span><br><span class="line">        bne $t0, $zero, if_end</span><br><span class="line">        print($t0, $t1, $t2)</span><br><span class="line">        print($t0, $t2, $t3)</span><br><span class="line">        pop($ra) # 弹返回地址</span><br><span class="line">        jr $ra</span><br><span class="line">    if_end:</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 取出保留的参数</span><br><span class="line">    ...</span><br><span class="line">    print($t0, $t1, $t2)</span><br><span class="line">    </span><br><span class="line">    ...若干递归</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-415-bsearch"><a class="markdownIt-Anchor" href="#1202-415-bsearch"></a> 1202-415 bsearch</h3>
+<ul>
+<li>二分查找！！！</li>
+<li>因为已经给出了C语言参考模板了，没有的话或许有同学会因为不清楚<code>[low,high]</code>还是<code>[low,high)</code>两种查找方式的区别，而写出一些小bug</li>
+<li>注意<code>slt</code>与<code>sltu</code>因为如果查找的<code>key</code>比数组中最小的值还要小的话，那么最后得到的值是-1，但是-1在无符号数中是最大的，会出现死循环哦</li>
+<li>直接给出可参考的模板了<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">binary_search:</span><br><span class="line">    push($s1)</span><br><span class="line">    move $s1, $a0 # key</span><br><span class="line">    li $t0, 0 # low</span><br><span class="line">    addi $t1, $s0, -1 # high</span><br><span class="line">    li $t2, 0 # mid</span><br><span class="line">    </span><br><span class="line">    while_begin:</span><br><span class="line">        slt $t5, $t1, $t0</span><br><span class="line">        bne $t5, $zero, while_end</span><br><span class="line">        </span><br><span class="line">        add $t2, $t0, $t1</span><br><span class="line">        srl $t2, $t2, 1</span><br><span class="line">        </span><br><span class="line">        //判断arr[mid]与key的大小</span><br><span class="line">        j while_begin</span><br><span class="line">    while_end:</span><br><span class="line"></span><br><span class="line">    li $t5, 0</span><br><span class="line">    print($t5)</span><br><span class="line">    pop($s1)</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-416-flower"><a class="markdownIt-Anchor" href="#1202-416-flower"></a> 1202-416 flower</h3>
+<ul>
+<li>简单汇编，直接给出可参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入m</span><br><span class="line">    read_in($s0) # 读入n</span><br><span class="line">    </span><br><span class="line">    for_i_begin:</span><br><span class="line">        beq $t0, $s0, for_i_end</span><br><span class="line">        divu $t1, $t0, 100</span><br><span class="line">        </span><br><span class="line">        mul $t2, $t1, 100</span><br><span class="line">        sub $t4, $t0, $t2</span><br><span class="line">        divu $t2, $t4, 10</span><br><span class="line">        </span><br><span class="line">        mul $t3, $t2, 10</span><br><span class="line">        sub $t3, $t4, $t3</span><br><span class="line">        </span><br><span class="line">        mul $t4, $t1, $t1</span><br><span class="line">        mul $t4, $t4, $t1</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t2, $t2</span><br><span class="line">        mul $t5, $t5, $t2</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t3, $t3</span><br><span class="line">        mul $t5, $t5, $t3</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        if_begin:</span><br><span class="line">            bne $t4, $t0, if_end</span><br><span class="line">            print($t0)</span><br><span class="line">        if_end:</span><br><span class="line">        add $t0, $t0, 1</span><br><span class="line">        j for_i_begin</span><br><span class="line">    for_i_end:</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-419-josef"><a class="markdownIt-Anchor" href="#1202-419-josef"></a> 1202-419 josef</h3>
+<ul>
+<li>也是一道大一写的题目呢，<s>小海豚</s></li>
+<li>其实刚开始我想如果暴力数组没过的话就用循环链表了(没想都暴力可以直接过)</li>
+<li>这里主要通过一个数组记录某个编号是否已经被删除了</li>
+<li>计数就是数组下标加一，遇到等于数组长度时自动返回0</li>
+<li>给出一个可以参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read($s0) # 读入人数n</span><br><span class="line">read($s1) # 读入报数m</span><br><span class="line"></span><br><span class="line">li $t0, 0 # 报数的人的编号</span><br><span class="line">li $t1, 0 # 外层循环变量i,将所有人都出局为止</span><br><span class="line">li $t2, 1 # 设置第一次数数</span><br><span class="line">for_start_i:</span><br><span class="line">    beq $t1, $s0, for_end_i # 达到最大人数结束循环</span><br><span class="line">    for_start_j:</span><br><span class="line">        beq $t2, $s1, for_end_j # 达到报数最大值</span><br><span class="line">        </span><br><span class="line">        //使用while循环处理报数，去除已经out的人</span><br><span class="line">    for_end_j:</span><br><span class="line">        sll $t4, $t0, 2</span><br><span class="line">        li $t5, 1</span><br><span class="line">        sw $t5, people($t4) # 记录出局的人，置1</span><br><span class="line">        addi $t5, $t0, 1 # 打印出局的人的编号</span><br><span class="line">        print($t5)</span><br><span class="line">        li $t2, 0 # 设置每次j的</span><br><span class="line">        addi $t1, $t1, 1 # 循环继续条件</span><br><span class="line">        j for_start_i</span><br><span class="line">for_end_i:</span><br><span class="line">    done</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>推荐题目</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>北航计算机组成P1课下</title>
     <url>/2024/09/28/CO_P1/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理p1课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p1课下"></a> 北航计算机组成原理P1课下</h1>
@@ -1705,93 +1798,687 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P2推荐题汇总</title>
-    <url>/2024/10/09/CO_P2_extra/</url>
-    <content><![CDATA[<h1 id="北航计算机组成p2推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p2推荐题目汇总"></a> 北航计算机组成P2推荐题目汇总</h1>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+    <title>北航计算机组成P3课下</title>
+    <url>/2024/10/22/CO_P3/</url>
+    <content><![CDATA[<h1 id="北航计算机组成原理p3课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p3课下"></a> 北航计算机组成原理P3课下</h1>
+<div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P3课下的相关内容，希望能对你有所帮助</p>
+</div>
+<h1 id="logisim-搭建8指令简单单周期cpu"><a class="markdownIt-Anchor" href="#logisim-搭建8指令简单单周期cpu"></a> logisim 搭建8指令简单单周期CPU</h1>
+<p>[toc]</p>
+<h2 id="设计文档"><a class="markdownIt-Anchor" href="#设计文档"></a> 设计文档</h2>
+<h3 id="总要求"><a class="markdownIt-Anchor" href="#总要求"></a> 总要求</h3>
 <ul>
-<li>题目怎么来的就不再赘述，有感兴趣的同学可以走这里 <a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a></li>
-</ul>
-<h2 id="p2推荐题目汇总"><a class="markdownIt-Anchor" href="#p2推荐题目汇总"></a> P2推荐题目汇总</h2>
-<h3 id="1202-35-calculate"><a class="markdownIt-Anchor" href="#1202-35-calculate"></a> 1202-35 calculate</h3>
+<li>实现指令集<code>&#123;addu、subu、ori、lui、lw、sw、beq、nop&#125;</code></li>
+<li>指令集所有指令的<code>RTL</code>
 <ul>
-<li>注意题目要求的是按照<strong>输入的顺序</strong>输出计数的字符，不是按照<code>ascii</code>码表的位置</li>
-<li>我开了两个数组一个记录26个字母的数量，一个记录出现的顺序(<strong>重复出现的字母不会进行第二遍</strong>)，最后遍历记录出现顺序的数组即可</li>
-<li>还有一个小小的点：因为样例看起来是一行读入一个字符，实际测评机是一个接一个的字符读入，所以不需要处理<code>\n</code>(我刚开始就处理了，导致报了一个非法读入的错误)  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.macro read_chr(%chr)</span><br><span class="line">    li $v0, 12</span><br><span class="line">    syscall</span><br><span class="line">    move %chr, $v0</span><br><span class="line"></span><br><span class="line">    # 不需要处理字母后面的\n</span><br><span class="line">    # li $v0, 12</span><br><span class="line">    # syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
-</li>
-<li>提供一个有处理是否有重复输入的代码块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">	for_z_begin: # 用于判断是否出现过这个字符</span><br><span class="line">		beq $t2, $s1, for_z_end # 对目前出现的所有字符遍历 </span><br><span class="line">		sll $t3, $t2, 2 </span><br><span class="line">		lw $t4, buffer($t3) # 读出第$t2个已有字符</span><br><span class="line">		sub $t4, $t4, $t1 # 判断是否为同一个字符</span><br><span class="line">		if_begin_1:</span><br><span class="line">			bne $t4, $zero, if_end_1 # 如果不是则跳转</span><br><span class="line">			j not_for_z_end # 如果是则直接结束这段内容</span><br><span class="line">		if_end_1:</span><br><span class="line">		addi $t2, $t2, 1</span><br><span class="line">		j for_z_begin</span><br><span class="line">	for_z_end:</span><br><span class="line">		sll $t3, $t2, 2 # 存入新读入的字符</span><br><span class="line">		sw $t1, buffer($t3)</span><br><span class="line">		addi $s1, $s1, 1</span><br><span class="line">	not_for_z_end:</span><br><span class="line">	</span><br><span class="line">	sll $t1, $t1, 2 # 找到指定字母的偏移字节</span><br><span class="line">	</span><br><span class="line">	lw $t2, num($t1)</span><br><span class="line">	addi $t2, $t2, 1 # 找到的字母加1</span><br><span class="line">	sw $t2, num($t1)</span><br><span class="line">	</span><br><span class="line">	addi $t0, $t0, 1 # 循环继续条件</span><br><span class="line">	j for_i_begin</span><br><span class="line">for_i_end:</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="1202-52-add"><a class="markdownIt-Anchor" href="#1202-52-add"></a> 1202-52 add</h3>
+<li><code>add</code>(<code>addu</code>)<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image0.png" alt="alt text" /></li>
+<li><code>sub</code>(<code>subu</code>)<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image1.png" alt="alt text" /></li>
+<li><code>ori</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image2.png" alt="alt text" /></li>
+<li><code>lui</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image3.png" alt="alt text" /></li>
+<li><code>lw</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image4.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image5.png" alt="alt text" /></li>
+<li><code>sw</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image6.png" alt="alt text" /></li>
+<li><code>beq</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image7.png" alt="alt text" /></li>
+<li><code>nop</code>
 <ul>
-<li>看上去有点麻烦而已，其实完全可以使用一个矩阵接收两次数字完成两次加法(因为所有内存起始值赋值为0)</li>
-<li>最后的转置也只是需要将原来的嵌套<code>for</code>循环中的<strong>先<code>row</code>后<code>col</code></strong> 改为 **先<code>col</code>后<code>row</code>**就可以了</li>
-<li>同样提供一个有大致思路的<code>main</code>模块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">read_in($s0) # 读入n</span><br><span class="line">read_in($s1) # 读入m</span><br><span class="line"></span><br><span class="line">li $s2, 2 # 直接设置读入两次</span><br><span class="line">li $t0, 0 # 设置循环变量i</span><br><span class="line"># 双重for循环读入</span><br><span class="line"></span><br><span class="line">print_str(hint) # 打印题目要求的hint信息</span><br><span class="line"># 双重for循环打印</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="1202-53-full_reserved"><a class="markdownIt-Anchor" href="#1202-53-full_reserved"></a> 1202-53 full_reserved</h3>
-<ul>
-<li>对于全排列问题(顺序)，可以考虑下面的思路(只想看汇编内容可以跳过，这里主要讲的是全排列是如何写的)
-<ul>
-<li>我们以<code>1234</code>四个数字举例，开头为<code>1</code>和<code>2</code>的情况</li>
-<li><code>1</code>:<code>1234 1243 1324 1342 1423 1432</code></li>
-<li><code>2</code>:<code>2134 2143 2314 2341 2413 2431</code></li>
-<li>可以发现，以某个数字开头的全排列其实是 以<strong>这个数字开头</strong>加上<strong>剩下所有数字按相对大小重新构成的数字队列</strong>的全排列</li>
-<li>例如<code>1</code>与<code>234</code>的全排列构成<code>1234</code>以<code>1</code>开头的全排列;<code>2</code>与<code>134</code>的全排列构成了<code>1234</code>以<code>2</code>开头的全排列，所以就可以写递归程序了(雾)</li>
-<li>所以所给递归程序的<code>symbol</code>全局数组是用来记录这个<strong>开头的数字</strong></li>
+<li>特殊，一般可以用<code>sll</code>一起代替，这里因为指令集没有<code>sll</code>所以我们直接使用<code>sll</code>的部分代替<code>nop</code></li>
 </ul>
 </li>
-<li>题目要求你改写<strong>逆序</strong>的全排列汇编程序
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="数据通路设计草图"><a class="markdownIt-Anchor" href="#数据通路设计草图"></a> 数据通路设计草图</h3>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_06e1d48e25b28e0dd5a05c1c5069791.jpg" alt="alt text" /><br />
+注：上述的<code>j</code>、<code>jal</code>、<code>jr</code>指令不在指令集中</p>
+<hr />
+<h3 id="数据通路详细设计"><a class="markdownIt-Anchor" href="#数据通路详细设计"></a> 数据通路详细设计</h3>
+<h4 id="if"><a class="markdownIt-Anchor" href="#if"></a> <code>IF</code></h4>
 <ul>
-<li>最方便的思路就是打印的时候不打印<code>array[i]</code>而打印<code>n+1-array[i]</code>这样相当于用<code>n....1</code>来全排列</li>
-<li>当然，如果你理解了这个C语言程序如何运作的，可以将<code>for</code>循环的顺序反过来，从最高位<code>n</code>来开始，思路同上面的讲解思路</li>
+<li>首先我们观察需要设计的CPU，必不可少的一部分就是<code>PC</code>、<code>IM</code>，没有指令谈何执行指令呢，所以我们将这个阶段称为<strong>取指</strong>(<code>IF</code>)</li>
+<li>基于低耦合的原则，我们希望<code>PC</code>永远只是指向当前需要执行的指令，而不需要进行其他的操作，因此，我们在取指阶段多加入一个模块<strong>次地址计算模块(<code>NPC</code>)</strong>，专门用于计算根据<code>PC</code>的值以及执行的指令与结果更新<code>PC</code>的值</li>
+<li>至此，<code>IF</code>阶段的所有模块都浮出水面了分别是<code>PC</code>、<code>NPC</code>、<code>IM</code></li>
 </ul>
-</li>
-<li>仔细考虑入栈出栈情况，如果使用栈传递参数记得开始时就要先出栈，<code>$ra</code>的保留值在任何一个程序的返回点都要弹出，总之<strong>入栈则一定要出栈</strong>(虽然有点像废话，但某些地方真的必须考虑清楚)，切记</li>
-<li>给出一个可以参考的<code>FullArray</code>函数的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">full_array:</span><br><span class="line">    addi $sp, $sp, -8 # 给出一定的栈空间</span><br><span class="line">    sw $a0, 4($sp) # 压栈</span><br><span class="line">    sw $ra 0($sp) </span><br><span class="line">    move $t0, $a0 # t0代表index</span><br><span class="line">    if_begin:</span><br><span class="line">        sltu $t2, $t0, $s0 # 判断index与n的大小</span><br><span class="line">        bne $t2, $zero, if_end</span><br><span class="line">        </span><br><span class="line">        li $t1, 0 # 设置循环变量i</span><br><span class="line">        for_i_begin:</span><br><span class="line">            beq $t1, $s0, for_i_end </span><br><span class="line">            sll $t2, $t1, 2 </span><br><span class="line">            lw $t3, array($t2) # 得到array[i]</span><br><span class="line">            sub $t3, $zero, $t3</span><br><span class="line">            addi $t4, $s0, 1</span><br><span class="line">            add $t3, $t3, $t4 # 得到n+1-array[i]</span><br><span class="line">            print_int($t3) # 打印这个值</span><br><span class="line">            print_str(space) # 打印空格</span><br><span class="line">            addi $t1, $t1, 1 # 循环i继续条件</span><br><span class="line">            j for_i_begin</span><br><span class="line">        for_i_end:</span><br><span class="line">        print_str(enter) # 打印换行</span><br><span class="line">        add $sp, $sp ,8 # 注意出栈，这里可以不用弹出值，但是一定要栈空间减少</span><br><span class="line">        jr $ra # 返回</span><br><span class="line">    if_end:</span><br><span class="line">        </span><br><span class="line">    # else执行的for循环递归</span><br><span class="line">    addi $sp, $sp, 8 # 将刚开始保留的参数弹出</span><br><span class="line">    lw $a0, -4($sp)</span><br><span class="line">    lw $ra -8($sp)	</span><br><span class="line">    </span><br><span class="line">    jr $ra # 返回</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="1202-329-sum"><a class="markdownIt-Anchor" href="#1202-329-sum"></a> 1202-329 sum</h3>
+<h5 id="pc"><a class="markdownIt-Anchor" href="#pc"></a> <code>PC</code></h5>
 <ul>
-<li>大概就是一个变量保留 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">n!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">n</span><span class="mclose">!</span></span></span></span> 的值，一个变量保留 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><mi>i</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">\sum\limits_{i=1}^n i!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.329066em;vertical-align:-0.9776689999999999em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3513970000000004em;"><span style="top:-2.122331em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.0000050000000003em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-3.950005em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9776689999999999em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">i</span><span class="mclose">!</span></span></span></span>，然后进行递推就可以了，千万不要递归啊(雾，大概率会爆吧</li>
-<li>提供一个可参考的<code>main</code>模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read($s0)</span><br><span class="line">    li $s1, 0</span><br><span class="line">    li $s2, 1</span><br><span class="line">    li $t0, 1</span><br><span class="line">    li $s3, 1</span><br><span class="line">    for_start:</span><br><span class="line">        sltu $s3, $s0, $t0</span><br><span class="line">        bne $s3, $zero, for_end</span><br><span class="line">        multu $t0, $s2</span><br><span class="line">        mflo $s2</span><br><span class="line">        addu $s1, $s1, $s2</span><br><span class="line">        addi $t0, $t0, 1</span><br><span class="line">        j for_start</span><br><span class="line">    for_end:</span><br><span class="line">        printU($s1)</span><br><span class="line">        done</span><br></pre></td></tr></table></figure>
+<li>
+<p>取指阶段最最重要的一个模块无疑是<code>PC</code>程序计数器，没有地址无从取指</p>
+</li>
+<li>
+<p>程序计数器<code>PC</code>始终指向当前执行的指令地址，且会根据<code>NPC</code>提供的值更新值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">init[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">对于PC端口的初始化，默认为<code>0x00003000</code></td>
+</tr>
+<tr>
+<td style="text-align:center">NPC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">NPC传入的值，时钟沿更新PC值</td>
+</tr>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">PC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">当前执行的指令地址</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image8.png" alt="alt text" /></p>
 </li>
 </ul>
-<h3 id="1202-330-hanoi"><a class="markdownIt-Anchor" href="#1202-330-hanoi"></a> 1202-330 hanoi</h3>
+<h5 id="npc"><a class="markdownIt-Anchor" href="#npc"></a> <code>NPC</code></h5>
 <ul>
-<li>诶呀，<s>是大一写的递归程序呢</s></li>
-<li>不论是C语言代码的理解和整体程序都没有难点，所以注意的只有压栈弹栈时候小心即可！</li>
-<li>因为函数参数过多，所以我采用了用栈传输参数的思路，所以要更加小心，哪些部分是保存参数、弹出参数，哪些部分是传递参数、接收参数</li>
-<li>本题给出了关于模板字符串的提示，虽然没法用占位符<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">format_str: .asciiz &quot;move disk D from C to C\n&quot;</span><br><span class="line">.macro print(%disk, %from, %to)</span><br><span class="line">    li $t7, 10</span><br><span class="line">    addi $t6, %disk, 48</span><br><span class="line">    sb $t6, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 17</span><br><span class="line">    sb %from, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 22</span><br><span class="line">    sb %to, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    la $a0, format_str</span><br><span class="line">    li $v0, 4</span><br><span class="line">    syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
+<li>
+<p>既然介绍了<code>PC</code>模块，接下来就需要设计<code>NPC</code>模块与<code>PC</code>模块一起配合不断地获得需要执行的指令的地址</p>
 </li>
-<li>同样，给出参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入n</span><br><span class="line">    li $t1, 65</span><br><span class="line">    li $t2, 66</span><br><span class="line">    li $t3, 67</span><br><span class="line">    la $sp, stack</span><br><span class="line">    addi $sp, $sp, 800 # 初始化参数与stack</span><br><span class="line">    </span><br><span class="line">    push($t0) # 传参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">hanoi:</span><br><span class="line">    pop($t3) # 接收参数</span><br><span class="line">    ...</span><br><span class="line">    push($ra) # 保存返回值</span><br><span class="line">    if_begin:</span><br><span class="line">        bne $t0, $zero, if_end</span><br><span class="line">        print($t0, $t1, $t2)</span><br><span class="line">        print($t0, $t2, $t3)</span><br><span class="line">        pop($ra) # 弹返回地址</span><br><span class="line">        jr $ra</span><br><span class="line">    if_end:</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 取出保留的参数</span><br><span class="line">    ...</span><br><span class="line">    print($t0, $t1, $t2)</span><br><span class="line">    </span><br><span class="line">    ...若干递归</span><br></pre></td></tr></table></figure>
+<li>
+<p><code>NPC</code>将根据当前<code>PC</code>的值与当前指令(例如<code>branch</code>类、<code>jump</code>类指令)综合判断更新<code>PC</code>的值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">PC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">接受当前PC的值</td>
+</tr>
+<tr>
+<td style="text-align:center">imm[15:0]</td>
+<td style="text-align:center">16(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">branch类指令跳转的立即数</td>
+</tr>
+<tr>
+<td style="text-align:center">IM_slt</td>
+<td style="text-align:center">1(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">当前执行的指令类型</td>
+</tr>
+<tr>
+<td style="text-align:center">equal(目前)</td>
+<td style="text-align:center">1(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">beq指令是否满足相等</td>
+</tr>
+<tr>
+<td style="text-align:center">NPC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">输出计算得到的此地址</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>解释为何是<strong>目前</strong></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image9.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_449ed5029e932b2f65a9f080a0dc318.jpg" alt="alt text" /></p>
 </li>
 </ul>
-<h3 id="1202-415-bsearch"><a class="markdownIt-Anchor" href="#1202-415-bsearch"></a> 1202-415 bsearch</h3>
+<h5 id="im"><a class="markdownIt-Anchor" href="#im"></a> <code>IM</code></h5>
 <ul>
-<li>二分查找！！！</li>
-<li>因为已经给出了C语言参考模板了，没有的话或许有同学会因为不清楚<code>[low,high]</code>还是<code>[low,high)</code>两种查找方式的区别，而写出一些小bug</li>
-<li>注意<code>slt</code>与<code>sltu</code>因为如果查找的<code>key</code>比数组中最小的值还要小的话，那么最后得到的值是-1，但是-1在无符号数中是最大的，会出现死循环哦</li>
-<li>直接给出可参考的模板了<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">binary_search:</span><br><span class="line">    push($s1)</span><br><span class="line">    move $s1, $a0 # key</span><br><span class="line">    li $t0, 0 # low</span><br><span class="line">    addi $t1, $s0, -1 # high</span><br><span class="line">    li $t2, 0 # mid</span><br><span class="line">    </span><br><span class="line">    while_begin:</span><br><span class="line">        slt $t5, $t1, $t0</span><br><span class="line">        bne $t5, $zero, while_end</span><br><span class="line">        </span><br><span class="line">        add $t2, $t0, $t1</span><br><span class="line">        srl $t2, $t2, 1</span><br><span class="line">        </span><br><span class="line">        //判断arr[mid]与key的大小</span><br><span class="line">        j while_begin</span><br><span class="line">    while_end:</span><br><span class="line"></span><br><span class="line">    li $t5, 0</span><br><span class="line">    print($t5)</span><br><span class="line">    pop($s1)</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure>
+<li>通过<code>PC</code>传入的地址寻找需要执行的地址，使用<code>ROM</code>存储器即可
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">PC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">传入PC的值</td>
+</tr>
+<tr>
+<td style="text-align:center">IM[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">得到的指令</td>
+</tr>
+<tr>
+<td style="text-align:center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image10.png" alt="alt text" /></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
 </li>
 </ul>
-<h3 id="1202-416-flower"><a class="markdownIt-Anchor" href="#1202-416-flower"></a> 1202-416 flower</h3>
+<hr />
+<h4 id="id"><a class="markdownIt-Anchor" href="#id"></a> <code>ID</code></h4>
 <ul>
-<li>简单汇编，直接给出可参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入m</span><br><span class="line">    read_in($s0) # 读入n</span><br><span class="line">    </span><br><span class="line">    for_i_begin:</span><br><span class="line">        beq $t0, $s0, for_i_end</span><br><span class="line">        divu $t1, $t0, 100</span><br><span class="line">        </span><br><span class="line">        mul $t2, $t1, 100</span><br><span class="line">        sub $t4, $t0, $t2</span><br><span class="line">        divu $t2, $t4, 10</span><br><span class="line">        </span><br><span class="line">        mul $t3, $t2, 10</span><br><span class="line">        sub $t3, $t4, $t3</span><br><span class="line">        </span><br><span class="line">        mul $t4, $t1, $t1</span><br><span class="line">        mul $t4, $t4, $t1</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t2, $t2</span><br><span class="line">        mul $t5, $t5, $t2</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t3, $t3</span><br><span class="line">        mul $t5, $t5, $t3</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        if_begin:</span><br><span class="line">            bne $t4, $t0, if_end</span><br><span class="line">            print($t0)</span><br><span class="line">        if_end:</span><br><span class="line">        add $t0, $t0, 1</span><br><span class="line">        j for_i_begin</span><br><span class="line">    for_i_end:</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+<li>现在我们已经可以正常地从指令存储器中取出指令了，那么为了执行指令我们首先需要明白这句指令在说什么(通过指令机器码确定指令)，所以我们需要一个指令译码器<code>IM_SPL</code>，其次确定了指令的类型(<code>R</code> <code>I</code> <code>J</code>)、指令的含义，我们就需要取出这个指令需要的操作数因为指令的类型不同，可能来源于寄存器堆<code>GRF</code>，也可能来自于指令给出的立即数，所以我们需要对立即数处理的模块<code>EXT</code>，这个阶段称为<strong>译码(<code>ID</code>)</strong></li>
+<li>至此，<code>ID</code>阶段包含<code>IM_SPL</code>、<code>GRF</code>、<code>EXT</code>三个模块</li>
+</ul>
+<h5 id="im_spl"><a class="markdownIt-Anchor" href="#im_spl"></a> <code>IM_SPL</code></h5>
+<ul>
+<li>
+<p><code>IM_SPL</code>对于从<code>IM</code>中取出的指令进行分线器分出，通过<code>IM_SPL</code>的输出内容，我们能更加清晰地了解指令的类型与用途</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">IM[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">传入解析的指令</td>
+</tr>
+<tr>
+<td style="text-align:center">opcode[5:0]</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">指令操作码</td>
+</tr>
+<tr>
+<td style="text-align:center">rs[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">源寄存器</td>
+</tr>
+<tr>
+<td style="text-align:center">rt[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">目标寄存器(J、I)</td>
+</tr>
+<tr>
+<td style="text-align:center">rd[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">目的地寄存器®</td>
+</tr>
+<tr>
+<td style="text-align:center">shamt[4:0] (目前不使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">移位</td>
+</tr>
+<tr>
+<td style="text-align:center">funct[5:0]</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">配合opcode确认R型指令</td>
+</tr>
+<tr>
+<td style="text-align:center">imm_i[15:0]</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">I型指令的立即数操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">imm_j[25:0] (目前不使用)</td>
+<td style="text-align:center">26</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">J型指令的立即数操作数</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image11.png" alt="alt text" /></p>
 </li>
 </ul>
-<h3 id="1202-419-josef"><a class="markdownIt-Anchor" href="#1202-419-josef"></a> 1202-419 josef</h3>
+<h5 id="grf"><a class="markdownIt-Anchor" href="#grf"></a> <code>GRF</code></h5>
 <ul>
-<li>也是一道大一写的题目呢，<s>小海豚</s></li>
-<li>其实刚开始我想如果暴力数组没过的话就用循环链表了(没想都暴力可以直接过)</li>
-<li>这里主要通过一个数组记录某个编号是否已经被删除了</li>
-<li>计数就是数组下标加一，遇到等于数组长度时自动返回0</li>
-<li>给出一个可以参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read($s0) # 读入人数n</span><br><span class="line">read($s1) # 读入报数m</span><br><span class="line"></span><br><span class="line">li $t0, 0 # 报数的人的编号</span><br><span class="line">li $t1, 0 # 外层循环变量i,将所有人都出局为止</span><br><span class="line">li $t2, 1 # 设置第一次数数</span><br><span class="line">for_start_i:</span><br><span class="line">    beq $t1, $s0, for_end_i # 达到最大人数结束循环</span><br><span class="line">    for_start_j:</span><br><span class="line">        beq $t2, $s1, for_end_j # 达到报数最大值</span><br><span class="line">        </span><br><span class="line">        //使用while循环处理报数，去除已经out的人</span><br><span class="line">    for_end_j:</span><br><span class="line">        sll $t4, $t0, 2</span><br><span class="line">        li $t5, 1</span><br><span class="line">        sw $t5, people($t4) # 记录出局的人，置1</span><br><span class="line">        addi $t5, $t0, 1 # 打印出局的人的编号</span><br><span class="line">        print($t5)</span><br><span class="line">        li $t2, 0 # 设置每次j的</span><br><span class="line">        addi $t1, $t1, 1 # 循环继续条件</span><br><span class="line">        j for_start_i</span><br><span class="line">for_end_i:</span><br><span class="line">    done</span><br></pre></td></tr></table></figure></li>
+<li>
+<p>假设当前的是R型指令，我们需要的操作数来自于寄存器，所以我们需要使用<code>IM_SPL</code>解析出来的寄存器编号去获得操作数的值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">A1[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第一个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A2[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第二个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A3[4:0] (<code>WB</code>阶段使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">WD[31:0] (<code>WB</code>阶段使用)</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">WE(<code>WB</code>阶段使用)</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写使能信号</td>
+</tr>
+<tr>
+<td style="text-align:center">RD1[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第一个读寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">RD2[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第二个读寄存器的值</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image12.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_30ef94c2f26f95db316fb797fd8d7c8.jpg" alt="alt text" /></p>
+</li>
 </ul>
+<h5 id="ext"><a class="markdownIt-Anchor" href="#ext"></a> <code>EXT</code></h5>
+<ul>
+<li>
+<p>对于I型指令与J型指令(目前不涉及)，我们虽然可以直接从指令中获得操作数，但是为了方便后续执行，我们需要将立即数位拓展至与寄存器的值的位数相同(32位)，故<code>EXT</code>就是根据指令来拓展立即数的模块</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">imm[15:0]</td>
+<td style="text-align:center">16(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">指令传入的立即数</td>
+</tr>
+<tr>
+<td style="text-align:center">ext_slt[1:0]</td>
+<td style="text-align:center">2(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">控制位拓展的类型</td>
+</tr>
+<tr>
+<td style="text-align:center">ext[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">拓展后的立即数</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image13.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_02a7d5e47dc0b941cbed86f3854f146.jpg" alt="alt text" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="ex"><a class="markdownIt-Anchor" href="#ex"></a> <code>EX</code></h4>
+<ul>
+<li>现在我们已经做好了执行指令的前的所有准备，接下来我们对这些操作数进行某些操作得到我们指令需要内容，这个阶段称为<strong>执行(<code>EX</code>)</strong></li>
+<li><code>EX</code>阶段只有一个模块<code>ALU</code></li>
+</ul>
+<h5 id="alu"><a class="markdownIt-Anchor" href="#alu"></a> <code>ALU</code></h5>
+<ul>
+<li>
+<p><code>ALU</code>算术单元来对操作数进行操作得到结果(算术类指令、逻辑类指令、存取类指令)，同时通过<code>ALU</code>输出符号位(<code>OF</code>co实验不需要、<code>ZF</code>目前仅实现、<code>SF</code>比较大小需要、 <code>CF</code>co实验不需要)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第一个操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">B[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第二个操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">cal_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">加法电路还是减法电路</td>
+</tr>
+<tr>
+<td style="text-align:center">out_slt[1:0]</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">选择输出了什么</td>
+</tr>
+<tr>
+<td style="text-align:center">out[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">输出数据</td>
+</tr>
+<tr>
+<td style="text-align:center">is_eq(目前)</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">符号位(目前只有零信号)</td>
+</tr>
+<tr>
+<td style="text-align:center">flag_slt(未实现)</td>
+<td style="text-align:center">？</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">控制输出的符号位</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image14.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_0aebdf2625a924021aaf26ac66ddfb8.jpg" alt="alt text" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="mem"><a class="markdownIt-Anchor" href="#mem"></a> <code>MEM</code></h4>
+<ul>
+<li>对于存取类指令，我们通过<code>EX</code>阶段获得的是接下来需要操作数在内存中的地址，我们需要对数据存储器<code>DM</code>再进行相应的更改，这个阶段称为<strong>访存(<code>MEM</code>)</strong></li>
+<li><code>MEM</code>阶段只有一个模块<code>DM</code></li>
+</ul>
+<h5 id="dm"><a class="markdownIt-Anchor" href="#dm"></a> <code>DM</code></h5>
+<ul>
+<li>
+<p>存放数据的存储器，对于存取类指令，我们可以从数据存储器中取得数据</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">A[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">存取数据地址</td>
+</tr>
+<tr>
+<td style="text-align:center">WD[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">存入数据值</td>
+</tr>
+<tr>
+<td style="text-align:center">WE</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写使能信号</td>
+</tr>
+<tr>
+<td style="text-align:center">RD[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">读出数据值</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image15.png" alt="alt text" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="wb"><a class="markdownIt-Anchor" href="#wb"></a> <code>WB</code></h4>
+<ul>
+<li>对于<code>ALU</code>计算得到的内容以及从内存中读出的值，我们经常需要写回寄存器堆，所以最后一个阶段虽然仍然是针对寄存器堆，所以这个阶段我们称其为<strong>回写(<code>WB</code>)</strong></li>
+<li><code>WB</code>阶段显然也只有唯一的模块<code>GRF</code></li>
+</ul>
+<h5 id="grf-2"><a class="markdownIt-Anchor" href="#grf-2"></a> <code>GRF</code></h5>
+<ul>
+<li>
+<p>在<code>ID</code>阶段我们已经使用了<code>GRF</code>作为数据的提供方，但是还有一些端口没有使用，在这里我们将使用余下的一些端口</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">A1[4:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第一个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A2[4:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第二个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A3[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">WD[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">WE</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写使能信号</td>
+</tr>
+<tr>
+<td style="text-align:center">RD1[31:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第一个读寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">RD2[31:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第二个读寄存器的值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计草图等看<a href="#grf">上面</a></strong></p>
+</li>
+</ul>
+<hr />
+<h4 id="总数据通路草图"><a class="markdownIt-Anchor" href="#总数据通路草图"></a> 总数据通路草图</h4>
+<ul>
+<li>对于单周期CPU所有基础部件我们已经搭建完毕，接下来练成数据通路只需要将相应的端口进行连接(<strong>出现多对一端口使用MUX，控制信号后面给出</strong>)<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_e4b367f3a721a3dbc9b295929b1039b.jpg" alt="alt text" /></li>
+</ul>
+<hr />
+<h3 id="控制信号生成"><a class="markdownIt-Anchor" href="#控制信号生成"></a> 控制信号生成</h3>
+<ul>
+<li>
+<p>在上述阶段，我们已经基本完成了各个基本指令的数据通路的实现，接下来我们将通过<code>Controller</code>根据指令生成各异的控制信号来指导我们数据通路的流通</p>
+</li>
+<li>
+<p>接下来的所有控制信号出现顺序采用(<code>IF -&gt; ID -&gt; EX -&gt; MEM -&gt; WB</code>)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">控制信号</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">IM_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制NPC中im_slt，说明此次执行的指令类型</td>
+</tr>
+<tr>
+<td style="text-align:center">A3_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制输入GRF的A3端口，根据R型指令与I型指令不同</td>
+</tr>
+<tr>
+<td style="text-align:center">GRF_we</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制GRF的WE信号，是否写入寄存器堆</td>
+</tr>
+<tr>
+<td style="text-align:center">EXT_slt[1:0]</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">控制EXT的ext_slt，调整拓展指令的类型</td>
+</tr>
+<tr>
+<td style="text-align:center">B_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制ALU的B端口输入，根据R型指令与I型指令不同</td>
+</tr>
+<tr>
+<td style="text-align:center">CAL_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制ALU的cal_slt信号，选择加法或者减法电路</td>
+</tr>
+<tr>
+<td style="text-align:center">OUT_slt</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">控制ALU的out_slt信号，选择输出的类型</td>
+</tr>
+<tr>
+<td style="text-align:center">DM_we</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制DM的we信号，是否写入内存</td>
+</tr>
+<tr>
+<td style="text-align:center">WD_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制GRF的WD端口输入，选择不同的写入数据</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>采用与或门阵列的形式生成信号，例如，先通过<code>opcode</code>、<code>funct</code>两个信号确定执行的指令类型，再通过指令类型去生成控制信号</p>
+<ul>
+<li>与门阵列生成指令类型<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image16.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image17.png" alt="alt text" /></li>
+<li>或门阵列生成控制信号<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image18.png" alt="alt text" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="思考题"><a class="markdownIt-Anchor" href="#思考题"></a> 思考题</h2>
+<p>小熊正在赶制</p>
+<h2 id="生成测试数据"><a class="markdownIt-Anchor" href="#生成测试数据"></a> 生成测试数据</h2>
+<p>小熊正在赶制</p>
 ]]></content>
       <categories>
         <category>计算机组成原理</category>
-        <category>推荐题目</category>
+        <category>课下复习</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>

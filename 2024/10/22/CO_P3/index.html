@@ -1,0 +1,1169 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>北航计算机组成P3课下 | Trash Bin for Chi</title><meta name="author" content="Chi,23371265@buaa.edu.cn"><meta name="copyright" content="Chi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="北航计算机组成原理P3课下 通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P3课下的相关内容，希望能对你有所帮助   logisim 搭建8指令简单单周期CPU [toc]  设计文档  总要求  实现指令集&#123;addu、subu、ori、lui、lw、sw、beq、nop&#125; 指令集所有指令的RTL  add(addu)  sub(subu)  ori">
+<meta property="og:type" content="article">
+<meta property="og:title" content="北航计算机组成P3课下">
+<meta property="og:url" content="https://kie-chi.github.io/2024/10/22/CO_P3/index.html">
+<meta property="og:site_name" content="Trash Bin for Chi">
+<meta property="og:description" content="北航计算机组成原理P3课下 通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P3课下的相关内容，希望能对你有所帮助   logisim 搭建8指令简单单周期CPU [toc]  设计文档  总要求  实现指令集&#123;addu、subu、ori、lui、lw、sw、beq、nop&#125; 指令集所有指令的RTL  add(addu)  sub(subu)  ori">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg">
+<meta property="article:published_time" content="2024-10-22T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-22T14:55:17.352Z">
+<meta property="article:author" content="Chi">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg"><link rel="shortcut icon" href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/wifi_fav.ico"><link rel="canonical" href="https://kie-chi.github.io/2024/10/22/CO_P3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"LAX3O9LZW6","apiKey":"bf885597c6928e6be2e67de57f38f2bd","indexName":"my-hexo-blog","hits":{"per_page":10},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":730,"position":"top","messagePrev":"我已经","messageNext":"天没有更新这篇文章了,如果您觉得过时了可以看看主页哦~"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Chi","link":"链接: ","source":"来源: Trash Bin for Chi","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '北航计算机组成P3课下',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-22 22:55:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 7 || hour >= 19
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Trash Bin for Chi"><img class="site-icon" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"/><span class="site-name">Trash Bin for Chi</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">北航计算机组成P3课下</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-22T14:00:00.000Z" title="发表于 2024-10-22 22:00:00">2024-10-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-22T14:55:17.352Z" title="更新于 2024-10-22 22:55:17">2024-10-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E8%AF%BE%E4%B8%8B%E5%A4%8D%E4%B9%A0/">课下复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="北航计算机组成P3课下"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="北航计算机组成原理p3课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p3课下"></a> 北航计算机组成原理P3课下</h1>
+<div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P3课下的相关内容，希望能对你有所帮助</p>
+</div>
+<h1 id="logisim-搭建8指令简单单周期cpu"><a class="markdownIt-Anchor" href="#logisim-搭建8指令简单单周期cpu"></a> logisim 搭建8指令简单单周期CPU</h1>
+<p>[toc]</p>
+<h2 id="设计文档"><a class="markdownIt-Anchor" href="#设计文档"></a> 设计文档</h2>
+<h3 id="总要求"><a class="markdownIt-Anchor" href="#总要求"></a> 总要求</h3>
+<ul>
+<li>实现指令集<code>&#123;addu、subu、ori、lui、lw、sw、beq、nop&#125;</code></li>
+<li>指令集所有指令的<code>RTL</code>
+<ul>
+<li><code>add</code>(<code>addu</code>)<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image0.png" alt="alt text" /></li>
+<li><code>sub</code>(<code>subu</code>)<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image1.png" alt="alt text" /></li>
+<li><code>ori</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image2.png" alt="alt text" /></li>
+<li><code>lui</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image3.png" alt="alt text" /></li>
+<li><code>lw</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image4.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image5.png" alt="alt text" /></li>
+<li><code>sw</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image6.png" alt="alt text" /></li>
+<li><code>beq</code><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image7.png" alt="alt text" /></li>
+<li><code>nop</code>
+<ul>
+<li>特殊，一般可以用<code>sll</code>一起代替，这里因为指令集没有<code>sll</code>所以我们直接使用<code>sll</code>的部分代替<code>nop</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="数据通路设计草图"><a class="markdownIt-Anchor" href="#数据通路设计草图"></a> 数据通路设计草图</h3>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_06e1d48e25b28e0dd5a05c1c5069791.jpg" alt="alt text" /><br />
+注：上述的<code>j</code>、<code>jal</code>、<code>jr</code>指令不在指令集中</p>
+<hr />
+<h3 id="数据通路详细设计"><a class="markdownIt-Anchor" href="#数据通路详细设计"></a> 数据通路详细设计</h3>
+<h4 id="if"><a class="markdownIt-Anchor" href="#if"></a> <code>IF</code></h4>
+<ul>
+<li>首先我们观察需要设计的CPU，必不可少的一部分就是<code>PC</code>、<code>IM</code>，没有指令谈何执行指令呢，所以我们将这个阶段称为<strong>取指</strong>(<code>IF</code>)</li>
+<li>基于低耦合的原则，我们希望<code>PC</code>永远只是指向当前需要执行的指令，而不需要进行其他的操作，因此，我们在取指阶段多加入一个模块<strong>次地址计算模块(<code>NPC</code>)</strong>，专门用于计算根据<code>PC</code>的值以及执行的指令与结果更新<code>PC</code>的值</li>
+<li>至此，<code>IF</code>阶段的所有模块都浮出水面了分别是<code>PC</code>、<code>NPC</code>、<code>IM</code></li>
+</ul>
+<h5 id="pc"><a class="markdownIt-Anchor" href="#pc"></a> <code>PC</code></h5>
+<ul>
+<li>
+<p>取指阶段最最重要的一个模块无疑是<code>PC</code>程序计数器，没有地址无从取指</p>
+</li>
+<li>
+<p>程序计数器<code>PC</code>始终指向当前执行的指令地址，且会根据<code>NPC</code>提供的值更新值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">init[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">对于PC端口的初始化，默认为<code>0x00003000</code></td>
+</tr>
+<tr>
+<td style="text-align:center">NPC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">NPC传入的值，时钟沿更新PC值</td>
+</tr>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">PC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">当前执行的指令地址</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image8.png" alt="alt text" /></p>
+</li>
+</ul>
+<h5 id="npc"><a class="markdownIt-Anchor" href="#npc"></a> <code>NPC</code></h5>
+<ul>
+<li>
+<p>既然介绍了<code>PC</code>模块，接下来就需要设计<code>NPC</code>模块与<code>PC</code>模块一起配合不断地获得需要执行的指令的地址</p>
+</li>
+<li>
+<p><code>NPC</code>将根据当前<code>PC</code>的值与当前指令(例如<code>branch</code>类、<code>jump</code>类指令)综合判断更新<code>PC</code>的值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">PC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">接受当前PC的值</td>
+</tr>
+<tr>
+<td style="text-align:center">imm[15:0]</td>
+<td style="text-align:center">16(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">branch类指令跳转的立即数</td>
+</tr>
+<tr>
+<td style="text-align:center">IM_slt</td>
+<td style="text-align:center">1(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">当前执行的指令类型</td>
+</tr>
+<tr>
+<td style="text-align:center">equal(目前)</td>
+<td style="text-align:center">1(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">beq指令是否满足相等</td>
+</tr>
+<tr>
+<td style="text-align:center">NPC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">输出计算得到的此地址</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>解释为何是<strong>目前</strong></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image9.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_449ed5029e932b2f65a9f080a0dc318.jpg" alt="alt text" /></p>
+</li>
+</ul>
+<h5 id="im"><a class="markdownIt-Anchor" href="#im"></a> <code>IM</code></h5>
+<ul>
+<li>通过<code>PC</code>传入的地址寻找需要执行的地址，使用<code>ROM</code>存储器即可
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">PC[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">传入PC的值</td>
+</tr>
+<tr>
+<td style="text-align:center">IM[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">得到的指令</td>
+</tr>
+<tr>
+<td style="text-align:center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image10.png" alt="alt text" /></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<hr />
+<h4 id="id"><a class="markdownIt-Anchor" href="#id"></a> <code>ID</code></h4>
+<ul>
+<li>现在我们已经可以正常地从指令存储器中取出指令了，那么为了执行指令我们首先需要明白这句指令在说什么(通过指令机器码确定指令)，所以我们需要一个指令译码器<code>IM_SPL</code>，其次确定了指令的类型(<code>R</code> <code>I</code> <code>J</code>)、指令的含义，我们就需要取出这个指令需要的操作数因为指令的类型不同，可能来源于寄存器堆<code>GRF</code>，也可能来自于指令给出的立即数，所以我们需要对立即数处理的模块<code>EXT</code>，这个阶段称为<strong>译码(<code>ID</code>)</strong></li>
+<li>至此，<code>ID</code>阶段包含<code>IM_SPL</code>、<code>GRF</code>、<code>EXT</code>三个模块</li>
+</ul>
+<h5 id="im_spl"><a class="markdownIt-Anchor" href="#im_spl"></a> <code>IM_SPL</code></h5>
+<ul>
+<li>
+<p><code>IM_SPL</code>对于从<code>IM</code>中取出的指令进行分线器分出，通过<code>IM_SPL</code>的输出内容，我们能更加清晰地了解指令的类型与用途</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">IM[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">传入解析的指令</td>
+</tr>
+<tr>
+<td style="text-align:center">opcode[5:0]</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">指令操作码</td>
+</tr>
+<tr>
+<td style="text-align:center">rs[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">源寄存器</td>
+</tr>
+<tr>
+<td style="text-align:center">rt[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">目标寄存器(J、I)</td>
+</tr>
+<tr>
+<td style="text-align:center">rd[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">目的地寄存器®</td>
+</tr>
+<tr>
+<td style="text-align:center">shamt[4:0] (目前不使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">移位</td>
+</tr>
+<tr>
+<td style="text-align:center">funct[5:0]</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">配合opcode确认R型指令</td>
+</tr>
+<tr>
+<td style="text-align:center">imm_i[15:0]</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">I型指令的立即数操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">imm_j[25:0] (目前不使用)</td>
+<td style="text-align:center">26</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">J型指令的立即数操作数</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image11.png" alt="alt text" /></p>
+</li>
+</ul>
+<h5 id="grf"><a class="markdownIt-Anchor" href="#grf"></a> <code>GRF</code></h5>
+<ul>
+<li>
+<p>假设当前的是R型指令，我们需要的操作数来自于寄存器，所以我们需要使用<code>IM_SPL</code>解析出来的寄存器编号去获得操作数的值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">A1[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第一个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A2[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第二个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A3[4:0] (<code>WB</code>阶段使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">WD[31:0] (<code>WB</code>阶段使用)</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">WE(<code>WB</code>阶段使用)</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写使能信号</td>
+</tr>
+<tr>
+<td style="text-align:center">RD1[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第一个读寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">RD2[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第二个读寄存器的值</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image12.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_30ef94c2f26f95db316fb797fd8d7c8.jpg" alt="alt text" /></p>
+</li>
+</ul>
+<h5 id="ext"><a class="markdownIt-Anchor" href="#ext"></a> <code>EXT</code></h5>
+<ul>
+<li>
+<p>对于I型指令与J型指令(目前不涉及)，我们虽然可以直接从指令中获得操作数，但是为了方便后续执行，我们需要将立即数位拓展至与寄存器的值的位数相同(32位)，故<code>EXT</code>就是根据指令来拓展立即数的模块</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">imm[15:0]</td>
+<td style="text-align:center">16(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">指令传入的立即数</td>
+</tr>
+<tr>
+<td style="text-align:center">ext_slt[1:0]</td>
+<td style="text-align:center">2(目前)</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">控制位拓展的类型</td>
+</tr>
+<tr>
+<td style="text-align:center">ext[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">拓展后的立即数</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image13.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_02a7d5e47dc0b941cbed86f3854f146.jpg" alt="alt text" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="ex"><a class="markdownIt-Anchor" href="#ex"></a> <code>EX</code></h4>
+<ul>
+<li>现在我们已经做好了执行指令的前的所有准备，接下来我们对这些操作数进行某些操作得到我们指令需要内容，这个阶段称为<strong>执行(<code>EX</code>)</strong></li>
+<li><code>EX</code>阶段只有一个模块<code>ALU</code></li>
+</ul>
+<h5 id="alu"><a class="markdownIt-Anchor" href="#alu"></a> <code>ALU</code></h5>
+<ul>
+<li>
+<p><code>ALU</code>算术单元来对操作数进行操作得到结果(算术类指令、逻辑类指令、存取类指令)，同时通过<code>ALU</code>输出符号位(<code>OF</code>co实验不需要、<code>ZF</code>目前仅实现、<code>SF</code>比较大小需要、 <code>CF</code>co实验不需要)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第一个操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">B[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第二个操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">cal_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">加法电路还是减法电路</td>
+</tr>
+<tr>
+<td style="text-align:center">out_slt[1:0]</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">选择输出了什么</td>
+</tr>
+<tr>
+<td style="text-align:center">out[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">输出数据</td>
+</tr>
+<tr>
+<td style="text-align:center">is_eq(目前)</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">符号位(目前只有零信号)</td>
+</tr>
+<tr>
+<td style="text-align:center">flag_slt(未实现)</td>
+<td style="text-align:center">？</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">控制输出的符号位</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image14.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_0aebdf2625a924021aaf26ac66ddfb8.jpg" alt="alt text" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="mem"><a class="markdownIt-Anchor" href="#mem"></a> <code>MEM</code></h4>
+<ul>
+<li>对于存取类指令，我们通过<code>EX</code>阶段获得的是接下来需要操作数在内存中的地址，我们需要对数据存储器<code>DM</code>再进行相应的更改，这个阶段称为<strong>访存(<code>MEM</code>)</strong></li>
+<li><code>MEM</code>阶段只有一个模块<code>DM</code></li>
+</ul>
+<h5 id="dm"><a class="markdownIt-Anchor" href="#dm"></a> <code>DM</code></h5>
+<ul>
+<li>
+<p>存放数据的存储器，对于存取类指令，我们可以从数据存储器中取得数据</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">A[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">存取数据地址</td>
+</tr>
+<tr>
+<td style="text-align:center">WD[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">存入数据值</td>
+</tr>
+<tr>
+<td style="text-align:center">WE</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写使能信号</td>
+</tr>
+<tr>
+<td style="text-align:center">RD[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">读出数据值</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image15.png" alt="alt text" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="wb"><a class="markdownIt-Anchor" href="#wb"></a> <code>WB</code></h4>
+<ul>
+<li>对于<code>ALU</code>计算得到的内容以及从内存中读出的值，我们经常需要写回寄存器堆，所以最后一个阶段虽然仍然是针对寄存器堆，所以这个阶段我们称其为<strong>回写(<code>WB</code>)</strong></li>
+<li><code>WB</code>阶段显然也只有唯一的模块<code>GRF</code></li>
+</ul>
+<h5 id="grf-2"><a class="markdownIt-Anchor" href="#grf-2"></a> <code>GRF</code></h5>
+<ul>
+<li>
+<p>在<code>ID</code>阶段我们已经使用了<code>GRF</code>作为数据的提供方，但是还有一些端口没有使用，在这里我们将使用余下的一些端口</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">端口</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">clk</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">时钟信号</td>
+</tr>
+<tr>
+<td style="text-align:center">rst</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center"><strong>异步</strong>复位信号</td>
+</tr>
+<tr>
+<td style="text-align:center">A1[4:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第一个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A2[4:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">第二个读寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">A3[4:0]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器编号</td>
+</tr>
+<tr>
+<td style="text-align:center">WD[31:0]</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写入寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">WE</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">input</td>
+<td style="text-align:center">写使能信号</td>
+</tr>
+<tr>
+<td style="text-align:center">RD1[31:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第一个读寄存器的值</td>
+</tr>
+<tr>
+<td style="text-align:center">RD2[31:0] (<code>ID</code>阶段使用)</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">output</td>
+<td style="text-align:center">第二个读寄存器的值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计草图等看<a href="#grf">上面</a></strong></p>
+</li>
+</ul>
+<hr />
+<h4 id="总数据通路草图"><a class="markdownIt-Anchor" href="#总数据通路草图"></a> 总数据通路草图</h4>
+<ul>
+<li>对于单周期CPU所有基础部件我们已经搭建完毕，接下来练成数据通路只需要将相应的端口进行连接(<strong>出现多对一端口使用MUX，控制信号后面给出</strong>)<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_e4b367f3a721a3dbc9b295929b1039b.jpg" alt="alt text" /></li>
+</ul>
+<hr />
+<h3 id="控制信号生成"><a class="markdownIt-Anchor" href="#控制信号生成"></a> 控制信号生成</h3>
+<ul>
+<li>
+<p>在上述阶段，我们已经基本完成了各个基本指令的数据通路的实现，接下来我们将通过<code>Controller</code>根据指令生成各异的控制信号来指导我们数据通路的流通</p>
+</li>
+<li>
+<p>接下来的所有控制信号出现顺序采用(<code>IF -&gt; ID -&gt; EX -&gt; MEM -&gt; WB</code>)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">控制信号</th>
+<th style="text-align:center">位宽</th>
+<th style="text-align:center">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">IM_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制NPC中im_slt，说明此次执行的指令类型</td>
+</tr>
+<tr>
+<td style="text-align:center">A3_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制输入GRF的A3端口，根据R型指令与I型指令不同</td>
+</tr>
+<tr>
+<td style="text-align:center">GRF_we</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制GRF的WE信号，是否写入寄存器堆</td>
+</tr>
+<tr>
+<td style="text-align:center">EXT_slt[1:0]</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">控制EXT的ext_slt，调整拓展指令的类型</td>
+</tr>
+<tr>
+<td style="text-align:center">B_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制ALU的B端口输入，根据R型指令与I型指令不同</td>
+</tr>
+<tr>
+<td style="text-align:center">CAL_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制ALU的cal_slt信号，选择加法或者减法电路</td>
+</tr>
+<tr>
+<td style="text-align:center">OUT_slt</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">控制ALU的out_slt信号，选择输出的类型</td>
+</tr>
+<tr>
+<td style="text-align:center">DM_we</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制DM的we信号，是否写入内存</td>
+</tr>
+<tr>
+<td style="text-align:center">WD_slt</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">控制GRF的WD端口输入，选择不同的写入数据</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>采用与或门阵列的形式生成信号，例如，先通过<code>opcode</code>、<code>funct</code>两个信号确定执行的指令类型，再通过指令类型去生成控制信号</p>
+<ul>
+<li>与门阵列生成指令类型<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image16.png" alt="alt text" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image17.png" alt="alt text" /></li>
+<li>或门阵列生成控制信号<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image18.png" alt="alt text" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="思考题"><a class="markdownIt-Anchor" href="#思考题"></a> 思考题</h2>
+<p>小熊正在赶制</p>
+<h2 id="生成测试数据"><a class="markdownIt-Anchor" href="#生成测试数据"></a> 生成测试数据</h2>
+<p>小熊正在赶制</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Kie-Chi.github.io">Chi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kie-chi.github.io/2024/10/22/CO_P3/">https://kie-chi.github.io/2024/10/22/CO_P3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Kie-Chi.github.io" target="_blank">Trash Bin for Chi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></div><div class="post_share"><div class="social-share" data-image="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助一杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">北航计算机组成P2课下</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/24/CO_P0/" title="北航计算机组成P0课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-24</div><div class="title">北航计算机组成P0课下</div></div></a></div><div><a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-30</div><div class="title">北航计算机组成P1推荐题汇总</div></div></a></div><div><a href="/2024/10/09/CO_P2_extra/" title="北航计算机组成P2推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-09</div><div class="title">北航计算机组成P2推荐题汇总</div></div></a></div><div><a href="/2024/09/28/CO_P1/" title="北航计算机组成P1课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-28</div><div class="title">北航计算机组成P1课下</div></div></a></div><div><a href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-15</div><div class="title">北航计算机组成P2课下</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Chi</div><div class="author-info__description">这个人很懒，这里什么都没有留下</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kie-Chi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kie-Chi" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xchi_xikai@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/Kie-Chi/my_co_repo" target="_blank" title="Code"><i class="fa-solid fa-code" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">懒人刷新处</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%97%E8%88%AA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86p3%E8%AF%BE%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text"> 北航计算机组成原理P3课下</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#logisim-%E6%90%AD%E5%BB%BA8%E6%8C%87%E4%BB%A4%E7%AE%80%E5%8D%95%E5%8D%95%E5%91%A8%E6%9C%9Fcpu"><span class="toc-number">2.</span> <span class="toc-text"> logisim 搭建8指令简单单周期CPU</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3"><span class="toc-number">2.1.</span> <span class="toc-text"> 设计文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A6%81%E6%B1%82"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 总要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%AE%BE%E8%AE%A1%E8%8D%89%E5%9B%BE"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 数据通路设计草图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 数据通路详细设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#if"><span class="toc-number">2.1.3.1.</span> <span class="toc-text"> IF</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#pc"><span class="toc-number">2.1.3.1.1.</span> <span class="toc-text"> PC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#npc"><span class="toc-number">2.1.3.1.2.</span> <span class="toc-text"> NPC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#im"><span class="toc-number">2.1.3.1.3.</span> <span class="toc-text"> IM</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#id"><span class="toc-number">2.1.3.2.</span> <span class="toc-text"> ID</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#im_spl"><span class="toc-number">2.1.3.2.1.</span> <span class="toc-text"> IM_SPL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#grf"><span class="toc-number">2.1.3.2.2.</span> <span class="toc-text"> GRF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ext"><span class="toc-number">2.1.3.2.3.</span> <span class="toc-text"> EXT</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ex"><span class="toc-number">2.1.3.3.</span> <span class="toc-text"> EX</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#alu"><span class="toc-number">2.1.3.3.1.</span> <span class="toc-text"> ALU</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mem"><span class="toc-number">2.1.3.4.</span> <span class="toc-text"> MEM</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dm"><span class="toc-number">2.1.3.4.1.</span> <span class="toc-text"> DM</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wb"><span class="toc-number">2.1.3.5.</span> <span class="toc-text"> WB</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#grf-2"><span class="toc-number">2.1.3.5.1.</span> <span class="toc-text"> GRF</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%8D%89%E5%9B%BE"><span class="toc-number">2.1.3.6.</span> <span class="toc-text"> 总数据通路草图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7%E7%94%9F%E6%88%90"><span class="toc-number">2.1.4.</span> <span class="toc-text"> 控制信号生成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">2.2.</span> <span class="toc-text"> 思考题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE"><span class="toc-number">2.3.</span> <span class="toc-text"> 生成测试数据</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P3课下"/></a><div class="content"><a class="title" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下">北航计算机组成P3课下</a><time datetime="2024-10-22T14:00:00.000Z" title="发表于 2024-10-22 22:00:00">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P2课下"/></a><div class="content"><a class="title" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下">北航计算机组成P2课下</a><time datetime="2024-10-15T06:00:00.000Z" title="发表于 2024-10-15 14:00:00">2024-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/09/CO_P2_extra/" title="北航计算机组成P2推荐题汇总"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P2推荐题汇总"/></a><div class="content"><a class="title" href="/2024/10/09/CO_P2_extra/" title="北航计算机组成P2推荐题汇总">北航计算机组成P2推荐题汇总</a><time datetime="2024-10-09T12:00:00.000Z" title="发表于 2024-10-09 20:00:00">2024-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/06/CN_u2/" title="计算机网络--物理层"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络--物理层"/></a><div class="content"><a class="title" href="/2024/10/06/CN_u2/" title="计算机网络--物理层">计算机网络--物理层</a><time datetime="2024-10-06T02:00:00.000Z" title="发表于 2024-10-06 10:00:00">2024-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/04/CN_u1/" title="计算机网络--概述"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络--概述"/></a><div class="content"><a class="title" href="/2024/10/04/CN_u1/" title="计算机网络--概述">计算机网络--概述</a><time datetime="2024-10-04T10:00:00.000Z" title="发表于 2024-10-04 18:00:00">2024-10-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Chi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: 'Ov23liTVvzPE9besvps5',
+      clientSecret: 'c1345a196978f719c699170e2f7a04939333916e',
+      repo: 'kie-chi.github.io',
+      owner: 'kie-chi',
+      admin: ['kie-chi'],
+      id: 'ce4011f6d22fbfd5ec053ef7675a620a',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/kie-chi/kie-chi.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom && ($dom.innerHTML= result)
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="true" data-text="Ok!,Good!,Great!,Amazing!,Excellent!,Crazy!,Unbelievable" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.65.0/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js?v=4.13.0"></script></div></div></body></html>
