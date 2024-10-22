@@ -1954,7 +1954,8 @@
 </ul>
 <h5 id="im"><a class="markdownIt-Anchor" href="#im"></a> <code>IM</code></h5>
 <ul>
-<li>通过<code>PC</code>传入的地址寻找需要执行的地址，使用<code>ROM</code>存储器即可
+<li>
+<p>通过<code>PC</code>传入的地址寻找需要执行的地址，使用<code>ROM</code>存储器即可</p>
 <table>
 <thead>
 <tr>
@@ -1977,14 +1978,9 @@
 <td style="text-align:center">output</td>
 <td style="text-align:center">得到的指令</td>
 </tr>
-<tr>
-<td style="text-align:center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image10.png" alt="IM结构图" /></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-</tr>
 </tbody>
 </table>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image10.png" alt="IM结构图" /></p>
 </li>
 </ul>
 <hr />
