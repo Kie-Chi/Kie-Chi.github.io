@@ -1810,20 +1810,20 @@
 <li>指令集所有指令的<code>RTL</code>
 <ul>
 <li><code>add</code>(<code>addu</code>)<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image0.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image0.png" alt="add指令RTL" /></li>
 <li><code>sub</code>(<code>subu</code>)<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image1.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image1.png" alt="sub指令RTL" /></li>
 <li><code>ori</code><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image2.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image2.png" alt="ori指令RTL" /></li>
 <li><code>lui</code><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image3.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image3.png" alt="lui指令RTL" /></li>
 <li><code>lw</code><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image4.png" alt="alt text" /><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image5.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image4.png" alt="lw指令RTL" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image5.png" alt="lw指令RTL" /></li>
 <li><code>sw</code><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image6.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image6.png" alt="sw指令RTL" /></li>
 <li><code>beq</code><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image7.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image7.png" alt="beq指令RTL" /></li>
 <li><code>nop</code>
 <ul>
 <li>特殊，一般可以用<code>sll</code>一起代替，这里因为指令集没有<code>sll</code>所以我们直接使用<code>sll</code>的部分代替<code>nop</code></li>
@@ -1834,7 +1834,7 @@
 </ul>
 <hr />
 <h3 id="数据通路设计草图"><a class="markdownIt-Anchor" href="#数据通路设计草图"></a> 数据通路设计草图</h3>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_06e1d48e25b28e0dd5a05c1c5069791.jpg" alt="alt text" /><br />
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_06e1d48e25b28e0dd5a05c1c5069791.jpg" alt="数据通路草图" /><br />
 注：上述的<code>j</code>、<code>jal</code>、<code>jr</code>指令不在指令集中</p>
 <hr />
 <h3 id="数据通路详细设计"><a class="markdownIt-Anchor" href="#数据通路详细设计"></a> 数据通路详细设计</h3>
@@ -1893,7 +1893,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image8.png" alt="alt text" /></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image8.png" alt="PC结构图" /></p>
 </li>
 </ul>
 <h5 id="npc"><a class="markdownIt-Anchor" href="#npc"></a> <code>NPC</code></h5>
@@ -1948,8 +1948,8 @@
 </li>
 <li>
 <p>解释为何是<strong>目前</strong></p>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image9.png" alt="alt text" /><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_449ed5029e932b2f65a9f080a0dc318.jpg" alt="alt text" /></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image9.png" alt="NPC结构图" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_449ed5029e932b2f65a9f080a0dc318.jpg" alt="NPC草图" /></p>
 </li>
 </ul>
 <h5 id="im"><a class="markdownIt-Anchor" href="#im"></a> <code>IM</code></h5>
@@ -1978,7 +1978,7 @@
 <td style="text-align:center">得到的指令</td>
 </tr>
 <tr>
-<td style="text-align:center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image10.png" alt="alt text" /></td>
+<td style="text-align:center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image10.png" alt="IM结构图" /></td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -2063,7 +2063,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image11.png" alt="alt text" /></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image11.png" alt="IM_SPL结构图" /></p>
 </li>
 </ul>
 <h5 id="grf"><a class="markdownIt-Anchor" href="#grf"></a> <code>GRF</code></h5>
@@ -2136,8 +2136,8 @@
 </tr>
 </tbody>
 </table>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image12.png" alt="alt text" /><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_30ef94c2f26f95db316fb797fd8d7c8.jpg" alt="alt text" /></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image12.png" alt="GRF结构图" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_30ef94c2f26f95db316fb797fd8d7c8.jpg" alt="GRF草图" /></p>
 </li>
 </ul>
 <h5 id="ext"><a class="markdownIt-Anchor" href="#ext"></a> <code>EXT</code></h5>
@@ -2174,8 +2174,8 @@
 </tr>
 </tbody>
 </table>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image13.png" alt="alt text" /><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_02a7d5e47dc0b941cbed86f3854f146.jpg" alt="alt text" /></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image13.png" alt="EXT结构图" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_02a7d5e47dc0b941cbed86f3854f146.jpg" alt="EXT草图" /></p>
 </li>
 </ul>
 <hr />
@@ -2242,8 +2242,8 @@
 </tr>
 </tbody>
 </table>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image14.png" alt="alt text" /><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_0aebdf2625a924021aaf26ac66ddfb8.jpg" alt="alt text" /></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image14.png" alt="ALU结构图" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_0aebdf2625a924021aaf26ac66ddfb8.jpg" alt="ALU草图" /></p>
 </li>
 </ul>
 <hr />
@@ -2304,7 +2304,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image15.png" alt="alt text" /></p>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image15.png" alt="DM结构图" /></p>
 </li>
 </ul>
 <hr />
@@ -2390,7 +2390,7 @@
 <h4 id="总数据通路草图"><a class="markdownIt-Anchor" href="#总数据通路草图"></a> 总数据通路草图</h4>
 <ul>
 <li>对于单周期CPU所有基础部件我们已经搭建完毕，接下来练成数据通路只需要将相应的端口进行连接(<strong>出现多对一端口使用MUX，控制信号后面给出</strong>)<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_e4b367f3a721a3dbc9b295929b1039b.jpg" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_e4b367f3a721a3dbc9b295929b1039b.jpg" alt="总数据通路草图" /></li>
 </ul>
 <hr />
 <h3 id="控制信号生成"><a class="markdownIt-Anchor" href="#控制信号生成"></a> 控制信号生成</h3>
@@ -2461,10 +2461,10 @@
 <p>采用与或门阵列的形式生成信号，例如，先通过<code>opcode</code>、<code>funct</code>两个信号确定执行的指令类型，再通过指令类型去生成控制信号</p>
 <ul>
 <li>与门阵列生成指令类型<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image16.png" alt="alt text" /><br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image17.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image16.png" alt="非R型指令与门阵列" /><br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image17.png" alt="R型指令与门阵列" /></li>
 <li>或门阵列生成控制信号<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image18.png" alt="alt text" /></li>
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_P3_image18.png" alt="或门阵列" /></li>
 </ul>
 </li>
 </ul>
