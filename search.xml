@@ -2601,7 +2601,7 @@ CPU中的<code>DM</code>、<code>GRF</code>是状态量。通过<code>IF</code>�
   </entry>
   <entry>
     <title>北航计算机组成单周期数据生成</title>
-    <url>/2024/10/15/CO_P4_noexam/</url>
+    <url>/2024/10/28/CO_P4_noexam/</url>
     <content><![CDATA[<h1 id="两种可能的测试数据生成方式"><a class="markdownIt-Anchor" href="#两种可能的测试数据生成方式"></a> 两种可能的测试数据生成方式</h1>
 <h2 id="unittest"><a class="markdownIt-Anchor" href="#unittest"></a> unitTest</h2>
 <h3 id="分类"><a class="markdownIt-Anchor" href="#分类"></a> 分类</h3>
