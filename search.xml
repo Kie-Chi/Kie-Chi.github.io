@@ -1371,88 +1371,6 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P1推荐题汇总</title>
-    <url>/2024/09/30/CO_P1_extra/</url>
-    <content><![CDATA[<h1 id="北航计算机组成p1推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p1推荐题目汇总"></a> 北航计算机组成P1推荐题目汇总</h1>
-<h2 id="题目怎么来的"><a class="markdownIt-Anchor" href="#题目怎么来的"></a> 题目怎么来的</h2>
-<ul>
-<li><s>偷来的(搓手手</s></li>
-<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<s>爬虫而生的</s>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure>
-</li>
-<li><code>PieId</code>
-<ul>
-<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
-</ul>
-</li>
-<li><code>ProblemId</code>
-<ul>
-<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
-<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
-</ul>
-</li>
-<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br />
-<a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
-</ul>
-<hr />
-<h2 id="组合电路"><a class="markdownIt-Anchor" href="#组合电路"></a> 组合电路</h2>
-<ul>
-<li>过于简单，仅有提示</li>
-</ul>
-<h3 id="1202-405-floattype"><a class="markdownIt-Anchor" href="#1202-405-floattype"></a> 1202-405 FloatType</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h3 id="1202-202-comparator"><a class="markdownIt-Anchor" href="#1202-202-comparator"></a> 1202-202 Comparator</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
-</ul>
-<h3 id="1202-424-voter"><a class="markdownIt-Anchor" href="#1202-424-voter"></a> 1202-424 Voter</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="1202-102-alu"><a class="markdownIt-Anchor" href="#1202-102-alu"></a> 1202-102 ALU</h3>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>注意使用拓展位的减法电路实现比较即可</li>
-</ul>
-<hr />
-<h2 id="有限状态机"><a class="markdownIt-Anchor" href="#有限状态机"></a> 有限状态机</h2>
-<h3 id="1202-334-drink"><a class="markdownIt-Anchor" href="#1202-334-drink"></a> 1202-334 Drink</h3>
-<ul>
-<li><s>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</s></li>
-<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
-<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text" /></li>
-<li>提供一个我使用的新结构框架（<s>应该没有泄露源码之嫌</s>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="1202-145-string"><a class="markdownIt-Anchor" href="#1202-145-string"></a> 1202-145 String</h3>
-<ul>
-<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
-<li>多重括号的辨别使用一个变量寄存左括号数量即可
-<ul>
-<li>string状态没有分开，看起来有一点乱<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图" /></li>
-<li>将带有左括号未匹配时单独分出状态，这样大概不会显得乱吧<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string.png" alt="wty赞助" /></li>
-</ul>
-</li>
-</ul>
-<h3 id="1202-336-intcheck"><a class="markdownIt-Anchor" href="#1202-336-intcheck"></a> 1202-336 IntCheck</h3>
-<ul>
-<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
-<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
-<li>第三，不要在小情侣后面码代码<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图" /></li>
-</ul>
-<a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
-  title="查看原图"><span>查看原图</span></a>]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>推荐题目</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>北航计算机组成P1课下</title>
     <url>/2024/09/28/CO_P1/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理p1课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p1课下"></a> 北航计算机组成原理P1课下</h1>
@@ -1699,6 +1617,88 @@
       <categories>
         <category>计算机组成原理</category>
         <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P1推荐题汇总</title>
+    <url>/2024/09/30/CO_P1_extra/</url>
+    <content><![CDATA[<h1 id="北航计算机组成p1推荐题目汇总"><a class="markdownIt-Anchor" href="#北航计算机组成p1推荐题目汇总"></a> 北航计算机组成P1推荐题目汇总</h1>
+<h2 id="题目怎么来的"><a class="markdownIt-Anchor" href="#题目怎么来的"></a> 题目怎么来的</h2>
+<ul>
+<li><s>偷来的(搓手手</s></li>
+<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<s>爬虫而生的</s>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure>
+</li>
+<li><code>PieId</code>
+<ul>
+<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
+</ul>
+</li>
+<li><code>ProblemId</code>
+<ul>
+<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
+<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
+</ul>
+</li>
+<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br />
+<a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
+</ul>
+<hr />
+<h2 id="组合电路"><a class="markdownIt-Anchor" href="#组合电路"></a> 组合电路</h2>
+<ul>
+<li>过于简单，仅有提示</li>
+</ul>
+<h3 id="1202-405-floattype"><a class="markdownIt-Anchor" href="#1202-405-floattype"></a> 1202-405 FloatType</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="1202-202-comparator"><a class="markdownIt-Anchor" href="#1202-202-comparator"></a> 1202-202 Comparator</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
+</ul>
+<h3 id="1202-424-voter"><a class="markdownIt-Anchor" href="#1202-424-voter"></a> 1202-424 Voter</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="1202-102-alu"><a class="markdownIt-Anchor" href="#1202-102-alu"></a> 1202-102 ALU</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意使用拓展位的减法电路实现比较即可</li>
+</ul>
+<hr />
+<h2 id="有限状态机"><a class="markdownIt-Anchor" href="#有限状态机"></a> 有限状态机</h2>
+<h3 id="1202-334-drink"><a class="markdownIt-Anchor" href="#1202-334-drink"></a> 1202-334 Drink</h3>
+<ul>
+<li><s>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</s></li>
+<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
+<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text" /></li>
+<li>提供一个我使用的新结构框架（<s>应该没有泄露源码之嫌</s>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1202-145-string"><a class="markdownIt-Anchor" href="#1202-145-string"></a> 1202-145 String</h3>
+<ul>
+<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
+<li>多重括号的辨别使用一个变量寄存左括号数量即可
+<ul>
+<li>string状态没有分开，看起来有一点乱<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图" /></li>
+<li>将带有左括号未匹配时单独分出状态，这样大概不会显得乱吧<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string.png" alt="wty赞助" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="1202-336-intcheck"><a class="markdownIt-Anchor" href="#1202-336-intcheck"></a> 1202-336 IntCheck</h3>
+<ul>
+<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
+<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
+<li>第三，不要在小情侣后面码代码<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图" /></li>
+</ul>
+<a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
+  title="查看原图"><span>查看原图</span></a>]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>推荐题目</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
@@ -2594,6 +2594,175 @@ CPU中的<code>DM</code>、<code>GRF</code>是状态量。通过<code>IF</code>�
       <categories>
         <category>计算机组成原理</category>
         <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成单周期数据生成</title>
+    <url>/2024/10/15/CO_P4_noexam/</url>
+    <content><![CDATA[<h1 id="两种可能的测试数据生成方式"><a class="markdownIt-Anchor" href="#两种可能的测试数据生成方式"></a> 两种可能的测试数据生成方式</h1>
+<h2 id="unittest"><a class="markdownIt-Anchor" href="#unittest"></a> unitTest</h2>
+<h3 id="分类"><a class="markdownIt-Anchor" href="#分类"></a> 分类</h3>
+<ul>
+<li>如同java中的单元测试，我们将常规指令（不包含什么<code>lwso</code>、<code>cwp</code>…）分为五个类别
+<ol>
+<li>寄存器赋值类型指令（set）
+<ul>
+<li>例如<code>lui</code>，能直接通过立即数对寄存器赋值（这里我还加入了<code>ori</code>配对成<code>li</code>），将来可能<code>addi</code>、<code>subi</code>也是这里的一部分</li>
+</ul>
+</li>
+<li>寄存器运算类型指令（arth）
+<ul>
+<li>例如<code>add</code>，通过两个寄存器相互运算得到值的指令，更通俗就是R型指令</li>
+</ul>
+</li>
+<li>存取类型指令（store）
+<ul>
+<li>例如<code>lw</code>，内存参与的指令</li>
+</ul>
+</li>
+<li>分支类型指令（branch）
+<ul>
+<li>例如<code>beq</code>，有条件跳转（有条件跳转并链接）指令</li>
+</ul>
+</li>
+<li>跳转类型指令（jump）
+<ul>
+<li>例如<code>jal</code>，无条件跳转（无条件跳转并链接）指令</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>接下来将我们已有的指令集分类加入，并按照<code>set -&gt; arth/store -&gt; branch -&gt; jump</code>的顺序依次进行测试，已测试的指令将出现在后面的指令测试中测试后续指令，所以测试顺序也是非常重要的</li>
+</ul>
+<hr />
+<h3 id="测试思路"><a class="markdownIt-Anchor" href="#测试思路"></a> 测试思路</h3>
+<ul>
+<li><code>set</code>
+<ul>
+<li>先测试<code>set</code>类指令，不仅是因为它们不需要依托其他指令的正确性，而且后续所有边界数据的测试都需要提前赋值，测试思路即多次对<code>$0 ~ $31</code>寄存器赋随机值</li>
+</ul>
+</li>
+<li><code>arth</code>
+<ul>
+<li>对于参与运算的数据，分为<code>inf</code>（最大、最小值左右）、<code>zero</code>（0左右）、<code>random</code>（其他随机数），我们对任意的两个寄存器选择上面某种方式<strong>赋值</strong>，再从此次数据集中随机挑选一条指令参与</li>
+</ul>
+</li>
+<li><code>store</code>
+<ul>
+<li>同理，选择基地址寄存器，循环随机生成寄存器值和偏移量，满足下面条件才结束循环
+<ul>
+<li>若选出了<code>$0</code>，要求生成<code>0 &lt; offset &lt; 3072</code></li>
+<li>若不是<code>$0</code>，要求<code>0 &lt; grf[base] + offset &lt; 3072</code></li>
+</ul>
+</li>
+<li>最后乘4，如果是<code>sb</code>、<code>sh</code>指令的指令考虑再给<code>offset</code>加上一个小的随机数</li>
+</ul>
+</li>
+<li><code>branch</code>
+<ul>
+<li>选择测试的<code>branch</code>指令，并随机决定是否跳转</li>
+<li>若不跳转
+<ul>
+<li>随机给两个寄存器赋不满足条件的值，然后结束</li>
+</ul>
+</li>
+<li>若跳转
+<ul>
+<li>向前跳，借鉴for循环的思路，但只向前跳一小步，主要测试<strong>能否向前跳</strong>，</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1 num1</span><br><span class="line">li $reg2 num1 - num2</span><br><span class="line">li $reg3 num2</span><br><span class="line">Brach:</span><br><span class="line">add $reg2, $reg2, $reg3</span><br><span class="line">beq $reg1, $reg2, Branch</span><br></pre></td></tr></table></figure>
+<ul>
+<li>向后跳更加随意</li>
+</ul>
+</li>
+<li><strong>关于死循环</strong>
+<ul>
+<li>我的数据生成器是可以生成死循环指令，目前只实现了<code>beq</code>死循环，规定死循环只在测试内容的最后5%才有可能出现，并且出现死循环即跳出生成数据返回，<strong>死循环</strong>永远在最后一个指令</li>
+<li>所以我的测评机在把代码丢给mars前会先检测最后一条指令（mars死机不会给出十六进制数据。。。），如果是死循环指令将会切除，并在提供给我们CPU的十六进制数据中加入死循环指令和一条<code>set</code>指令，测试CPU是否真的死循环了</li>
+<li><s>然后我发现死循环某种程度也是向前跳，其实不用单独测试，又把这个功能去掉了</s></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>jump</code>
+<ul>
+<li>对于一个无条件跳转指令，首先他要能跳</li>
+<li>对于借助标签的跳转指令
+<ol>
+<li>采用for循环的方式测试能否正常跳转</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1, num1</span><br><span class="line">li $reg2, num2</span><br><span class="line">li $reg3, 1</span><br><span class="line">Jumpstart:</span><br><span class="line">beq $reg1, $reg2, Jumpend</span><br><span class="line">add/sub $reg1, $reg1, $reg3</span><br><span class="line">jump Jumpstart</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>采取连续跳跃，提前生成能够跳出的label组合</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Jump0_0:</span><br><span class="line">jal Jump0_3 </span><br><span class="line">Jump0_1:</span><br><span class="line">jal Jump0_4</span><br><span class="line">Jump0_2:</span><br><span class="line">jal Jump0_5</span><br><span class="line">Jump0_3:</span><br><span class="line">jal Jump0_2</span><br><span class="line">Jump0_4:</span><br><span class="line">jal Jump0_1</span><br><span class="line">Jump0_5:</span><br></pre></td></tr></table></figure>
+</li>
+<li>对于借助寄存器的跳转指令，将与借助标签的跳转指令联动测试，采取类似函数调用的格式测试<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">beq $0, $0, BranchforJ1_0</span><br><span class="line">Jump1_0:</span><br><span class="line">add $24, $31, $0</span><br><span class="line">jr $24</span><br><span class="line">BranchforJ1_0:</span><br><span class="line">jal Jump1_0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="单周期与流水线"><a class="markdownIt-Anchor" href="#单周期与流水线"></a> 单周期与流水线</h3>
+<ul>
+<li>对于单周期，单元测试已经可以完备测试，主要是因为单周期指令的数据通路在同一时钟周期仅有一条指令占有，各个指令之间的数据通路不互相影响</li>
+<li>对于流水线，我们当然也可以采用单元测试的方式，不过首先指令的格式需要进行细微的调整<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lui $reg1, num1</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">ori $reg1, $reg1, num2</span><br><span class="line">nop</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过插入<code>nop</code>消除指令之间的互相影响，达到测试<strong>数据通路以及部分控制单元</strong>的目的，但也仅仅只能测试这两个</li>
+<li>对于<strong>转发电路以及冲突单元</strong>的测试还需依靠更加随机测试</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="randomtest"><a class="markdownIt-Anchor" href="#randomtest"></a> randomTest</h2>
+<h3 id="单周期"><a class="markdownIt-Anchor" href="#单周期"></a> 单周期</h3>
+<ul>
+<li>单周期的随机测试看起来没什么用途，单元测试已经可以完备测试CPU了（<s>虽然我还是实现了随机测试</s>）</li>
+</ul>
+<h3 id="流水线"><a class="markdownIt-Anchor" href="#流水线"></a> 流水线</h3>
+<ul>
+<li>
+<p>首先说明，笔者还未将这部分内容加入测评机，仅仅是一个蓝图（）</p>
+</li>
+<li>
+<p>单元测试有一个最大的缺点即，对于各类指令的测试往往需要<strong>预先赋值</strong>，这大大影响了指令序列的随机性，但是过于随机的指令序列将严重影响<code>store</code>、<code>branch</code>、<code>jump</code>类指令的测试效果</p>
+<ul>
+<li>这里引入一个寄存器数组、内存数组，在我们生成数据时跟踪，寄存器、内存的变化</li>
+<li>再引入一张表（有多少个条件跳转指令则引入多少张表），记录某两个寄存器是否已经满足跳转关系</li>
+<li><s>听起来有点像自己写mars</s>，我现在的函数是下面这个样子</li>
+</ul>
+</li>
+<li>
+<p>我们可以将一次随机测试分为数段，每段的开头进行预先赋值，保证一些条件（如至少8个寄存器处于极端数据等等），然后遇到终止条件结束这段测试，对不满足条件的部分重新赋值，终止条件可以如下：</p>
+<ol>
+<li>少于3个寄存器处于极端数据</li>
+<li>少于3个寄存器处于<code>-65535 ~ 65535 + 3072</code></li>
+<li>少于3个寄存器满足跳转关系</li>
+</ol>
+<ul>
+<li>由此，我们跟踪了一部分数据，可以摆脱<strong>先赋值再操作</strong>这种单元测试，对于<code>lw</code>、<code>sw</code>之类的可以从条件2的寄存器中直接使用</li>
+<li>向后跳转部分可以从满足条件关系中直接使用</li>
+<li>同时保证了寄存器组数据的随机性</li>
+</ul>
+</li>
+<li>
+<p>如果单元测试足够充分的话，完全可以在随机测试中只测试指令之间的影响，不在乎<code>branch</code>类指令向前还是向后，不在乎<code>arth</code>类指令的数据是否包含极端，这些都是原本数据通路的问题，不必在randomTest中反复测试啦</p>
+</li>
+</ul>
+<hr />
+<h2 id="结语"><a class="markdownIt-Anchor" href="#结语"></a> 结语</h2>
+<ul>
+<li>看起来流水线的数据生成还有很长一段路要走啊，希望能实现蓝图吧</li>
+<li>数据生成与处理必然有诸多不当之处，希望大家指正。同时，如果在流水线数据方面有思路的同学，请和我交流（orz）<br />
+<a href="https://github.com/Kie-Chi/co_test_builder.git">单周期测评机</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>自动化测试</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
