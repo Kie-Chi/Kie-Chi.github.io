@@ -1,6 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>计算机网络--物理层</title>
+    <url>/2024/10/06/CN_u2/</url>
+    <content><![CDATA[<h1 id="计算机网络物理层"><a class="markdownIt-Anchor" href="#计算机网络物理层"></a> 计算机网络–物理层</h1>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<ul>
+<li>在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去</li>
+</ul>
+<h2 id="通信基础"><a class="markdownIt-Anchor" href="#通信基础"></a> 通信基础</h2>
+<ul>
+<li>信源
+<ul>
+<li>信息的发送方</li>
+</ul>
+</li>
+<li>信宿
+<ul>
+<li>信息的接收方</li>
+</ul>
+</li>
+<li>信道
+<ul>
+<li>信息传输的通道</li>
+</ul>
+</li>
+<li>信号
+<ul>
+<li>数字信号：信号是离散的</li>
+<li>模拟信号：信号是连续的</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="信号"><a class="markdownIt-Anchor" href="#信号"></a> 信号</h3>
+<ul>
+<li>在计算机中，我们常常使用一位的二进制 0/1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)</li>
+<li><strong>码元</strong>
+<ul>
+<li>每一个信号都是一个码元，每一个码元都对应一个二进制数</li>
+<li>对于一位的信号只有两种码元，我们称为<strong>二进制码元</strong>；对于两位的信号会有四种码元，我们称为<strong>四进制码元</strong>。一个信号输出的整个周期被称为信号周期或者码元周期</li>
+<li>优缺点
+<ul>
+<li>优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息</li>
+<li>缺点：需要加强信号功率，并且对信道的要求更高</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>码元</strong>与<strong>比特</strong>的关系
+<ul>
+<li>一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号</li>
+<li>$ X_{码元} = \log_2 K * X_{比特}<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>K$为信号的种类数量)</li>
+</ul>
+</li>
+<li>速率
+<ul>
+<li>波特率：每秒钟传递多少码元</li>
+<li>比特率：每秒钟传递多少比特信息</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="信道"><a class="markdownIt-Anchor" href="#信道"></a> 信道</h3>
+<ul>
+<li><strong>带宽</strong>
+<ul>
+<li>含义一：传输的最大速率</li>
+<li>含义二：允许通过的信号频带范围<br />
+<font color = red> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Attention</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span></font>:下面为了方便突出两者的联系，取<strong>最高传输速率</strong>表示带宽第一种含义，取<strong>带宽</strong>只表示第二种含义<br />
+<br><br />
+虽然带宽的两种含义看起来毫不相关，但是下面介绍的两个定理都揭示了这两种含义之间的内在联系，在这之前我们先介绍噪声，这个极易影响信息传输的坏家伙</li>
+</ul>
+</li>
+<li><strong>噪声</strong>
+<ul>
+<li>对于在信道中传输的信号有干扰作用，会影响信道的数据传输速率<br />
+这和我们在学习物理中声音的噪声概念几乎是一致的，都是干扰、妨碍的作用。</li>
+</ul>
+</li>
+<li><strong>奈奎斯特定理</strong>(奈氏准则)
+<ul>
+<li>对于一个<strong>理想低通信道</strong>(没有噪声、带宽有限的信道)</li>
+<li>$ V_{极限波特率} = 2 * X_{带宽}$</li>
+<li>注意<strong>极限波特率</strong>与最高传输速率(默认比特率的转换<br />
+奈氏准则向我们揭示了<strong>无噪声</strong>情况下最高传输速率与带宽之间的内在联系</li>
+</ul>
+</li>
+<li><strong>香农定理</strong>
+<ul>
+<li>对于一个有噪声、带宽有限的信道</li>
+<li>$ V_{极限比特率} = X_{带宽} * \log_2 (1 + S/N) $</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi mathvariant="normal">/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">S/N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>是信噪比，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>W</mi><mtext>信号的功率</mtext></msub><msub><mi>W</mi><mtext>噪声的功率</mtext></msub></mfrac></mrow><annotation encoding="application/x-tex">\frac{W_{信号的功率}} {W_{噪声的功率}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3339409999999998em;vertical-align:-0.44530499999999995em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8886359999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">噪</span><span class="mord cjk_fallback mtight">声</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.410305em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">信</span><span class="mord cjk_fallback mtight">号</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44530499999999995em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+<li>由于信噪比的值往往很大，所以我们采取另一种记录信噪比的记法，即$ N_{信噪比} = 10 * \log_{10} S/N $单位是<code>dB</code></li>
+<li>注意是<strong>极限比特率</strong></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="信号变换"><a class="markdownIt-Anchor" href="#信号变换"></a> 信号变换</h3>
+<ul>
+<li>数字信号
+<ul>
+<li>对于二进制数据与数字信号之间的转换，我们称为<strong>编码与解码</strong></li>
+</ul>
+</li>
+<li>模拟信号
+<ul>
+<li>对于二进制数据与模拟信号之间的转换，我们称之为<strong>调制与解调</strong><br />
+<strong>变换器</strong>可以将二进制信号转换为物理信号，<strong>反变换器</strong>可以将物理信号转换为二进制信号</li>
+</ul>
+</li>
+<li>变换器
+<ul>
+<li>有线网络适配器(网卡)：编码-解码器</li>
+<li>光猫：调制-解调器</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="编码方式"><a class="markdownIt-Anchor" href="#编码方式"></a> 编码方式</h4>
+<ul>
+<li>不归零编码(Non-Return-to-Zero)
+<ul>
+<li>低 0 高 1，中不变</li>
+<li>在每一个信号周期内信号始终不会归零，缺点是要给出时钟线</li>
+</ul>
+</li>
+<li>归零编码(Return-to-Zero)
+<ul>
+<li>低 0 高 1，中归零</li>
+<li>每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号</li>
+</ul>
+</li>
+<li>反向非归零编码(Non-Return-to-Zero-Inverted)
+<ul>
+<li>起点跳 0 不跳 1，中不变</li>
+<li>每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变</li>
+</ul>
+</li>
+<li>曼彻斯特编码
+<ul>
+<li>上跳 0 下跳 1，中必变</li>
+<li>每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是 0 还是 1</li>
+</ul>
+</li>
+<li>差分曼彻斯特编码
+<ul>
+<li>起点跳 0 不跳 1，中必变</li>
+<li>与<code>NRZI</code>的区别在于信号周期中间一定会发生跳变<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_1.jpg" alt="编码方式示意图" /><br />
+| 编码方式 | 自同步能力 | 浪费带宽 | 抗干扰能力 |<br />
+| :-----: | :-------: | :—😐 :-----: |<br />
+| 非归零编码 | 无 | 不浪费 | 弱 |<br />
+| 归零编码|有 | 浪费 | 弱 |<br />
+| 反向非归零编码 | 增加冗余位可支持 | 浪费(浪费的是冗余位) | 弱 |<br />
+| 曼彻斯特编码 | 有 | 浪费 | 强 |<br />
+| 差分曼彻斯特编码 | 有 | 浪费 | 强 |</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="调制方式"><a class="markdownIt-Anchor" href="#调制方式"></a> 调制方式</h4>
+<ul>
+<li>调幅(<code>AM</code>) or 幅移键控(<code>ASK</code>)
+<ul>
+<li>根据振幅表示信号</li>
+<li>有振幅为 1，无振幅为 0</li>
+<li>不同码元的振幅不同</li>
+</ul>
+</li>
+<li>调频(<code>FM</code>) or 频移键控(<code>FSK</code>)
+<ul>
+<li>根据频率表示信号</li>
+<li>例如频率低为 0，频率高为 1</li>
+<li>不同的码元频率不同</li>
+</ul>
+</li>
+<li>调相(<code>PM</code>) or 相移键控(<code>PSK</code>)
+<ul>
+<li>根据相位表示信号</li>
+<li>例如相位为 0 则为 0，相位为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> 则为 1</li>
+<li>不同的码元相位不同<br />
+对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式</li>
+</ul>
+</li>
+<li>正交幅度调制(<code>QAM</code>)
+<ul>
+<li>例如有<code>m</code>种振幅大小与<code>n</code>种频率大小，则共同可以综合出<code>mn</code>种码元<br />
+<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_2.jpg" alt="调制方式示意图" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="传输介质"><a class="markdownIt-Anchor" href="#传输介质"></a> 传输介质</h4>
+<ul>
+<li>导向型介质：即沿着特定的方向传播，一般而言，有线信号是使用导向型介质
+<ul>
+<li>双绞线(<code>Twisted Pair</code>)
+<ul>
+<li>主要构成：两根导线相互绞合而成</li>
+<li>有屏蔽层：<code>Shielded Twisted Pair</code>，无屏蔽层：<code>Unshielded Twisted Pair</code></li>
+<li>抗干扰能力：较好，因为导线绞合以及屏蔽层可以提升抗电磁干扰能力</li>
+</ul>
+</li>
+<li>同轴电缆
+<ul>
+<li>主要构成：内导体(用于传输信号) + 外导体屏蔽层(用于抗电磁干扰)</li>
+<li>抗干扰能力：好，因为外导体提供电磁屏蔽可以带来良好的抗干扰性</li>
+</ul>
+</li>
+<li>光纤
+<ul>
+<li>主要构成：纤芯(高折射率) + 包层(低折射率)，利用光的全反射特性让光信号在纤芯内传播</li>
+<li>单模光纤：一根光纤中只有一条光线传播，适合长距离的传播；多模光纤：一根光纤中有多条光线传播，适合短距离的传播</li>
+<li>抗干扰能力：非常好，光信号对电磁干扰不敏感</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非导向型介质：无特定方向传播，一般而言，无线信号是使用非导向型介质
+<ul>
+<li>无线电波
+<ul>
+<li>特点：穿透能力强、传播距离长、信号指向型弱</li>
+<li>例如：手机、WIFI 信号</li>
+</ul>
+</li>
+<li>微波
+<ul>
+<li>特点：频率带宽高、信号指向型强、保密性差(容易被窃听)</li>
+<li>例如：卫星通信</li>
+</ul>
+</li>
+<li>红外通信、激光通信</li>
+</ul>
+</li>
+<li>以太网对有线介质的命名
+<ul>
+<li>速度 + <code>Base</code> + 介质信息
+<ul>
+<li><code>10Base5</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 500m</li>
+<li><code>10Base2</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 200m</li>
+<li><code>10BaseF*</code>：10<code>Mbps</code> + 光纤 + *某些其他信息</li>
+<li><code>10BaseT*</code>：10<code>Mbps</code> + 双绞线 + *某些其他信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="物理层设备"><a class="markdownIt-Anchor" href="#物理层设备"></a> 物理层设备</h4>
+<ul>
+<li>
+<p>中继器(<code>Repeater</code>)</p>
+<ul>
+<li>若规定 0.5V～1V 是低电平，4.5V～5V 是高电平，不符合此标准的信号视为无效</li>
+<li>如果中继器接收了有效的信号会将低电平整形为 1V，将高电平整形为 5V</li>
+<li>仅支持<strong>半双工通信</strong>，中继器连接的两个端口不允许同时发送数据，会导致“冲突”</li>
+</ul>
+</li>
+<li>
+<p>集线器(<code>Hub</code>)</p>
+<ul>
+<li>本质上是多端中继器，集线器将其中一个端口接收到的信号整形再生后，转发到所有的端口中</li>
+<li>集线器各端口连接的结点不可以同时发送数据，会导致“冲突”</li>
+</ul>
+</li>
+<li>
+<p>冲突域</p>
+<ul>
+<li>如果两台主机同时发送数据会导致冲突，则这两台主机处于同一<strong>冲突域</strong>中</li>
+</ul>
+</li>
+<li>
+<p>其他特性</p>
+<ul>
+<li>集线器、中继器不能**“无限串联”**
+<ul>
+<li><code>10Base5</code>遵循<code>5-4-3</code>原则，使用集线器连接<code>10Base5</code>网线时，最多只能串联<strong>5</strong>个网段，使用<strong>4</strong>台集线器，只有<strong>3</strong>个网段可以连接计算机</li>
+</ul>
+</li>
+<li>集线器逻辑上是总线型拓扑结构
+<ul>
+<li>集线器连接的各个网段会“共享带宽”，集线器的总带宽被连接的各个主机平均分配</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机网络--概述</title>
     <url>/2024/10/04/CN_u1/</url>
     <content><![CDATA[<h1 id="计算机网络概述"><a class="markdownIt-Anchor" href="#计算机网络概述"></a> 计算机网络–概述</h1>
@@ -553,303 +850,6 @@
 <li><code>TCP/IP</code>模型的网络层取消了对于分组检查与控制协调的若干功能，如差错控制、流量控制、连接管理、可靠传输管理</li>
 <li><code>TCP/IP</code>模型的网络层的传输数据不可靠</li>
 <li><code>TCP/IP</code>模型中不需要中间路由器等计算机网络核心管理流量等行为而将各种功能施加在端系统中</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络--物理层</title>
-    <url>/2024/10/06/CN_u2/</url>
-    <content><![CDATA[<h1 id="计算机网络物理层"><a class="markdownIt-Anchor" href="#计算机网络物理层"></a> 计算机网络–物理层</h1>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<ul>
-<li>在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去</li>
-</ul>
-<h2 id="通信基础"><a class="markdownIt-Anchor" href="#通信基础"></a> 通信基础</h2>
-<ul>
-<li>信源
-<ul>
-<li>信息的发送方</li>
-</ul>
-</li>
-<li>信宿
-<ul>
-<li>信息的接收方</li>
-</ul>
-</li>
-<li>信道
-<ul>
-<li>信息传输的通道</li>
-</ul>
-</li>
-<li>信号
-<ul>
-<li>数字信号：信号是离散的</li>
-<li>模拟信号：信号是连续的</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="信号"><a class="markdownIt-Anchor" href="#信号"></a> 信号</h3>
-<ul>
-<li>在计算机中，我们常常使用一位的二进制 0/1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)</li>
-<li><strong>码元</strong>
-<ul>
-<li>每一个信号都是一个码元，每一个码元都对应一个二进制数</li>
-<li>对于一位的信号只有两种码元，我们称为<strong>二进制码元</strong>；对于两位的信号会有四种码元，我们称为<strong>四进制码元</strong>。一个信号输出的整个周期被称为信号周期或者码元周期</li>
-<li>优缺点
-<ul>
-<li>优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息</li>
-<li>缺点：需要加强信号功率，并且对信道的要求更高</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>码元</strong>与<strong>比特</strong>的关系
-<ul>
-<li>一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号</li>
-<li>$ X_{码元} = \log_2 K * X_{比特}<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>K$为信号的种类数量)</li>
-</ul>
-</li>
-<li>速率
-<ul>
-<li>波特率：每秒钟传递多少码元</li>
-<li>比特率：每秒钟传递多少比特信息</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="信道"><a class="markdownIt-Anchor" href="#信道"></a> 信道</h3>
-<ul>
-<li><strong>带宽</strong>
-<ul>
-<li>含义一：传输的最大速率</li>
-<li>含义二：允许通过的信号频带范围<br />
-<font color = red> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Attention</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span></font>:下面为了方便突出两者的联系，取<strong>最高传输速率</strong>表示带宽第一种含义，取<strong>带宽</strong>只表示第二种含义<br />
-<br><br />
-虽然带宽的两种含义看起来毫不相关，但是下面介绍的两个定理都揭示了这两种含义之间的内在联系，在这之前我们先介绍噪声，这个极易影响信息传输的坏家伙</li>
-</ul>
-</li>
-<li><strong>噪声</strong>
-<ul>
-<li>对于在信道中传输的信号有干扰作用，会影响信道的数据传输速率<br />
-这和我们在学习物理中声音的噪声概念几乎是一致的，都是干扰、妨碍的作用。</li>
-</ul>
-</li>
-<li><strong>奈奎斯特定理</strong>(奈氏准则)
-<ul>
-<li>对于一个<strong>理想低通信道</strong>(没有噪声、带宽有限的信道)</li>
-<li>$ V_{极限波特率} = 2 * X_{带宽}$</li>
-<li>注意<strong>极限波特率</strong>与最高传输速率(默认比特率的转换<br />
-奈氏准则向我们揭示了<strong>无噪声</strong>情况下最高传输速率与带宽之间的内在联系</li>
-</ul>
-</li>
-<li><strong>香农定理</strong>
-<ul>
-<li>对于一个有噪声、带宽有限的信道</li>
-<li>$ V_{极限比特率} = X_{带宽} * \log_2 (1 + S/N) $</li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi mathvariant="normal">/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">S/N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>是信噪比，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>W</mi><mtext>信号的功率</mtext></msub><msub><mi>W</mi><mtext>噪声的功率</mtext></msub></mfrac></mrow><annotation encoding="application/x-tex">\frac{W_{信号的功率}} {W_{噪声的功率}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3339409999999998em;vertical-align:-0.44530499999999995em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8886359999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">噪</span><span class="mord cjk_fallback mtight">声</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.410305em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">信</span><span class="mord cjk_fallback mtight">号</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44530499999999995em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
-<li>由于信噪比的值往往很大，所以我们采取另一种记录信噪比的记法，即$ N_{信噪比} = 10 * \log_{10} S/N $单位是<code>dB</code></li>
-<li>注意是<strong>极限比特率</strong></li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="信号变换"><a class="markdownIt-Anchor" href="#信号变换"></a> 信号变换</h3>
-<ul>
-<li>数字信号
-<ul>
-<li>对于二进制数据与数字信号之间的转换，我们称为<strong>编码与解码</strong></li>
-</ul>
-</li>
-<li>模拟信号
-<ul>
-<li>对于二进制数据与模拟信号之间的转换，我们称之为<strong>调制与解调</strong><br />
-<strong>变换器</strong>可以将二进制信号转换为物理信号，<strong>反变换器</strong>可以将物理信号转换为二进制信号</li>
-</ul>
-</li>
-<li>变换器
-<ul>
-<li>有线网络适配器(网卡)：编码-解码器</li>
-<li>光猫：调制-解调器</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="编码方式"><a class="markdownIt-Anchor" href="#编码方式"></a> 编码方式</h4>
-<ul>
-<li>不归零编码(Non-Return-to-Zero)
-<ul>
-<li>低 0 高 1，中不变</li>
-<li>在每一个信号周期内信号始终不会归零，缺点是要给出时钟线</li>
-</ul>
-</li>
-<li>归零编码(Return-to-Zero)
-<ul>
-<li>低 0 高 1，中归零</li>
-<li>每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号</li>
-</ul>
-</li>
-<li>反向非归零编码(Non-Return-to-Zero-Inverted)
-<ul>
-<li>起点跳 0 不跳 1，中不变</li>
-<li>每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变</li>
-</ul>
-</li>
-<li>曼彻斯特编码
-<ul>
-<li>上跳 0 下跳 1，中必变</li>
-<li>每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是 0 还是 1</li>
-</ul>
-</li>
-<li>差分曼彻斯特编码
-<ul>
-<li>起点跳 0 不跳 1，中必变</li>
-<li>与<code>NRZI</code>的区别在于信号周期中间一定会发生跳变<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_1.jpg" alt="编码方式示意图" /><br />
-| 编码方式 | 自同步能力 | 浪费带宽 | 抗干扰能力 |<br />
-| :-----: | :-------: | :—😐 :-----: |<br />
-| 非归零编码 | 无 | 不浪费 | 弱 |<br />
-| 归零编码|有 | 浪费 | 弱 |<br />
-| 反向非归零编码 | 增加冗余位可支持 | 浪费(浪费的是冗余位) | 弱 |<br />
-| 曼彻斯特编码 | 有 | 浪费 | 强 |<br />
-| 差分曼彻斯特编码 | 有 | 浪费 | 强 |</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="调制方式"><a class="markdownIt-Anchor" href="#调制方式"></a> 调制方式</h4>
-<ul>
-<li>调幅(<code>AM</code>) or 幅移键控(<code>ASK</code>)
-<ul>
-<li>根据振幅表示信号</li>
-<li>有振幅为 1，无振幅为 0</li>
-<li>不同码元的振幅不同</li>
-</ul>
-</li>
-<li>调频(<code>FM</code>) or 频移键控(<code>FSK</code>)
-<ul>
-<li>根据频率表示信号</li>
-<li>例如频率低为 0，频率高为 1</li>
-<li>不同的码元频率不同</li>
-</ul>
-</li>
-<li>调相(<code>PM</code>) or 相移键控(<code>PSK</code>)
-<ul>
-<li>根据相位表示信号</li>
-<li>例如相位为 0 则为 0，相位为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> 则为 1</li>
-<li>不同的码元相位不同<br />
-对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式</li>
-</ul>
-</li>
-<li>正交幅度调制(<code>QAM</code>)
-<ul>
-<li>例如有<code>m</code>种振幅大小与<code>n</code>种频率大小，则共同可以综合出<code>mn</code>种码元<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_2.jpg" alt="调制方式示意图" /></li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="传输介质"><a class="markdownIt-Anchor" href="#传输介质"></a> 传输介质</h4>
-<ul>
-<li>导向型介质：即沿着特定的方向传播，一般而言，有线信号是使用导向型介质
-<ul>
-<li>双绞线(<code>Twisted Pair</code>)
-<ul>
-<li>主要构成：两根导线相互绞合而成</li>
-<li>有屏蔽层：<code>Shielded Twisted Pair</code>，无屏蔽层：<code>Unshielded Twisted Pair</code></li>
-<li>抗干扰能力：较好，因为导线绞合以及屏蔽层可以提升抗电磁干扰能力</li>
-</ul>
-</li>
-<li>同轴电缆
-<ul>
-<li>主要构成：内导体(用于传输信号) + 外导体屏蔽层(用于抗电磁干扰)</li>
-<li>抗干扰能力：好，因为外导体提供电磁屏蔽可以带来良好的抗干扰性</li>
-</ul>
-</li>
-<li>光纤
-<ul>
-<li>主要构成：纤芯(高折射率) + 包层(低折射率)，利用光的全反射特性让光信号在纤芯内传播</li>
-<li>单模光纤：一根光纤中只有一条光线传播，适合长距离的传播；多模光纤：一根光纤中有多条光线传播，适合短距离的传播</li>
-<li>抗干扰能力：非常好，光信号对电磁干扰不敏感</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>非导向型介质：无特定方向传播，一般而言，无线信号是使用非导向型介质
-<ul>
-<li>无线电波
-<ul>
-<li>特点：穿透能力强、传播距离长、信号指向型弱</li>
-<li>例如：手机、WIFI 信号</li>
-</ul>
-</li>
-<li>微波
-<ul>
-<li>特点：频率带宽高、信号指向型强、保密性差(容易被窃听)</li>
-<li>例如：卫星通信</li>
-</ul>
-</li>
-<li>红外通信、激光通信</li>
-</ul>
-</li>
-<li>以太网对有线介质的命名
-<ul>
-<li>速度 + <code>Base</code> + 介质信息
-<ul>
-<li><code>10Base5</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 500m</li>
-<li><code>10Base2</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 200m</li>
-<li><code>10BaseF*</code>：10<code>Mbps</code> + 光纤 + *某些其他信息</li>
-<li><code>10BaseT*</code>：10<code>Mbps</code> + 双绞线 + *某些其他信息</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h4 id="物理层设备"><a class="markdownIt-Anchor" href="#物理层设备"></a> 物理层设备</h4>
-<ul>
-<li>
-<p>中继器(<code>Repeater</code>)</p>
-<ul>
-<li>若规定 0.5V～1V 是低电平，4.5V～5V 是高电平，不符合此标准的信号视为无效</li>
-<li>如果中继器接收了有效的信号会将低电平整形为 1V，将高电平整形为 5V</li>
-<li>仅支持<strong>半双工通信</strong>，中继器连接的两个端口不允许同时发送数据，会导致“冲突”</li>
-</ul>
-</li>
-<li>
-<p>集线器(<code>Hub</code>)</p>
-<ul>
-<li>本质上是多端中继器，集线器将其中一个端口接收到的信号整形再生后，转发到所有的端口中</li>
-<li>集线器各端口连接的结点不可以同时发送数据，会导致“冲突”</li>
-</ul>
-</li>
-<li>
-<p>冲突域</p>
-<ul>
-<li>如果两台主机同时发送数据会导致冲突，则这两台主机处于同一<strong>冲突域</strong>中</li>
-</ul>
-</li>
-<li>
-<p>其他特性</p>
-<ul>
-<li>集线器、中继器不能**“无限串联”**
-<ul>
-<li><code>10Base5</code>遵循<code>5-4-3</code>原则，使用集线器连接<code>10Base5</code>网线时，最多只能串联<strong>5</strong>个网段，使用<strong>4</strong>台集线器，只有<strong>3</strong>个网段可以连接计算机</li>
-</ul>
-</li>
-<li>集线器逻辑上是总线型拓扑结构
-<ul>
-<li>集线器连接的各个网段会“共享带宽”，集线器的总带宽被连接的各个主机平均分配</li>
 </ul>
 </li>
 </ul>
@@ -1798,175 +1798,6 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成单周期数据生成</title>
-    <url>/2024/10/28/CO_P4_noexam/</url>
-    <content><![CDATA[<h1 id="两种可能的测试数据生成方式"><a class="markdownIt-Anchor" href="#两种可能的测试数据生成方式"></a> 两种可能的测试数据生成方式</h1>
-<h2 id="unittest"><a class="markdownIt-Anchor" href="#unittest"></a> unitTest</h2>
-<h3 id="分类"><a class="markdownIt-Anchor" href="#分类"></a> 分类</h3>
-<ul>
-<li>如同java中的单元测试，我们将常规指令（不包含什么<code>lwso</code>、<code>cwp</code>…）分为五个类别
-<ol>
-<li>寄存器赋值类型指令（set）
-<ul>
-<li>例如<code>lui</code>，能直接通过立即数对寄存器赋值（这里我还加入了<code>ori</code>配对成<code>li</code>），将来可能<code>addi</code>、<code>subi</code>也是这里的一部分</li>
-</ul>
-</li>
-<li>寄存器运算类型指令（arth）
-<ul>
-<li>例如<code>add</code>，通过两个寄存器相互运算得到值的指令，更通俗就是R型指令</li>
-</ul>
-</li>
-<li>存取类型指令（store）
-<ul>
-<li>例如<code>lw</code>，内存参与的指令</li>
-</ul>
-</li>
-<li>分支类型指令（branch）
-<ul>
-<li>例如<code>beq</code>，有条件跳转（有条件跳转并链接）指令</li>
-</ul>
-</li>
-<li>跳转类型指令（jump）
-<ul>
-<li>例如<code>jal</code>，无条件跳转（无条件跳转并链接）指令</li>
-</ul>
-</li>
-</ol>
-</li>
-<li>接下来将我们已有的指令集分类加入，并按照<code>set -&gt; arth/store -&gt; branch -&gt; jump</code>的顺序依次进行测试，已测试的指令将出现在后面的指令测试中测试后续指令，所以测试顺序也是非常重要的</li>
-</ul>
-<hr />
-<h3 id="测试思路"><a class="markdownIt-Anchor" href="#测试思路"></a> 测试思路</h3>
-<ul>
-<li><code>set</code>
-<ul>
-<li>先测试<code>set</code>类指令，不仅是因为它们不需要依托其他指令的正确性，而且后续所有边界数据的测试都需要提前赋值，测试思路即多次对<code>$0 ~ $31</code>寄存器赋随机值</li>
-</ul>
-</li>
-<li><code>arth</code>
-<ul>
-<li>对于参与运算的数据，分为<code>inf</code>（最大、最小值左右）、<code>zero</code>（0左右）、<code>random</code>（其他随机数），我们对任意的两个寄存器选择上面某种方式<strong>赋值</strong>，再从此次数据集中随机挑选一条指令参与</li>
-</ul>
-</li>
-<li><code>store</code>
-<ul>
-<li>同理，选择基地址寄存器，循环随机生成寄存器值和偏移量，满足下面条件才结束循环
-<ul>
-<li>若选出了<code>$0</code>，要求生成<code>0 &lt; offset &lt; 3072</code></li>
-<li>若不是<code>$0</code>，要求<code>0 &lt; grf[base] + offset &lt; 3072</code></li>
-</ul>
-</li>
-<li>最后乘4，如果是<code>sb</code>、<code>sh</code>指令的指令考虑再给<code>offset</code>加上一个小的随机数</li>
-</ul>
-</li>
-<li><code>branch</code>
-<ul>
-<li>选择测试的<code>branch</code>指令，并随机决定是否跳转</li>
-<li>若不跳转
-<ul>
-<li>随机给两个寄存器赋不满足条件的值，然后结束</li>
-</ul>
-</li>
-<li>若跳转
-<ul>
-<li>向前跳，借鉴for循环的思路，但只向前跳一小步，主要测试<strong>能否向前跳</strong>，</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1 num1</span><br><span class="line">li $reg2 num1 - num2</span><br><span class="line">li $reg3 num2</span><br><span class="line">Brach:</span><br><span class="line">add $reg2, $reg2, $reg3</span><br><span class="line">beq $reg1, $reg2, Branch</span><br></pre></td></tr></table></figure>
-<ul>
-<li>向后跳更加随意</li>
-</ul>
-</li>
-<li><strong>关于死循环</strong>
-<ul>
-<li>我的数据生成器是可以生成死循环指令，目前只实现了<code>beq</code>死循环，规定死循环只在测试内容的最后5%才有可能出现，并且出现死循环即跳出生成数据返回，<strong>死循环</strong>永远在最后一个指令</li>
-<li>所以我的测评机在把代码丢给mars前会先检测最后一条指令（mars死机不会给出十六进制数据。。。），如果是死循环指令将会切除，并在提供给我们CPU的十六进制数据中加入死循环指令和一条<code>set</code>指令，测试CPU是否真的死循环了</li>
-<li><s>然后我发现死循环某种程度也是向前跳，其实不用单独测试，又把这个功能去掉了</s></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>jump</code>
-<ul>
-<li>对于一个无条件跳转指令，首先他要能跳</li>
-<li>对于借助标签的跳转指令
-<ol>
-<li>采用for循环的方式测试能否正常跳转</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1, num1</span><br><span class="line">li $reg2, num2</span><br><span class="line">li $reg3, 1</span><br><span class="line">Jumpstart:</span><br><span class="line">beq $reg1, $reg2, Jumpend</span><br><span class="line">add/sub $reg1, $reg1, $reg3</span><br><span class="line">jump Jumpstart</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>采取连续跳跃，提前生成能够跳出的label组合</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Jump0_0:</span><br><span class="line">jal Jump0_3 </span><br><span class="line">Jump0_1:</span><br><span class="line">jal Jump0_4</span><br><span class="line">Jump0_2:</span><br><span class="line">jal Jump0_5</span><br><span class="line">Jump0_3:</span><br><span class="line">jal Jump0_2</span><br><span class="line">Jump0_4:</span><br><span class="line">jal Jump0_1</span><br><span class="line">Jump0_5:</span><br></pre></td></tr></table></figure>
-</li>
-<li>对于借助寄存器的跳转指令，将与借助标签的跳转指令联动测试，采取类似函数调用的格式测试<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">beq $0, $0, BranchforJ1_0</span><br><span class="line">Jump1_0:</span><br><span class="line">add $24, $31, $0</span><br><span class="line">jr $24</span><br><span class="line">BranchforJ1_0:</span><br><span class="line">jal Jump1_0</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="单周期与流水线"><a class="markdownIt-Anchor" href="#单周期与流水线"></a> 单周期与流水线</h3>
-<ul>
-<li>对于单周期，单元测试已经可以完备测试，主要是因为单周期指令的数据通路在同一时钟周期仅有一条指令占有，各个指令之间的数据通路不互相影响</li>
-<li>对于流水线，我们当然也可以采用单元测试的方式，不过首先指令的格式需要进行细微的调整<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lui $reg1, num1</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">ori $reg1, $reg1, num2</span><br><span class="line">nop</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<ul>
-<li>通过插入<code>nop</code>消除指令之间的互相影响，达到测试<strong>数据通路以及部分控制单元</strong>的目的，但也仅仅只能测试这两个</li>
-<li>对于<strong>转发电路以及冲突单元</strong>的测试还需依靠更加随机测试</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="randomtest"><a class="markdownIt-Anchor" href="#randomtest"></a> randomTest</h2>
-<h3 id="单周期"><a class="markdownIt-Anchor" href="#单周期"></a> 单周期</h3>
-<ul>
-<li>单周期的随机测试看起来没什么用途，单元测试已经可以完备测试CPU了（<s>虽然我还是实现了随机测试</s>）</li>
-</ul>
-<h3 id="流水线"><a class="markdownIt-Anchor" href="#流水线"></a> 流水线</h3>
-<ul>
-<li>
-<p>首先说明，笔者还未将这部分内容加入测评机，仅仅是一个蓝图（）</p>
-</li>
-<li>
-<p>单元测试有一个最大的缺点即，对于各类指令的测试往往需要<strong>预先赋值</strong>，这大大影响了指令序列的随机性，但是过于随机的指令序列将严重影响<code>store</code>、<code>branch</code>、<code>jump</code>类指令的测试效果</p>
-<ul>
-<li>这里引入一个寄存器数组、内存数组，在我们生成数据时跟踪，寄存器、内存的变化</li>
-<li>再引入一张表（有多少个条件跳转指令则引入多少张表），记录某两个寄存器是否已经满足跳转关系</li>
-<li><s>听起来有点像自己写mars</s>，我现在的函数是下面这个样子</li>
-</ul>
-</li>
-<li>
-<p>我们可以将一次随机测试分为数段，每段的开头进行预先赋值，保证一些条件（如至少8个寄存器处于极端数据等等），然后遇到终止条件结束这段测试，对不满足条件的部分重新赋值，终止条件可以如下：</p>
-<ol>
-<li>少于3个寄存器处于极端数据</li>
-<li>少于3个寄存器处于<code>-65535 ~ 65535 + 3072</code></li>
-<li>少于3个寄存器满足跳转关系</li>
-</ol>
-<ul>
-<li>由此，我们跟踪了一部分数据，可以摆脱<strong>先赋值再操作</strong>这种单元测试，对于<code>lw</code>、<code>sw</code>之类的可以从条件2的寄存器中直接使用</li>
-<li>向后跳转部分可以从满足条件关系中直接使用</li>
-<li>同时保证了寄存器组数据的随机性</li>
-</ul>
-</li>
-<li>
-<p>如果单元测试足够充分的话，完全可以在随机测试中只测试指令之间的影响，不在乎<code>branch</code>类指令向前还是向后，不在乎<code>arth</code>类指令的数据是否包含极端，这些都是原本数据通路的问题，不必在randomTest中反复测试啦</p>
-</li>
-</ul>
-<hr />
-<h2 id="结语"><a class="markdownIt-Anchor" href="#结语"></a> 结语</h2>
-<ul>
-<li>看起来流水线的数据生成还有很长一段路要走啊，希望能实现蓝图吧</li>
-<li>数据生成与处理必然有诸多不当之处，希望大家指正。同时，如果在流水线数据方面有思路的同学，请和我交流（orz）<br />
-<a href="https://github.com/Kie-Chi/co_test_builder.git">单周期测评机</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>自动化测试</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>北航计算机组成P3课下</title>
     <url>/2024/10/22/CO_P3/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理p3课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p3课下"></a> 北航计算机组成原理P3课下</h1>
@@ -2668,6 +2499,270 @@ CPU中的<code>DM</code>、<code>GRF</code>是状态量。通过<code>IF</code>�
       <categories>
         <category>计算机组成原理</category>
         <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P4</title>
+    <url>/2024/11/13/CO_P4/</url>
+    <content><![CDATA[<h1 id="北航计算机组成p4"><a class="markdownIt-Anchor" href="#北航计算机组成p4"></a> 北航计算机组成P4</h1>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<ul>
+<li>咳咳，最近太忙了作业好多啊，搭完CPU每周还要迭代自己的测评机，原来CO也可以训练我们面向对象的能力</li>
+</ul>
+<hr />
+<h2 id="课下"><a class="markdownIt-Anchor" href="#课下"></a> 课下</h2>
+<ul>
+<li>其实P4就是把P3的电路图翻译成代码，整体上没有难度，如果你P3有好好设计你的CPU的话，<s>没有好好设计的话，就照着学长设计好的CPU翻译</s>，总之也是从一个一个的模块开始搭建，这里不赘述了</li>
+</ul>
+<h3 id="组合逻辑建模"><a class="markdownIt-Anchor" href="#组合逻辑建模"></a> 组合逻辑建模</h3>
+<ul>
+<li>我啰嗦一两句，最近几年课程组不知道在干什么（<s>明年等我当助教我也要搞得抽象</s>），考试喜欢考一些奇奇怪怪的组合逻辑，所以或许你需要根据你使用的建模逻辑稍微熟练一些Verilog的语法，这样课上的时候或许不会那么慌</li>
+<li>两种组合逻辑建模方式对于写CPU的思路还是有略微不同的，而且各有各的好处，见仁见智了</li>
+</ul>
+<h4 id="assign"><a class="markdownIt-Anchor" href="#assign"></a> <code>assign</code></h4>
+<ul>
+<li>最大的优点就是简洁、代码量很少，而且就是电路连线，从P3转过来会比较方便<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_add) ? A + B :</span><br><span class="line">                 (ALUOp == `ALU_sub) ? A - B :</span><br><span class="line">                 (ALUOp == `ALU_or) ? A | B :</span><br><span class="line">                 (ALUOp == `ALU_and) ? A &amp; B : <span class="number">32&#x27;b0</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一行就解决了ALU，反正就是挺爽的</li>
+</ul>
+</li>
+<li>缺点是对于复杂逻辑建模比较困难，所以<strong>强烈建议</strong>掌握<code>function</code>和<code>task</code>(这个或许不用嘛)的用法，反正考场上会用到的，比如我随便编一个指令，要求实现<code>gxadd rd, rs, rt</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gray(00): 00</span><br><span class="line">gray(01): 01</span><br><span class="line">gray(10): 11</span><br><span class="line">gray(11): 10</span><br><span class="line"></span><br><span class="line">temp1 &lt;- GPR[rs] + GPR[rt]</span><br><span class="line">for i in range(0,16):</span><br><span class="line">    temp2[2*i+1: 2*i] &lt;- gray(temp1[2*i+1: 2*i])</span><br><span class="line">temp2 &lt;- temp2 ^ temp1</span><br><span class="line">if temp2 &gt; temp1:</span><br><span class="line">    GPR[rd] = temp2</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = temp1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>好，你现在用assign语句把它建模到ALU里面去（），是吧，这个时候<code>function</code>就要发力了，管他三七二十一全部丢进函数里面</li>
+</ul>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> [<span class="number">1</span>: <span class="number">0</span>] cal_gray;</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] origin;</span><br><span class="line">    <span class="keyword">if</span> (origin == <span class="number">2&#x27;b0</span>) cal_gray = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b1</span>) cal_gray = <span class="number">2&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b10</span>) cal_gray = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">else</span> cal_gray = <span class="number">2&#x27;b10</span>;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>其实也可以如果你熟悉掩码和格雷码的定义的话，例如<code>gray(x) = x ^ (x &gt;&gt; 1)</code>，又因为两位的二进制右移一位第一位一定是0，所以我们考虑将32位的数字的奇数位覆盖再整体右移，达到一次实现16次2位的异或</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">temp1 = A + B;</span><br><span class="line">temp2 = temp1 &amp; <span class="number">0xaaaaaaaa</span>;</span><br><span class="line"><span class="comment">//0xaaaaaaaa就是....10101010</span></span><br><span class="line"><span class="comment">//反正奇数位就这样被覆盖了</span></span><br><span class="line">temp2 = temp2 &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="comment">//相当于进行了上面的 x &gt;&gt; 1，反正奇数位都是0了</span></span><br><span class="line">temp2 = temp2 ^ temp1</span><br><span class="line"><span class="comment">//最终的temp2就是经历两位gray转化后的数字了</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_gxadd) ? </span><br><span class="line">(( ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) &gt; (A+B) ) ? ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) : (A+B))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr />
+<h4 id="always"><a class="markdownIt-Anchor" href="#always"></a> <code>always@(*)</code></h4>
+<ul>
+<li>最大的缺点是代码量可能会比上面大一些，也可能大很多，全面准备吧</li>
+<li>最大的优点就是适合复杂逻辑的建模，比如上面那个瞎编的指令</li>
+<li>不过还是建议掌握<code>function</code>，多好啊，变成纯纯面向过程的语言了</li>
+<li>讲一个经常会用的切片，好玩爱玩
+<ul>
+<li>假设你现在想要学lb、lh指令取出一个字中的某个字节或者半字，但是不想要一直if-else（考场上不会的话枚举是一个很好的选择），你想到了verilog可以切片</li>
+</ul>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span> h_adder;</span><br><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span>[<span class="number">1</span>: <span class="number">0</span>] b_adder;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] pos;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">0</span>: <span class="number">31</span>] neg;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"><span class="comment">//pos[b_adder * 8 + 7: b_adder * 8]</span></span><br><span class="line"><span class="comment">//错误用法，Verilog的切片两边要是常数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="comment">//定义高位到低位</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 + 15 取低16位，按照高位到低位排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 取高16位，但是还是按照从高到低排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义从低到高</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同上，但是从低到高排列</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同理</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr />
+<h2 id="课上"><a class="markdownIt-Anchor" href="#课上"></a> 课上</h2>
+<h3 id="t1-eam"><a class="markdownIt-Anchor" href="#t1-eam"></a> T1 eam</h3>
+<ul>
+<li><code>eam $rd, $rs, $rt</code></li>
+<li>R型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ext_imm &lt;- signed(GPR[rs][15: 0])</span><br><span class="line">res &lt;- ext_imm % 17</span><br><span class="line">if signed(GPR[rt]) &lt; 0:</span><br><span class="line">    GPR[rd] = one_ext(res)</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = zero_ext(res)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将rs寄存器低16位截断为有符号数，这个数对17取模得到的<strong>正余数</strong>，然后根据另一个操作数的正负进行1或者0拓展</li>
+</ul>
+</li>
+</ul>
+<h3 id="t2-cptl"><a class="markdownIt-Anchor" href="#t2-cptl"></a> T2 cptl</h3>
+<ul>
+<li><code>cptl $rs, $rt, label</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">temp &lt;- PC + 4 + sign_ext(offset || 00)</span><br><span class="line">PC &lt;- temp</span><br><span class="line"></span><br><span class="line">if GPR[rs][17: 12] == 6&#x27;b111111 || ......GPR[rs][5: 0] == 6&#x27;b111111: </span><br><span class="line">    GPR[rt] &lt;- PC + 4</span><br><span class="line">else:</span><br><span class="line">    GPR[31] &lt;- PC + 4</span><br></pre></td></tr></table></figure>
+<ul>
+<li>跳转类指令，然后链接内容和rs寄存器低18位是否有6个连续的1有关系</li>
+</ul>
+</li>
+</ul>
+<h3 id="t3-olw"><a class="markdownIt-Anchor" href="#t3-olw"></a> T3 olw</h3>
+<ul>
+<li><code>olw $rt, offset($base)</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vadder &lt;- GPR[base] + sign_ext(offset || 00)</span><br><span class="line">temp &lt;- Mem[vadder[31: 2]]</span><br><span class="line"></span><br><span class="line">if func(temp):</span><br><span class="line">    GPR[rt] &lt;- temp</span><br><span class="line">else:</span><br><span class="line">    None</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果读出来的数据是单调不减的，那么才写入</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<ul>
+<li>课上没什么好玩的，第一个指令注意要使用有符号，不然你就会像我一样疑惑了半个小时为什么这么取模都是0然后暴力while循环求余数。。。</li>
+<li>过两天会把P5好好更新的，顺便预告一下测评机，其实写好了，只是想等P6直接做一个流水线全的，over</li>
+<li>先不写题解了，亲爱的小羊找我看视频，我先溜了</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+        <category>课上考试</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成单周期数据生成</title>
+    <url>/2024/10/28/CO_P4_noexam/</url>
+    <content><![CDATA[<h1 id="两种可能的测试数据生成方式"><a class="markdownIt-Anchor" href="#两种可能的测试数据生成方式"></a> 两种可能的测试数据生成方式</h1>
+<h2 id="unittest"><a class="markdownIt-Anchor" href="#unittest"></a> unitTest</h2>
+<h3 id="分类"><a class="markdownIt-Anchor" href="#分类"></a> 分类</h3>
+<ul>
+<li>如同java中的单元测试，我们将常规指令（不包含什么<code>lwso</code>、<code>cwp</code>…）分为五个类别
+<ol>
+<li>寄存器赋值类型指令（set）
+<ul>
+<li>例如<code>lui</code>，能直接通过立即数对寄存器赋值（这里我还加入了<code>ori</code>配对成<code>li</code>），将来可能<code>addi</code>、<code>subi</code>也是这里的一部分</li>
+</ul>
+</li>
+<li>寄存器运算类型指令（arth）
+<ul>
+<li>例如<code>add</code>，通过两个寄存器相互运算得到值的指令，更通俗就是R型指令</li>
+</ul>
+</li>
+<li>存取类型指令（store）
+<ul>
+<li>例如<code>lw</code>，内存参与的指令</li>
+</ul>
+</li>
+<li>分支类型指令（branch）
+<ul>
+<li>例如<code>beq</code>，有条件跳转（有条件跳转并链接）指令</li>
+</ul>
+</li>
+<li>跳转类型指令（jump）
+<ul>
+<li>例如<code>jal</code>，无条件跳转（无条件跳转并链接）指令</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>接下来将我们已有的指令集分类加入，并按照<code>set -&gt; arth/store -&gt; branch -&gt; jump</code>的顺序依次进行测试，已测试的指令将出现在后面的指令测试中测试后续指令，所以测试顺序也是非常重要的</li>
+</ul>
+<hr />
+<h3 id="测试思路"><a class="markdownIt-Anchor" href="#测试思路"></a> 测试思路</h3>
+<ul>
+<li><code>set</code>
+<ul>
+<li>先测试<code>set</code>类指令，不仅是因为它们不需要依托其他指令的正确性，而且后续所有边界数据的测试都需要提前赋值，测试思路即多次对<code>$0 ~ $31</code>寄存器赋随机值</li>
+</ul>
+</li>
+<li><code>arth</code>
+<ul>
+<li>对于参与运算的数据，分为<code>inf</code>（最大、最小值左右）、<code>zero</code>（0左右）、<code>random</code>（其他随机数），我们对任意的两个寄存器选择上面某种方式<strong>赋值</strong>，再从此次数据集中随机挑选一条指令参与</li>
+</ul>
+</li>
+<li><code>store</code>
+<ul>
+<li>同理，选择基地址寄存器，循环随机生成寄存器值和偏移量，满足下面条件才结束循环
+<ul>
+<li>若选出了<code>$0</code>，要求生成<code>0 &lt; offset &lt; 3072</code></li>
+<li>若不是<code>$0</code>，要求<code>0 &lt; grf[base] + offset &lt; 3072</code></li>
+</ul>
+</li>
+<li>最后乘4，如果是<code>sb</code>、<code>sh</code>指令的指令考虑再给<code>offset</code>加上一个小的随机数</li>
+</ul>
+</li>
+<li><code>branch</code>
+<ul>
+<li>选择测试的<code>branch</code>指令，并随机决定是否跳转</li>
+<li>若不跳转
+<ul>
+<li>随机给两个寄存器赋不满足条件的值，然后结束</li>
+</ul>
+</li>
+<li>若跳转
+<ul>
+<li>向前跳，借鉴for循环的思路，但只向前跳一小步，主要测试<strong>能否向前跳</strong>，</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1 num1</span><br><span class="line">li $reg2 num1 - num2</span><br><span class="line">li $reg3 num2</span><br><span class="line">Brach:</span><br><span class="line">add $reg2, $reg2, $reg3</span><br><span class="line">beq $reg1, $reg2, Branch</span><br></pre></td></tr></table></figure>
+<ul>
+<li>向后跳更加随意</li>
+</ul>
+</li>
+<li><strong>关于死循环</strong>
+<ul>
+<li>我的数据生成器是可以生成死循环指令，目前只实现了<code>beq</code>死循环，规定死循环只在测试内容的最后5%才有可能出现，并且出现死循环即跳出生成数据返回，<strong>死循环</strong>永远在最后一个指令</li>
+<li>所以我的测评机在把代码丢给mars前会先检测最后一条指令（mars死机不会给出十六进制数据。。。），如果是死循环指令将会切除，并在提供给我们CPU的十六进制数据中加入死循环指令和一条<code>set</code>指令，测试CPU是否真的死循环了</li>
+<li><s>然后我发现死循环某种程度也是向前跳，其实不用单独测试，又把这个功能去掉了</s></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>jump</code>
+<ul>
+<li>对于一个无条件跳转指令，首先他要能跳</li>
+<li>对于借助标签的跳转指令
+<ol>
+<li>采用for循环的方式测试能否正常跳转</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1, num1</span><br><span class="line">li $reg2, num2</span><br><span class="line">li $reg3, 1</span><br><span class="line">Jumpstart:</span><br><span class="line">beq $reg1, $reg2, Jumpend</span><br><span class="line">add/sub $reg1, $reg1, $reg3</span><br><span class="line">jump Jumpstart</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>采取连续跳跃，提前生成能够跳出的label组合</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Jump0_0:</span><br><span class="line">jal Jump0_3 </span><br><span class="line">Jump0_1:</span><br><span class="line">jal Jump0_4</span><br><span class="line">Jump0_2:</span><br><span class="line">jal Jump0_5</span><br><span class="line">Jump0_3:</span><br><span class="line">jal Jump0_2</span><br><span class="line">Jump0_4:</span><br><span class="line">jal Jump0_1</span><br><span class="line">Jump0_5:</span><br></pre></td></tr></table></figure>
+</li>
+<li>对于借助寄存器的跳转指令，将与借助标签的跳转指令联动测试，采取类似函数调用的格式测试<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">beq $0, $0, BranchforJ1_0</span><br><span class="line">Jump1_0:</span><br><span class="line">add $24, $31, $0</span><br><span class="line">jr $24</span><br><span class="line">BranchforJ1_0:</span><br><span class="line">jal Jump1_0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="单周期与流水线"><a class="markdownIt-Anchor" href="#单周期与流水线"></a> 单周期与流水线</h3>
+<ul>
+<li>对于单周期，单元测试已经可以完备测试，主要是因为单周期指令的数据通路在同一时钟周期仅有一条指令占有，各个指令之间的数据通路不互相影响</li>
+<li>对于流水线，我们当然也可以采用单元测试的方式，不过首先指令的格式需要进行细微的调整<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lui $reg1, num1</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">ori $reg1, $reg1, num2</span><br><span class="line">nop</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过插入<code>nop</code>消除指令之间的互相影响，达到测试<strong>数据通路以及部分控制单元</strong>的目的，但也仅仅只能测试这两个</li>
+<li>对于<strong>转发电路以及冲突单元</strong>的测试还需依靠更加随机测试</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="randomtest"><a class="markdownIt-Anchor" href="#randomtest"></a> randomTest</h2>
+<h3 id="单周期"><a class="markdownIt-Anchor" href="#单周期"></a> 单周期</h3>
+<ul>
+<li>单周期的随机测试看起来没什么用途，单元测试已经可以完备测试CPU了（<s>虽然我还是实现了随机测试</s>）</li>
+</ul>
+<h3 id="流水线"><a class="markdownIt-Anchor" href="#流水线"></a> 流水线</h3>
+<ul>
+<li>
+<p>首先说明，笔者还未将这部分内容加入测评机，仅仅是一个蓝图（）</p>
+</li>
+<li>
+<p>单元测试有一个最大的缺点即，对于各类指令的测试往往需要<strong>预先赋值</strong>，这大大影响了指令序列的随机性，但是过于随机的指令序列将严重影响<code>store</code>、<code>branch</code>、<code>jump</code>类指令的测试效果</p>
+<ul>
+<li>这里引入一个寄存器数组、内存数组，在我们生成数据时跟踪，寄存器、内存的变化</li>
+<li>再引入一张表（有多少个条件跳转指令则引入多少张表），记录某两个寄存器是否已经满足跳转关系</li>
+<li><s>听起来有点像自己写mars</s>，我现在的函数是下面这个样子</li>
+</ul>
+</li>
+<li>
+<p>我们可以将一次随机测试分为数段，每段的开头进行预先赋值，保证一些条件（如至少8个寄存器处于极端数据等等），然后遇到终止条件结束这段测试，对不满足条件的部分重新赋值，终止条件可以如下：</p>
+<ol>
+<li>少于3个寄存器处于极端数据</li>
+<li>少于3个寄存器处于<code>-65535 ~ 65535 + 3072</code></li>
+<li>少于3个寄存器满足跳转关系</li>
+</ol>
+<ul>
+<li>由此，我们跟踪了一部分数据，可以摆脱<strong>先赋值再操作</strong>这种单元测试，对于<code>lw</code>、<code>sw</code>之类的可以从条件2的寄存器中直接使用</li>
+<li>向后跳转部分可以从满足条件关系中直接使用</li>
+<li>同时保证了寄存器组数据的随机性</li>
+</ul>
+</li>
+<li>
+<p>如果单元测试足够充分的话，完全可以在随机测试中只测试指令之间的影响，不在乎<code>branch</code>类指令向前还是向后，不在乎<code>arth</code>类指令的数据是否包含极端，这些都是原本数据通路的问题，不必在randomTest中反复测试啦</p>
+</li>
+</ul>
+<hr />
+<h2 id="结语"><a class="markdownIt-Anchor" href="#结语"></a> 结语</h2>
+<ul>
+<li>看起来流水线的数据生成还有很长一段路要走啊，希望能实现蓝图吧</li>
+<li>数据生成与处理必然有诸多不当之处，希望大家指正。同时，如果在流水线数据方面有思路的同学，请和我交流（orz）<br />
+<a href="https://github.com/Kie-Chi/co_test_builder.git">单周期测评机</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>自动化测试</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
