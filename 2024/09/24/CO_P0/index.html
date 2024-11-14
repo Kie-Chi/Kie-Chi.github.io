@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>北航计算机组成P0课下 | Trash Bin for Chi</title><meta name="author" content="Chi,23371265@buaa.edu.cn"><meta name="copyright" content="Chi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="北航计算机组成原理P0课下  P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正 注意logisimlogisimlogisim的AppearanceAppearanceAppearance调整   P0.Q1 CRC校验码  读完了题目感觉题目和校验没什么关系 教程已经有了明显的提示，使用4位模2运算电路拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>北航计算机组成P0课下 | Trash Bin for Chi</title><meta name="author" content="Chi,23371265@buaa.edu.cn"><meta name="copyright" content="Chi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="北航计算机组成原理P0课下P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正注意$logisim$的$Appearance$调整   P0.Q1 CRC校验码 读完了题目感觉题目和校验没什么关系教程已经有了明显的提示，使用4位模2运算电路拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类似行波进位器的电路 子电路定义如下(:sob:英语不好轻喷 )   定义">
 <meta property="og:type" content="article">
 <meta property="og:title" content="北航计算机组成P0课下">
 <meta property="og:url" content="https://kie-chi.github.io/2024/09/24/CO_P0/index.html">
 <meta property="og:site_name" content="Trash Bin for Chi">
-<meta property="og:description" content="北航计算机组成原理P0课下  P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正 注意logisimlogisimlogisim的AppearanceAppearanceAppearance调整   P0.Q1 CRC校验码  读完了题目感觉题目和校验没什么关系 教程已经有了明显的提示，使用4位模2运算电路拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类">
+<meta property="og:description" content="北航计算机组成原理P0课下P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正注意$logisim$的$Appearance$调整   P0.Q1 CRC校验码 读完了题目感觉题目和校验没什么关系教程已经有了明显的提示，使用4位模2运算电路拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类似行波进位器的电路 子电路定义如下(:sob:英语不好轻喷 )   定义">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg">
 <meta property="article:published_time" content="2024-09-24T12:00:00.000Z">
@@ -193,502 +193,441 @@
     document.addEventListener('pjax:send', () => { preloader.initLoading() })
     document.addEventListener('pjax:complete', () => { preloader.endLoading() })
   }
-})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Trash Bin for Chi"><img class="site-icon" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"/><span class="site-name">Trash Bin for Chi</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">北航计算机组成P0课下</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-24T12:00:00.000Z" title="发表于 2024-09-24 20:00:00">2024-09-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-28T07:19:42.291Z" title="更新于 2024-09-28 15:19:42">2024-09-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E8%AF%BE%E4%B8%8B%E5%A4%8D%E4%B9%A0/">课下复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="北航计算机组成P0课下"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="北航计算机组成原理p0课下"><a class="markdownIt-Anchor" href="#北航计算机组成原理p0课下"></a> 北航计算机组成原理P0课下</h1>
-<h3 id="p0课下做题的一些分享思路不一定是最佳实现思路敬请大家斧正"><a class="markdownIt-Anchor" href="#p0课下做题的一些分享思路不一定是最佳实现思路敬请大家斧正"></a> P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</h3>
-<div class="note warning simple"><p>注意<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>i</mi><mi>s</mi><mi>i</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">logisim</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">i</span><span class="mord mathnormal">s</span><span class="mord mathnormal">i</span><span class="mord mathnormal">m</span></span></span></span>的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>调整</p>
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Trash Bin for Chi"><img class="site-icon" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"/><span class="site-name">Trash Bin for Chi</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">北航计算机组成P0课下</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-24T12:00:00.000Z" title="发表于 2024-09-24 20:00:00">2024-09-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-28T07:19:42.291Z" title="更新于 2024-09-28 15:19:42">2024-09-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E8%AF%BE%E4%B8%8B%E5%A4%8D%E4%B9%A0/">课下复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="北航计算机组成P0课下"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="北航计算机组成原理P0课下"><a href="#北航计算机组成原理P0课下" class="headerlink" title="北航计算机组成原理P0课下"></a>北航计算机组成原理P0课下</h1><h3 id="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"><a href="#P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正" class="headerlink" title="P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正"></a>P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</h3><div class="note warning simple"><p>注意$logisim$的$Appearance$调整</p>
 </div>
-<h2 id="p0q1-crc校验码"><a class="markdownIt-Anchor" href="#p0q1-crc校验码"></a> P0.Q1 CRC校验码</h2>
-<ul>
-<li><s>读完了题目感觉题目和校验没什么关系</s><br />
-教程已经有了明显的提示，使用<strong>4位模2运算电路</strong>拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类似行波进位器的电路
-<ul>
-<li>子电路定义如下(😭英语不好轻喷 )
-<table>
+
+<h2 id="P0-Q1-CRC校验码"><a href="#P0-Q1-CRC校验码" class="headerlink" title="P0.Q1 CRC校验码"></a>P0.Q1 CRC校验码</h2><ul>
+<li><del>读完了题目感觉题目和校验没什么关系</del><br>教程已经有了明显的提示，使用<strong>4位模2运算电路</strong>拼出11位的模2除法运算电路，考虑到本题应该是一个组合电路题，所以笔者使用了类似行波进位器的电路<ul>
+<li>子电路定义如下(:sob:英语不好轻喷 )<table>
 <thead>
 <tr>
-<th style="text-align:center">定义接口</th>
-<th style="text-align:center">方向</th>
-<th style="text-align:center">描述</th>
+<th align="center">定义接口</th>
+<th align="center">方向</th>
+<th align="center">描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">div[2:0]</td>
-<td style="text-align:center">I</td>
-<td style="text-align:center">上一次<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">mod2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord">2</span></span></span></span>运算留下的余数</td>
+<tbody><tr>
+<td align="center">div[2:0]</td>
+<td align="center">I</td>
+<td align="center">上一次$mod2$运算留下的余数</td>
 </tr>
 <tr>
-<td style="text-align:center">new</td>
-<td style="text-align:center">I</td>
-<td style="text-align:center">本次<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">mod2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord">2</span></span></span></span>运算放在尾端的数</td>
+<td align="center">new</td>
+<td align="center">I</td>
+<td align="center">本次$mod2$运算放在尾端的数</td>
 </tr>
 <tr>
-<td style="text-align:center">todiv[3:0]</td>
-<td style="text-align:center">I</td>
-<td style="text-align:center">除数</td>
+<td align="center">todiv[3:0]</td>
+<td align="center">I</td>
+<td align="center">除数</td>
 </tr>
 <tr>
-<td style="text-align:center">hi[2:0]</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">余数</td>
+<td align="center">hi[2:0]</td>
+<td align="center">O</td>
+<td align="center">余数</td>
 </tr>
 <tr>
-<td style="text-align:center">lo</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">商</td>
+<td align="center">lo</td>
+<td align="center">O</td>
+<td align="center">商</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 </li>
-<li>有八次<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">mod2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord">2</span></span></span></span>运算所以实现了八个子电路<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>M</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo>≤</mo><mi>i</mi><mo>≤</mo><mn>8</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">M_i ( 1 \le i \le 8)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79549em;vertical-align:-0.13597em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">8</span><span class="mclose">)</span></span></span></span></li>
+<li>有八次$mod2$运算所以实现了八个子电路$M_i ( 1 \le i \le 8)$</li>
 <li>利用<code>Splitter</code>分出后五位和三位零依次传入子电路中</li>
-<li>连接$M_i.hi $ 与$ M_{i+1}.div<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>，就构成了行波</mtext></mrow><annotation encoding="application/x-tex">，就构成了行波</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">构</span><span class="mord cjk_fallback">成</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">行</span><span class="mord cjk_fallback">波</span></span></span></span>mod2$运算电路(<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-8.png" alt="alt text" /></li>
+<li>连接$M_i.hi $ 与$ M_{i+1}.div$，就构成了行波$mod2$运算电路(<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-8.png" alt="alt text"></li>
 </ul>
 </li>
-<li>其实本来看到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">mod2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord">2</span></span></span></span>除法运算第一个想到的是循环移位，但是不知道能不能用时序，应该是不行吧</li>
-<li>最后的最后，记得<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>，记得<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>，记得<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>，重要的事情说三遍</li>
+<li>其实本来看到$mod2$除法运算第一个想到的是循环移位，但是不知道能不能用时序，应该是不行吧</li>
+<li>最后的最后，记得$Appearance$，记得$Appearance$，记得$Appearance$，重要的事情说三遍</li>
 </ul>
-<hr />
-<h2 id="p0q2-实现grf"><a class="markdownIt-Anchor" href="#p0q2-实现grf"></a> P0.Q2 实现GRF</h2>
-<ul>
-<li>
-<p><s>啊，是寄存器堆，我们完了</s><br />
-整体思路不难，输入数据使用32位<code>DMX</code>分配到各个寄存器，读出操作将寄存器堆连接32位<code>MUX</code>得到输出，最后的使能端口我使用了主的使能端<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">We</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord mathnormal">e</span></span></span></span>和各个寄存器的使能端<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><msub><mi>e</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">We_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的综合<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image.png" alt="alt text" /></p>
+<hr>
+<h2 id="P0-Q2-实现GRF"><a href="#P0-Q2-实现GRF" class="headerlink" title="P0.Q2 实现GRF"></a>P0.Q2 实现GRF</h2><ul>
+<li><del>啊，是寄存器堆，我们完了</del><br>整体思路不难，输入数据使用32位<code>DMX</code>分配到各个寄存器，读出操作将寄存器堆连接32位<code>MUX</code>得到输出，最后的使能端口我使用了主的使能端$We$和各个寄存器的使能端$We_i$的综合<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image.png" alt="alt text"></li>
+<li><font color = red>$Attention$: </font>对于特殊寄存器<code>$0</code>，我没有单独实现为一个寄存器，而是将写入<code>$0</code>的数据线置空，读取<code>$0</code>的数据线恒置为$0$<br>其实主要是搭建大量的寄存器和连接像上图的<code>Tunnel</code>容易导致莫名的连线问题，不过你<del>可以CV</del>，但是既然助教们在logisim教程中写了自动化教程肯定有他们的道理，所以我们用<code>Python</code>自动化脚本帮助我们生成<code>GRF</code>，<del>感觉没我CV快是怎么回事</del></li>
+<li>接下来构建<code>Python</code>自动化脚本<ul>
+<li><p>首先，既然要使用脚本生成大量的寄存器，我们就需要找到<code>GRF</code>的最小单位，不然怎么愉快的for循环呢，大概是下面这样<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-2.png" alt="alt text"></p>
 </li>
-<li>
-<p><font color = red><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Attention</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span>: </font>对于特殊寄存器<code>$0</code>，我没有单独实现为一个寄存器，而是将写入<code>$0</code>的数据线置空，读取<code>$0</code>的数据线恒置为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span><br />
-其实主要是搭建大量的寄存器和连接像上图的<code>Tunnel</code>容易导致莫名的连线问题，不过你<s>可以CV</s>，但是既然助教们在logisim教程中写了自动化教程肯定有他们的道理，所以我们用<code>Python</code>自动化脚本帮助我们生成<code>GRF</code>，<s>感觉没我CV快是怎么回事</s></p>
-</li>
-<li>
-<p>接下来构建<code>Python</code>自动化脚本</p>
-<ul>
-<li>首先，既然要使用脚本生成大量的寄存器，我们就需要找到<code>GRF</code>的最小单位，不然怎么愉快的for循环呢，大概是下面这样<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-2.png" alt="alt text" /></li>
-<li>但是，我们观察logisim的电路文件，发现连线的操作很麻烦，是从一个坐标点导向另一个坐标点，坐标点嘛，如果写入脚本中，不仅会耗费大量时间记录需要连线的位置而且更易错，这违背了我们<s>图方便、省事</s>的初衷</li>
-</ul>
+<li><p>但是，我们观察logisim的电路文件，发现连线的操作很麻烦，是从一个坐标点导向另一个坐标点，坐标点嘛，如果写入脚本中，不仅会耗费大量时间记录需要连线的位置而且更易错，这违背了我们<del>图方便、省事</del>的初衷</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">wire</span> <span class="attr">from</span>=<span class="string">&quot;(340,890)&quot;</span> <span class="attr">to</span>=<span class="string">&quot;(430,890)&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">wire</span> <span class="attr">from</span>=<span class="string">&quot;(70,1050)&quot;</span> <span class="attr">to</span>=<span class="string">&quot;(100,1050)&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">wire</span> <span class="attr">from</span>=<span class="string">&quot;(70,1070)&quot;</span> <span class="attr">to</span>=<span class="string">&quot;(100,1070)&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">wire</span> <span class="attr">from</span>=<span class="string">&quot;(70,250)&quot;</span> <span class="attr">to</span>=<span class="string">&quot;(130,250)&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>所以我们对上述电路进行如下改造，丑是丑了点，但是<code>XML</code>格式十分简洁，反正logisim文件不是给人看的，机器看得明白就行<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-1.png" alt="alt text" /></p>
-  <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;4&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(500,320)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Register&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;$18&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(330,340)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(480,340)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(320,395)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;facing&quot;</span> <span class="attr">val</span>=<span class="string">&quot;east&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;write_11&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(500,620)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;rd_22&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(180,565)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(500,395)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;rd_19&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(630,640)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>因为原电路已经略显复杂，接下来我单开了一个circuit搭建了一个最小单位，然后就能比较方便地找到这个基本单位了，接下来就是使用Python生成xml文件了，我使用的源码如下<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">grf = <span class="string">&quot;&quot;&quot;   &lt;comp lib=&quot;4&quot; loc=&quot;%s&quot; name=&quot;Register&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;facing&quot; val=&quot;east&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;rst&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;clk&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;facing&quot; val=&quot;east&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">row = <span class="number">150</span></span><br><span class="line">col = <span class="number">75</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;grf.xml&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">            reg_loc = [<span class="number">200</span> + i * row, <span class="number">170</span> + j * col]</span><br><span class="line">            grf_name = <span class="string">f&quot;$<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            rd_name = <span class="string">f&quot;rd_<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            rd_loc = reg_loc</span><br><span class="line">            we_loc = [reg_loc[<span class="number">0</span>] - <span class="number">30</span>, reg_loc[<span class="number">1</span>] + <span class="number">10</span>]</span><br><span class="line">            we_name = <span class="string">f&quot;we_<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            rst_loc = [reg_loc[<span class="number">0</span>] - <span class="number">10</span>, reg_loc[<span class="number">1</span>] + <span class="number">20</span>]</span><br><span class="line">            clk_loc = [reg_loc[<span class="number">0</span>] - <span class="number">20</span>, reg_loc[<span class="number">1</span>] + <span class="number">20</span>]</span><br><span class="line">            wri_loc = [reg_loc[<span class="number">0</span>] - <span class="number">30</span>, reg_loc[<span class="number">1</span>]]</span><br><span class="line">            wri_name = <span class="string">f&quot;write_<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            <span class="comment"># print(grf % (tuple(reg_loc), grf_name, tuple(rd_loc), rd_name, tuple(we_loc), we_name,tuple(rst_loc), tuple(clk_loc), tuple(wri_loc), wri_name))</span></span><br><span class="line">            file.write(grf % (<span class="built_in">tuple</span>(reg_loc), grf_name, <span class="built_in">tuple</span>(rd_loc), rd_name, <span class="built_in">tuple</span>(we_loc), we_name,<span class="built_in">tuple</span>(rst_loc), <span class="built_in">tuple</span>(clk_loc), <span class="built_in">tuple</span>(wri_loc), wri_name))</span><br></pre></td></tr></table></figure>
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-4.png" alt="alt text" /><br />
-(大概是这样，间距还可以调整，修改代码中的<code>row</code>和<code>col</code>值即可)<br />
-<br><br />
+<p>所以我们对上述电路进行如下改造，丑是丑了点，但是<code>XML</code>格式十分简洁，反正logisim文件不是给人看的，机器看得明白就行<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-1.png" alt="alt text"></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;4&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(500,320)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Register&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;$18&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(330,340)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(480,340)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(320,395)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;facing&quot;</span> <span class="attr">val</span>=<span class="string">&quot;east&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;write_11&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(500,620)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;rd_22&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(180,565)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(500,395)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;rd_19&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(630,640)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;clk&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>因为原电路已经略显复杂，接下来我单开了一个circuit搭建了一个最小单位，然后就能比较方便地找到这个基本单位了，接下来就是使用Python生成xml文件了，我使用的源码如下</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">grf = <span class="string">&quot;&quot;&quot;   &lt;comp lib=&quot;4&quot; loc=&quot;%s&quot; name=&quot;Register&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;facing&quot; val=&quot;east&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;rst&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;clk&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;facing&quot; val=&quot;east&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">row = <span class="number">150</span></span><br><span class="line">col = <span class="number">75</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;grf.xml&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">            reg_loc = [<span class="number">200</span> + i * row, <span class="number">170</span> + j * col]</span><br><span class="line">            grf_name = <span class="string">f&quot;$<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            rd_name = <span class="string">f&quot;rd_<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            rd_loc = reg_loc</span><br><span class="line">            we_loc = [reg_loc[<span class="number">0</span>] - <span class="number">30</span>, reg_loc[<span class="number">1</span>] + <span class="number">10</span>]</span><br><span class="line">            we_name = <span class="string">f&quot;we_<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            rst_loc = [reg_loc[<span class="number">0</span>] - <span class="number">10</span>, reg_loc[<span class="number">1</span>] + <span class="number">20</span>]</span><br><span class="line">            clk_loc = [reg_loc[<span class="number">0</span>] - <span class="number">20</span>, reg_loc[<span class="number">1</span>] + <span class="number">20</span>]</span><br><span class="line">            wri_loc = [reg_loc[<span class="number">0</span>] - <span class="number">30</span>, reg_loc[<span class="number">1</span>]]</span><br><span class="line">            wri_name = <span class="string">f&quot;write_<span class="subst">&#123;i * <span class="number">8</span> + j &#125;</span>&quot;</span></span><br><span class="line">            <span class="comment"># print(grf % (tuple(reg_loc), grf_name, tuple(rd_loc), rd_name, tuple(we_loc), we_name,tuple(rst_loc), tuple(clk_loc), tuple(wri_loc), wri_name))</span></span><br><span class="line">            file.write(grf % (<span class="built_in">tuple</span>(reg_loc), grf_name, <span class="built_in">tuple</span>(rd_loc), rd_name, <span class="built_in">tuple</span>(we_loc), we_name,<span class="built_in">tuple</span>(rst_loc), <span class="built_in">tuple</span>(clk_loc), <span class="built_in">tuple</span>(wri_loc), wri_name))</span><br></pre></td></tr></table></figure>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-4.png" alt="alt text"><br>(大概是这样，间距还可以调整，修改代码中的<code>row</code>和<code>col</code>值即可)</p>
+<br>
 <br></li>
-<li>对于连接<code>MUX</code>与<code>DMX</code>我们如法炮制，新开一个文件存放最小单位，这里的最小单位其实是就是自己，只是连接的32个<code>Tunnel</code>还是有规律的<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;2&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(560,250)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Demultiplexer&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;select&quot;</span> <span class="attr">val</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;enable&quot;</span> <span class="attr">val</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(520,10)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;write_1&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(520,20)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;write_2&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li>发现在<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>250</mn></mrow><annotation encoding="application/x-tex">y=250</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">0</span></span></span></span>位置的DMX的第一个接口时从0开始的，每两个接口之间是10个单位，就可以使用for循环生成这些<code>Tunnel</code>了，源码如下<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">mux_1 = <span class="string">&quot;&quot;&quot;    </span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;2&quot; loc=&quot;(250,250)&quot; name=&quot;Multiplexer&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;select&quot; val=&quot;5&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;enable&quot; val=&quot;false&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line">mux_2 = <span class="string">&quot;&quot;&quot;     </span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;2&quot; loc=&quot;(430,250)&quot; name=&quot;Multiplexer&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;select&quot; val=&quot;5&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;enable&quot; val=&quot;false&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">mux_loc = [(<span class="number">250</span>, <span class="number">250</span>), (<span class="number">430</span>, <span class="number">250</span>)]</span><br><span class="line">tunnel_rd = <span class="string">&quot;&quot;&quot;    </span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;facing&quot; val=&quot;east&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">dmx = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;2&quot; loc=&quot;(560,250)&quot; name=&quot;Demultiplexer&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;select&quot; val=&quot;5&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;enable&quot; val=&quot;false&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line">dmx_loc = (<span class="number">560</span>, <span class="number">250</span>)</span><br><span class="line"></span><br><span class="line">tunnel_wr = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;mux.xml&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="keyword">for</span> z <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">            tun_loc = [mux_loc[z][<span class="number">0</span>] - <span class="number">40</span>, <span class="number">90</span> + <span class="number">10</span> * i]</span><br><span class="line">            tun_name = <span class="string">f&quot;rd_<span class="subst">&#123;i&#125;</span>&quot;</span></span><br><span class="line">            <span class="built_in">print</span>(tunnel_rd % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">            file.write(tunnel_rd % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">    file.write(mux_1)</span><br><span class="line">    file.write(mux_2)</span><br><span class="line">    file.write(dmx)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">        tun_loc = [dmx_loc[<span class="number">0</span>] + <span class="number">40</span>, <span class="number">90</span> + <span class="number">10</span> * i]</span><br><span class="line">        tun_name = <span class="string">f&quot;we_<span class="subst">&#123;i&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(tunnel_wr % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">        file.write(tunnel_wr % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">    <span class="comment"># 这里本来有一个写WD的write的for循环，图方便注释掉了</span></span><br><span class="line">    <span class="comment"># 只需要把tun_name自行调整即可，记得是DMX哦</span></span><br></pre></td></tr></table></figure>
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-9.png" alt="alt text" /></li>
-</ul>
-</li>
-<li>
-<p>这个题目好，P4写单周期的时候还能用</p>
-</li>
-<li>
-<p><code>GRF</code>，巨能用，一节更比六节强，玩具车用完收音机还能用</p>
-</li>
-<li>
-<p>最后的最后，记得<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>，记得<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>，记得<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>，重要的事情说三遍(你怎么知道我<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>r</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Pre</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">e</span></span></span></span> 被<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Appearance</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">c</span><span class="mord mathnormal">e</span></span></span></span>卡到④了)</p>
+<li><p>对于连接<code>MUX</code>与<code>DMX</code>我们如法炮制，新开一个文件存放最小单位，这里的最小单位其实是就是自己，只是连接的32个<code>Tunnel</code>还是有规律的</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;2&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(560,250)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Demultiplexer&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;select&quot;</span> <span class="attr">val</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span> <span class="attr">val</span>=<span class="string">&quot;32&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;enable&quot;</span> <span class="attr">val</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(520,10)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;write_1&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">comp</span> <span class="attr">lib</span>=<span class="string">&quot;0&quot;</span> <span class="attr">loc</span>=<span class="string">&quot;(520,20)&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Tunnel&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;label&quot;</span> <span class="attr">val</span>=<span class="string">&quot;write_2&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>发现在$y&#x3D;250$位置的DMX的第一个接口时从0开始的，每两个接口之间是10个单位，就可以使用for循环生成这些<code>Tunnel</code>了，源码如下</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">mux_1 = <span class="string">&quot;&quot;&quot;    </span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;2&quot; loc=&quot;(250,250)&quot; name=&quot;Multiplexer&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;select&quot; val=&quot;5&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;enable&quot; val=&quot;false&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line">mux_2 = <span class="string">&quot;&quot;&quot;     </span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;2&quot; loc=&quot;(430,250)&quot; name=&quot;Multiplexer&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;select&quot; val=&quot;5&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;enable&quot; val=&quot;false&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">mux_loc = [(<span class="number">250</span>, <span class="number">250</span>), (<span class="number">430</span>, <span class="number">250</span>)]</span><br><span class="line">tunnel_rd = <span class="string">&quot;&quot;&quot;    </span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;facing&quot; val=&quot;east&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;width&quot; val=&quot;32&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">dmx = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;2&quot; loc=&quot;(560,250)&quot; name=&quot;Demultiplexer&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;select&quot; val=&quot;5&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;enable&quot; val=&quot;false&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line">dmx_loc = (<span class="number">560</span>, <span class="number">250</span>)</span><br><span class="line"></span><br><span class="line">tunnel_wr = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;comp lib=&quot;0&quot; loc=&quot;%s&quot; name=&quot;Tunnel&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a name=&quot;label&quot; val=&quot;%s&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;/comp&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;mux.xml&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="keyword">for</span> z <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">            tun_loc = [mux_loc[z][<span class="number">0</span>] - <span class="number">40</span>, <span class="number">90</span> + <span class="number">10</span> * i]</span><br><span class="line">            tun_name = <span class="string">f&quot;rd_<span class="subst">&#123;i&#125;</span>&quot;</span></span><br><span class="line">            <span class="built_in">print</span>(tunnel_rd % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">            file.write(tunnel_rd % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">    file.write(mux_1)</span><br><span class="line">    file.write(mux_2)</span><br><span class="line">    file.write(dmx)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">        tun_loc = [dmx_loc[<span class="number">0</span>] + <span class="number">40</span>, <span class="number">90</span> + <span class="number">10</span> * i]</span><br><span class="line">        tun_name = <span class="string">f&quot;we_<span class="subst">&#123;i&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(tunnel_wr % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">        file.write(tunnel_wr % (<span class="built_in">tuple</span>(tun_loc), tun_name))</span><br><span class="line">    <span class="comment"># 这里本来有一个写WD的write的for循环，图方便注释掉了</span></span><br><span class="line">    <span class="comment"># 只需要把tun_name自行调整即可，记得是DMX哦</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-9.png" alt="alt text"></p>
 </li>
 </ul>
-<hr />
-<h2 id="p0q3-导航"><a class="markdownIt-Anchor" href="#p0q3-导航"></a> P0.Q3 导航</h2>
-<ul>
-<li>
-<p><s>爵士好题</s></p>
 </li>
-<li>
-<p>刚开始看到这道题本来打算用<code>Mealy</code>机，使用<code>Mealy</code>机真的很方便，因为<code>hit</code>和<code>arrive</code>都与<code>status</code>、<code>dir</code>有关，但是因为题目指定了<code>Moore</code>机所有很快就丢弃了这个思路</p>
+<li>这个题目好，P4写单周期的时候还能用</li>
+<li><code>GRF</code>，巨能用，一节更比六节强，玩具车用完收音机还能用</li>
+<li>最后的最后，记得$Appearance$，记得$Appearance$，记得$Appearance$，重要的事情说三遍(你怎么知道我$Pre$ 被$Appearance$卡到④了)</li>
+</ul>
+<hr>
+<h2 id="P0-Q3-导航"><a href="#P0-Q3-导航" class="headerlink" title="P0.Q3 导航"></a>P0.Q3 导航</h2><ul>
+<li><p><del>爵士好题</del></p>
 </li>
-<li>
-<p>然后想到了创建多个状态包括撞墙的状态，然后写出复杂的状态转移方程，最后一共有13个状态吧，构建状态转移方程过于复杂，所以也丢弃了</p>
+<li><p>刚开始看到这道题本来打算用<code>Mealy</code>机，使用<code>Mealy</code>机真的很方便，因为<code>hit</code>和<code>arrive</code>都与<code>status</code>、<code>dir</code>有关，但是因为题目指定了<code>Moore</code>机所有很快就丢弃了这个思路</p>
 </li>
-<li>
-<p>最后我还是决定使用<code>Mealy</code>状态机和<code>Register</code>构建一个<code>Moore</code>状态机（假装输出只和状态相关）</p>
+<li><p>然后想到了创建多个状态包括撞墙的状态，然后写出复杂的状态转移方程，最后一共有13个状态吧，构建状态转移方程过于复杂，所以也丢弃了</p>
+</li>
+<li><p>最后我还是决定使用<code>Mealy</code>状态机和<code>Register</code>构建一个<code>Moore</code>状态机（假装输出只和状态相关）</p>
 <ul>
 <li><code>Register</code>保存<code>hit</code>的值，使得<code>hit</code>只在时钟上升沿变化，看起来就像是只随着<code>status</code>变化了（因为<code>status</code>是随着时钟上升沿变化的），而<code>arrive</code>本身就可以只与<code>status</code>有关，那么我们关于<code>status</code>的<code>Moore</code>机就构建好了</li>
 </ul>
 </li>
-<li>
-<p>状态转移的真值表如下</p>
+<li><p>状态转移的真值表如下</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">status</th>
-<th style="text-align:center">dir</th>
-<th style="text-align:center">next_status</th>
-<th style="text-align:center">arrive</th>
-<th style="text-align:center">hit</th>
+<th align="center">status</th>
+<th align="center">dir</th>
+<th align="center">next_status</th>
+<th align="center">arrive</th>
+<th align="center">hit</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">000</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">001</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<tbody><tr>
+<td align="center">000</td>
+<td align="center">00</td>
+<td align="center">001</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">000</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">000</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">000</td>
+<td align="center">01</td>
+<td align="center">000</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">000</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">000</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">000</td>
+<td align="center">10</td>
+<td align="center">000</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">000</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">000</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">000</td>
+<td align="center">11</td>
+<td align="center">000</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">001</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">011</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<td align="center">001</td>
+<td align="center">00</td>
+<td align="center">011</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">001</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">010</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<td align="center">001</td>
+<td align="center">01</td>
+<td align="center">010</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">001</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">000</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<td align="center">001</td>
+<td align="center">10</td>
+<td align="center">000</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">001</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">001</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">001</td>
+<td align="center">11</td>
+<td align="center">001</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">010</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">100</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<td align="center">010</td>
+<td align="center">00</td>
+<td align="center">100</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">010</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">010</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">010</td>
+<td align="center">01</td>
+<td align="center">010</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">010</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">010</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">010</td>
+<td align="center">10</td>
+<td align="center">010</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">010</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">001</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<td align="center">010</td>
+<td align="center">11</td>
+<td align="center">001</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">011</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">011</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">011</td>
+<td align="center">00</td>
+<td align="center">011</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">011</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">100</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<td align="center">011</td>
+<td align="center">01</td>
+<td align="center">100</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">011</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">001</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<td align="center">011</td>
+<td align="center">10</td>
+<td align="center">001</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">011</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">011</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
+<td align="center">011</td>
+<td align="center">11</td>
+<td align="center">011</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">100</td>
-<td style="text-align:center">??</td>
-<td style="text-align:center">000</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
+<td align="center">100</td>
+<td align="center">??</td>
+<td align="center">000</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 </li>
-<li>
-<p>主电路图大致如下<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-5.png" alt="alt text" /></p>
+<li><p>主电路图大致如下<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-5.png" alt="alt text"></p>
 </li>
-<li>
-<p>在群里看到向巨只用了两位的<code>type</code>，我也想了一下，下面是我的思路</p>
+<li><p>在群里看到向巨只用了两位的<code>type</code>，我也想了一下，下面是我的思路</p>
 <ul>
 <li>相较于原本的电路，将状态<code>100</code>即在B机房这个状态去除，改为在<code>S2</code>状态下 <code>dir</code>为<code>01</code>、<code>S3</code>状态下<code>dir</code>为<code>00</code>时，<code>arrive</code>置1，且返回A机房（<code>Mealy</code>状态机 + 寄存器）</li>
 <li><code>arrive</code>模块也使用<code>Register</code>保存，在时钟上升沿更新</li>
 <li>在A机房状态下，如果<code>arrive</code>为1，则总状态不更新，类似于同步复位信号，不过<code>status</code>这个时候已经是<code>00</code></li>
 </ul>
 </li>
-<li>
-<p>向巨，yyds</p>
+<li><p>向巨，yyds</p>
 </li>
 </ul>
-<hr />
-<h2 id="p0q4-正则表达式"><a class="markdownIt-Anchor" href="#p0q4-正则表达式"></a> P0.Q4 正则表达式</h2>
-<ul>
-<li>
-<p><s>欸，这道题没有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">Q3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">Q</span><span class="mord">3</span></span></span></span>难欸，怎么放在<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">Q4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">Q</span><span class="mord">4</span></span></span></span></s><br />
-好了回归题目，这次的题目是一个<code>Mealy</code>类型的有限状态机，所以千万不要写错成了<code>Moore</code>类型的状态机啊</p>
+<hr>
+<h2 id="P0-Q4-正则表达式"><a href="#P0-Q4-正则表达式" class="headerlink" title="P0.Q4 正则表达式"></a>P0.Q4 正则表达式</h2><ul>
+<li><p><del>欸，这道题没有$Q3$难欸，怎么放在$Q4$</del><br>好了回归题目，这次的题目是一个<code>Mealy</code>类型的有限状态机，所以千万不要写错成了<code>Moore</code>类型的状态机啊</p>
 </li>
-<li>
-<p>主要就是<code>Moore</code>状态机会比<code>Mealy</code>状态机多一个状态，因为<code>Moore</code>状态机保存了最后匹配成功的一个状态，<code>Mealy</code>状态机不需要保存匹配成功的状态，只需要在输入最后匹配条件时输出<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，并且回到非法状态即可</p>
+<li><p>主要就是<code>Moore</code>状态机会比<code>Mealy</code>状态机多一个状态，因为<code>Moore</code>状态机保存了最后匹配成功的一个状态，<code>Mealy</code>状态机不需要保存匹配成功的状态，只需要在输入最后匹配条件时输出$1$，并且回到非法状态即可</p>
 </li>
-<li>
-<p><code>Mealy</code>状态机状态转移图<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-12.png" alt="alt text" /></p>
+<li><p><code>Mealy</code>状态机状态转移图<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-12.png" alt="alt text"></p>
 </li>
-<li>
-<p><code>Moore</code>状态机状态转移图<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-10.png" alt="alt text" /></p>
+<li><p><code>Moore</code>状态机状态转移图<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-10.png" alt="alt text"></p>
 </li>
-<li>
-<p><code>Mealy</code>状态机状态转移方程</p>
+<li><p><code>Mealy</code>状态机状态转移方程</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">status</th>
-<th style="text-align:center">input</th>
-<th style="text-align:center">next_status</th>
-<th style="text-align:center">output</th>
+<th align="center">status</th>
+<th align="center">input</th>
+<th align="center">next_status</th>
+<th align="center">output</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">00</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">0</td>
+<tbody><tr>
+<td align="center">00</td>
+<td align="center">00</td>
+<td align="center">00</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">00</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">0</td>
+<td align="center">00</td>
+<td align="center">01</td>
+<td align="center">01</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">00</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">0</td>
+<td align="center">00</td>
+<td align="center">10</td>
+<td align="center">00</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">00</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">0</td>
+<td align="center">00</td>
+<td align="center">11</td>
+<td align="center">00</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">01</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">0</td>
+<td align="center">01</td>
+<td align="center">00</td>
+<td align="center">10</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">01</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">0</td>
+<td align="center">01</td>
+<td align="center">01</td>
+<td align="center">01</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">01</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">0</td>
+<td align="center">01</td>
+<td align="center">10</td>
+<td align="center">10</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">01</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">0</td>
+<td align="center">01</td>
+<td align="center">11</td>
+<td align="center">00</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">10</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">1</td>
+<td align="center">10</td>
+<td align="center">00</td>
+<td align="center">00</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">10</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">01</td>
-<td style="text-align:center">0</td>
+<td align="center">10</td>
+<td align="center">01</td>
+<td align="center">01</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">10</td>
-<td style="text-align:center">10</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">1</td>
+<td align="center">10</td>
+<td align="center">10</td>
+<td align="center">00</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">10</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">00</td>
-<td style="text-align:center">0</td>
+<td align="center">10</td>
+<td align="center">11</td>
+<td align="center">00</td>
+<td align="center">0</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 </li>
 </ul>
-<hr />
-<h2 id="p0附加题-ftoi"><a class="markdownIt-Anchor" href="#p0附加题-ftoi"></a> P0.附加题 ftoi</h2>
-<ul>
-<li>
-<p><s>半精度浮点数，所以不能用C语言编测试数据了，助教很坏</s></p>
+<hr>
+<h2 id="P0-附加题-ftoi"><a href="#P0-附加题-ftoi" class="headerlink" title="P0.附加题 ftoi"></a>P0.附加题 ftoi</h2><ul>
+<li><p><del>半精度浮点数，所以不能用C语言编测试数据了，助教很坏</del></p>
 </li>
-<li>
-<p>根据题目改编的IEEE浮点数，我们大致可以分为四类</p>
+<li><p>根据题目改编的IEEE浮点数，我们大致可以分为四类</p>
 <ol>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>规格化小数</mtext></mrow><annotation encoding="application/x-tex">规格化小数</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">规</span><span class="mord cjk_fallback">格</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">小</span><span class="mord cjk_fallback">数</span></span></span></span></li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>非规格化小数</mtext></mrow><annotation encoding="application/x-tex">非规格化小数</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">非</span><span class="mord cjk_fallback">规</span><span class="mord cjk_fallback">格</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">小</span><span class="mord cjk_fallback">数</span></span></span></span></li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∞</mi></mrow><annotation encoding="application/x-tex">\infty</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">∞</span></span></span></span></li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mi>A</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">NAN</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></li>
+<li>$规格化小数$</li>
+<li>$非规格化小数$</li>
+<li>$0$</li>
+<li>$\infty$</li>
+<li>$NAN$</li>
 </ol>
 </li>
-<li>
-<p>浮点数的类型又可以由下面三个bool型变量决定</p>
+<li><p>浮点数的类型又可以由下面三个bool型变量决定</p>
 <ol>
 <li><code>exp_iszero</code></li>
 <li><code>exp_isfull</code></li>
 <li><code>frac_iszero</code></li>
 </ol>
 </li>
-<li>
-<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mi>A</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">NAN</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∞</mi></mrow><annotation encoding="application/x-tex">\infty</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord">∞</span></span></span></span>只有<code>frac_iszero</code>不一致，又因为刚好有5个类型，所以干脆将这两个类型合并为一个，然后使用真值表技术生成两位<code>type</code>关于三个变量的子电路</p>
+<li><p>$NAN$ 和 $\infty$只有<code>frac_iszero</code>不一致，又因为刚好有5个类型，所以干脆将这两个类型合并为一个，然后使用真值表技术生成两位<code>type</code>关于三个变量的子电路</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">定义接口</th>
-<th style="text-align:center">方向</th>
-<th style="text-align:center">描述</th>
+<th align="center">定义接口</th>
+<th align="center">方向</th>
+<th align="center">描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">exp_iszero</td>
-<td style="text-align:center">I</td>
-<td style="text-align:center">所得浮点数exponent位置是否全为0</td>
+<tbody><tr>
+<td align="center">exp_iszero</td>
+<td align="center">I</td>
+<td align="center">所得浮点数exponent位置是否全为0</td>
 </tr>
 <tr>
-<td style="text-align:center">exp_isfull</td>
-<td style="text-align:center">I</td>
-<td style="text-align:center">所得浮点数exponent位置是否全为1</td>
+<td align="center">exp_isfull</td>
+<td align="center">I</td>
+<td align="center">所得浮点数exponent位置是否全为1</td>
 </tr>
 <tr>
-<td style="text-align:center">frac_iszero</td>
-<td style="text-align:center">I</td>
-<td style="text-align:center">所得浮点数fraction位置是否全为0</td>
+<td align="center">frac_iszero</td>
+<td align="center">I</td>
+<td align="center">所得浮点数fraction位置是否全为0</td>
 </tr>
 <tr>
-<td style="text-align:center">type[1:0]</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">浮点数属于的类型</td>
+<td align="center">type[1:0]</td>
+<td align="center">O</td>
+<td align="center">浮点数属于的类型</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
-<li>状态转移真值表如下
-<table>
+<li>状态转移真值表如下<table>
 <thead>
 <tr>
-<th style="text-align:center">exp_iszero</th>
-<th style="text-align:center">exp_isfull</th>
-<th style="text-align:center">frac_iszero</th>
-<th style="text-align:center">type</th>
+<th align="center">exp_iszero</th>
+<th align="center">exp_isfull</th>
+<th align="center">frac_iszero</th>
+<th align="center">type</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">00</td>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">00</td>
 </tr>
 <tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">01</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">01</td>
 </tr>
 <tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">10</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">10</td>
 </tr>
 <tr>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">?</td>
-<td style="text-align:center">11</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">?</td>
+<td align="center">11</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 </li>
 </ul>
 </li>
-<li>
-<p>后两个类型的输出都是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>,前两个类型的唯一区别是<code>frac</code>定点数的小数点前是否有默认的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，所以先讲述而这在实现上的共性</p>
+<li><p>后两个类型的输出都是$0$,前两个类型的唯一区别是<code>frac</code>定点数的小数点前是否有默认的$1$，所以先讲述而这在实现上的共性</p>
 <ul>
-<li>通过<code>exponent</code>的值和<code>bias</code>的值算出真正需要的位移值<code>shift</code>(补码编码)，这里使用加法电路实现减法电路不用考虑溢出，这得益于移码中<code>bias</code>选择(一般是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">⌊</mo><mi>e</mi><mi>x</mi><msub><mi>p</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">⌋</mo></mrow><annotation encoding="application/x-tex">\lfloor exp_{max} /2 \rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mord">2</span><span class="mclose">⌋</span></span></span></span>)</li>
-<li>如果<code>shift</code>是负数，则直接输出<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>即可，因为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>&lt;</mo><mi>f</mi><mi>r</mi><mi>a</mi><mi>c</mi><mo>&lt;</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">0 \lt frac \lt 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>，所以至多右移<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>位就直接为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></li>
-<li>我通过<code>shift</code>与<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span>比较直接决定左移还是右移，好处是不需要考虑先左移<code>shift</code>再右移<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span>可能导致的高位<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>损失，坏处是又要写两个减法电路（，然后再<code>MUX</code>选择结果</li>
+<li>通过<code>exponent</code>的值和<code>bias</code>的值算出真正需要的位移值<code>shift</code>(补码编码)，这里使用加法电路实现减法电路不用考虑溢出，这得益于移码中<code>bias</code>选择(一般是$\lfloor exp_{max} &#x2F;2 \rfloor$)</li>
+<li>如果<code>shift</code>是负数，则直接输出$0$即可，因为$0 \lt frac \lt 2$，所以至多右移$1$位就直接为$0$</li>
+<li>我通过<code>shift</code>与$10$比较直接决定左移还是右移，好处是不需要考虑先左移<code>shift</code>再右移$10$可能导致的高位$1$损失，坏处是又要写两个减法电路（，然后再<code>MUX</code>选择结果</li>
 <li>根据<code>sign</code>符号位决定是否<code>取反加1</code>，同样不需要考虑溢出</li>
 </ul>
 </li>
-<li>
-<p>接下来分别说明两次可以忽略溢出的原因（<s>有点废话的证明</s>）</p>
+<li><p>接下来分别说明两次可以忽略溢出的原因（<del>有点废话的证明</del>）</p>
 <ul>
 <li>对于第一个算的<code>shift</code>(补码编码)，主要原因是非符号数的减法电路和符号数的减法电路实际是一套电路，而且<code>bias</code>设置的好，如果<code>exponent</code>的首位是0，我们理解为补码的减法电路，正数减去正数不会溢出，得到的答案（补码是正确的），如果<code>exponent</code>的首位是1，因为<code>bias</code>设置的合理，只有<code>11111</code>的情况会无法得到正数，但是这种情况已经被排除了（因为其他的<code>type</code>使用了），所以得到的补码也是正确的（正数的编码是自己）</li>
-<li>第二个负数取补码的情况时，为什么不需要考虑可能已经溢出到32位外的值，取完补码再取后32位，而是直接不考虑开始时的溢出，这和一个小结论有关，对于一个正数取其相反数的补码可以这样做：从这个正数最低位的1开始，到最高位为止中间的所有数字取反，假设1全部溢出在32位外，则后32位始终保持0，假设后32位中有1，根据结论无论考不考虑溢出部分后32位的值都应该一致的<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-6.png" alt="alt text" /></li>
+<li>第二个负数取补码的情况时，为什么不需要考虑可能已经溢出到32位外的值，取完补码再取后32位，而是直接不考虑开始时的溢出，这和一个小结论有关，对于一个正数取其相反数的补码可以这样做：从这个正数最低位的1开始，到最高位为止中间的所有数字取反，假设1全部溢出在32位外，则后32位始终保持0，假设后32位中有1，根据结论无论考不考虑溢出部分后32位的值都应该一致的<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/image-6.png" alt="alt text"></li>
 </ul>
 </li>
 </ul>
-<hr />
-<h2 id="p0推荐题目"><a class="markdownIt-Anchor" href="#p0推荐题目"></a> P0.推荐题目</h2>
-<p>好，但是现在还没出</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Kie-Chi.github.io">Chi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kie-chi.github.io/2024/09/24/CO_P0/">https://kie-chi.github.io/2024/09/24/CO_P0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Kie-Chi.github.io" target="_blank">Trash Bin for Chi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></div><div class="post_share"><div class="social-share" data-image="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助一杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python基础--字符串(一)</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/" title="Python基础--字符串(二)"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python基础--字符串(二)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-22</div><div class="title">北航计算机组成P3课下</div></div></a></div><div><a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-30</div><div class="title">北航计算机组成P1推荐题汇总</div></div></a></div><div><a href="/2024/10/09/CO_P2_extra/" title="北航计算机组成P2推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-09</div><div class="title">北航计算机组成P2推荐题汇总</div></div></a></div><div><a href="/2024/09/28/CO_P1/" title="北航计算机组成P1课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-28</div><div class="title">北航计算机组成P1课下</div></div></a></div><div><a href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-28</div><div class="title">北航计算机组成单周期数据生成</div></div></a></div><div><a href="/2024/11/14/CO_P5/" title="北航计算机组成P5"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-14</div><div class="title">北航计算机组成P5</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Chi</div><div class="author-info__description">这个人很懒，这里什么都没有留下</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kie-Chi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kie-Chi" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xchi_xikai@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/Kie-Chi/my_co_repo" target="_blank" title="Code"><i class="fa-solid fa-code" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">懒人刷新处</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%97%E8%88%AA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86p0%E8%AF%BE%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text"> 北航计算机组成原理P0课下</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#p0%E8%AF%BE%E4%B8%8B%E5%81%9A%E9%A2%98%E7%9A%84%E4%B8%80%E4%BA%9B%E5%88%86%E4%BA%AB%E6%80%9D%E8%B7%AF%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%98%AF%E6%9C%80%E4%BD%B3%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF%E6%95%AC%E8%AF%B7%E5%A4%A7%E5%AE%B6%E6%96%A7%E6%AD%A3"><span class="toc-number">1.0.1.</span> <span class="toc-text"> P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p0q1-crc%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text"> P0.Q1 CRC校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p0q2-%E5%AE%9E%E7%8E%B0grf"><span class="toc-number">1.2.</span> <span class="toc-text"> P0.Q2 实现GRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p0q3-%E5%AF%BC%E8%88%AA"><span class="toc-number">1.3.</span> <span class="toc-text"> P0.Q3 导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p0q4-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text"> P0.Q4 正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p0%E9%99%84%E5%8A%A0%E9%A2%98-ftoi"><span class="toc-number">1.5.</span> <span class="toc-text"> P0.附加题 ftoi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p0%E6%8E%A8%E8%8D%90%E9%A2%98%E7%9B%AE"><span class="toc-number">1.6.</span> <span class="toc-text"> P0.推荐题目</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/CO_P5/" title="北航计算机组成P5"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P5"/></a><div class="content"><a class="title" href="/2024/11/14/CO_P5/" title="北航计算机组成P5">北航计算机组成P5</a><time datetime="2024-11-14T10:00:00.000Z" title="发表于 2024-11-14 18:00:00">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/13/CO_P4/" title="北航计算机组成P4"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P4"/></a><div class="content"><a class="title" href="/2024/11/13/CO_P4/" title="北航计算机组成P4">北航计算机组成P4</a><time datetime="2024-11-13T06:00:00.000Z" title="发表于 2024-11-13 14:00:00">2024-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成单周期数据生成"/></a><div class="content"><a class="title" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成">北航计算机组成单周期数据生成</a><time datetime="2024-10-28T06:00:00.000Z" title="发表于 2024-10-28 14:00:00">2024-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P3课下"/></a><div class="content"><a class="title" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下">北航计算机组成P3课下</a><time datetime="2024-10-22T14:00:00.000Z" title="发表于 2024-10-22 22:00:00">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P2课下"/></a><div class="content"><a class="title" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下">北航计算机组成P2课下</a><time datetime="2024-10-15T06:00:00.000Z" title="发表于 2024-10-15 14:00:00">2024-10-15</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Chi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+<hr>
+<h2 id="P0-推荐题目"><a href="#P0-推荐题目" class="headerlink" title="P0.推荐题目"></a>P0.推荐题目</h2><p>好，但是现在还没出</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Kie-Chi.github.io">Chi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kie-chi.github.io/2024/09/24/CO_P0/">https://kie-chi.github.io/2024/09/24/CO_P0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Kie-Chi.github.io" target="_blank">Trash Bin for Chi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></div><div class="post_share"><div class="social-share" data-image="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助一杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python基础--字符串(一)</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/" title="Python基础--字符串(二)"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/PY_1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python基础--字符串(二)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-30</div><div class="title">北航计算机组成P1推荐题汇总</div></div></a></div><div><a href="/2024/10/09/CO_P2_extra/" title="北航计算机组成P2推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-09</div><div class="title">北航计算机组成P2推荐题汇总</div></div></a></div><div><a href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-22</div><div class="title">北航计算机组成P3课下</div></div></a></div><div><a href="/2024/11/13/CO_P4/" title="北航计算机组成P4"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-13</div><div class="title">北航计算机组成P4</div></div></a></div><div><a href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-28</div><div class="title">北航计算机组成单周期数据生成</div></div></a></div><div><a href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-15</div><div class="title">北航计算机组成P2课下</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Chi</div><div class="author-info__description">这个人很懒，这里什么都没有留下</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kie-Chi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kie-Chi" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xchi_xikai@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/Kie-Chi/my_co_repo" target="_blank" title="Code"><i class="fa-solid fa-code" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">懒人刷新处</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%97%E8%88%AA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86P0%E8%AF%BE%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text">北航计算机组成原理P0课下</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P0%E8%AF%BE%E4%B8%8B%E5%81%9A%E9%A2%98%E7%9A%84%E4%B8%80%E4%BA%9B%E5%88%86%E4%BA%AB%EF%BC%8C%E6%80%9D%E8%B7%AF%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%98%AF%E6%9C%80%E4%BD%B3%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF%EF%BC%8C%E6%95%AC%E8%AF%B7%E5%A4%A7%E5%AE%B6%E6%96%A7%E6%AD%A3"><span class="toc-number">1.0.1.</span> <span class="toc-text">P0课下做题的一些分享，思路不一定是最佳实现思路，敬请大家斧正</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q1-CRC%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">P0.Q1 CRC校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q2-%E5%AE%9E%E7%8E%B0GRF"><span class="toc-number">1.2.</span> <span class="toc-text">P0.Q2 实现GRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q3-%E5%AF%BC%E8%88%AA"><span class="toc-number">1.3.</span> <span class="toc-text">P0.Q3 导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-Q4-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">P0.Q4 正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-%E9%99%84%E5%8A%A0%E9%A2%98-ftoi"><span class="toc-number">1.5.</span> <span class="toc-text">P0.附加题 ftoi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P0-%E6%8E%A8%E8%8D%90%E9%A2%98%E7%9B%AE"><span class="toc-number">1.6.</span> <span class="toc-text">P0.推荐题目</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/CO_P5/" title="北航计算机组成P5"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P5"/></a><div class="content"><a class="title" href="/2024/11/14/CO_P5/" title="北航计算机组成P5">北航计算机组成P5</a><time datetime="2024-11-14T10:00:00.000Z" title="发表于 2024-11-14 18:00:00">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/13/CO_P4/" title="北航计算机组成P4"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P4"/></a><div class="content"><a class="title" href="/2024/11/13/CO_P4/" title="北航计算机组成P4">北航计算机组成P4</a><time datetime="2024-11-13T06:00:00.000Z" title="发表于 2024-11-13 14:00:00">2024-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成单周期数据生成"/></a><div class="content"><a class="title" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成">北航计算机组成单周期数据生成</a><time datetime="2024-10-28T06:00:00.000Z" title="发表于 2024-10-28 14:00:00">2024-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P3课下"/></a><div class="content"><a class="title" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下">北航计算机组成P3课下</a><time datetime="2024-10-22T14:00:00.000Z" title="发表于 2024-10-22 22:00:00">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P2课下"/></a><div class="content"><a class="title" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下">北航计算机组成P2课下</a><time datetime="2024-10-15T06:00:00.000Z" title="发表于 2024-10-15 14:00:00">2024-10-15</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Chi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
   if (typeof pangu === 'object') pangu.autoSpacingPage()
   else {
     getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')

@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络--物理层 | Trash Bin for Chi</title><meta name="author" content="Chi,23371265@buaa.edu.cn"><meta name="copyright" content="Chi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="计算机网络–物理层  前言  在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去   通信基础  信源  信息的发送方   信宿  信息的接收方   信道  信息传输的通道   信号  数字信号：信号是离散的 模拟信号：信号是连续">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络--物理层 | Trash Bin for Chi</title><meta name="author" content="Chi,23371265@buaa.edu.cn"><meta name="copyright" content="Chi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="计算机网络–物理层前言 在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去  通信基础 信源 信息的发送方   信宿 信息的接收方   信道 信息传输的通道   信号 数字信号：信号是离散的 模拟信号：信号是连续的     信号 在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络--物理层">
 <meta property="og:url" content="https://kie-chi.github.io/2024/10/06/CN_u2/index.html">
 <meta property="og:site_name" content="Trash Bin for Chi">
-<meta property="og:description" content="计算机网络–物理层  前言  在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去   通信基础  信源  信息的发送方   信宿  信息的接收方   信道  信息传输的通道   信号  数字信号：信号是离散的 模拟信号：信号是连续">
+<meta property="og:description" content="计算机网络–物理层前言 在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去  通信基础 信源 信息的发送方   信宿 信息的接收方   信道 信息传输的通道   信号 数字信号：信号是离散的 模拟信号：信号是连续的     信号 在">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg">
 <meta property="article:published_time" content="2024-10-06T02:00:00.000Z">
@@ -193,215 +193,203 @@
     document.addEventListener('pjax:send', () => { preloader.initLoading() })
     document.addEventListener('pjax:complete', () => { preloader.endLoading() })
   }
-})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Trash Bin for Chi"><img class="site-icon" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"/><span class="site-name">Trash Bin for Chi</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络--物理层</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-06T02:00:00.000Z" title="发表于 2024-10-06 10:00:00">2024-10-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-06T09:00:09.648Z" title="更新于 2024-10-06 17:00:09">2024-10-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机网络--物理层"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="计算机网络物理层"><a class="markdownIt-Anchor" href="#计算机网络物理层"></a> 计算机网络–物理层</h1>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<ul>
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Trash Bin for Chi"><img class="site-icon" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png"/><span class="site-name">Trash Bin for Chi</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络--物理层</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-06T02:00:00.000Z" title="发表于 2024-10-06 10:00:00">2024-10-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-06T09:00:09.648Z" title="更新于 2024-10-06 17:00:09">2024-10-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机网络--物理层"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="计算机网络–物理层"><a href="#计算机网络–物理层" class="headerlink" title="计算机网络–物理层"></a>计算机网络–物理层</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
 <li>在上一次的 blog 中我们对于计算机网络的结构功能等基础内容，从这一节开始我们将要学习的是计算机网络模型的第一层–物理层，通过物理层我们可以将需要传递的数据变为真实的物理信号，由此通过信息通路(也就是第零层)传递出去</li>
 </ul>
-<h2 id="通信基础"><a class="markdownIt-Anchor" href="#通信基础"></a> 通信基础</h2>
-<ul>
-<li>信源
-<ul>
+<h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><ul>
+<li>信源<ul>
 <li>信息的发送方</li>
 </ul>
 </li>
-<li>信宿
-<ul>
+<li>信宿<ul>
 <li>信息的接收方</li>
 </ul>
 </li>
-<li>信道
-<ul>
+<li>信道<ul>
 <li>信息传输的通道</li>
 </ul>
 </li>
-<li>信号
-<ul>
+<li>信号<ul>
 <li>数字信号：信号是离散的</li>
 <li>模拟信号：信号是连续的</li>
 </ul>
 </li>
 </ul>
-<hr />
-<h3 id="信号"><a class="markdownIt-Anchor" href="#信号"></a> 信号</h3>
-<ul>
-<li>在计算机中，我们常常使用一位的二进制 0/1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)</li>
-<li><strong>码元</strong>
-<ul>
+<hr>
+<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><ul>
+<li>在计算机中，我们常常使用一位的二进制 0&#x2F;1 来表示信号，但是这并不代表着信号只能是一位的二进制(两种)</li>
+<li><strong>码元</strong><ul>
 <li>每一个信号都是一个码元，每一个码元都对应一个二进制数</li>
 <li>对于一位的信号只有两种码元，我们称为<strong>二进制码元</strong>；对于两位的信号会有四种码元，我们称为<strong>四进制码元</strong>。一个信号输出的整个周期被称为信号周期或者码元周期</li>
-<li>优缺点
-<ul>
+<li>优缺点<ul>
 <li>优点：每个信号周期可以携带更多信息，每个码元可以携带更多信息</li>
 <li>缺点：需要加强信号功率，并且对信道的要求更高</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>码元</strong>与<strong>比特</strong>的关系
-<ul>
+<li><strong>码元</strong>与<strong>比特</strong>的关系<ul>
 <li>一个码元可以携带多少比特，这取决于一个码元周期可以有多少种信号</li>
-<li>$ X_{码元} = \log_2 K * X_{比特}<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>K$为信号的种类数量)</li>
+<li>$ X_{码元} &#x3D; \log_2 K * X_{比特}$($K$为信号的种类数量)</li>
 </ul>
 </li>
-<li>速率
-<ul>
+<li>速率<ul>
 <li>波特率：每秒钟传递多少码元</li>
 <li>比特率：每秒钟传递多少比特信息</li>
 </ul>
 </li>
 </ul>
-<hr />
-<h3 id="信道"><a class="markdownIt-Anchor" href="#信道"></a> 信道</h3>
-<ul>
-<li><strong>带宽</strong>
-<ul>
+<hr>
+<h3 id="信道"><a href="#信道" class="headerlink" title="信道"></a>信道</h3><ul>
+<li><strong>带宽</strong><ul>
 <li>含义一：传输的最大速率</li>
-<li>含义二：允许通过的信号频带范围<br />
-<font color = red> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Attention</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span></font>:下面为了方便突出两者的联系，取<strong>最高传输速率</strong>表示带宽第一种含义，取<strong>带宽</strong>只表示第二种含义<br />
-<br><br />
+<li>含义二：允许通过的信号频带范围<br><font color = red> $Attention$</font>:下面为了方便突出两者的联系，取<strong>最高传输速率</strong>表示带宽第一种含义，取<strong>带宽</strong>只表示第二种含义<br>
 虽然带宽的两种含义看起来毫不相关，但是下面介绍的两个定理都揭示了这两种含义之间的内在联系，在这之前我们先介绍噪声，这个极易影响信息传输的坏家伙</li>
 </ul>
 </li>
-<li><strong>噪声</strong>
-<ul>
-<li>对于在信道中传输的信号有干扰作用，会影响信道的数据传输速率<br />
-这和我们在学习物理中声音的噪声概念几乎是一致的，都是干扰、妨碍的作用。</li>
+<li><strong>噪声</strong><ul>
+<li>对于在信道中传输的信号有干扰作用，会影响信道的数据传输速率<br>这和我们在学习物理中声音的噪声概念几乎是一致的，都是干扰、妨碍的作用。</li>
 </ul>
 </li>
-<li><strong>奈奎斯特定理</strong>(奈氏准则)
-<ul>
+<li><strong>奈奎斯特定理</strong>(奈氏准则)<ul>
 <li>对于一个<strong>理想低通信道</strong>(没有噪声、带宽有限的信道)</li>
-<li>$ V_{极限波特率} = 2 * X_{带宽}$</li>
-<li>注意<strong>极限波特率</strong>与最高传输速率(默认比特率的转换<br />
-奈氏准则向我们揭示了<strong>无噪声</strong>情况下最高传输速率与带宽之间的内在联系</li>
+<li>$ V_{极限波特率} &#x3D; 2 * X_{带宽}$</li>
+<li>注意<strong>极限波特率</strong>与最高传输速率(默认比特率的转换<br>奈氏准则向我们揭示了<strong>无噪声</strong>情况下最高传输速率与带宽之间的内在联系</li>
 </ul>
 </li>
-<li><strong>香农定理</strong>
-<ul>
+<li><strong>香农定理</strong><ul>
 <li>对于一个有噪声、带宽有限的信道</li>
-<li>$ V_{极限比特率} = X_{带宽} * \log_2 (1 + S/N) $</li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi mathvariant="normal">/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">S/N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>是信噪比，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>W</mi><mtext>信号的功率</mtext></msub><msub><mi>W</mi><mtext>噪声的功率</mtext></msub></mfrac></mrow><annotation encoding="application/x-tex">\frac{W_{信号的功率}} {W_{噪声的功率}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3339409999999998em;vertical-align:-0.44530499999999995em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8886359999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">噪</span><span class="mord cjk_fallback mtight">声</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.410305em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">信</span><span class="mord cjk_fallback mtight">号</span><span class="mord cjk_fallback mtight">的</span><span class="mord cjk_fallback mtight">功</span><span class="mord cjk_fallback mtight">率</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44530499999999995em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
-<li>由于信噪比的值往往很大，所以我们采取另一种记录信噪比的记法，即$ N_{信噪比} = 10 * \log_{10} S/N $单位是<code>dB</code></li>
+<li>$ V_{极限比特率} &#x3D; X_{带宽} * \log_2 (1 + S&#x2F;N) $</li>
+<li>$S&#x2F;N$是信噪比，即$\frac{W_{信号的功率}} {W_{噪声的功率}}$</li>
+<li>由于信噪比的值往往很大，所以我们采取另一种记录信噪比的记法，即$ N_{信噪比} &#x3D; 10 * \log_{10} S&#x2F;N $单位是<code>dB</code></li>
 <li>注意是<strong>极限比特率</strong></li>
 </ul>
 </li>
 </ul>
-<hr />
-<h3 id="信号变换"><a class="markdownIt-Anchor" href="#信号变换"></a> 信号变换</h3>
-<ul>
-<li>数字信号
-<ul>
+<hr>
+<h3 id="信号变换"><a href="#信号变换" class="headerlink" title="信号变换"></a>信号变换</h3><ul>
+<li>数字信号<ul>
 <li>对于二进制数据与数字信号之间的转换，我们称为<strong>编码与解码</strong></li>
 </ul>
 </li>
-<li>模拟信号
-<ul>
-<li>对于二进制数据与模拟信号之间的转换，我们称之为<strong>调制与解调</strong><br />
-<strong>变换器</strong>可以将二进制信号转换为物理信号，<strong>反变换器</strong>可以将物理信号转换为二进制信号</li>
+<li>模拟信号<ul>
+<li>对于二进制数据与模拟信号之间的转换，我们称之为<strong>调制与解调</strong><br><strong>变换器</strong>可以将二进制信号转换为物理信号，<strong>反变换器</strong>可以将物理信号转换为二进制信号</li>
 </ul>
 </li>
-<li>变换器
-<ul>
+<li>变换器<ul>
 <li>有线网络适配器(网卡)：编码-解码器</li>
 <li>光猫：调制-解调器</li>
 </ul>
 </li>
 </ul>
-<hr />
-<h4 id="编码方式"><a class="markdownIt-Anchor" href="#编码方式"></a> 编码方式</h4>
-<ul>
-<li>不归零编码(Non-Return-to-Zero)
-<ul>
+<hr>
+<h4 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h4><ul>
+<li>不归零编码(Non-Return-to-Zero)<ul>
 <li>低 0 高 1，中不变</li>
 <li>在每一个信号周期内信号始终不会归零，缺点是要给出时钟线</li>
 </ul>
 </li>
-<li>归零编码(Return-to-Zero)
-<ul>
+<li>归零编码(Return-to-Zero)<ul>
 <li>低 0 高 1，中归零</li>
 <li>每一个信号周期中间信号归零，保持发送方与接收方的时间节奏，保持时钟信号</li>
 </ul>
 </li>
-<li>反向非归零编码(Non-Return-to-Zero-Inverted)
-<ul>
+<li>反向非归零编码(Non-Return-to-Zero-Inverted)<ul>
 <li>起点跳 0 不跳 1，中不变</li>
 <li>每一个信号周期始终不归零，但是看每一个周期的起点是否会发生跳变</li>
 </ul>
 </li>
-<li>曼彻斯特编码
-<ul>
+<li>曼彻斯特编码<ul>
 <li>上跳 0 下跳 1，中必变</li>
 <li>每个周期中间位置将发生信号的跳变，根据信号是向上跳变还是向下跳变来规定这个信号周期对应的到底是 0 还是 1</li>
 </ul>
 </li>
-<li>差分曼彻斯特编码
-<ul>
+<li>差分曼彻斯特编码<ul>
 <li>起点跳 0 不跳 1，中必变</li>
-<li>与<code>NRZI</code>的区别在于信号周期中间一定会发生跳变<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_1.jpg" alt="编码方式示意图" /><br />
-| 编码方式 | 自同步能力 | 浪费带宽 | 抗干扰能力 |<br />
-| :-----: | :-------: | :—😐 :-----: |<br />
-| 非归零编码 | 无 | 不浪费 | 弱 |<br />
-| 归零编码|有 | 浪费 | 弱 |<br />
-| 反向非归零编码 | 增加冗余位可支持 | 浪费(浪费的是冗余位) | 弱 |<br />
-| 曼彻斯特编码 | 有 | 浪费 | 强 |<br />
-| 差分曼彻斯特编码 | 有 | 浪费 | 强 |</li>
+<li>与<code>NRZI</code>的区别在于信号周期中间一定会发生跳变<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_1.jpg" alt="编码方式示意图"><table>
+<thead>
+<tr>
+<th align="center">编码方式</th>
+<th align="center">自同步能力</th>
+<th align="center">浪费带宽</th>
+<th align="center">抗干扰能力</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">非归零编码</td>
+<td align="center">无</td>
+<td align="center">不浪费</td>
+<td align="center">弱</td>
+</tr>
+<tr>
+<td align="center">归零编码</td>
+<td align="center">有</td>
+<td align="center">浪费</td>
+<td align="center">弱</td>
+</tr>
+<tr>
+<td align="center">反向非归零编码</td>
+<td align="center">增加冗余位可支持</td>
+<td align="center">浪费(浪费的是冗余位)</td>
+<td align="center">弱</td>
+</tr>
+<tr>
+<td align="center">曼彻斯特编码</td>
+<td align="center">有</td>
+<td align="center">浪费</td>
+<td align="center">强</td>
+</tr>
+<tr>
+<td align="center">差分曼彻斯特编码</td>
+<td align="center">有</td>
+<td align="center">浪费</td>
+<td align="center">强</td>
+</tr>
+</tbody></table>
+</li>
 </ul>
 </li>
 </ul>
-<hr />
-<h4 id="调制方式"><a class="markdownIt-Anchor" href="#调制方式"></a> 调制方式</h4>
-<ul>
-<li>调幅(<code>AM</code>) or 幅移键控(<code>ASK</code>)
-<ul>
+<hr>
+<h4 id="调制方式"><a href="#调制方式" class="headerlink" title="调制方式"></a>调制方式</h4><ul>
+<li>调幅(<code>AM</code>) or 幅移键控(<code>ASK</code>)<ul>
 <li>根据振幅表示信号</li>
 <li>有振幅为 1，无振幅为 0</li>
 <li>不同码元的振幅不同</li>
 </ul>
 </li>
-<li>调频(<code>FM</code>) or 频移键控(<code>FSK</code>)
-<ul>
+<li>调频(<code>FM</code>) or 频移键控(<code>FSK</code>)<ul>
 <li>根据频率表示信号</li>
 <li>例如频率低为 0，频率高为 1</li>
 <li>不同的码元频率不同</li>
 </ul>
 </li>
-<li>调相(<code>PM</code>) or 相移键控(<code>PSK</code>)
-<ul>
+<li>调相(<code>PM</code>) or 相移键控(<code>PSK</code>)<ul>
 <li>根据相位表示信号</li>
-<li>例如相位为 0 则为 0，相位为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> 则为 1</li>
-<li>不同的码元相位不同<br />
-对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式</li>
+<li>例如相位为 0 则为 0，相位为$\pi$ 则为 1</li>
+<li>不同的码元相位不同<br>对于这些调制方式甚至可以采用复合的方式，产生不同的调制方式</li>
 </ul>
 </li>
-<li>正交幅度调制(<code>QAM</code>)
-<ul>
-<li>例如有<code>m</code>种振幅大小与<code>n</code>种频率大小，则共同可以综合出<code>mn</code>种码元<br />
-<img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_2.jpg" alt="调制方式示意图" /></li>
+<li>正交幅度调制(<code>QAM</code>)<ul>
+<li>例如有<code>m</code>种振幅大小与<code>n</code>种频率大小，则共同可以综合出<code>mn</code>种码元<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_u2_2.jpg" alt="调制方式示意图"></li>
 </ul>
 </li>
 </ul>
-<hr />
-<h4 id="传输介质"><a class="markdownIt-Anchor" href="#传输介质"></a> 传输介质</h4>
-<ul>
-<li>导向型介质：即沿着特定的方向传播，一般而言，有线信号是使用导向型介质
-<ul>
-<li>双绞线(<code>Twisted Pair</code>)
-<ul>
+<hr>
+<h4 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h4><ul>
+<li>导向型介质：即沿着特定的方向传播，一般而言，有线信号是使用导向型介质<ul>
+<li>双绞线(<code>Twisted Pair</code>)<ul>
 <li>主要构成：两根导线相互绞合而成</li>
 <li>有屏蔽层：<code>Shielded Twisted Pair</code>，无屏蔽层：<code>Unshielded Twisted Pair</code></li>
 <li>抗干扰能力：较好，因为导线绞合以及屏蔽层可以提升抗电磁干扰能力</li>
 </ul>
 </li>
-<li>同轴电缆
-<ul>
+<li>同轴电缆<ul>
 <li>主要构成：内导体(用于传输信号) + 外导体屏蔽层(用于抗电磁干扰)</li>
 <li>抗干扰能力：好，因为外导体提供电磁屏蔽可以带来良好的抗干扰性</li>
 </ul>
 </li>
-<li>光纤
-<ul>
+<li>光纤<ul>
 <li>主要构成：纤芯(高折射率) + 包层(低折射率)，利用光的全反射特性让光信号在纤芯内传播</li>
 <li>单模光纤：一根光纤中只有一条光线传播，适合长距离的传播；多模光纤：一根光纤中有多条光线传播，适合短距离的传播</li>
 <li>抗干扰能力：非常好，光信号对电磁干扰不敏感</li>
@@ -409,16 +397,13 @@
 </li>
 </ul>
 </li>
-<li>非导向型介质：无特定方向传播，一般而言，无线信号是使用非导向型介质
-<ul>
-<li>无线电波
-<ul>
+<li>非导向型介质：无特定方向传播，一般而言，无线信号是使用非导向型介质<ul>
+<li>无线电波<ul>
 <li>特点：穿透能力强、传播距离长、信号指向型弱</li>
 <li>例如：手机、WIFI 信号</li>
 </ul>
 </li>
-<li>微波
-<ul>
+<li>微波<ul>
 <li>特点：频率带宽高、信号指向型强、保密性差(容易被窃听)</li>
 <li>例如：卫星通信</li>
 </ul>
@@ -426,10 +411,8 @@
 <li>红外通信、激光通信</li>
 </ul>
 </li>
-<li>以太网对有线介质的命名
-<ul>
-<li>速度 + <code>Base</code> + 介质信息
-<ul>
+<li>以太网对有线介质的命名<ul>
+<li>速度 + <code>Base</code> + 介质信息<ul>
 <li><code>10Base5</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 500m</li>
 <li><code>10Base2</code>：10<code>Mbps</code> + 同轴电缆 + 最远传输距离 200m</li>
 <li><code>10BaseF*</code>：10<code>Mbps</code> + 光纤 + *某些其他信息</li>
@@ -439,47 +422,40 @@
 </ul>
 </li>
 </ul>
-<hr />
-<h4 id="物理层设备"><a class="markdownIt-Anchor" href="#物理层设备"></a> 物理层设备</h4>
-<ul>
-<li>
-<p>中继器(<code>Repeater</code>)</p>
+<hr>
+<h4 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h4><ul>
+<li><p>中继器(<code>Repeater</code>)</p>
 <ul>
 <li>若规定 0.5V～1V 是低电平，4.5V～5V 是高电平，不符合此标准的信号视为无效</li>
 <li>如果中继器接收了有效的信号会将低电平整形为 1V，将高电平整形为 5V</li>
 <li>仅支持<strong>半双工通信</strong>，中继器连接的两个端口不允许同时发送数据，会导致“冲突”</li>
 </ul>
 </li>
-<li>
-<p>集线器(<code>Hub</code>)</p>
+<li><p>集线器(<code>Hub</code>)</p>
 <ul>
 <li>本质上是多端中继器，集线器将其中一个端口接收到的信号整形再生后，转发到所有的端口中</li>
 <li>集线器各端口连接的结点不可以同时发送数据，会导致“冲突”</li>
 </ul>
 </li>
-<li>
-<p>冲突域</p>
+<li><p>冲突域</p>
 <ul>
 <li>如果两台主机同时发送数据会导致冲突，则这两台主机处于同一<strong>冲突域</strong>中</li>
 </ul>
 </li>
-<li>
-<p>其他特性</p>
+<li><p>其他特性</p>
 <ul>
-<li>集线器、中继器不能**“无限串联”**
-<ul>
+<li>集线器、中继器不能<strong>“无限串联”</strong><ul>
 <li><code>10Base5</code>遵循<code>5-4-3</code>原则，使用集线器连接<code>10Base5</code>网线时，最多只能串联<strong>5</strong>个网段，使用<strong>4</strong>台集线器，只有<strong>3</strong>个网段可以连接计算机</li>
 </ul>
 </li>
-<li>集线器逻辑上是总线型拓扑结构
-<ul>
+<li>集线器逻辑上是总线型拓扑结构<ul>
 <li>集线器连接的各个网段会“共享带宽”，集线器的总带宽被连接的各个主机平均分配</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Kie-Chi.github.io">Chi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kie-chi.github.io/2024/10/06/CN_u2/">https://kie-chi.github.io/2024/10/06/CN_u2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Kie-Chi.github.io" target="_blank">Trash Bin for Chi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助一杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/04/CN_u1/" title="计算机网络--概述"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机网络--概述</div></div></a></div><div class="next-post pull-right"><a href="/2024/10/09/CO_P2_extra/" title="北航计算机组成P2推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">北航计算机组成P2推荐题汇总</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/10/04/CN_u1/" title="计算机网络--概述"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-04</div><div class="title">计算机网络--概述</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Chi</div><div class="author-info__description">这个人很懒，这里什么都没有留下</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kie-Chi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kie-Chi" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xchi_xikai@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/Kie-Chi/my_co_repo" target="_blank" title="Code"><i class="fa-solid fa-code" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">懒人刷新处</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%89%A9%E7%90%86%E5%B1%82"><span class="toc-number">1.</span> <span class="toc-text"> 计算机网络–物理层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80"><span class="toc-number">1.2.</span> <span class="toc-text"> 通信基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E9%81%93"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 信道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E5%8F%98%E6%8D%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 信号变换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.3.1.</span> <span class="toc-text"> 编码方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.3.2.</span> <span class="toc-text"> 调制方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="toc-number">1.2.3.3.</span> <span class="toc-text"> 传输介质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87"><span class="toc-number">1.2.3.4.</span> <span class="toc-text"> 物理层设备</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/CO_P5/" title="北航计算机组成P5"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P5"/></a><div class="content"><a class="title" href="/2024/11/14/CO_P5/" title="北航计算机组成P5">北航计算机组成P5</a><time datetime="2024-11-14T10:00:00.000Z" title="发表于 2024-11-14 18:00:00">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/13/CO_P4/" title="北航计算机组成P4"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P4"/></a><div class="content"><a class="title" href="/2024/11/13/CO_P4/" title="北航计算机组成P4">北航计算机组成P4</a><time datetime="2024-11-13T06:00:00.000Z" title="发表于 2024-11-13 14:00:00">2024-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成单周期数据生成"/></a><div class="content"><a class="title" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成">北航计算机组成单周期数据生成</a><time datetime="2024-10-28T06:00:00.000Z" title="发表于 2024-10-28 14:00:00">2024-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P3课下"/></a><div class="content"><a class="title" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下">北航计算机组成P3课下</a><time datetime="2024-10-22T14:00:00.000Z" title="发表于 2024-10-22 22:00:00">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P2课下"/></a><div class="content"><a class="title" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下">北航计算机组成P2课下</a><time datetime="2024-10-15T06:00:00.000Z" title="发表于 2024-10-15 14:00:00">2024-10-15</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Chi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Kie-Chi.github.io">Chi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kie-chi.github.io/2024/10/06/CN_u2/">https://kie-chi.github.io/2024/10/06/CN_u2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Kie-Chi.github.io" target="_blank">Trash Bin for Chi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助一杯咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/whechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/04/CN_u1/" title="计算机网络--概述"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机网络--概述</div></div></a></div><div class="next-post pull-right"><a href="/2024/10/09/CO_P2_extra/" title="北航计算机组成P2推荐题汇总"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">北航计算机组成P2推荐题汇总</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/10/04/CN_u1/" title="计算机网络--概述"><img class="cover" src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-04</div><div class="title">计算机网络--概述</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/author.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Chi</div><div class="author-info__description">这个人很懒，这里什么都没有留下</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kie-Chi"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kie-Chi" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xchi_xikai@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/Kie-Chi/my_co_repo" target="_blank" title="Code"><i class="fa-solid fa-code" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">懒人刷新处</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%93%E7%89%A9%E7%90%86%E5%B1%82"><span class="toc-number">1.</span> <span class="toc-text">计算机网络–物理层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80"><span class="toc-number">1.2.</span> <span class="toc-text">通信基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.2.1.</span> <span class="toc-text">信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E9%81%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">信道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E5%8F%98%E6%8D%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text">信号变换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">编码方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">调制方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">传输介质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87"><span class="toc-number">1.2.3.4.</span> <span class="toc-text">物理层设备</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/CO_P5/" title="北航计算机组成P5"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P5"/></a><div class="content"><a class="title" href="/2024/11/14/CO_P5/" title="北航计算机组成P5">北航计算机组成P5</a><time datetime="2024-11-14T10:00:00.000Z" title="发表于 2024-11-14 18:00:00">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/13/CO_P4/" title="北航计算机组成P4"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P4"/></a><div class="content"><a class="title" href="/2024/11/13/CO_P4/" title="北航计算机组成P4">北航计算机组成P4</a><time datetime="2024-11-13T06:00:00.000Z" title="发表于 2024-11-13 14:00:00">2024-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成单周期数据生成"/></a><div class="content"><a class="title" href="/2024/10/28/CO_P4_noexam/" title="北航计算机组成单周期数据生成">北航计算机组成单周期数据生成</a><time datetime="2024-10-28T06:00:00.000Z" title="发表于 2024-10-28 14:00:00">2024-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P3课下"/></a><div class="content"><a class="title" href="/2024/10/22/CO_P3/" title="北航计算机组成P3课下">北航计算机组成P3课下</a><time datetime="2024-10-22T14:00:00.000Z" title="发表于 2024-10-22 22:00:00">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下"><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CO_3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="北航计算机组成P2课下"/></a><div class="content"><a class="title" href="/2024/10/15/CO_p2/" title="北航计算机组成P2课下">北航计算机组成P2课下</a><time datetime="2024-10-15T06:00:00.000Z" title="发表于 2024-10-15 14:00:00">2024-10-15</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/CN_1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Chi</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
   if (typeof pangu === 'object') pangu.autoSpacingPage()
   else {
     getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
