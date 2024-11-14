@@ -4325,7 +4325,7 @@ CPU中的<code>DM</code>、<code>GRF</code>是状态量。通过<code>IF</code>�
 </ul>
 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> D_rs_val = (D_rs == <span class="number">5&#x27;b0</span>) ? <span class="number">32&#x27;b0</span> :</span><br><span class="line">                  (D_rs == E_a3) ? FWD_E :</span><br><span class="line">                  (D_rs == M_a3) ? FWD_M :</span><br><span class="line">                  (D_rs == W_a3) ? FWD_W : D_grf_rd1;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>这里有一个疑惑，万一正确的数据没生成但是我们已经无脑转发回去了怎么办，首先我们目前实现的指令集不需要考虑这种情况，因为它对应着<strong>阻塞</strong>，Tuse &lt; Tnew时会直接阻塞，因为这种情况来不及转发回去，也就是数据没生成就转发了</li>
+<li>这里有一个疑惑，万一正确的数据没生成或者目前是错的但是我们已经无脑转发回去了怎么办？首先我们目前实现的指令集不需要考虑第一种情况，因为它对应着<strong>阻塞</strong>，Tuse &lt; Tnew时会直接阻塞。因为这种情况来不及转发回去，也就是数据没生成就转发了；第二种情况因为Tuse &gt;= Tnew，那么Tuse等于0时，Tnew一定也是0，说明正确的数据已经生成了并且已经转回去了，覆盖率原来错误的数据。</li>
 <li><strong>注意</strong>：其实可以使用恰当转发，如加入Tnew==0条件，生成数据才转发回去，不过实际上我们目前不会使用，课上倒是又可能，不过也有其他办法规避，至少目前可以认为我们不选恰当转发（我后面会更新的</li>
 </ul>
 </li>
