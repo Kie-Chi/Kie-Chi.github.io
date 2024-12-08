@@ -4121,10 +4121,54 @@
 </ul>
 <hr>
 <h3 id="关于数据生成器"><a href="#关于数据生成器" class="headerlink" title="关于数据生成器"></a>关于数据生成器</h3><ul>
-<li>因为很懒，所以我从P3~P7的数据生成器是一整个大型文件，因此很多函数需要传递各种参数限制生成的数据（），提供给大家，不过大概率很难调用吧，里面有几个外置的函数可供P7使用！<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">dataMaker = DataMaker()</span><br><span class="line"><span class="comment"># exc_test(times, forbidden=True, _dir=&quot;.&quot;):</span></span><br><span class="line"><span class="comment"># times生成指令最大长度，不建议超过1000条因为这里有中断程序</span></span><br><span class="line"><span class="comment"># forbidden是否禁止RI测试，方便和Mars对拍</span></span><br><span class="line"><span class="comment"># _dir设置好文件夹，生成的数据会在这个文件夹下</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># int_test(times, noTimer=False, noInterrupt=False, _dir=&quot;.&quot;, tb_dir=&quot;.&quot;)</span></span><br><span class="line"><span class="comment"># times同上</span></span><br><span class="line"><span class="comment"># noTimer不使用计时器产生中断</span></span><br><span class="line"><span class="comment"># noInterrupt不使用tb产生中断</span></span><br><span class="line"><span class="comment"># _dir同上</span></span><br><span class="line"><span class="comment"># tb_dir如果需要tb的中断，生成的tb文件会在这个文件夹下</span></span><br></pre></td></tr></table></figure>
-<a class="btn-beautify " href="https://kie-chi.github.io/images/DataMaker.py" 
+<li>提示，没有加入P7新增指令的转发，不过异常处理程序已经很多变了吧（），各位还是自己测试一下转发什么的吧</li>
+<li>因为很懒，所以我从P3~P7的数据生成器是一整个大型文件，因此很多函数需要传递各种参数限制生成的数据（），提供给大家，不过大概率很难调用吧，里面有几个外置的函数可供P7使用！<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">dataMaker = DataMaker()</span><br><span class="line">dataMaker.exc_test(<span class="number">500</span>, <span class="literal">True</span>, <span class="string">&quot;./test&quot;</span>)</span><br><span class="line"><span class="comment"># exc_test(times, forbidden=True, _dir=&quot;.&quot;)</span></span><br><span class="line"><span class="comment"># times生成指令最大长度，不建议超过1000条因为这里有中断程序</span></span><br><span class="line"><span class="comment"># forbidden是否禁止RI测试，方便和Mars对拍</span></span><br><span class="line"><span class="comment"># _dir设置好文件夹，生成的数据会在这个文件夹下</span></span><br><span class="line"></span><br><span class="line">dataMaker.int_test(<span class="number">500</span>, _<span class="built_in">dir</span>=<span class="string">&quot;./test&quot;</span>, tb_dir=<span class="string">&quot;./tbs&quot;</span>)</span><br><span class="line"><span class="comment"># int_test(times, noTimer=False, noInterrupt=False, _dir=&quot;.&quot;, tb_dir=&quot;.&quot;)</span></span><br><span class="line"><span class="comment"># times同上</span></span><br><span class="line"><span class="comment"># noTimer不使用计时器产生中断</span></span><br><span class="line"><span class="comment"># noInterrupt不使用tb产生中断</span></span><br><span class="line"><span class="comment"># _dir同上</span></span><br><span class="line"><span class="comment"># tb_dir如果需要tb的中断，生成的tb文件会在这个文件夹下</span></span><br></pre></td></tr></table></figure>
+<a class="btn-beautify " href="https://kie-chi.github.io/files/DataMaker.py" 
   title="DataMaker源码"><span>DataMaker源码</span></a></li>
 </ul>
+<hr>
+<h2 id="课上测试"><a href="#课上测试" class="headerlink" title="课上测试"></a>课上测试</h2><ul>
+<li>这个课上是真的测试哦</li>
+<li>首先大家手要快，拿到了之后立马提交前四个，否则会等得很煎熬，不过我19:00提交的，19:01前四道题就过了，过题最快的一集，看它转的时候有那么一点点小紧张，不过我相信我的测评机（如果没过我大概率也de不出来，已经想好用拉肚子作为逃跑的理由了）</li>
+<li>最后一道题是一道抽象指令题，归为啥类都不合适哈</li>
+<li><code>withdraw</code><ul>
+<li><code>withdraw</code></li>
+<li>将最近一条sw的行为撤销</li>
+<li>首先在CP0中添加四个额外的寄存器<code>DomainLo</code>、<code>DomainHi</code>、<code>ChangeAddr</code>、<code>ChangeData</code><ul>
+<li><code>ChangeAddr</code>: 最近一次sw修改值的地址</li>
+<li><code>ChangeData</code>: 最近一次sw修改之前的值，用于恢复这个地址的值</li>
+<li><code>DomainLo</code>: 允许撤销sw指令地址下界，低于这个值报<code>AdES</code>异常</li>
+<li><code>DomainHi</code>: 允许撤销sw指令地址上界，超过这个值报<code>AdES</code>异常</li>
+</ul>
+</li>
+<li>注意实现这些值，寄存器编号忘了；<code>mfc0</code>可以获取它们的值，<code>mtc0</code>只可以更改地址上下界两个寄存器，而且保证是字对齐</li>
+<li>如果withdraw指令前面没有出现过sw，则忽略这条指令</li>
+<li>如果withdraw发挥了作用，其效果相当于一条sw指令</li>
+</ul>
+</li>
+<li>一道相当繁琐的指令题<ul>
+<li>首先将四个寄存器加入CP0</li>
+<li>CP0中设置一个符号位flag，标识是否已经有sw指令了</li>
+<li>在CP0中多加一层ExcCode的判断<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//withdraw时判断是否有ExcCodePlus</span></span><br><span class="line"><span class="keyword">assign</span> newExcCode = (ExcCode != <span class="number">5&#x27;b0</span>) ? ExcCode :</span><br><span class="line">                    (ExcCodePlus != <span class="number">5&#x27;b0</span>) ? ExcCodePlus : <span class="number">5&#x27;b0</span>;</span><br></pre></td></tr></table></figure></li>
+<li>建议传入ByteEn，通过是否位<code>4&#39;b1111</code>来判断是否为sw</li>
+<li>遇到withdraw指令判断逻辑较为复杂<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//withdraw是外界传入的信号，标识withdraw指令 </span></span><br><span class="line"><span class="keyword">if</span> (withdraw &amp; flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(Addr &lt; DomainLo || Addr &gt;= DomainHi) <span class="keyword">begin</span></span><br><span class="line">        ExcCodePlus = `EXC_AdES;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!Req) <span class="keyword">begin</span></span><br><span class="line">        outByteEn = <span class="number">4&#x27;b1111</span>;</span><br><span class="line">        outAddr = ChangeAddr;</span><br><span class="line">        outData = ChangeData;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li>然后在M级把这些输出值接到DM即可<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> m_data_byteen = (withdraw) ? outByteEn :....</span><br><span class="line"><span class="keyword">assign</span> m_data_addr ...</span><br><span class="line"><span class="keyword">assign</span> m_data_wdata ...</span><br></pre></td></tr></table></figure></li>
+<li>最后这条指令不需要转发和暂停，课程组还算优点人性，要我当助教我就这样(doge)<ul>
+<li>变异load指令<code>withdraw $rt, offset($base)</code>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">addr &lt;- GPR[base] + offset</span><br><span class="line">vaddr &lt;- addr[31: 2]</span><br><span class="line">temp1 &lt;- Mem[vaddr]</span><br><span class="line">temp2 &lt;- Mme[CP0.ChangeAddr]</span><br><span class="line">temp3 &lt;- temp2[4:0]</span><br><span class="line">if temp1 &gt; CP0.ChangeData:</span><br><span class="line">    withdraw                &lt;- 这个withdraw是原题的withdraw</span><br><span class="line">elif temp1 &lt; CP0.ChangeData:</span><br><span class="line">    GPR[rt] &lt;- temp1</span><br><span class="line">else:</span><br><span class="line">    GPR[temp3 ^ rt] &lt;- temp2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>写完我自己都笑了，希望明年不会有这么阴间的（）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><ol>
+<li>我的测评机有一个彩蛋噢</li>
+<li>嘻嘻<br><img src="https://kie-chi.github.io/images/CO_P7/P7_image.png" alt="alt text"><br><img src="https://kie-chi.github.io/images/CO_P7/P7_image_1.png" alt="alt text"></li>
+</ol>
 ]]></content>
       <categories>
         <category>计算机组成原理</category>
