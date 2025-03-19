@@ -1531,215 +1531,6 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P4</title>
-    <url>/2024/11/13/CO_P4/</url>
-    <content><![CDATA[<h1 id="北航计算机组成P4"><a href="#北航计算机组成P4" class="headerlink" title="北航计算机组成P4"></a>北航计算机组成P4</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>咳咳，最近太忙了作业好多啊，搭完CPU每周还要迭代自己的测评机，原来CO也可以训练我们面向对象的能力</li>
-</ul>
-<hr>
-<h2 id="课下"><a href="#课下" class="headerlink" title="课下"></a>课下</h2><ul>
-<li>其实P4就是把P3的电路图翻译成代码，整体上没有难度，如果你P3有好好设计你的CPU的话，<del>没有好好设计的话，就照着学长设计好的CPU翻译</del>，总之也是从一个一个的模块开始搭建，这里不赘述了</li>
-</ul>
-<h3 id="组合逻辑建模"><a href="#组合逻辑建模" class="headerlink" title="组合逻辑建模"></a>组合逻辑建模</h3><ul>
-<li>我啰嗦一两句，最近几年课程组不知道在干什么（<del>明年等我当助教我也要搞得抽象</del>），考试喜欢考一些奇奇怪怪的组合逻辑，所以或许你需要根据你使用的建模逻辑稍微熟练一些Verilog的语法，这样课上的时候或许不会那么慌</li>
-<li>两种组合逻辑建模方式对于写CPU的思路还是有略微不同的，而且各有各的好处，见仁见智了</li>
-</ul>
-<h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a><code>assign</code></h4><ul>
-<li>最大的优点就是简洁、代码量很少，而且就是电路连线，从P3转过来会比较方便<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_add) ? A + B :</span><br><span class="line">                 (ALUOp == `ALU_sub) ? A - B :</span><br><span class="line">                 (ALUOp == `ALU_or) ? A | B :</span><br><span class="line">                 (ALUOp == `ALU_and) ? A &amp; B : <span class="number">32&#x27;b0</span>;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>一行就解决了ALU，反正就是挺爽的</li>
-</ul>
-</li>
-<li>缺点是对于复杂逻辑建模比较困难，所以<strong>强烈建议</strong>掌握<code>function</code>和<code>task</code>(这个或许不用嘛)的用法，反正考场上会用到的，比如我随便编一个指令，要求实现<code>gxadd rd, rs, rt</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gray(00): 00</span><br><span class="line">gray(01): 01</span><br><span class="line">gray(10): 11</span><br><span class="line">gray(11): 10</span><br><span class="line"></span><br><span class="line">temp1 &lt;- GPR[rs] + GPR[rt]</span><br><span class="line">for i in range(0,16):</span><br><span class="line">    temp2[2*i+1: 2*i] &lt;- gray(temp1[2*i+1: 2*i])</span><br><span class="line">temp2 &lt;- temp2 ^ temp1</span><br><span class="line">if temp2 &gt; temp1:</span><br><span class="line">    GPR[rd] = temp2</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = temp1</span><br></pre></td></tr></table></figure>
-<ul>
-<li>好，你现在用assign语句把它建模到ALU里面去（），是吧，这个时候<code>function</code>就要发力了，管他三七二十一全部丢进函数里面<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> [<span class="number">1</span>: <span class="number">0</span>] cal_gray;</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] origin;</span><br><span class="line">    <span class="keyword">if</span> (origin == <span class="number">2&#x27;b0</span>) cal_gray = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b1</span>) cal_gray = <span class="number">2&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b10</span>) cal_gray = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">else</span> cal_gray = <span class="number">2&#x27;b10</span>;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
-<li>其实也可以如果你熟悉掩码和格雷码的定义的话，例如<code>gray(x) = x ^ (x &gt;&gt; 1)</code>，又因为两位的二进制右移一位第一位一定是0，所以我们考虑将32位的数字的奇数位覆盖再整体右移，达到一次实现16次2位的异或<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">temp1 = A + B;</span><br><span class="line">temp2 = temp1 &amp; <span class="number">0xaaaaaaaa</span>;</span><br><span class="line"><span class="comment">//0xaaaaaaaa就是....10101010</span></span><br><span class="line"><span class="comment">//反正奇数位就这样被覆盖了</span></span><br><span class="line">temp2 = temp2 &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="comment">//相当于进行了上面的 x &gt;&gt; 1，反正奇数位都是0了</span></span><br><span class="line">temp2 = temp2 ^ temp1</span><br><span class="line"><span class="comment">//最终的temp2就是经历两位gray转化后的数字了</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_gxadd) ? </span><br><span class="line">(( ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) &gt; (A+B) ) ? ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) : (A+B))</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h4 id="always"><a href="#always" class="headerlink" title="always@(*)"></a><code>always@(*)</code></h4><ul>
-<li>最大的缺点是代码量可能会比上面大一些，也可能大很多，全面准备吧</li>
-<li>最大的优点就是适合复杂逻辑的建模，比如上面那个瞎编的指令</li>
-<li>不过还是建议掌握<code>function</code>，多好啊，变成纯纯面向过程的语言了</li>
-<li>讲一个经常会用的切片，好玩爱玩<ul>
-<li>假设你现在想要学lb、lh指令取出一个字中的某个字节或者半字，但是不想要一直if-else（考场上不会的话枚举是一个很好的选择），你想到了verilog可以切片<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span> h_adder;</span><br><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span>[<span class="number">1</span>: <span class="number">0</span>] b_adder;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] pos;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">0</span>: <span class="number">31</span>] neg;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"><span class="comment">//pos[b_adder * 8 + 7: b_adder * 8]</span></span><br><span class="line"><span class="comment">//错误用法，Verilog的切片两边要是常数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="comment">//定义高位到低位</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 + 15 取低16位，按照高位到低位排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 取高16位，但是还是按照从高到低排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义从低到高</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同上，但是从低到高排列</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同理</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="课上"><a href="#课上" class="headerlink" title="课上"></a>课上</h2><h3 id="T1-eam"><a href="#T1-eam" class="headerlink" title="T1 eam"></a>T1 eam</h3><ul>
-<li><code>eam $rd, $rs, $rt</code></li>
-<li>R型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ext_imm &lt;- signed(GPR[rs][15: 0])</span><br><span class="line">res &lt;- ext_imm % 17</span><br><span class="line">if signed(GPR[rt]) &lt; 0:</span><br><span class="line">    GPR[rd] = one_ext(res)</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = zero_ext(res)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>将rs寄存器低16位截断为有符号数，这个数对17取模得到的<strong>正余数</strong>，然后根据另一个操作数的正负进行1或者0拓展</li>
-</ul>
-</li>
-</ul>
-<h3 id="T2-cptl"><a href="#T2-cptl" class="headerlink" title="T2 cptl"></a>T2 cptl</h3><ul>
-<li><code>cptl $rs, $rt, label</code></li>
-<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">temp &lt;- PC + 4 + sign_ext(offset || 00)</span><br><span class="line">PC &lt;- temp</span><br><span class="line"></span><br><span class="line">if GPR[rs][17: 12] == 6&#x27;b111111 || ......GPR[rs][5: 0] == 6&#x27;b111111: </span><br><span class="line">    GPR[rt] &lt;- PC + 4</span><br><span class="line">else:</span><br><span class="line">    GPR[31] &lt;- PC + 4</span><br></pre></td></tr></table></figure>
-<ul>
-<li>跳转类指令，然后链接内容和rs寄存器低18位是否有6个连续的1有关系</li>
-</ul>
-</li>
-</ul>
-<h3 id="T3-olw"><a href="#T3-olw" class="headerlink" title="T3 olw"></a>T3 olw</h3><ul>
-<li><code>olw $rt, offset($base)</code></li>
-<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vadder &lt;- GPR[base] + sign_ext(offset || 00)</span><br><span class="line">temp &lt;- Mem[vadder[31: 2]]</span><br><span class="line"></span><br><span class="line">if func(temp):</span><br><span class="line">    GPR[rt] &lt;- temp</span><br><span class="line">else:</span><br><span class="line">    None</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果读出来的数据是单调不减的，那么才写入</li>
-</ul>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>课上没什么好玩的，第一个指令注意要使用有符号，不然你就会像我一样疑惑了半个小时为什么这么取模都是0然后暴力while循环求余数。。。</li>
-<li>过两天会把P5好好更新的，顺便预告一下测评机，其实写好了，只是想等P6直接做一个流水线全的，over</li>
-<li>先不写题解了，亲爱的小羊找我看视频，我先溜了</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>课下复习</category>
-        <category>课上考试</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>北航计算机组成单周期数据生成</title>
-    <url>/2024/10/28/CO_P4_noexam/</url>
-    <content><![CDATA[<h1 id="两种可能的测试数据生成方式"><a href="#两种可能的测试数据生成方式" class="headerlink" title="两种可能的测试数据生成方式"></a>两种可能的测试数据生成方式</h1><h2 id="unitTest"><a href="#unitTest" class="headerlink" title="unitTest"></a>unitTest</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
-<li>如同java中的单元测试，我们将常规指令（不包含什么<code>lwso</code>、<code>cwp</code>…）分为五个类别<ol>
-<li>寄存器赋值类型指令（set）<ul>
-<li>例如<code>lui</code>，能直接通过立即数对寄存器赋值（这里我还加入了<code>ori</code>配对成<code>li</code>），将来可能<code>addi</code>、<code>subi</code>也是这里的一部分</li>
-</ul>
-</li>
-<li>寄存器运算类型指令（arth）<ul>
-<li>例如<code>add</code>，通过两个寄存器相互运算得到值的指令，更通俗就是R型指令</li>
-</ul>
-</li>
-<li>存取类型指令（store）<ul>
-<li>例如<code>lw</code>，内存参与的指令</li>
-</ul>
-</li>
-<li>分支类型指令（branch）<ul>
-<li>例如<code>beq</code>，有条件跳转（有条件跳转并链接）指令</li>
-</ul>
-</li>
-<li>跳转类型指令（jump）<ul>
-<li>例如<code>jal</code>，无条件跳转（无条件跳转并链接）指令</li>
-</ul>
-</li>
-</ol>
-</li>
-<li>接下来将我们已有的指令集分类加入，并按照<code>set -&gt; arth/store -&gt; branch -&gt; jump</code>的顺序依次进行测试，已测试的指令将出现在后面的指令测试中测试后续指令，所以测试顺序也是非常重要的</li>
-</ul>
-<hr>
-<h3 id="测试思路"><a href="#测试思路" class="headerlink" title="测试思路"></a>测试思路</h3><ul>
-<li><code>set</code><ul>
-<li>先测试<code>set</code>类指令，不仅是因为它们不需要依托其他指令的正确性，而且后续所有边界数据的测试都需要提前赋值，测试思路即多次对<code>$0 ~ $31</code>寄存器赋随机值</li>
-</ul>
-</li>
-<li><code>arth</code><ul>
-<li>对于参与运算的数据，分为<code>inf</code>（最大、最小值左右）、<code>zero</code>（0左右）、<code>random</code>（其他随机数），我们对任意的两个寄存器选择上面某种方式<strong>赋值</strong>，再从此次数据集中随机挑选一条指令参与</li>
-</ul>
-</li>
-<li><code>store</code><ul>
-<li>同理，选择基地址寄存器，循环随机生成寄存器值和偏移量，满足下面条件才结束循环<ul>
-<li>若选出了<code>$0</code>，要求生成<code>0 &lt; offset &lt; 3072</code></li>
-<li>若不是<code>$0</code>，要求<code>0 &lt; grf[base] + offset &lt; 3072</code></li>
-</ul>
-</li>
-<li>最后乘4，如果是<code>sb</code>、<code>sh</code>指令的指令考虑再给<code>offset</code>加上一个小的随机数</li>
-</ul>
-</li>
-<li><code>branch</code><ul>
-<li>选择测试的<code>branch</code>指令，并随机决定是否跳转</li>
-<li>若不跳转<ul>
-<li>随机给两个寄存器赋不满足条件的值，然后结束</li>
-</ul>
-</li>
-<li>若跳转<ul>
-<li>向前跳，借鉴for循环的思路，但只向前跳一小步，主要测试<strong>能否向前跳</strong>，<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1 num1</span><br><span class="line">li $reg2 num1 - num2</span><br><span class="line">li $reg3 num2</span><br><span class="line">Brach:</span><br><span class="line">add $reg2, $reg2, $reg3</span><br><span class="line">beq $reg1, $reg2, Branch</span><br></pre></td></tr></table></figure></li>
-<li>向后跳更加随意</li>
-</ul>
-</li>
-<li><strong>关于死循环</strong><ul>
-<li>我的数据生成器是可以生成死循环指令，目前只实现了<code>beq</code>死循环，规定死循环只在测试内容的最后5%才有可能出现，并且出现死循环即跳出生成数据返回，<strong>死循环</strong>永远在最后一个指令</li>
-<li>所以我的测评机在把代码丢给mars前会先检测最后一条指令（mars死机不会给出十六进制数据。。。），如果是死循环指令将会切除，并在提供给我们CPU的十六进制数据中加入死循环指令和一条<code>set</code>指令，测试CPU是否真的死循环了</li>
-<li><del>然后我发现死循环某种程度也是向前跳，其实不用单独测试，又把这个功能去掉了</del></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>jump</code><ul>
-<li>对于一个无条件跳转指令，首先他要能跳</li>
-<li>对于借助标签的跳转指令<ol>
-<li>采用for循环的方式测试能否正常跳转<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1, num1</span><br><span class="line">li $reg2, num2</span><br><span class="line">li $reg3, 1</span><br><span class="line">Jumpstart:</span><br><span class="line">beq $reg1, $reg2, Jumpend</span><br><span class="line">add/sub $reg1, $reg1, $reg3</span><br><span class="line">jump Jumpstart</span><br></pre></td></tr></table></figure></li>
-<li>采取连续跳跃，提前生成能够跳出的label组合<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Jump0_0:</span><br><span class="line">jal Jump0_3 </span><br><span class="line">Jump0_1:</span><br><span class="line">jal Jump0_4</span><br><span class="line">Jump0_2:</span><br><span class="line">jal Jump0_5</span><br><span class="line">Jump0_3:</span><br><span class="line">jal Jump0_2</span><br><span class="line">Jump0_4:</span><br><span class="line">jal Jump0_1</span><br><span class="line">Jump0_5:</span><br></pre></td></tr></table></figure></li>
-</ol>
-</li>
-<li>对于借助寄存器的跳转指令，将与借助标签的跳转指令联动测试，采取类似函数调用的格式测试<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">beq $0, $0, BranchforJ1_0</span><br><span class="line">Jump1_0:</span><br><span class="line">add $24, $31, $0</span><br><span class="line">jr $24</span><br><span class="line">BranchforJ1_0:</span><br><span class="line">jal Jump1_0</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="单周期与流水线"><a href="#单周期与流水线" class="headerlink" title="单周期与流水线"></a>单周期与流水线</h3><ul>
-<li>对于单周期，单元测试已经可以完备测试，主要是因为单周期指令的数据通路在同一时钟周期仅有一条指令占有，各个指令之间的数据通路不互相影响</li>
-<li>对于流水线，我们当然也可以采用单元测试的方式，不过首先指令的格式需要进行细微的调整<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lui $reg1, num1</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">ori $reg1, $reg1, num2</span><br><span class="line">nop</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<ul>
-<li>通过插入<code>nop</code>消除指令之间的互相影响，达到测试<strong>数据通路以及部分控制单元</strong>的目的，但也仅仅只能测试这两个</li>
-<li>对于<strong>转发电路以及冲突单元</strong>的测试还需依靠更加随机测试</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="randomTest"><a href="#randomTest" class="headerlink" title="randomTest"></a>randomTest</h2><h3 id="单周期"><a href="#单周期" class="headerlink" title="单周期"></a>单周期</h3><ul>
-<li>单周期的随机测试看起来没什么用途，单元测试已经可以完备测试CPU了（<del>虽然我还是实现了随机测试</del>）</li>
-</ul>
-<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><ul>
-<li><p>首先说明，笔者还未将这部分内容加入测评机，仅仅是一个蓝图（）</p>
-</li>
-<li><p>单元测试有一个最大的缺点即，对于各类指令的测试往往需要<strong>预先赋值</strong>，这大大影响了指令序列的随机性，但是过于随机的指令序列将严重影响<code>store</code>、<code>branch</code>、<code>jump</code>类指令的测试效果</p>
-<ul>
-<li>这里引入一个寄存器数组、内存数组，在我们生成数据时跟踪，寄存器、内存的变化</li>
-<li>再引入一张表（有多少个条件跳转指令则引入多少张表），记录某两个寄存器是否已经满足跳转关系</li>
-<li><del>听起来有点像自己写mars</del>，我现在的函数是下面这个样子</li>
-</ul>
-</li>
-<li><p>我们可以将一次随机测试分为数段，每段的开头进行预先赋值，保证一些条件（如至少8个寄存器处于极端数据等等），然后遇到终止条件结束这段测试，对不满足条件的部分重新赋值，终止条件可以如下：</p>
-<ol>
-<li>少于3个寄存器处于极端数据</li>
-<li>少于3个寄存器处于<code>-65535 ~ 65535 + 3072</code></li>
-<li>少于3个寄存器满足跳转关系</li>
-</ol>
-<ul>
-<li>由此，我们跟踪了一部分数据，可以摆脱<strong>先赋值再操作</strong>这种单元测试，对于<code>lw</code>、<code>sw</code>之类的可以从条件2的寄存器中直接使用</li>
-<li>向后跳转部分可以从满足条件关系中直接使用</li>
-<li>同时保证了寄存器组数据的随机性</li>
-</ul>
-</li>
-<li><p>如果单元测试足够充分的话，完全可以在随机测试中只测试指令之间的影响，不在乎<code>branch</code>类指令向前还是向后，不在乎<code>arth</code>类指令的数据是否包含极端，这些都是原本数据通路的问题，不必在randomTest中反复测试啦</p>
-</li>
-</ul>
-<hr>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><ul>
-<li>看起来流水线的数据生成还有很长一段路要走啊，希望能实现蓝图吧</li>
-<li>数据生成与处理必然有诸多不当之处，希望大家指正。同时，如果在流水线数据方面有思路的同学，请和我交流（orz）<br><a href="https://github.com/Kie-Chi/co_test_builder.git">单周期测评机</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>自动化测试</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>北航计算机组成P3课下</title>
     <url>/2024/10/22/CO_P3/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理P3课下"><a href="#北航计算机组成原理P3课下" class="headerlink" title="北航计算机组成原理P3课下"></a>北航计算机组成原理P3课下</h1><div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P3课下的相关内容，希望能对你有所帮助</p>
@@ -2339,6 +2130,234 @@
       <categories>
         <category>计算机组成原理</category>
         <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P4</title>
+    <url>/2024/11/13/CO_P4/</url>
+    <content><![CDATA[<h1 id="北航计算机组成P4"><a href="#北航计算机组成P4" class="headerlink" title="北航计算机组成P4"></a>北航计算机组成P4</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>咳咳，最近太忙了作业好多啊，搭完CPU每周还要迭代自己的测评机，原来CO也可以训练我们面向对象的能力</li>
+</ul>
+<hr>
+<h2 id="课下"><a href="#课下" class="headerlink" title="课下"></a>课下</h2><ul>
+<li>其实P4就是把P3的电路图翻译成代码，整体上没有难度，如果你P3有好好设计你的CPU的话，<del>没有好好设计的话，就照着学长设计好的CPU翻译</del>，总之也是从一个一个的模块开始搭建，这里不赘述了</li>
+</ul>
+<h3 id="组合逻辑建模"><a href="#组合逻辑建模" class="headerlink" title="组合逻辑建模"></a>组合逻辑建模</h3><ul>
+<li>我啰嗦一两句，最近几年课程组不知道在干什么（<del>明年等我当助教我也要搞得抽象</del>），考试喜欢考一些奇奇怪怪的组合逻辑，所以或许你需要根据你使用的建模逻辑稍微熟练一些Verilog的语法，这样课上的时候或许不会那么慌</li>
+<li>两种组合逻辑建模方式对于写CPU的思路还是有略微不同的，而且各有各的好处，见仁见智了</li>
+</ul>
+<h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a><code>assign</code></h4><ul>
+<li>最大的优点就是简洁、代码量很少，而且就是电路连线，从P3转过来会比较方便<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_add) ? A + B :</span><br><span class="line">                 (ALUOp == `ALU_sub) ? A - B :</span><br><span class="line">                 (ALUOp == `ALU_or) ? A | B :</span><br><span class="line">                 (ALUOp == `ALU_and) ? A &amp; B : <span class="number">32&#x27;b0</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一行就解决了ALU，反正就是挺爽的</li>
+</ul>
+</li>
+<li>缺点是对于复杂逻辑建模比较困难，所以<strong>强烈建议</strong>掌握<code>function</code>和<code>task</code>(这个或许不用嘛)的用法，反正考场上会用到的，比如我随便编一个指令，要求实现<code>gxadd rd, rs, rt</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gray(00): 00</span><br><span class="line">gray(01): 01</span><br><span class="line">gray(10): 11</span><br><span class="line">gray(11): 10</span><br><span class="line"></span><br><span class="line">temp1 &lt;- GPR[rs] + GPR[rt]</span><br><span class="line">for i in range(0,16):</span><br><span class="line">    temp2[2*i+1: 2*i] &lt;- gray(temp1[2*i+1: 2*i])</span><br><span class="line">temp2 &lt;- temp2 ^ temp1</span><br><span class="line">if temp2 &gt; temp1:</span><br><span class="line">    GPR[rd] = temp2</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = temp1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>好，你现在用assign语句把它建模到ALU里面去（），是吧，这个时候<code>function</code>就要发力了，管他三七二十一全部丢进函数里面<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> [<span class="number">1</span>: <span class="number">0</span>] cal_gray;</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] origin;</span><br><span class="line">    <span class="keyword">if</span> (origin == <span class="number">2&#x27;b0</span>) cal_gray = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b1</span>) cal_gray = <span class="number">2&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b10</span>) cal_gray = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">else</span> cal_gray = <span class="number">2&#x27;b10</span>;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
+<li>其实也可以如果你熟悉掩码和格雷码的定义的话，例如<code>gray(x) = x ^ (x &gt;&gt; 1)</code>，又因为两位的二进制右移一位第一位一定是0，所以我们考虑将32位的数字的奇数位覆盖再整体右移，达到一次实现16次2位的异或<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">temp1 = A + B;</span><br><span class="line">temp2 = temp1 &amp; <span class="number">0xaaaaaaaa</span>;</span><br><span class="line"><span class="comment">//0xaaaaaaaa就是....10101010</span></span><br><span class="line"><span class="comment">//反正奇数位就这样被覆盖了</span></span><br><span class="line">temp2 = temp2 &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="comment">//相当于进行了上面的 x &gt;&gt; 1，反正奇数位都是0了</span></span><br><span class="line">temp2 = temp2 ^ temp1</span><br><span class="line"><span class="comment">//最终的temp2就是经历两位gray转化后的数字了</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_gxadd) ? </span><br><span class="line">(( ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) &gt; (A+B) ) ? ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) : (A+B))</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="always"><a href="#always" class="headerlink" title="always@(*)"></a><code>always@(*)</code></h4><ul>
+<li>最大的缺点是代码量可能会比上面大一些，也可能大很多，全面准备吧</li>
+<li>最大的优点就是适合复杂逻辑的建模，比如上面那个瞎编的指令</li>
+<li>不过还是建议掌握<code>function</code>，多好啊，变成纯纯面向过程的语言了</li>
+<li>讲一个经常会用的切片，好玩爱玩<ul>
+<li>假设你现在想要学lb、lh指令取出一个字中的某个字节或者半字，但是不想要一直if-else（考场上不会的话枚举是一个很好的选择），你想到了verilog可以切片<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span> h_adder;</span><br><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span>[<span class="number">1</span>: <span class="number">0</span>] b_adder;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] pos;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">0</span>: <span class="number">31</span>] neg;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"><span class="comment">//pos[b_adder * 8 + 7: b_adder * 8]</span></span><br><span class="line"><span class="comment">//错误用法，Verilog的切片两边要是常数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="comment">//定义高位到低位</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 + 15 取低16位，按照高位到低位排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 取高16位，但是还是按照从高到低排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义从低到高</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同上，但是从低到高排列</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同理</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="课上"><a href="#课上" class="headerlink" title="课上"></a>课上</h2><h3 id="T1-eam"><a href="#T1-eam" class="headerlink" title="T1 eam"></a>T1 eam</h3><ul>
+<li><code>eam $rd, $rs, $rt</code></li>
+<li>R型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ext_imm &lt;- signed(GPR[rs][15: 0])</span><br><span class="line">res &lt;- ext_imm % 17</span><br><span class="line">if signed(GPR[rt]) &lt; 0:</span><br><span class="line">    GPR[rd] = one_ext(res)</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = zero_ext(res)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将rs寄存器低16位截断为有符号数，这个数对17取模得到的<strong>正余数</strong>，然后根据另一个操作数的正负进行1或者0拓展</li>
+</ul>
+</li>
+</ul>
+<h3 id="T2-cptl"><a href="#T2-cptl" class="headerlink" title="T2 cptl"></a>T2 cptl</h3><ul>
+<li><code>cptl $rs, $rt, label</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">temp &lt;- PC + 4 + sign_ext(offset || 00)</span><br><span class="line">PC &lt;- temp</span><br><span class="line"></span><br><span class="line">if GPR[rs][17: 12] == 6&#x27;b111111 || ......GPR[rs][5: 0] == 6&#x27;b111111: </span><br><span class="line">    GPR[rt] &lt;- PC + 4</span><br><span class="line">else:</span><br><span class="line">    GPR[31] &lt;- PC + 4</span><br></pre></td></tr></table></figure>
+<ul>
+<li>跳转类指令，然后链接内容和rs寄存器低18位是否有6个连续的1有关系</li>
+</ul>
+</li>
+</ul>
+<h3 id="T3-olw"><a href="#T3-olw" class="headerlink" title="T3 olw"></a>T3 olw</h3><ul>
+<li><code>olw $rt, offset($base)</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vadder &lt;- GPR[base] + sign_ext(offset || 00)</span><br><span class="line">temp &lt;- Mem[vadder[31: 2]]</span><br><span class="line"></span><br><span class="line">if func(temp):</span><br><span class="line">    GPR[rt] &lt;- temp</span><br><span class="line">else:</span><br><span class="line">    None</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果读出来的数据是单调不减的，那么才写入</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>课上没什么好玩的，第一个指令注意要使用有符号，不然你就会像我一样疑惑了半个小时为什么这么取模都是0然后暴力while循环求余数。。。</li>
+<li>过两天会把P5好好更新的，顺便预告一下测评机，其实写好了，只是想等P6直接做一个流水线全的，over</li>
+<li>先不写题解了，亲爱的小羊找我看视频，我先溜了</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+        <category>课上考试</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成单周期数据生成</title>
+    <url>/2024/10/28/CO_P4_noexam/</url>
+    <content><![CDATA[<h1 id="两种可能的测试数据生成方式"><a href="#两种可能的测试数据生成方式" class="headerlink" title="两种可能的测试数据生成方式"></a>两种可能的测试数据生成方式</h1><h2 id="unitTest"><a href="#unitTest" class="headerlink" title="unitTest"></a>unitTest</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
+<li>如同java中的单元测试，我们将常规指令（不包含什么<code>lwso</code>、<code>cwp</code>…）分为五个类别<ol>
+<li>寄存器赋值类型指令（set）<ul>
+<li>例如<code>lui</code>，能直接通过立即数对寄存器赋值（这里我还加入了<code>ori</code>配对成<code>li</code>），将来可能<code>addi</code>、<code>subi</code>也是这里的一部分</li>
+</ul>
+</li>
+<li>寄存器运算类型指令（arth）<ul>
+<li>例如<code>add</code>，通过两个寄存器相互运算得到值的指令，更通俗就是R型指令</li>
+</ul>
+</li>
+<li>存取类型指令（store）<ul>
+<li>例如<code>lw</code>，内存参与的指令</li>
+</ul>
+</li>
+<li>分支类型指令（branch）<ul>
+<li>例如<code>beq</code>，有条件跳转（有条件跳转并链接）指令</li>
+</ul>
+</li>
+<li>跳转类型指令（jump）<ul>
+<li>例如<code>jal</code>，无条件跳转（无条件跳转并链接）指令</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>接下来将我们已有的指令集分类加入，并按照<code>set -&gt; arth/store -&gt; branch -&gt; jump</code>的顺序依次进行测试，已测试的指令将出现在后面的指令测试中测试后续指令，所以测试顺序也是非常重要的</li>
+</ul>
+<hr>
+<h3 id="测试思路"><a href="#测试思路" class="headerlink" title="测试思路"></a>测试思路</h3><ul>
+<li><code>set</code><ul>
+<li>先测试<code>set</code>类指令，不仅是因为它们不需要依托其他指令的正确性，而且后续所有边界数据的测试都需要提前赋值，测试思路即多次对<code>$0 ~ $31</code>寄存器赋随机值</li>
+</ul>
+</li>
+<li><code>arth</code><ul>
+<li>对于参与运算的数据，分为<code>inf</code>（最大、最小值左右）、<code>zero</code>（0左右）、<code>random</code>（其他随机数），我们对任意的两个寄存器选择上面某种方式<strong>赋值</strong>，再从此次数据集中随机挑选一条指令参与</li>
+</ul>
+</li>
+<li><code>store</code><ul>
+<li>同理，选择基地址寄存器，循环随机生成寄存器值和偏移量，满足下面条件才结束循环<ul>
+<li>若选出了<code>$0</code>，要求生成<code>0 &lt; offset &lt; 3072</code></li>
+<li>若不是<code>$0</code>，要求<code>0 &lt; grf[base] + offset &lt; 3072</code></li>
+</ul>
+</li>
+<li>最后乘4，如果是<code>sb</code>、<code>sh</code>指令的指令考虑再给<code>offset</code>加上一个小的随机数</li>
+</ul>
+</li>
+<li><code>branch</code><ul>
+<li>选择测试的<code>branch</code>指令，并随机决定是否跳转</li>
+<li>若不跳转<ul>
+<li>随机给两个寄存器赋不满足条件的值，然后结束</li>
+</ul>
+</li>
+<li>若跳转<ul>
+<li>向前跳，借鉴for循环的思路，但只向前跳一小步，主要测试<strong>能否向前跳</strong>，<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1 num1</span><br><span class="line">li $reg2 num1 - num2</span><br><span class="line">li $reg3 num2</span><br><span class="line">Brach:</span><br><span class="line">add $reg2, $reg2, $reg3</span><br><span class="line">beq $reg1, $reg2, Branch</span><br></pre></td></tr></table></figure></li>
+<li>向后跳更加随意</li>
+</ul>
+</li>
+<li><strong>关于死循环</strong><ul>
+<li>我的数据生成器是可以生成死循环指令，目前只实现了<code>beq</code>死循环，规定死循环只在测试内容的最后5%才有可能出现，并且出现死循环即跳出生成数据返回，<strong>死循环</strong>永远在最后一个指令</li>
+<li>所以我的测评机在把代码丢给mars前会先检测最后一条指令（mars死机不会给出十六进制数据。。。），如果是死循环指令将会切除，并在提供给我们CPU的十六进制数据中加入死循环指令和一条<code>set</code>指令，测试CPU是否真的死循环了</li>
+<li><del>然后我发现死循环某种程度也是向前跳，其实不用单独测试，又把这个功能去掉了</del></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>jump</code><ul>
+<li>对于一个无条件跳转指令，首先他要能跳</li>
+<li>对于借助标签的跳转指令<ol>
+<li>采用for循环的方式测试能否正常跳转<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">li $reg1, num1</span><br><span class="line">li $reg2, num2</span><br><span class="line">li $reg3, 1</span><br><span class="line">Jumpstart:</span><br><span class="line">beq $reg1, $reg2, Jumpend</span><br><span class="line">add/sub $reg1, $reg1, $reg3</span><br><span class="line">jump Jumpstart</span><br></pre></td></tr></table></figure></li>
+<li>采取连续跳跃，提前生成能够跳出的label组合<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Jump0_0:</span><br><span class="line">jal Jump0_3 </span><br><span class="line">Jump0_1:</span><br><span class="line">jal Jump0_4</span><br><span class="line">Jump0_2:</span><br><span class="line">jal Jump0_5</span><br><span class="line">Jump0_3:</span><br><span class="line">jal Jump0_2</span><br><span class="line">Jump0_4:</span><br><span class="line">jal Jump0_1</span><br><span class="line">Jump0_5:</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li>对于借助寄存器的跳转指令，将与借助标签的跳转指令联动测试，采取类似函数调用的格式测试<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">beq $0, $0, BranchforJ1_0</span><br><span class="line">Jump1_0:</span><br><span class="line">add $24, $31, $0</span><br><span class="line">jr $24</span><br><span class="line">BranchforJ1_0:</span><br><span class="line">jal Jump1_0</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="单周期与流水线"><a href="#单周期与流水线" class="headerlink" title="单周期与流水线"></a>单周期与流水线</h3><ul>
+<li>对于单周期，单元测试已经可以完备测试，主要是因为单周期指令的数据通路在同一时钟周期仅有一条指令占有，各个指令之间的数据通路不互相影响</li>
+<li>对于流水线，我们当然也可以采用单元测试的方式，不过首先指令的格式需要进行细微的调整<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lui $reg1, num1</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">ori $reg1, $reg1, num2</span><br><span class="line">nop</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过插入<code>nop</code>消除指令之间的互相影响，达到测试<strong>数据通路以及部分控制单元</strong>的目的，但也仅仅只能测试这两个</li>
+<li>对于<strong>转发电路以及冲突单元</strong>的测试还需依靠更加随机测试</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="randomTest"><a href="#randomTest" class="headerlink" title="randomTest"></a>randomTest</h2><h3 id="单周期"><a href="#单周期" class="headerlink" title="单周期"></a>单周期</h3><ul>
+<li>单周期的随机测试看起来没什么用途，单元测试已经可以完备测试CPU了（<del>虽然我还是实现了随机测试</del>）</li>
+</ul>
+<h3 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h3><ul>
+<li><p>首先说明，笔者还未将这部分内容加入测评机，仅仅是一个蓝图（）</p>
+</li>
+<li><p>单元测试有一个最大的缺点即，对于各类指令的测试往往需要<strong>预先赋值</strong>，这大大影响了指令序列的随机性，但是过于随机的指令序列将严重影响<code>store</code>、<code>branch</code>、<code>jump</code>类指令的测试效果</p>
+<ul>
+<li>这里引入一个寄存器数组、内存数组，在我们生成数据时跟踪，寄存器、内存的变化</li>
+<li>再引入一张表（有多少个条件跳转指令则引入多少张表），记录某两个寄存器是否已经满足跳转关系</li>
+<li><del>听起来有点像自己写mars</del>，我现在的函数是下面这个样子</li>
+</ul>
+</li>
+<li><p>我们可以将一次随机测试分为数段，每段的开头进行预先赋值，保证一些条件（如至少8个寄存器处于极端数据等等），然后遇到终止条件结束这段测试，对不满足条件的部分重新赋值，终止条件可以如下：</p>
+<ol>
+<li>少于3个寄存器处于极端数据</li>
+<li>少于3个寄存器处于<code>-65535 ~ 65535 + 3072</code></li>
+<li>少于3个寄存器满足跳转关系</li>
+</ol>
+<ul>
+<li>由此，我们跟踪了一部分数据，可以摆脱<strong>先赋值再操作</strong>这种单元测试，对于<code>lw</code>、<code>sw</code>之类的可以从条件2的寄存器中直接使用</li>
+<li>向后跳转部分可以从满足条件关系中直接使用</li>
+<li>同时保证了寄存器组数据的随机性</li>
+</ul>
+</li>
+<li><p>如果单元测试足够充分的话，完全可以在随机测试中只测试指令之间的影响，不在乎<code>branch</code>类指令向前还是向后，不在乎<code>arth</code>类指令的数据是否包含极端，这些都是原本数据通路的问题，不必在randomTest中反复测试啦</p>
+</li>
+</ul>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><ul>
+<li>看起来流水线的数据生成还有很长一段路要走啊，希望能实现蓝图吧</li>
+<li>数据生成与处理必然有诸多不当之处，希望大家指正。同时，如果在流水线数据方面有思路的同学，请和我交流（orz）<br><a href="https://github.com/Kie-Chi/co_test_builder.git">单周期测评机</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>自动化测试</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P6</title>
+    <url>/2024/12/08/CO_P6/</url>
+    <content><![CDATA[<h1 id="北航计算机组成P6"><a href="#北航计算机组成P6" class="headerlink" title="北航计算机组成P6"></a>北航计算机组成P6</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>不要问我为什么先有P7再有P6，问就是忘了，一直忘到了现在，我真有点不记得课上的指令，反正我记得P6比P5简单来着</li>
+</ul>
+<hr>
+<h2 id="课下复习"><a href="#课下复习" class="headerlink" title="课下复习"></a>课下复习</h2><hr>
+<h2 id="课上测试"><a href="#课上测试" class="headerlink" title="课上测试"></a>课上测试</h2><hr>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+        <category>课上考试</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
@@ -3987,25 +4006,6 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P6</title>
-    <url>/2024/12/08/CO_P6/</url>
-    <content><![CDATA[<h1 id="北航计算机组成P6"><a href="#北航计算机组成P6" class="headerlink" title="北航计算机组成P6"></a>北航计算机组成P6</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>不要问我为什么先有P7再有P6，问就是忘了，一直忘到了现在，我真有点不记得课上的指令，反正我记得P6比P5简单来着</li>
-</ul>
-<hr>
-<h2 id="课下复习"><a href="#课下复习" class="headerlink" title="课下复习"></a>课下复习</h2><hr>
-<h2 id="课上测试"><a href="#课上测试" class="headerlink" title="课上测试"></a>课上测试</h2><hr>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>课下复习</category>
-        <category>课上考试</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>北航计算机组成P7</title>
     <url>/2024/12/08/CO_P7/</url>
     <content><![CDATA[<h1 id="北航计组组成P7"><a href="#北航计组组成P7" class="headerlink" title="北航计组组成P7"></a>北航计组组成P7</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
@@ -4278,124 +4278,342 @@
       </tags>
   </entry>
   <entry>
-    <title>Python基础--字符串(二)</title>
-    <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
-    <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
-<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
-<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
+    <title>面向对象u1</title>
+    <url>/2025/03/19/OO_u1/</url>
+    <content><![CDATA[<h1 id="北航2025面向对象第一单元"><a href="#北航2025面向对象第一单元" class="headerlink" title="北航2025面向对象第一单元"></a>北航2025面向对象第一单元</h1><p>[toc]</p>
+<h2 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h2><h3 id="1-代码架构分析"><a href="#1-代码架构分析" class="headerlink" title="1.代码架构分析"></a>1.代码架构分析</h3><p>在阅读往届学长的博客（以及尝试使用正则表达式解析嵌套括号）后，最后决定了使用递归下降算法。最最主要的是今年oop中也出现了递归下降方法，课程写的文档挺不错的，通俗易懂。找了一下，发现居然也是一位<a href="https://zhhangbian.github.io/2024/04/02/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-Unit1-%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D/">学长的博客</a></p>
+<p>虽然只学了一年多编程，但是苯人对递归式的函数还是有较深的体会的，主要针对一下两点来写递归函数即可</p>
+<ul>
+<li>函数的职责：即明确一个函数返回值或者是函数调用的时机，实际上就是牢记函数初衷（<strong>parseExpr就返回表达式，在解析表达式时调用</strong>），当描述一个递归函数的递归调用过程中卡壳了，不妨回到这个函数被设计之初的职责，跳出细节才能看到全局。</li>
+<li>函数终止的条件：尤其是自调用的递归函数，常常会陷入无限调用的套娃中。使用一个具体的例子往往能够更加好地理解什么时候函数递归到达终点了。</li>
 </ul>
-<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
-<li><code>%s</code><ul>
-<li>适用于为字符串占位，<del>我本来就是啊</del></li>
+<p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/class.png" alt="alt text"></p>
+<h3 id="2-流程分析"><a href="#2-流程分析" class="headerlink" title="2.流程分析"></a>2.流程分析</h3><p>我将整个流程分为四个模块，**<code>预处理 -&gt; 解析 -&gt; 合并项 -&gt; 生成字符串</code>**</p>
+<ul>
+<li>虽然在本次作业中，生成和优化字符串同隶属于最后一个模块，随着基项复杂度的增加，二者的分开也是在所难免</li>
 </ul>
-</li>
-<li><code>%d</code><ul>
-<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
-</ul>
-</li>
-<li><code>%f</code><ul>
-<li>适用于为浮点数占位</li>
-</ul>
-</li>
-<li><code>.precision</code><ul>
-<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
-</ul>
-</li>
-<li><code>width</code><ul>
-<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
+<h4 id="i-预处理"><a href="#i-预处理" class="headerlink" title="i.预处理"></a>i.预处理</h4><p>由于题目给出的原字符串无用信息过多，并不能很好的划分为清晰的<code>Token</code>，所以需要先对表达式进行一些处理</p>
+<ul>
+<li>去除空白字符：<code>.replaceAll(&quot;[ \t]&quot;, &quot;&quot;)</code> &#x2F; <code>.replaceAll(&quot;\\s+&quot;, &quot;&quot;)</code></li>
+<li>合并连续的加减号<ul>
+<li>使用正则表达式循环替换<code>++ +- -+ --</code>，直到字符串长度不再改变</li>
+<li>顺序遍历字符串，记录连续的符号，手动消除</li>
 </ul>
 </li>
-<li><code>flags</code><ul>
-<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
-<li><code>0</code>，补充前导0</li>
-<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
-<li><code> </code>，方便正数与负数对齐</li>
-<li><code>+</code>，数字补齐符号</li>
+</ul>
+<p>还可以进行的操作，比如去除正号与前导零<code>replaceAll(&quot;^\+?0*([0-9]+)$&quot;, &quot;$1&quot;)</code>好像也不需要其他操作了，当然我没有在预处理阶段处理符号和前导零</p>
+<h4 id="ii-解析"><a href="#ii-解析" class="headerlink" title="ii.解析"></a>ii.解析</h4><p>按照<code>parseExpr -&gt; parseTerm -&gt; parseFactor</code></p>
+<ul>
+<li>当然，在其中还可以适当封装一些其他方法，降低方法的复杂度</li>
+<li>如，三种不同的因子分别使用方法识别<code>parseXXXFactor</code></li>
+<li>识别指数（或缺省）<code>parseExp</code></li>
+<li>总之，方法在保证结构完整、功能集中的情况下复杂度尽可能低</li>
+</ul>
+<p>使用递归下降即可，最后得到一个<code>Expr</code>的表达式对象</p>
+<ul>
+<li>注意<code>+/-</code>分割，由于我没有在识别<code>Token</code>时将符号与数字一起判断，<code>+/-</code>可能作为项之间的分割也可以作为符号，只要注意在<code>parseTerm</code>、<code>parseFactor</code>注意它们不同的含义即可</li>
+<li><code>BigInteger</code>支持解析前导零的字符串，所以这里不用在意了</li>
+</ul>
+<h4 id="iii-合并项"><a href="#iii-合并项" class="headerlink" title="iii.合并项"></a>iii.合并项</h4><p>在语法树的层面上，我们解析的操作实际是建立了一个庞大的树结构，接下来该应该根据语法树来还原多项式</p>
+<ul>
+<li><p>边建树边返回多项式边化简，此时<code>parse</code>方法的返回值直接改为多项&#x2F;单项式。优点是效率更高，缺点是依托于强大的算法基础，而且容易错。以<code>Poly</code>、<code>Mono</code>举例</p>
+<ul>
+<li><code>parseExpr/parseTerm/parseFactor: Poly</code>：返回表达式&#x2F;项&#x2F;因子对应多项式</li>
+<li><code>parseExpr</code>将所有<code>parseTerm</code>得到的多项式加起来</li>
+<li><code>parseTerm</code>将所有<code>parseFactor</code>得到的多项式乘起来</li>
+<li><code>parseNumFactor</code>: 返回纯数字组成的多项式，但是只有一个项<code>[coe * x ^ 0]</code></li>
+<li><code>parseVarFactor</code>: 返回纯自变量组成的多项式，但是只有一个项<code>[1 * x ^ exp]</code></li>
+<li><code>parseExprFactor/parseExpr</code>: 返回表达式因子组成的多项式，但是只有一个项<code>[coe1 * x ^ exp1, coe2 * x ^ exp2, ...]</code></li>
 </ul>
 </li>
-<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
+<li><p>建树之后后序遍历，为每一种类设置一个返回多项式的函数<code>toPoly</code>作为<em>遍历函数</em></p>
+<ul>
+<li>对于<code>Expr</code>类，先遍历所有子结点也就是<code>Term</code><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Expr.java</span></span><br><span class="line"><span class="keyword">public</span> Poly <span class="title function_">toPoly</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">Poly</span> <span class="variable">res</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">    <span class="keyword">for</span> (Term term : <span class="built_in">this</span>.terms) &#123;</span><br><span class="line">        res.addPoly(term.toPoly());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>对于<code>Term</code>类，也先遍历所有子结点也就是<code>Factor</code><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Term.java</span></span><br><span class="line"><span class="keyword">public</span> Poly <span class="title function_">toPoly</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">Poly</span> <span class="variable">res</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">    <span class="keyword">for</span> (Factor factor : <span class="built_in">this</span>.factors) &#123;</span><br><span class="line">        res.mulPoly(factor.toPoly());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>其他所有细节都同上</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="防御性编程"><a href="#防御性编程" class="headerlink" title="防御性编程"></a>防御性编程</h5><h6 id="a-“不可变类”"><a href="#a-“不可变类”" class="headerlink" title="a.“不可变类”"></a>a.“不可变类”</h6><p>java中有专门的一种类，被称为不可变类，这种类一旦被创建内部属性无法更改。利用了java的机制维护了类内属性的安全性，例如<code>BigInteger</code>或是<code>Integer</code>类都是不可变类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">BigInteger</span> <span class="variable">tmp</span> <span class="operator">=</span> BigInteger.valueOf(<span class="number">2</span>);</span><br><span class="line"><span class="comment">// 创建一个存储2的大数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现int类型的自加操作</span></span><br><span class="line"><span class="comment">// tmp++ ???</span></span><br><span class="line">tmp.add(BigInteger.ONE)</span><br><span class="line"><span class="comment">// 发现tmp的值并没有发生改变</span></span><br><span class="line"></span><br><span class="line">tmp = tmp.add(BigInteger.ONE)</span><br><span class="line"><span class="comment">// tmp顺利加1，但是tmp并非原来的存储2的对象</span></span><br></pre></td></tr></table></figure>
 
-<pre><code> 1234 +1234
--1234 -1234
-  12,  34,  3.10
-12  ,34  ,3.10  
-0012,0234,003.10
-12  ,234 ,3.10  
-</code></pre>
-<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
-<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
-<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
-<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-</ul>
-</li>
-<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
-<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-</ul>
-</li>
-<li>利用键值对传入参数，则括号中必须使用key值<ul>
-<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
-<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
-</ul>
-</li>
-<li>利用键值对和位置进行复杂传参<ul>
-<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
+<p>而我采用的“不可变类”实际为可变类型，即在创建后是可以被改变的，但是我在编写代码时遵循“协议”（欸欸欸，就是这么高级），人工维护类的不可变性</p>
+<ul>
+<li>&#x3D;&#x3D;类创建的对象在投入使用后属性不可以被改变&#x3D;&#x3D;，被使用前随意</li>
+<li>此处被使用可以理解为参与合并同类项，以Poly对象的使用为例<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/poly.png" alt="合并同类项示意图"><ul>
+<li>这里以<code>poly3</code>对象为例，在第一次合并同类项之前，<code>poly3</code>已经被创建，作为接受合并同类项的容器，&#x3D;&#x3D;此时poly3的内部属性显然在一直改变&#x3D;&#x3D;（因为单项式一直被加入这个容器）</li>
+<li>直到合并同类项完成后一直到使用前<code>poly3</code>都保持一个稳定的状态（&#x3D;&#x3D;但是此时修改poly3的属性我认为仍然符合我的定义&#x3D;&#x3D;）</li>
+<li>最后当<code>poly3</code>投入合并同类项时，其已经在&#x2F;被使用了，&#x3D;&#x3D;此后应该保证poly3属性永远不再改变&#x3D;&#x3D;</li>
 </ul>
 </li>
 </ul>
-<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
-<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
-<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
-<li><code>fill</code><ul>
-<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
+<h6 id="b-克隆"><a href="#b-克隆" class="headerlink" title="b.克隆"></a>b.克隆</h6><table>
+<thead>
+<tr>
+<th align="center">传递方式</th>
+<th align="center">描述</th>
+<th align="center">使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">值传递</td>
+<td align="center">实例对象栈上开辟空间，栈存储内容为值，传递时将存储的值给出</td>
+<td align="center">简单类型(int char…)</td>
+</tr>
+<tr>
+<td align="center">引用传递</td>
+<td align="center">实例对象堆上开辟空间，栈存储内容为地址，传递时传递将地址给出</td>
+<td align="center">复杂类型(一般JavaBin类)</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">克隆方式</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">浅克隆</td>
+<td align="center">地址与原对象不同，实例对象内简单类型重新创建，复杂类型传递引用</td>
+</tr>
+<tr>
+<td align="center">深克隆</td>
+<td align="center">地址与原对象不同，实例对象内简单类型重新创建，复杂类型递归创建新的实例</td>
+</tr>
+</tbody></table>
+<p>发现往年有许多学长提出遇到深浅克隆的问题，但是他们大都采取了深克隆的方式较为保险的操作。但是若Poly类与Var类深度耦合，你中有我，我中有你。深克隆该如何进行？<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Poly.java</span></span><br><span class="line"><span class="comment">//HashMap&lt;Var, BigInteger&gt; varMap</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">clone</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="type">Poly</span> <span class="variable">res</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">  <span class="keyword">for</span> (Var <span class="keyword">var</span> : varMap.keySet()) &#123;</span><br><span class="line">    res.addVar((Var) <span class="keyword">var</span>.clone());  </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Var.java</span></span><br><span class="line"><span class="comment">//BigInteger coe</span></span><br><span class="line"><span class="comment">//BigInteger exp</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">clone</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Var</span>(coe, exp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>将深克隆实现为递归形式，在后续迭代过程中也可以很好的解决<code>Poly</code>与<code>Var</code>之间的耦合关系。例如，为<code>Var</code>类新加一个<code>Poly</code>的属性，我们只需要微调即可。分析可以发现，这并不是一个无限递归的函数，在<code>varMap</code>为空时整个递归达到底部。<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Var.java</span></span><br><span class="line"><span class="comment">//+ Poly expPoly</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">clone</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Var</span>(coe, exp, (Poly) expPoly.clone());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>但是递归的终点实在是太长了，深克隆是一笔巨大的开销。故而我们不能困于此，我们更多的程序开销应该用来卷性能（），得益于我们类的设计理念，深克隆实际是可以完全规避的</p>
+<p>之所以使用深克隆是为了保护数据的一直性，尤其是在引用这种前提下，一个对象可能有多个引用。此时通过某一个引用的修改可能导致其他引用获取到错误的数据。为此可以将将要修改的对象从里到外复制一遍再使用。</p>
+<p>回顾我们的设计，我们的Poly类与Var类在投入使用后属于不可改变的状态，自然不存在内部数据被修改而导致的若干现象，省下一大笔性能开销</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Poly.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">Poly</span><span class="params">(HashMap&lt;Var, BigInteger&gt; varMap)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.varMap = varMap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">clone</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="comment">// HashMap克隆方式也是浅克隆，键值对是引用</span></span><br><span class="line">  HashMap&lt;Var, BigInteger&gt; newVarMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>(<span class="built_in">this</span>.varMap);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Poly</span>(newVarMap);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="c-多项式存储"><a href="#c-多项式存储" class="headerlink" title="c.多项式存储"></a>c.多项式存储</h6><p>因为我们时常需要合并同类项，因此能否快速找到同类项十分重要。使用<code>HashSet</code>、<code>HashMap</code>这类使用哈希索引的数据结构十分方便，但是需要重写<code>hashCode</code>和<code>equals</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Var.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> Objects.hash(exp);</span><br><span class="line">  <span class="comment">//不需要比较系数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (o == <span class="built_in">this</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> Var)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">Var</span> <span class="variable">var</span> <span class="operator">=</span> (Var) o;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">var</span>.getExp() == exp;</span><br><span class="line">  <span class="comment">//同样只需要判断指数，不需要系数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于<code>Var</code>类型实现了以后，使用<code>HashSet&lt;Var&gt;</code>就十分方便了，之所以使用<code>HashMap</code>主要时考虑到判断<code>Poly</code>是否相等时需要考虑系数<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Poly.java</span></span><br><span class="line"><span class="comment">//HashSet&lt;Var&gt;</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (o == <span class="built_in">this</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> Poly)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">Poly</span> <span class="variable">var</span> <span class="operator">=</span> (Poly) o;</span><br><span class="line">  <span class="keyword">return</span> Objects.equals(varSet, <span class="keyword">var</span>.getVarSet());</span><br><span class="line">  <span class="comment">//此方法比较两个Set中的元素是否能满足equals方法</span></span><br><span class="line">  <span class="comment">//根据我们重写的Var的equals方法，其只考虑了指数</span></span><br><span class="line">  <span class="comment">//即2*x+3*x^2与1*x-3*x^2会被判断为相等</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//改为HashMap&lt;Var, BigInteger&gt; </span></span><br><span class="line"><span class="comment">//var &lt;-&gt; coe</span></span><br><span class="line"><span class="keyword">return</span> Objects.equals(varMap, <span class="keyword">var</span>.getVarMap());</span><br><span class="line"><span class="comment">//比较键值对，所以系数作为值被考虑在内</span></span><br><span class="line"><span class="comment">//即2*x+3*x^2与1*x-3*x^2不同</span></span><br></pre></td></tr></table></figure>
+<font color=red><em>tips：</em></font>由于我们设计的<code>Poly</code>与<code>Var</code>具有投入使用后不可改变的特性，故而我们可以尝试缓存对应的<code>hash</code>值，这样可以减少调用<code>hashCode()</code>的性能开销</li>
 </ul>
-</li>
-<li><code>align</code><ul>
-<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">//cached hashCode</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> hash;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hasCode</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (hash == <span class="number">0</span>) &#123;</span><br><span class="line">    hash = Objects.hash(......);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-复杂度分析"><a href="#3-复杂度分析" class="headerlink" title="3.复杂度分析"></a>3.复杂度分析</h3><p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/hw_1_com_1.png" alt="alt text"><br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/hw_1_com_2.png" alt="alt text"><br>这里只列出来爆红的几个方法</p>
+<ul>
+<li><code>preProcess</code>里面放了一个合并正负号的循环，复杂度很高</li>
+<li><code>Lexer</code>构造方法因为有很多条件分支，导致所有都爆红</li>
+<li><code>Poly.toString</code>由于也是有将<strong>正数项</strong>提前，导致复杂度偏高</li>
 </ul>
-</li>
-<li><code>sign</code><ul>
-<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
-</ul>
-</li>
-<li><code>width</code><ul>
-<li>最小宽度，默认为字符串长度</li>
-</ul>
-</li>
-<li><code>precision</code><ul>
-<li>控制小数的精度范围，默认是小数点后六位</li>
-</ul>
-</li>
-<li><code>type</code><ul>
-<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="4-bug分析"><a href="#4-bug分析" class="headerlink" title="4.bug分析"></a>4.bug分析</h3><p>本次作业强测、互测均为出现bug</p>
+<h2 id="由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题-构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的"><a href="#由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题-构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的" class="headerlink" title="由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题- 构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的"></a>由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题<br>- 构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的</h2><h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><h3 id="1-架构设计"><a href="#1-架构设计" class="headerlink" title="1.架构设计"></a>1.架构设计</h3><p>就上次作业而言，本次作业新加入<code>递推函数</code>与<code>三角函数因子</code>，难度跨度相较前几年应该是较大，大概是从<code>hw1</code>跳转<code>hw3</code>左右。递推函数实则原先自定义函数+嵌套调用，三角函数内因子类型不限制，化简难度较大<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/class_2.png" alt="alt-text"><br>(.p.s虽然说<del>字符串替换是陋习</del>，但是在语法树层面的替换容易出现一些神奇的问题，比如形参的实参是形参。。。，除了递归搜索替换也没有其他好的方法)<br><code>funcDefiner类</code></p>
+<ul>
+<li>定义为工具类，内部全为静态方法</li>
+<li>存储所有递推函数信息（预防迭代）<br>
 
-<pre><code>1___ 000002 $$$$11$$$$
-0012          3     34    
-</code></pre>
-<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
-<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
-<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
-<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
+  <code>funcMap: HashMap&lt;String, HashMap&lt;String, String&gt;&gt;</code><ul>
+<li>将函数名，与调用信息存起来</li>
+<li>第一步映射<code>函数名 -&gt; 函数体</code>，为了防止多个递推函数，使用<code>HashMap</code>存储</li>
+<li>第二步，针对不同情况下<code>n</code>的取值确定函数体，同样使用<code>HashMap</code>存储</li>
+<li><code>f&#123;1&#125;(x...) = ...</code>，递推的基础<ul>
+<li><code>&quot;1&quot; -&gt; ...</code></li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><code>f&#123;0&#125;(x...) = ...</code>，递推的基础<ul>
+<li><code>&quot;0&quot; -&gt; ...</code></li>
+</ul>
+</li>
+<li><code>f&#123;n&#125;(x...) = f&#123;n-1&#125;(x...) + f&#123;n-2&#125;(x...)</code>，递推公式<ul>
+<li><code>&quot;n&quot; -&gt; f&#123;n-1&#125;(x...) + f&#123;n-2&#125;(x...)</code></li>
+</ul>
+</li>
+<li>获取函数<code>f</code>的递推公式 -&gt; <code>funcMap.get(&quot;f&quot;).get(&quot;n&quot;)</code></li>
+<li>获取函数<code>g</code>的0的值 -&gt; <code>funcMap.get(&quot;g&quot;).get(&quot;0&quot;)</code></li>
+</ul>
+</li>
+</ul>
+<br>
 
-<pre><code>line= &#39;this is a test string&#39;
-a=3
-__123.34000___
+<pre><code>`paraMap: HashMap&lt;String, ArrayList&lt;String&gt;&gt;`
+- 将函数名，与形参列表存起来
+- `函数名 -&gt; 形参列表`
 </code></pre>
+<br>
+
+<pre><code>`setFunc(Scanner)`
+- 根据传入的`n`、三个递推式子，收集函数信息
+- 记得预处理，去除空白符号以及可能的连续正负号
+</code></pre>
+<br>
+
+<pre><code>`callFunc(funcName, n, Actualparas)`
+- `funcName`传入此次需要调用的函数
+- `n`传入此次递归函数的索引值`f&#123;3&#125;... -&gt; &quot;3&quot;...`
+- 若`n`不为`0 or 1`，否则直接使用函数体即可
+  - 找到函数体中所有`n`的位置，根据`n`位置后的符号与数字替换
+  - `n=3`,`f&#123;n-1&#125;(x,y^2)+f&#123;n-2&#125;(x^2,y)`
+    - `f&#123;2&#125;(x,y^2)+f&#123;1&#125;(x^2,y)`
+- 将形参替换为实参
+  - `ActualParas = [Factor1, Factor2]` 使用表达式因子，原因在后面，**使用Poly对象的`toString()`，因为有些情况可以化简，如果直接输出可能会卡爆堆**
+- &lt;font color=red&gt;记忆化递归：&lt;/font&gt;这里的递归我们`funcMap`没有存储`0,1,n`之外的值，事实上我们计算一个表达式的函数体可以先查表例如`3`，显然不在表内，所以根据`f&#123;n&#125;...`的递推式计算出`f&#123;3&#125;`对应的函数体，**然后把3加入表内，这样我们的表就变为`0,1,3,n`了**，下次需要使用`f&#123;3&#125;`时只需要查表即可，不需要重复替换
+</code></pre>
+<br>
+
+<pre><code>`parseFuncFactor`
+- 读入函数名、还有此次的n值
+- 读入实参列表时，请使用`parseExpr`后封装为`ExprFactor`，因为原有形参可能是幂函数，被替换一次后将不再是因子
+- `f&#123;n&#125;(x, y) = f&#123;n-1&#125;(x^2, y) + f&#123;n-2&#125;(x, y^2)`
+- 求`f&#123;3&#125;((x+1), x)`时
+- `n=3: (x+1), x`实参为表达式因子
+- `n=2: (x+1)^2, x; (x+1), x^2`出现非因子项，只能使用表达式表示
+</code></pre>
+<br>
+
+<pre><code>`ParaFactor`
+- 为了提高封装性，可以新建类代表实参因子，其他同理
+</code></pre>
+<h3 id="2-流程分析-1"><a href="#2-流程分析-1" class="headerlink" title="2.流程分析"></a>2.流程分析</h3><p>大部分内容和第一次作业是一致的，此处不再赘述，此次作业唯一不同的在于三角函数的化简内容。</p>
+<h4 id="三角函数化简"><a href="#三角函数化简" class="headerlink" title="三角函数化简"></a>三角函数化简</h4><blockquote>
+<p><code>Poly</code>代表多项式类，形如<code>Var1 + Var2 + Var3...</code><br><code>Var</code>代表单项式类，形如$coe\times x^{exp}\times\prod_{i&#x3D;1}^n{sin(expr_i)^{a_i}}\times\prod_{j&#x3D;1}^n{cos(expr_j)^{b_j}}$</p>
+</blockquote>
+<p>基于同类项的三角函数化简</p>
+<h5 id="什么是同类项"><a href="#什么是同类项" class="headerlink" title="什么是同类项"></a>什么是同类项</h5><p>在第一次作业中，单项式的形式极为简单，我们可以认为除去系数，<strong>指数相等的单项式就是同类项</strong>，即<code>coe1 * x^exp</code>&#x2F;<code>coe2 * x^exp</code><br>在第二次作业中我们引入了三角函数因子，单项式的复杂度急剧上升，甚至由于<strong>三角函数本身可以向内或向外传递负号</strong>，同类项甚至很难以一种形式化的方式表述出。例如，<code>x*sin(x)</code>与<code>3*x*sin(x)</code>显然是同类项，但是<code>x*sin(x)</code>与<code>3*x*sin((-x))</code>实际上也是同类项，二者同样可以合并。此时判断除系数外的部分相同已经不奏效了，故定义&#x3D;&#x3D;可加&#x3D;&#x3D;作为同类项的标准</p>
+<ul>
+<li>对于<code>Var</code>类，&#x3D;&#x3D;可加&#x3D;&#x3D;意味<strong>指数相等</strong>，二者的三角函数部分组成的集合（<code>sin</code>、<code>cos</code>）需要满足某种双射，使得双射的两方<ul>
+<li><strong>三角函数种类相等</strong>(同为<code>sin</code>或<code>cos</code>)</li>
+<li><strong>三角函数因子的指数相等</strong></li>
+<li><strong>三角函数内部的<code>Poly</code>满足可加</strong></li>
+</ul>
+</li>
+<li>对于<code>Poly</code>类，<strong>可加</strong>意味着，其中的单项式集合满足某种双射，使得双射的两方<ul>
+<li><strong>可加</strong></li>
+<li>将所有<strong>可加的Var</strong>通过正负号变换为相同格式后，对应的所有<code>Var</code>的<strong>系数相同或者互为相反数</strong></li>
+</ul>
+</li>
+<li>举例·<ul>
+<li><code>x</code>与<code>-2*x</code>是可加的</li>
+<li><code>x + sin(x)</code>与<code>-x + sin((-x))</code>是可加的</li>
+<li><code>x + sin(x)</code>与<code>-x - sin((-x))</code>不是可加的</li>
+<li><code>2*sin((x-1))^2</code>与<code>3*sin((1-x))^2</code>是可加的</li>
+<li><code>x + 2*sin((x-1))^2</code>与<code>x + 3*sin((1-x))^2</code>是不可加的</li>
+<li><code>sin((cos((x-1))+1))</code>与<code>-sin((-1-cos((1-x))))</code>是可加的</li>
+<li><code>sin((x^2-cos((x-sin((1-x))))^3-cos((x-sin((1-x))))^1+1-sin((cos((x^2-2*x+1))^2-x+1))^2-sin((cos((x^2-2*x+1))^2-x+1))^3))</code>与<code>sin((x^2-cos((-x-sin((x-1))))^3-cos((-x-sin((x-1))))^1+1-sin((-cos((-x^2+2*x-1))^2+x-1))^2+sin((-cos((-x^2+2*x-1))^2+x-1))^3))</code>是可加的</li>
+</ul>
+</li>
+</ul>
+<p>可以比较容易地看出来，&#x3D;&#x3D;可加&#x3D;&#x3D;的定义满足一种递归的形式，这主要是因为<code>Poly</code>和<code>Var</code>内部是深度耦合的，其对应的数据结构是递归形式的，所以我们设计的某种算法也应该遵循其结构，体现为递归形式</p>
+<h5 id="如何识别同类项"><a href="#如何识别同类项" class="headerlink" title="如何识别同类项"></a>如何识别同类项</h5><p>如果觉得递归麻烦的话可以参考后面的<a href="#%E8%AF%86%E5%88%AB%E5%90%8C%E7%B1%BB%E9%A1%B9%E5%8A%A0%E9%80%9F">近似算法</a></p>
+<p>也许现在我们已经明晰了什么样的结构是&#x3D;&#x3D;可加&#x3D;&#x3D;的，是同类项。但是重要的是我们还需要代码能够知道什么样的结构是&#x3D;&#x3D;可加&#x3D;&#x3D;的，为此我们专门在优化类中定义两个方法</p>
+<ul>
+<li><code>public static boolean canAddVar(Var var1, Var var2)</code></li>
+<li><code>public static boolean canAddPoly(Poly poly1, Poly poly2)</code></li>
+</ul>
+<p>具体实现可以参考以下结构</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1代表两项可加，且数学意义上同号</span></span><br><span class="line"><span class="comment">// -1代表两项可加，且数学意义上异号</span></span><br><span class="line"><span class="comment">// 0代表两项不可加</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">canAddVar</span><span class="params">(Var var1, Var var2)</span> &#123;</span><br><span class="line">    <span class="comment">//若指数不同直接返回</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//若sin集合数目不等直接返回</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//若cos集合数目不等直接返回</span></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断双射只能使用循环了</span></span><br><span class="line">    <span class="keyword">for</span> (Poly poly : var1.sinMap) &#123;</span><br><span class="line">        <span class="comment">//判断var2中sinMap是否有与poly可加的项</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">sign</span> <span class="operator">=</span> contains(var2.sinMap, poly)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//不含则直接返回</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//同理判断cosMap中是否有</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">containsPoly</span><span class="params">(HashMap&lt;?,?&gt;sinMap, Poly poly)</span> &#123;</span><br><span class="line">    <span class="comment">//首先可以检测sinMap中是否含有key</span></span><br><span class="line">    sinMap.containsKey(poly)</span><br><span class="line">    <span class="comment">//还可以判断是否有poly.negate()</span></span><br><span class="line">    sinMap.containsKey(poly.negate())</span><br><span class="line"></span><br><span class="line">    <span class="comment">//若都不存在则可以循环判断是否可加</span></span><br><span class="line">    <span class="keyword">for</span> (Poly other : sinMap) &#123;</span><br><span class="line">        <span class="comment">//适当剪枝</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="type">int</span> <span class="variable">sign</span> <span class="operator">=</span> canAddPoly(poly, other)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">canAddPoly</span><span class="params">(Poly poly1, Poly poly2)</span> &#123;</span><br><span class="line">    <span class="comment">//判别个数等剪枝</span></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> <span class="variable">allSign</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">first</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (Var <span class="keyword">var</span> : poly1.varMap) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> <span class="variable">sign</span> <span class="operator">=</span> containsVar(poly2, <span class="keyword">var</span>)</span><br><span class="line">        <span class="comment">//若不含则直接返回</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">//若符号不符则立即返回</span></span><br><span class="line">        <span class="keyword">if</span> (fisrt) &#123;</span><br><span class="line">            allSign = sign;</span><br><span class="line">            first = <span class="literal">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (allSign != sign) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">containsVar</span><span class="params">(Poly poly, Var <span class="keyword">var</span>)</span> &#123;</span><br><span class="line">    <span class="comment">//适当剪枝</span></span><br><span class="line">    <span class="keyword">for</span> (Var other : poly.varMap) &#123;</span><br><span class="line">        <span class="comment">//适当剪枝</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="type">int</span> <span class="variable">sign</span> <span class="operator">=</span> canAddVar(other, <span class="keyword">var</span>)</span><br><span class="line">        <span class="comment">//不可加返回</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="识别同类项加速"><a href="#识别同类项加速" class="headerlink" title="识别同类项加速"></a>识别同类项加速</h5><p>由于我们识别同类项的式子是一个递归式，最坏的情况可能接近$O(n)$(还是在剪枝相当不错，可以尽早发现两个式子不是同类项的时候，否则大概是$O(n^{n^{n^{…}}})$，这为我们的程序性能带来了极大的打击。为此我们可以通过一些预处理的手段加速我们识别同类项的速度————<strong>尽可能地规定一个范式</strong>，因为我们无法判定含三角函数的一大难点就是同类项可能差异巨大，难以通过一般方式识别</p>
+<p>对于三角函数内可以提出负号的情况例如<code>sin((-x-1))</code>和<code>sin((-x))</code>，我们可以化简为<code>-sin((x+1))</code>和<code>-sin(x)</code>。而且可以看出这样的提出方式显然是有利无害的</p>
+<p>接下来对于有正有负的情况我们到底是提负号还是不提负号呢，答案是比较<code>hash</code>值，其实这样想到主要是因为三角函数内部是<code>Poly</code>，而<code>Poly</code>内部天生的缓存了<code>hash</code>。所以我们可以判断一下<code>Poly</code>和<code>Poly.negate()</code>两个对象那个hash比较大&#x2F;小（规则统一即可），这样我们可以递归地证明大部分情况下是可以正确处理好同类项的</p>
+<p>最后还有一种极为特殊的情况，<code>Poly</code>与<code>Poly.negate()</code>的<code>hash</code>值相等怎么办，那我到底取反还是不取反呢。例如我自己测试时发现<code>cos((x^2-2*x+1))</code>与<code>cos((-x^2+2*x-1))</code>的<code>hash</code>值是相等的，那么此时可以</p>
+<ul>
+<li>使用之前的递归判断方式，增大耗时以求最最最准确的答案</li>
+<li>放弃优化，认为这种情况出现的概率实在是太低了，前面的方案已经足以应对绝大部分情况而且性能极佳<blockquote>
+<p>如何选择全凭个人，但是追求性能的同时不要忽视正确性和程序运行性能，顾此失彼、因小失大并不是明智的选择<br>就像我是选择了最求最最最准确的答案，并对一些极端情况做了测试，效果并不差</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="如何利用可加项化简"><a href="#如何利用可加项化简" class="headerlink" title="如何利用可加项化简"></a>如何利用可加项化简</h5><blockquote>
+<p>若知道<code>expr1</code>与<code>expr2</code>可加，<code>expr3</code>与<code>expr4</code>可加且同号</p>
+</blockquote>
+<ul>
+<li><code>c * 2^i * sin(expr1)^i * cos(expr2)^i</code> (sin二倍角公式)<ul>
+<li><code>c * sin(2*expr1)^i</code></li>
+</ul>
+</li>
+<li><code>c1 * expr3 * sin(expr1)^2 + c2 * expr4 * cos(expr2)^2</code> (平方和公式变形) <ul>
+<li>若<code>c1 == c2</code>，<code>c1/c2 * expr3</code></li>
+<li>若<code>c1 &gt; c2</code>，<code>c2 * expr3 + (c1 - c2) * expr4 * sin(expr1)^2</code></li>
+<li>若<code>c2 &lt; c2</code>，<code>c1 * expr3 + (c2 - c1) * expr4 * cos(expr2)^2</code></li>
+</ul>
+</li>
+<li><code>c1 * expr3 * sin(expr1)^2 - c2 * expr4 * cos(expr2)^2</code> (cos二倍角公式)<ul>
+<li>若<code>c1 == c2</code>，<code>- c2 * expr4 * cos(2*expr2)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-复杂度分析-1"><a href="#3-复杂度分析-1" class="headerlink" title="3.复杂度分析"></a>3.复杂度分析</h3><p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/hw_2_com.png" alt="alt text"></p>
+<ul>
+<li>本次作业的重灾区在三角函数化简部分，由于有大量的剪枝，导致复杂度特别高，看起来较难进一步减少复杂度</li>
+<li>其余上次作业的部分有所改善</li>
+</ul>
+<h3 id="4-bug分析-1"><a href="#4-bug分析-1" class="headerlink" title="4.bug分析"></a>4.bug分析</h3><p>本次作业强测、互测均未出现bug</p>
+<p>值得一提的是，由于本次作业跨度过大，导致就算是A房也是血流成河。房间里大致发现了9个bug左右。有些人的bug太过简单导致经常输出，最后有效刀16刀，总结一下出现的各类bug</p>
+<ul>
+<li>自定义递推函数形参替换问题，使用<strong>replace替换两遍</strong>，这对于<code>f(x, y)</code>是没有问题的，但是对于<code>f(y, x)</code>会导致形参<code>y</code>的实参中的<code>x</code>再次被错误替换</li>
+<li>错误判等条件，有同学的<code>Poly</code>类相等方法是<code>return hashCode() == poly.hashCode()</code>，这个错误是显然的，这位同学并没有考虑<code>hash</code>冲突的情况</li>
+<li>输出调试信息，有一位同学在三角函数化简时会输出<code>extra ....</code>的调试信息</li>
+<li>格式问题，有同学在化简括号过程中<code>sin(-2*x)</code>必要括号未保留</li>
+<li>符号处理不到位，有位同学一边建树一边化简，由于保留符号的地方太多而混淆，导致识别正负号有问题</li>
+</ul>
+<p>惨烈的<code>hw2</code>（），有点可惜的是在周六上午还想到了可以和差化积化简，但是最后由于下午做志愿打消了这个想法，没想到最后强测性能中真的出现了。故在第三次作业中实现了和差化积</p>
+<hr>
+<h2 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h2><h3 id="1-代码架构分析-1"><a href="#1-代码架构分析-1" class="headerlink" title="1.代码架构分析"></a>1.代码架构分析</h3><p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/class_3.png" alt="alt-text"><br>本次作业加入了求导因子和自定义函数因子</p>
+<p>针对自定义函数，可以单纯理解为一个自定义递推函数，这个自定义递推函数只有初始化的函数体，其他直接套用自定义递推函数</p>
+<p>针对求导因子，我将其设置在<code>Poly</code>与<code>Var</code>对象中，因为<code>Poly</code>与<code>Var</code>中已经实现了大部分的化简操作，这样直接对化简完的<code>Poly</code>对象进行求导操作复杂度更低一些，举一个不符合互测限制的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">h(y) = cos(cos(cos(cos(cos(cos(cos(y)))))))</span><br><span class="line">g(x) = sin(sin(sin(sin(sin(sin(sin(h(x))))))))</span><br><span class="line">1</span><br><span class="line">f&#123;0&#125;(x) = cos(cos(cos(cos(cos(cos(x))))))</span><br><span class="line">f&#123;1&#125;(x) = sin(sin(sin(sin(sin(sin(x))))))</span><br><span class="line">f&#123;n&#125;(x) = 1*f&#123;n-1&#125;(h(x)) + 1*f&#123;n-2&#125;(g(x))</span><br><span class="line">dx(f&#123;5&#125;(x) - f&#123;5&#125;(x) + f&#123;5&#125;(x) - f&#123;5&#125;(x) + f&#123;5&#125;(x) - f&#123;5&#125;(x))</span><br><span class="line">&gt;&gt;&gt; 0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果求导因子最后返回表达式的话，大概中间会得到一个特别长的式子，大概率会爆堆。但是如果先对内部进行化简会发现里面实际是0，这样可以减少空间占用</p>
+</blockquote>
+<p>将<code>Poly</code>理解为若干<code>Var</code>相加，<code>Var</code>是由多个基本项相乘</p>
+<ul>
+<li><code>Poly.derive()</code>方法就很简单了，调用<code>Var.derive()</code>相加即可</li>
+<li><code>Var.derive()</code>的实现略显复杂，考虑将<code>Var</code>分为三份<code>x ^ exp</code>、<code>sinMap</code>、<code>cosMap</code>，分别对其求导再运用乘法原则<ul>
+<li>同理对于<code>sinMap</code>和<code>cosMap</code>内部的<code>Poly</code>运用链式法则即可</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-流程分析-2"><a href="#2-流程分析-2" class="headerlink" title="2.流程分析"></a>2.流程分析</h3><p>因为第二次作业中化简表达式不彻底，有三个点性能分为0（），早知道就早点实现和差化积了。所以本次作业加入了如下的化简，并且优化了一下平方和公式的变形</p>
+<h5 id="如何利用可加项化简-续"><a href="#如何利用可加项化简-续" class="headerlink" title="如何利用可加项化简(续)"></a>如何利用可加项化简(续)</h5><blockquote>
+<p>若知道<code>expr1</code>与<code>expr2</code>可加，<code>expr3</code>与<code>expr4</code>可加且同号<br><code>expr5、expr6</code>满足可加，<code>expr7、expr8</code>满足可加</p>
+</blockquote>
+<ul>
+<li><code>c * 2^i * sin(expr1)^i * cos(expr2)^i</code> (sin二倍角公式)<ul>
+<li><code>c * sin(2*expr1)^i</code></li>
+</ul>
+</li>
+<li><code>c1 * expr3 * sin(expr1)^2 + c2 * expr4 * cos(expr2)^2</code> (平方和公式变形 + cos二倍角公式) <ul>
+<li>若<code>c1 == c2</code>，<code>c1/c2 * expr3/expr4</code>(.p.s这个其实是第三种情况的一种剪枝。。。)</li>
+<li>若<code>c1 == -c2</code>， <code>c2 * expr4 * cos(2*expr2/2*expr1)^2</code></li>
+<li>否则<code>c2 * expr4 * cos(expr2)^2 --&gt; c2 * expr4 - c2 * expr4 * sin(expr2)^2</code>然后就可以合并同类项了</li>
+</ul>
+</li>
+<li><code>expr1 * sin(expr5) * cos(expr7) +- expr2 * sin(expr6) * cos(expr8)</code> (sin加减)<ul>
+<li><code>expr1 * sin(expr5 +- expr7)</code></li>
+</ul>
+</li>
+<li><code>expr1 * cos(expr5) * cos(expr7) +- expr2 * sin(expr6) * sin(expr8)</code> (cos加减)<ul>
+<li><code>expr1 * cos(expr5 +- expr7)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-复杂度分析-2"><a href="#3-复杂度分析-2" class="headerlink" title="3.复杂度分析"></a>3.复杂度分析</h3><p><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/hw_3_com.png" alt="alt text"></p>
+<ul>
+<li>同上次，因为三角函数化简需要剪枝的部分实在是太多，导致整片地方都是爆红区。这部分内容极难优化，纯粹是因为三角函数化简操作实在是过分复杂</li>
+</ul>
+<h3 id="4-bug分析-2"><a href="#4-bug分析-2" class="headerlink" title="4.bug分析"></a>4.bug分析</h3><p>本次作业强测、互测均为出现bug<br>首先值得一提的是，测评机出现了bug，导致无法判别化简式与原式是否相等，本人在互测中因此被砍了两刀，不过最后还是撤刀了。其实这也体现出大家自己搭的测评机判等也是有点问题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cos((cos(x) - sin(x))^3)</span><br><span class="line">cos(cos(x)+2*sin(x)^2*cos(x)-sin(x)-2*sin(x)*cos(x)^2)</span><br></pre></td></tr></table></figure>
+<p>不过我认为这是情有可原的，含有三角函数的式子判等本来就相当艰难，在第二次作业的测评机中，我和室友讨论最后决定使用<strong>多次随机点数值计算+误差判断</strong>的方式判断。且使用了相对误差（避免因为计算数值过大导致的绝对误差过大）、<code>1e-7</code>左右的误差是较好的</p>
+<p>但是在第三次作业中发现了一些缺陷，对于部分在0附近突变的函数值，随机点无法很好地去除这些极端点，导致即使是相对误差也会有极大的缺陷。这时陷入了两难的境地，相对误差和绝对误差的效果都很差，所以最后使用的方案是<strong>特高精度随机点数值计算+相对误差&#x2F;绝对误差同时使用</strong></p>
+<ul>
+<li>使用了<code>mpmath</code>库，精度到达了小数点后50位（此处<code>dps</code>和下面的<code>1e-15</code>需要互相配合，否则还是会出现误判的情况）</li>
+<li>对于函数值小于<code>1e-15</code>的值，误差使用绝对误差</li>
+<li>其余使用相对误差</li>
+</ul>
+<p>咳咳，还是说说同房同学的bug，本次找到的bug较少（大家都没啥bug加上被刀了心情不太好（差点破金身了）</p>
+<ul>
+<li>有同学求导对于负号的处理出现问题，反转多次导致bug</li>
+<li>有同学没有考虑到出现<code>h(x, y) = x...</code>这种只出现一个自变量表达式的情况</li>
+<li>有同学深拷贝耗时太多，被sin、cos串卡T了（拿一个房间其他人提交上去的样例），我也整了一个，不过因为cost没交上去，后来想回来改的时候发现被刀了:sob:，所以就结束了悲伤的互测环节（<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">h(x)=cos(cos(cos(cos(x))))</span><br><span class="line">g(x)=cos(cos(cos(cos(h(x)))))</span><br><span class="line">0</span><br><span class="line">cos(cos(cos(cos(cos(cos(g(g(g(x)))))))))</span><br></pre></td></tr></table></figure></li>
+</ul>
 ]]></content>
       <categories>
-        <category>Python</category>
+        <category>OO</category>
       </categories>
       <tags>
-        <tag>Python基础</tag>
-        <tag>字符串</tag>
+        <tag>OO</tag>
       </tags>
   </entry>
   <entry>
@@ -4613,6 +4831,127 @@ __123.34000___
 </ul>
 </li>
 </ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python基础</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python基础--字符串(二)</title>
+    <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
+    <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
+<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
+</ul>
+<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
+<li><code>%s</code><ul>
+<li>适用于为字符串占位，<del>我本来就是啊</del></li>
+</ul>
+</li>
+<li><code>%d</code><ul>
+<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
+</ul>
+</li>
+<li><code>%f</code><ul>
+<li>适用于为浮点数占位</li>
+</ul>
+</li>
+<li><code>.precision</code><ul>
+<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
+</ul>
+</li>
+<li><code>flags</code><ul>
+<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
+<li><code>0</code>，补充前导0</li>
+<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
+<li><code> </code>，方便正数与负数对齐</li>
+<li><code>+</code>，数字补齐符号</li>
+</ul>
+</li>
+<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> 1234 +1234
+-1234 -1234
+  12,  34,  3.10
+12  ,34  ,3.10  
+0012,0234,003.10
+12  ,234 ,3.10  
+</code></pre>
+<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
+<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
+<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
+<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
+<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>利用键值对传入参数，则括号中必须使用key值<ul>
+<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+</ul>
+</li>
+<li>利用键值对和位置进行复杂传参<ul>
+<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
+<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
+<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
+<li><code>fill</code><ul>
+<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
+</ul>
+</li>
+<li><code>align</code><ul>
+<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
+</ul>
+</li>
+<li><code>sign</code><ul>
+<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>最小宽度，默认为字符串长度</li>
+</ul>
+</li>
+<li><code>precision</code><ul>
+<li>控制小数的精度范围，默认是小数点后六位</li>
+</ul>
+</li>
+<li><code>type</code><ul>
+<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code>1___ 000002 $$$$11$$$$
+0012          3     34    
+</code></pre>
+<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
+<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
+<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
+<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>line= &#39;this is a test string&#39;
+a=3
+__123.34000___
+</code></pre>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -4917,7 +5256,7 @@ __123.34000___
   </entry>
   <entry>
     <title>Shell脚本(2)</title>
-    <url>/2025/02/08/Shell_2/</url>
+    <url>/2025/02/09/Shell_2/</url>
     <content><![CDATA[<h1 id="Shell-2"><a href="#Shell-2" class="headerlink" title="Shell(2)"></a>Shell(2)</h1><h2 id="传递参数"><a href="#传递参数" class="headerlink" title="传递参数"></a>传递参数</h2><p>运行脚本时后续可以用空格传递若干参数</p>
 <table>
 <thead>
