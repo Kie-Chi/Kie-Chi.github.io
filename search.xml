@@ -1531,6 +1531,84 @@
       </tags>
   </entry>
   <entry>
+    <title>北航计算机组成P4</title>
+    <url>/2024/11/13/CO_P4/</url>
+    <content><![CDATA[<h1 id="北航计算机组成P4"><a href="#北航计算机组成P4" class="headerlink" title="北航计算机组成P4"></a>北航计算机组成P4</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>咳咳，最近太忙了作业好多啊，搭完CPU每周还要迭代自己的测评机，原来CO也可以训练我们面向对象的能力</li>
+</ul>
+<hr>
+<h2 id="课下"><a href="#课下" class="headerlink" title="课下"></a>课下</h2><ul>
+<li>其实P4就是把P3的电路图翻译成代码，整体上没有难度，如果你P3有好好设计你的CPU的话，<del>没有好好设计的话，就照着学长设计好的CPU翻译</del>，总之也是从一个一个的模块开始搭建，这里不赘述了</li>
+</ul>
+<h3 id="组合逻辑建模"><a href="#组合逻辑建模" class="headerlink" title="组合逻辑建模"></a>组合逻辑建模</h3><ul>
+<li>我啰嗦一两句，最近几年课程组不知道在干什么（<del>明年等我当助教我也要搞得抽象</del>），考试喜欢考一些奇奇怪怪的组合逻辑，所以或许你需要根据你使用的建模逻辑稍微熟练一些Verilog的语法，这样课上的时候或许不会那么慌</li>
+<li>两种组合逻辑建模方式对于写CPU的思路还是有略微不同的，而且各有各的好处，见仁见智了</li>
+</ul>
+<h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a><code>assign</code></h4><ul>
+<li>最大的优点就是简洁、代码量很少，而且就是电路连线，从P3转过来会比较方便<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_add) ? A + B :</span><br><span class="line">                 (ALUOp == `ALU_sub) ? A - B :</span><br><span class="line">                 (ALUOp == `ALU_or) ? A | B :</span><br><span class="line">                 (ALUOp == `ALU_and) ? A &amp; B : <span class="number">32&#x27;b0</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一行就解决了ALU，反正就是挺爽的</li>
+</ul>
+</li>
+<li>缺点是对于复杂逻辑建模比较困难，所以<strong>强烈建议</strong>掌握<code>function</code>和<code>task</code>(这个或许不用嘛)的用法，反正考场上会用到的，比如我随便编一个指令，要求实现<code>gxadd rd, rs, rt</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gray(00): 00</span><br><span class="line">gray(01): 01</span><br><span class="line">gray(10): 11</span><br><span class="line">gray(11): 10</span><br><span class="line"></span><br><span class="line">temp1 &lt;- GPR[rs] + GPR[rt]</span><br><span class="line">for i in range(0,16):</span><br><span class="line">    temp2[2*i+1: 2*i] &lt;- gray(temp1[2*i+1: 2*i])</span><br><span class="line">temp2 &lt;- temp2 ^ temp1</span><br><span class="line">if temp2 &gt; temp1:</span><br><span class="line">    GPR[rd] = temp2</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = temp1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>好，你现在用assign语句把它建模到ALU里面去（），是吧，这个时候<code>function</code>就要发力了，管他三七二十一全部丢进函数里面<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> [<span class="number">1</span>: <span class="number">0</span>] cal_gray;</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] origin;</span><br><span class="line">    <span class="keyword">if</span> (origin == <span class="number">2&#x27;b0</span>) cal_gray = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b1</span>) cal_gray = <span class="number">2&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b10</span>) cal_gray = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">else</span> cal_gray = <span class="number">2&#x27;b10</span>;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
+<li>其实也可以如果你熟悉掩码和格雷码的定义的话，例如<code>gray(x) = x ^ (x &gt;&gt; 1)</code>，又因为两位的二进制右移一位第一位一定是0，所以我们考虑将32位的数字的奇数位覆盖再整体右移，达到一次实现16次2位的异或<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">temp1 = A + B;</span><br><span class="line">temp2 = temp1 &amp; <span class="number">0xaaaaaaaa</span>;</span><br><span class="line"><span class="comment">//0xaaaaaaaa就是....10101010</span></span><br><span class="line"><span class="comment">//反正奇数位就这样被覆盖了</span></span><br><span class="line">temp2 = temp2 &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="comment">//相当于进行了上面的 x &gt;&gt; 1，反正奇数位都是0了</span></span><br><span class="line">temp2 = temp2 ^ temp1</span><br><span class="line"><span class="comment">//最终的temp2就是经历两位gray转化后的数字了</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_gxadd) ? </span><br><span class="line">(( ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) &gt; (A+B) ) ? ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) : (A+B))</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="always"><a href="#always" class="headerlink" title="always@(*)"></a><code>always@(*)</code></h4><ul>
+<li>最大的缺点是代码量可能会比上面大一些，也可能大很多，全面准备吧</li>
+<li>最大的优点就是适合复杂逻辑的建模，比如上面那个瞎编的指令</li>
+<li>不过还是建议掌握<code>function</code>，多好啊，变成纯纯面向过程的语言了</li>
+<li>讲一个经常会用的切片，好玩爱玩<ul>
+<li>假设你现在想要学lb、lh指令取出一个字中的某个字节或者半字，但是不想要一直if-else（考场上不会的话枚举是一个很好的选择），你想到了verilog可以切片<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span> h_adder;</span><br><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span>[<span class="number">1</span>: <span class="number">0</span>] b_adder;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] pos;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">0</span>: <span class="number">31</span>] neg;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"><span class="comment">//pos[b_adder * 8 + 7: b_adder * 8]</span></span><br><span class="line"><span class="comment">//错误用法，Verilog的切片两边要是常数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="comment">//定义高位到低位</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 + 15 取低16位，按照高位到低位排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 取高16位，但是还是按照从高到低排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义从低到高</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同上，但是从低到高排列</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同理</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="课上"><a href="#课上" class="headerlink" title="课上"></a>课上</h2><h3 id="T1-eam"><a href="#T1-eam" class="headerlink" title="T1 eam"></a>T1 eam</h3><ul>
+<li><code>eam $rd, $rs, $rt</code></li>
+<li>R型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ext_imm &lt;- signed(GPR[rs][15: 0])</span><br><span class="line">res &lt;- ext_imm % 17</span><br><span class="line">if signed(GPR[rt]) &lt; 0:</span><br><span class="line">    GPR[rd] = one_ext(res)</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = zero_ext(res)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将rs寄存器低16位截断为有符号数，这个数对17取模得到的<strong>正余数</strong>，然后根据另一个操作数的正负进行1或者0拓展</li>
+</ul>
+</li>
+</ul>
+<h3 id="T2-cptl"><a href="#T2-cptl" class="headerlink" title="T2 cptl"></a>T2 cptl</h3><ul>
+<li><code>cptl $rs, $rt, label</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">temp &lt;- PC + 4 + sign_ext(offset || 00)</span><br><span class="line">PC &lt;- temp</span><br><span class="line"></span><br><span class="line">if GPR[rs][17: 12] == 6&#x27;b111111 || ......GPR[rs][5: 0] == 6&#x27;b111111: </span><br><span class="line">    GPR[rt] &lt;- PC + 4</span><br><span class="line">else:</span><br><span class="line">    GPR[31] &lt;- PC + 4</span><br></pre></td></tr></table></figure>
+<ul>
+<li>跳转类指令，然后链接内容和rs寄存器低18位是否有6个连续的1有关系</li>
+</ul>
+</li>
+</ul>
+<h3 id="T3-olw"><a href="#T3-olw" class="headerlink" title="T3 olw"></a>T3 olw</h3><ul>
+<li><code>olw $rt, offset($base)</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vadder &lt;- GPR[base] + sign_ext(offset || 00)</span><br><span class="line">temp &lt;- Mem[vadder[31: 2]]</span><br><span class="line"></span><br><span class="line">if func(temp):</span><br><span class="line">    GPR[rt] &lt;- temp</span><br><span class="line">else:</span><br><span class="line">    None</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果读出来的数据是单调不减的，那么才写入</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>课上没什么好玩的，第一个指令注意要使用有符号，不然你就会像我一样疑惑了半个小时为什么这么取模都是0然后暴力while循环求余数。。。</li>
+<li>过两天会把P5好好更新的，顺便预告一下测评机，其实写好了，只是想等P6直接做一个流水线全的，over</li>
+<li>先不写题解了，亲爱的小羊找我看视频，我先溜了</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+        <category>课上考试</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>北航计算机组成P3课下</title>
     <url>/2024/10/22/CO_P3/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理P3课下"><a href="#北航计算机组成原理P3课下" class="headerlink" title="北航计算机组成原理P3课下"></a>北航计算机组成原理P3课下</h1><div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P3课下的相关内容，希望能对你有所帮助</p>
@@ -2130,84 +2208,6 @@
       <categories>
         <category>计算机组成原理</category>
         <category>课下复习</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>北航计算机组成P4</title>
-    <url>/2024/11/13/CO_P4/</url>
-    <content><![CDATA[<h1 id="北航计算机组成P4"><a href="#北航计算机组成P4" class="headerlink" title="北航计算机组成P4"></a>北航计算机组成P4</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>咳咳，最近太忙了作业好多啊，搭完CPU每周还要迭代自己的测评机，原来CO也可以训练我们面向对象的能力</li>
-</ul>
-<hr>
-<h2 id="课下"><a href="#课下" class="headerlink" title="课下"></a>课下</h2><ul>
-<li>其实P4就是把P3的电路图翻译成代码，整体上没有难度，如果你P3有好好设计你的CPU的话，<del>没有好好设计的话，就照着学长设计好的CPU翻译</del>，总之也是从一个一个的模块开始搭建，这里不赘述了</li>
-</ul>
-<h3 id="组合逻辑建模"><a href="#组合逻辑建模" class="headerlink" title="组合逻辑建模"></a>组合逻辑建模</h3><ul>
-<li>我啰嗦一两句，最近几年课程组不知道在干什么（<del>明年等我当助教我也要搞得抽象</del>），考试喜欢考一些奇奇怪怪的组合逻辑，所以或许你需要根据你使用的建模逻辑稍微熟练一些Verilog的语法，这样课上的时候或许不会那么慌</li>
-<li>两种组合逻辑建模方式对于写CPU的思路还是有略微不同的，而且各有各的好处，见仁见智了</li>
-</ul>
-<h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a><code>assign</code></h4><ul>
-<li>最大的优点就是简洁、代码量很少，而且就是电路连线，从P3转过来会比较方便<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_add) ? A + B :</span><br><span class="line">                 (ALUOp == `ALU_sub) ? A - B :</span><br><span class="line">                 (ALUOp == `ALU_or) ? A | B :</span><br><span class="line">                 (ALUOp == `ALU_and) ? A &amp; B : <span class="number">32&#x27;b0</span>;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>一行就解决了ALU，反正就是挺爽的</li>
-</ul>
-</li>
-<li>缺点是对于复杂逻辑建模比较困难，所以<strong>强烈建议</strong>掌握<code>function</code>和<code>task</code>(这个或许不用嘛)的用法，反正考场上会用到的，比如我随便编一个指令，要求实现<code>gxadd rd, rs, rt</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gray(00): 00</span><br><span class="line">gray(01): 01</span><br><span class="line">gray(10): 11</span><br><span class="line">gray(11): 10</span><br><span class="line"></span><br><span class="line">temp1 &lt;- GPR[rs] + GPR[rt]</span><br><span class="line">for i in range(0,16):</span><br><span class="line">    temp2[2*i+1: 2*i] &lt;- gray(temp1[2*i+1: 2*i])</span><br><span class="line">temp2 &lt;- temp2 ^ temp1</span><br><span class="line">if temp2 &gt; temp1:</span><br><span class="line">    GPR[rd] = temp2</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = temp1</span><br></pre></td></tr></table></figure>
-<ul>
-<li>好，你现在用assign语句把它建模到ALU里面去（），是吧，这个时候<code>function</code>就要发力了，管他三七二十一全部丢进函数里面<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> [<span class="number">1</span>: <span class="number">0</span>] cal_gray;</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] origin;</span><br><span class="line">    <span class="keyword">if</span> (origin == <span class="number">2&#x27;b0</span>) cal_gray = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b1</span>) cal_gray = <span class="number">2&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b10</span>) cal_gray = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">else</span> cal_gray = <span class="number">2&#x27;b10</span>;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
-<li>其实也可以如果你熟悉掩码和格雷码的定义的话，例如<code>gray(x) = x ^ (x &gt;&gt; 1)</code>，又因为两位的二进制右移一位第一位一定是0，所以我们考虑将32位的数字的奇数位覆盖再整体右移，达到一次实现16次2位的异或<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">temp1 = A + B;</span><br><span class="line">temp2 = temp1 &amp; <span class="number">0xaaaaaaaa</span>;</span><br><span class="line"><span class="comment">//0xaaaaaaaa就是....10101010</span></span><br><span class="line"><span class="comment">//反正奇数位就这样被覆盖了</span></span><br><span class="line">temp2 = temp2 &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="comment">//相当于进行了上面的 x &gt;&gt; 1，反正奇数位都是0了</span></span><br><span class="line">temp2 = temp2 ^ temp1</span><br><span class="line"><span class="comment">//最终的temp2就是经历两位gray转化后的数字了</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_gxadd) ? </span><br><span class="line">(( ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) &gt; (A+B) ) ? ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) : (A+B))</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h4 id="always"><a href="#always" class="headerlink" title="always@(*)"></a><code>always@(*)</code></h4><ul>
-<li>最大的缺点是代码量可能会比上面大一些，也可能大很多，全面准备吧</li>
-<li>最大的优点就是适合复杂逻辑的建模，比如上面那个瞎编的指令</li>
-<li>不过还是建议掌握<code>function</code>，多好啊，变成纯纯面向过程的语言了</li>
-<li>讲一个经常会用的切片，好玩爱玩<ul>
-<li>假设你现在想要学lb、lh指令取出一个字中的某个字节或者半字，但是不想要一直if-else（考场上不会的话枚举是一个很好的选择），你想到了verilog可以切片<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span> h_adder;</span><br><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span>[<span class="number">1</span>: <span class="number">0</span>] b_adder;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] pos;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">0</span>: <span class="number">31</span>] neg;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"><span class="comment">//pos[b_adder * 8 + 7: b_adder * 8]</span></span><br><span class="line"><span class="comment">//错误用法，Verilog的切片两边要是常数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="comment">//定义高位到低位</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 + 15 取低16位，按照高位到低位排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 取高16位，但是还是按照从高到低排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义从低到高</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同上，但是从低到高排列</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同理</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="课上"><a href="#课上" class="headerlink" title="课上"></a>课上</h2><h3 id="T1-eam"><a href="#T1-eam" class="headerlink" title="T1 eam"></a>T1 eam</h3><ul>
-<li><code>eam $rd, $rs, $rt</code></li>
-<li>R型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ext_imm &lt;- signed(GPR[rs][15: 0])</span><br><span class="line">res &lt;- ext_imm % 17</span><br><span class="line">if signed(GPR[rt]) &lt; 0:</span><br><span class="line">    GPR[rd] = one_ext(res)</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = zero_ext(res)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>将rs寄存器低16位截断为有符号数，这个数对17取模得到的<strong>正余数</strong>，然后根据另一个操作数的正负进行1或者0拓展</li>
-</ul>
-</li>
-</ul>
-<h3 id="T2-cptl"><a href="#T2-cptl" class="headerlink" title="T2 cptl"></a>T2 cptl</h3><ul>
-<li><code>cptl $rs, $rt, label</code></li>
-<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">temp &lt;- PC + 4 + sign_ext(offset || 00)</span><br><span class="line">PC &lt;- temp</span><br><span class="line"></span><br><span class="line">if GPR[rs][17: 12] == 6&#x27;b111111 || ......GPR[rs][5: 0] == 6&#x27;b111111: </span><br><span class="line">    GPR[rt] &lt;- PC + 4</span><br><span class="line">else:</span><br><span class="line">    GPR[31] &lt;- PC + 4</span><br></pre></td></tr></table></figure>
-<ul>
-<li>跳转类指令，然后链接内容和rs寄存器低18位是否有6个连续的1有关系</li>
-</ul>
-</li>
-</ul>
-<h3 id="T3-olw"><a href="#T3-olw" class="headerlink" title="T3 olw"></a>T3 olw</h3><ul>
-<li><code>olw $rt, offset($base)</code></li>
-<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vadder &lt;- GPR[base] + sign_ext(offset || 00)</span><br><span class="line">temp &lt;- Mem[vadder[31: 2]]</span><br><span class="line"></span><br><span class="line">if func(temp):</span><br><span class="line">    GPR[rt] &lt;- temp</span><br><span class="line">else:</span><br><span class="line">    None</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果读出来的数据是单调不减的，那么才写入</li>
-</ul>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>课上没什么好玩的，第一个指令注意要使用有符号，不然你就会像我一样疑惑了半个小时为什么这么取模都是0然后暴力while循环求余数。。。</li>
-<li>过两天会把P5好好更新的，顺便预告一下测评机，其实写好了，只是想等P6直接做一个流水线全的，over</li>
-<li>先不写题解了，亲爱的小羊找我看视频，我先溜了</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>课下复习</category>
-        <category>课上考试</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
@@ -4006,6 +4006,78 @@
       </tags>
   </entry>
   <entry>
+    <title>北航计算机组成P2课下</title>
+    <url>/2024/10/15/CO_p2/</url>
+    <content><![CDATA[<h1 id="北航计算机组成原理P2课下"><a href="#北航计算机组成原理P2课下" class="headerlink" title="北航计算机组成原理P2课下"></a>北航计算机组成原理P2课下</h1><div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P2课下的相关内容，希望能对你有所帮助</p>
+</div>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>在分享此次P2附加题做题思路前，我想对于在做题过程中错误和技巧进行总结与反思</li>
+</ul>
+<h3 id="对于栈的使用"><a href="#对于栈的使用" class="headerlink" title="对于栈的使用"></a>对于栈的使用</h3><ul>
+<li>为了使用栈，<del>首先我们要有一个栈</del>，而且对于某些递归程序或者传递参数较多的程序，频繁地对栈指针进行加减操作可能会出现某些难以察觉的问题，所以常常对于入栈和出栈操作封装函数<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.data</span><br><span class="line">  stack: .space 400</span><br><span class="line"></span><br><span class="line">.macro push(%int)</span><br><span class="line">  addi $sp, $sp, -4</span><br><span class="line">  sw %int, $sp</span><br><span class="line">.end_macro</span><br><span class="line"></span><br><span class="line">.macro pop(%int)</span><br><span class="line">  lw %int $sp</span><br><span class="line">  addi $sp, $sp, 4</span><br><span class="line">.end_macro</span><br><span class="line"></span><br><span class="line">.text</span><br><span class="line">  la $sp, stack</span><br><span class="line">  addi $sp, $sp, 400</span><br></pre></td></tr></table></figure></li>
+<li>对于含有多个参数的递归程序，比如汉罗塔问题（四个参数用寄存器其实也还可以），将会使用栈传递和接收参数，同时还需要使用栈保护寄存器，所以可以规定自己的一套规则（在函数的开始接收参数再保存寄存器，调用函数前先保护寄存器再传递参数），总之一定要明白每次出入栈的真正含义，例如对于下面的c语言代码翻译<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">hanoi</span><span class="params">(<span class="type">int</span> base, <span class="type">char</span> from, <span class="type">char</span> via, <span class="type">char</span> to)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (base == <span class="number">0</span>) &#123;</span><br><span class="line">      ...</span><br><span class="line">  &#125;</span><br><span class="line">  hanoi(base - <span class="number">1</span>, from, via, to);</span><br><span class="line">  move(base, from, via);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    push($t0) # 传参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">hanoi:</span><br><span class="line">    pop($t3) # 接收参数</span><br><span class="line">    ...</span><br><span class="line">    push($ra) # 保存返回地址</span><br><span class="line">    </span><br><span class="line">    # if模块</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 取出保留的参数</span><br><span class="line">    ...</span><br><span class="line">    print($t0, $t1, $t2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    pop($ra) # 取出返回地址</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure></li>
+<li>如果你喜欢，可以永远只在调用函数前保留所有的参数，但是我个人比较喜欢在函数的开头保留<code>$ra</code>和<code>$s</code>（不过似乎从来没这样用过），然后在每一个返回的地方<code>pop($ra); jr $ra</code>，这样可以避免出现<code>$ra</code>混乱（可能是叶子函数但是弹了一个不是<code>$ra</code>的值，可能是中间函数使用了上层函数的<code>$ra</code>，莫名其妙出现一些很奇怪的bug）<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">push($ra) # 保存返回地址</span><br><span class="line"></span><br><span class="line">if_begin:</span><br><span class="line">    ...</span><br><span class="line">    pop($ra) # 取出返回地址</span><br><span class="line">    jr $ra</span><br><span class="line"></span><br><span class="line">jal others</span><br><span class="line">...</span><br><span class="line">pop($ra) # 取出返回地址</span><br><span class="line">jr $ra</span><br></pre></td></tr></table></figure></li>
+<li>如果出现了调用栈时的bug可以从顶层模块开始将各个部分拆分出来，例有如下调用关系<code>main -&gt; hanoi -&gt; move/hanoi</code>，我们编写<code>main</code>函数的栈使用时，将假设<code>hanoi</code>等下层的函数正确地使用了栈，所以在调用前后除了传递进去的参数其他部分应该保持完全一致，不必纠结下层函数中间如何使用栈，然后依次向下编写<code>hanoi</code>、<code>move</code>函数，方能条理清晰、面面俱到<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hanoi:</span><br><span class="line"></span><br><span class="line">    push($t0) # 保护寄存器</span><br><span class="line">    push($t1)</span><br><span class="line"></span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    push($t1)</span><br><span class="line"></span><br><span class="line">    jal hanoi # 可以理解除了传递的参数，调用函数前后栈结构不变</span><br><span class="line"></span><br><span class="line">    pop($t1) # 取出保护的寄存器</span><br><span class="line">    pop($t0)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>调用函数前栈内容<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">                                     </span><br><span class="line">                          </span><br><span class="line">                         +-------------+ &lt;-$sp               </span><br><span class="line">                  --&gt;    |  传递参数    |     --&gt;           </span><br><span class="line">+--------+ &lt;-$sp  准备   +-------------+     调用       </span><br><span class="line">| ...    |               |  ...        |               </span><br></pre></td></tr></table></figure></li>
+<li>调用函数后栈内容<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+----------------+ &lt;-$sp</span><br><span class="line">|被调用者保存寄存器| </span><br><span class="line">+----------------+      </span><br><span class="line">|  返回地址       |    --&gt;  </span><br><span class="line">+----------------+    返回  +----------+ &lt;-$sp</span><br><span class="line">|  ...           |          | ...      |</span><br></pre></td></tr></table></figure>
+<a href="http://cscore.buaa.edu.cn/#/problem?ProblemId=330&PieId=1202">MIPS汉罗塔</a><br><a href="http://cscore.buaa.edu.cn/#/problem?ProblemId=53&PieId=1202">MIPS全排列反转</a>(其实是P1课下一摸一样)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="P2-extra-1-1206-33-puzzle"><a href="#P2-extra-1-1206-33-puzzle" class="headerlink" title="P2_extra_1 1206-33 puzzle"></a>P2_extra_1 1206-33 puzzle</h2><ul>
+<li>本题看起来就像DP算法，但是想了好半天也没有找到一个可靠的状态转移方程（我不会算法，我是fw），所以我就正常使用递归来写了<ul>
+<li>首先我们确认探索的起点</li>
+<li>有四个可选择方向，上下左右</li>
+<li>判断向某个方向走是否会出边界</li>
+<li>判断某个方向是否有路，以及是否是此次寻找的完整路径已经走过的结点</li>
+<li>最后以走到的结点为下一次探索的起点<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> matrix[<span class="number">8</span>][<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;  <span class="comment">// 定义矩阵</span></span><br><span class="line"><span class="type">int</span> visited[<span class="number">8</span>][<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;; <span class="comment">// 记录访问状态</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> row, col;</span><br><span class="line"><span class="type">int</span> end_r, end_c;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> s_row, <span class="type">int</span> s_col)</span> &#123;</span><br><span class="line">    <span class="comment">// 找到终点</span></span><br><span class="line">    <span class="keyword">if</span> (s_row == end_r - <span class="number">1</span> &amp;&amp; s_col == end_c - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 四个方向：上、下、左、右</span></span><br><span class="line">    <span class="type">int</span> dir_r[<span class="number">4</span>] = &#123;<span class="number">-1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    <span class="type">int</span> dir_c[<span class="number">4</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    <span class="type">int</span> total = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    visited[s_row][s_col] = <span class="number">1</span>; <span class="comment">// 标记当前节点为已访问</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历四个方向</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        <span class="type">int</span> new_r = s_row + dir_r[i];</span><br><span class="line">        <span class="type">int</span> new_c = s_col + dir_c[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 边界检查</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="number">0</span> &lt;= new_r &amp;&amp; new_r &lt; row &amp;&amp; <span class="number">0</span> &lt;= new_c &amp;&amp; new_c &lt; col) &#123;</span><br><span class="line">            <span class="comment">// 如果该位置没有障碍物且未被访问</span></span><br><span class="line">            <span class="keyword">if</span> (!matrix[new_r][new_c] &amp;&amp; !visited[new_r][new_c] ) &#123;</span><br><span class="line">                total += dfs(new_r, new_c); <span class="comment">// 递归搜索</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    visited[s_row][s_col] = <span class="number">0</span>; <span class="comment">// 回溯，解除当前节点的访问标记</span></span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> start_r, start_c;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输入矩阵的行数和列数</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;row, &amp;col);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读入矩阵</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; row; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; col; j++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;matrix[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输入起点和终点坐标</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d&quot;</span>, &amp;start_r, &amp;start_c, &amp;end_r, &amp;end_c);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用DFS并输出结果</span></span><br><span class="line">    <span class="type">int</span> total_paths = dfs(start_r - <span class="number">1</span>, start_c - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, total_paths);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>这道题翻译大概率不会有<code>$ra</code>的问题，因为虽然我全程使用的是栈传递，但是因为这个递归函数有返回值，所以每次返回前我都需要将返回值压栈，自然会想到返回地址的问题</li>
+<li>但是因为是多个条件的if判断，触发任何一个不满足条件直接跳出即可<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># read in new_r</span><br><span class="line">lw $t4, dir_r($t3)</span><br><span class="line">add $t4, $t4, $t0</span><br><span class="line"></span><br><span class="line"># 0 &lt;= new_r</span><br><span class="line">slt $t5 ,$t4, $zero </span><br><span class="line">bne $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># new_r &lt; row</span><br><span class="line">slt $t5, $t4, $s0 </span><br><span class="line">beq $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># read in new_c</span><br><span class="line">lw $t3, dir_c($t3) </span><br><span class="line">add $t3, $t3, $t1</span><br><span class="line"></span><br><span class="line"># 0 &lt;= new_c</span><br><span class="line">slt $t5, $t3, $zero </span><br><span class="line">bne $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># new_c &lt; col</span><br><span class="line">slt $t5, $t3, $s1 # new</span><br><span class="line">beq $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># !matrix[i][j]</span><br><span class="line">read_matrix($t4, $t3, $s1, $t5)</span><br><span class="line">bne $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># !visited[i][j]</span><br><span class="line">read_visited($t4, $t3, $s1, $t5)</span><br><span class="line">bne $t5, $zero, if_end_2</span><br></pre></td></tr></table></figure></li>
+<li>虽然我没找到DP的写法，但是可以开一个数组<code>path[i][j]</code>表示<code>(i,j)</code>位置到<code>(end_r,end_c)</code>的路径数，这样如果这个值不是0就可以不用继续递归了，效率应该还是略低于DP（如果有的话），<strong>请教我DP！！！</strong></li>
+</ul>
+<hr>
+<h2 id="p2-extra-1-1206-418-factorial"><a href="#p2-extra-1-1206-418-factorial" class="headerlink" title="p2_extra_1 1206-418 factorial"></a>p2_extra_1 1206-418 factorial</h2><ul>
+<li>高精度！！！</li>
+<li>本题应该纯粹是考察高精度的，目测数据不强，<del>毕竟我只能算不到600位也过了</del>，测试数据应该是远远没有1000位的</li>
+<li>如果你选了6系人都爱的oop，你一定很喜欢java；如果你喜欢java，你就会知道里面有一个很有趣的类<code>BigInteger</code><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> signum; <span class="comment">//存储数字符号</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span>[] mag; <span class="comment">//存储二进制块</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>BigInteger</code>将大数字分为若干二进制块(unsigned)，动态调整存储这些二进制块的数组，<code>BigInteger</code>理论上可以表示任意大的数字（受限于java数组只能开<code>Integer.MAX_VALUE</code>大小，所以最大大概可以表示 $ (2 \times 2147483648) ^ {2147483648} $ </li>
+<li>显然，<code>BigInteger</code>挑选了一个很大的值作为基准，所以我们可以参考它的思想，也像它这样存储大数，不过因为我们<del>没有java那么nb</del>，我们算乘法的值不能超过32位，所以<code>base</code>可以适当地取得小一点例如我取了<code>10000</code>也就是每一个进制块只能表示<code>0 ~ 9999</code></li>
+</ul>
+</li>
+<li>最后，似乎大数乘法也有若干很神奇的优化，像什么<code>FFT</code>、<code>Karatsuba</code>什么什么算法，太高大上了看不懂怎么实现的（<del>找了一段<code>FFT + Karatsuba</code>的诡异代码</del>，明明每个操作都认识，放一起这么出来了这么奇怪的代码）</li>
+<li>所以我使用了最最朴素的乘法<code>*</code><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BASE 1000</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">multiply</span><span class="params">(<span class="type">int</span> mag[], <span class="type">int</span> *mag_size, <span class="type">int</span> num)</span> &#123;</span><br><span class="line">    <span class="type">int</span> carry = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; *mag_size; i++) &#123;</span><br><span class="line">        <span class="type">int</span> prod = mag[i] * num + carry;</span><br><span class="line">        mag[i] = prod % BASE;</span><br><span class="line">        carry = prod / BASE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (carry) &#123;</span><br><span class="line">        mag[(*mag_size)++] = carry % BASE;</span><br><span class="line">        carry /= BASE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>一个提醒<ul>
+<li>最开始我一直有一个点没过，我以为有一个超级超级强的数据，而且还放在第一个，<del>差点就回去看<code>FFT + Karatsuba</code></del>，后来发现我使用的<code>beq</code>指令，如果碰见计算<code>0!</code>下面这样的情况循环21亿多次才会结束（<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read_in($s0) # 读入n</span><br><span class="line">li $t0, 2 # 从2的阶乘开始算</span><br><span class="line">addi $s0, $s0, 1 # n = n + 1</span><br><span class="line"></span><br><span class="line">for_i_begin:</span><br><span class="line">    beq $t0, $s0, for_i_end</span><br><span class="line">for_i_end:</span><br></pre></td></tr></table></figure></li>
+<li>数据还是很弱的，没有真的到1000位，主要还是考查高精度吧，助教们真好</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="鬼点子"><a href="#鬼点子" class="headerlink" title="鬼点子"></a>鬼点子</h3><ul>
+<li>接下来的一切内容全部不保真，<del>仅供学习和交流使用</del></li>
+<li>例如上面两道附加题，大概都是需要自己写出C语言代码再进行翻译，当然不乏有巨佬完全不需要这样orz，所以是否可以使用gcc编译器汇编并用objdump进行反汇编得到汇编代码<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -O3 -funroll-loops -finline-functions -fomit-frame-pointer -march=native factorial.c -o factorial</span><br><span class="line">objdump -d factorial</span><br></pre></td></tr></table></figure></li>
+<li>然后观察生成的<code>x86-64</code>代码的思路，或者<del>直接将其修改为mips汇编</del>，感觉有可行性，但是不多，不过可以使用gcc编译器学一学汇编是真的，可以看编译器会这么使用寄存器和栈来实现一个结构、函数之类的</li>
+<li>不过也许或者大概可能课上不会出现强优化的题目？（味精）</li>
+</ul>
+<hr>
+<h2 id="P2推荐题目"><a href="#P2推荐题目" class="headerlink" title="P2推荐题目"></a>P2推荐题目</h2><p><a href="https://kie-chi.github.io/2024/10/09/CO_P2_extra/">偷摸地夹带私货</a></p>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>北航计算机组成P7</title>
     <url>/2024/12/08/CO_P7/</url>
     <content><![CDATA[<h1 id="北航计组组成P7"><a href="#北航计组组成P7" class="headerlink" title="北航计组组成P7"></a>北航计组组成P7</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
@@ -4206,75 +4278,124 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P2课下</title>
-    <url>/2024/10/15/CO_p2/</url>
-    <content><![CDATA[<h1 id="北航计算机组成原理P2课下"><a href="#北航计算机组成原理P2课下" class="headerlink" title="北航计算机组成原理P2课下"></a>北航计算机组成原理P2课下</h1><div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P2课下的相关内容，希望能对你有所帮助</p>
-</div>
+    <title>Python基础--字符串(二)</title>
+    <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
+    <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
+<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
+</ul>
+<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
+<li><code>%s</code><ul>
+<li>适用于为字符串占位，<del>我本来就是啊</del></li>
+</ul>
+</li>
+<li><code>%d</code><ul>
+<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
+</ul>
+</li>
+<li><code>%f</code><ul>
+<li>适用于为浮点数占位</li>
+</ul>
+</li>
+<li><code>.precision</code><ul>
+<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
+</ul>
+</li>
+<li><code>flags</code><ul>
+<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
+<li><code>0</code>，补充前导0</li>
+<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
+<li><code> </code>，方便正数与负数对齐</li>
+<li><code>+</code>，数字补齐符号</li>
+</ul>
+</li>
+<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>在分享此次P2附加题做题思路前，我想对于在做题过程中错误和技巧进行总结与反思</li>
+<pre><code> 1234 +1234
+-1234 -1234
+  12,  34,  3.10
+12  ,34  ,3.10  
+0012,0234,003.10
+12  ,234 ,3.10  
+</code></pre>
+<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
+<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
+<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
+<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
 </ul>
-<h3 id="对于栈的使用"><a href="#对于栈的使用" class="headerlink" title="对于栈的使用"></a>对于栈的使用</h3><ul>
-<li>为了使用栈，<del>首先我们要有一个栈</del>，而且对于某些递归程序或者传递参数较多的程序，频繁地对栈指针进行加减操作可能会出现某些难以察觉的问题，所以常常对于入栈和出栈操作封装函数<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.data</span><br><span class="line">  stack: .space 400</span><br><span class="line"></span><br><span class="line">.macro push(%int)</span><br><span class="line">  addi $sp, $sp, -4</span><br><span class="line">  sw %int, $sp</span><br><span class="line">.end_macro</span><br><span class="line"></span><br><span class="line">.macro pop(%int)</span><br><span class="line">  lw %int $sp</span><br><span class="line">  addi $sp, $sp, 4</span><br><span class="line">.end_macro</span><br><span class="line"></span><br><span class="line">.text</span><br><span class="line">  la $sp, stack</span><br><span class="line">  addi $sp, $sp, 400</span><br></pre></td></tr></table></figure></li>
-<li>对于含有多个参数的递归程序，比如汉罗塔问题（四个参数用寄存器其实也还可以），将会使用栈传递和接收参数，同时还需要使用栈保护寄存器，所以可以规定自己的一套规则（在函数的开始接收参数再保存寄存器，调用函数前先保护寄存器再传递参数），总之一定要明白每次出入栈的真正含义，例如对于下面的c语言代码翻译<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">hanoi</span><span class="params">(<span class="type">int</span> base, <span class="type">char</span> from, <span class="type">char</span> via, <span class="type">char</span> to)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (base == <span class="number">0</span>) &#123;</span><br><span class="line">      ...</span><br><span class="line">  &#125;</span><br><span class="line">  hanoi(base - <span class="number">1</span>, from, via, to);</span><br><span class="line">  move(base, from, via);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    push($t0) # 传参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">hanoi:</span><br><span class="line">    pop($t3) # 接收参数</span><br><span class="line">    ...</span><br><span class="line">    push($ra) # 保存返回地址</span><br><span class="line">    </span><br><span class="line">    # if模块</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 取出保留的参数</span><br><span class="line">    ...</span><br><span class="line">    print($t0, $t1, $t2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    pop($ra) # 取出返回地址</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure></li>
-<li>如果你喜欢，可以永远只在调用函数前保留所有的参数，但是我个人比较喜欢在函数的开头保留<code>$ra</code>和<code>$s</code>（不过似乎从来没这样用过），然后在每一个返回的地方<code>pop($ra); jr $ra</code>，这样可以避免出现<code>$ra</code>混乱（可能是叶子函数但是弹了一个不是<code>$ra</code>的值，可能是中间函数使用了上层函数的<code>$ra</code>，莫名其妙出现一些很奇怪的bug）<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">push($ra) # 保存返回地址</span><br><span class="line"></span><br><span class="line">if_begin:</span><br><span class="line">    ...</span><br><span class="line">    pop($ra) # 取出返回地址</span><br><span class="line">    jr $ra</span><br><span class="line"></span><br><span class="line">jal others</span><br><span class="line">...</span><br><span class="line">pop($ra) # 取出返回地址</span><br><span class="line">jr $ra</span><br></pre></td></tr></table></figure></li>
-<li>如果出现了调用栈时的bug可以从顶层模块开始将各个部分拆分出来，例有如下调用关系<code>main -&gt; hanoi -&gt; move/hanoi</code>，我们编写<code>main</code>函数的栈使用时，将假设<code>hanoi</code>等下层的函数正确地使用了栈，所以在调用前后除了传递进去的参数其他部分应该保持完全一致，不必纠结下层函数中间如何使用栈，然后依次向下编写<code>hanoi</code>、<code>move</code>函数，方能条理清晰、面面俱到<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hanoi:</span><br><span class="line"></span><br><span class="line">    push($t0) # 保护寄存器</span><br><span class="line">    push($t1)</span><br><span class="line"></span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    push($t1)</span><br><span class="line"></span><br><span class="line">    jal hanoi # 可以理解除了传递的参数，调用函数前后栈结构不变</span><br><span class="line"></span><br><span class="line">    pop($t1) # 取出保护的寄存器</span><br><span class="line">    pop($t0)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>调用函数前栈内容<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">                                     </span><br><span class="line">                          </span><br><span class="line">                         +-------------+ &lt;-$sp               </span><br><span class="line">                  --&gt;    |  传递参数    |     --&gt;           </span><br><span class="line">+--------+ &lt;-$sp  准备   +-------------+     调用       </span><br><span class="line">| ...    |               |  ...        |               </span><br></pre></td></tr></table></figure></li>
-<li>调用函数后栈内容<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+----------------+ &lt;-$sp</span><br><span class="line">|被调用者保存寄存器| </span><br><span class="line">+----------------+      </span><br><span class="line">|  返回地址       |    --&gt;  </span><br><span class="line">+----------------+    返回  +----------+ &lt;-$sp</span><br><span class="line">|  ...           |          | ...      |</span><br></pre></td></tr></table></figure>
-<a href="http://cscore.buaa.edu.cn/#/problem?ProblemId=330&PieId=1202">MIPS汉罗塔</a><br><a href="http://cscore.buaa.edu.cn/#/problem?ProblemId=53&PieId=1202">MIPS全排列反转</a>(其实是P1课下一摸一样)</li>
+</li>
+<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
+<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>利用键值对传入参数，则括号中必须使用key值<ul>
+<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+</ul>
+</li>
+<li>利用键值对和位置进行复杂传参<ul>
+<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
 </ul>
 </li>
 </ul>
-<hr>
-<h2 id="P2-extra-1-1206-33-puzzle"><a href="#P2-extra-1-1206-33-puzzle" class="headerlink" title="P2_extra_1 1206-33 puzzle"></a>P2_extra_1 1206-33 puzzle</h2><ul>
-<li>本题看起来就像DP算法，但是想了好半天也没有找到一个可靠的状态转移方程（我不会算法，我是fw），所以我就正常使用递归来写了<ul>
-<li>首先我们确认探索的起点</li>
-<li>有四个可选择方向，上下左右</li>
-<li>判断向某个方向走是否会出边界</li>
-<li>判断某个方向是否有路，以及是否是此次寻找的完整路径已经走过的结点</li>
-<li>最后以走到的结点为下一次探索的起点<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> matrix[<span class="number">8</span>][<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;  <span class="comment">// 定义矩阵</span></span><br><span class="line"><span class="type">int</span> visited[<span class="number">8</span>][<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;; <span class="comment">// 记录访问状态</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> row, col;</span><br><span class="line"><span class="type">int</span> end_r, end_c;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> s_row, <span class="type">int</span> s_col)</span> &#123;</span><br><span class="line">    <span class="comment">// 找到终点</span></span><br><span class="line">    <span class="keyword">if</span> (s_row == end_r - <span class="number">1</span> &amp;&amp; s_col == end_c - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 四个方向：上、下、左、右</span></span><br><span class="line">    <span class="type">int</span> dir_r[<span class="number">4</span>] = &#123;<span class="number">-1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    <span class="type">int</span> dir_c[<span class="number">4</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    <span class="type">int</span> total = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    visited[s_row][s_col] = <span class="number">1</span>; <span class="comment">// 标记当前节点为已访问</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历四个方向</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        <span class="type">int</span> new_r = s_row + dir_r[i];</span><br><span class="line">        <span class="type">int</span> new_c = s_col + dir_c[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 边界检查</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="number">0</span> &lt;= new_r &amp;&amp; new_r &lt; row &amp;&amp; <span class="number">0</span> &lt;= new_c &amp;&amp; new_c &lt; col) &#123;</span><br><span class="line">            <span class="comment">// 如果该位置没有障碍物且未被访问</span></span><br><span class="line">            <span class="keyword">if</span> (!matrix[new_r][new_c] &amp;&amp; !visited[new_r][new_c] ) &#123;</span><br><span class="line">                total += dfs(new_r, new_c); <span class="comment">// 递归搜索</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    visited[s_row][s_col] = <span class="number">0</span>; <span class="comment">// 回溯，解除当前节点的访问标记</span></span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> start_r, start_c;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输入矩阵的行数和列数</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;row, &amp;col);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读入矩阵</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; row; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; col; j++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;matrix[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输入起点和终点坐标</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d&quot;</span>, &amp;start_r, &amp;start_c, &amp;end_r, &amp;end_c);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用DFS并输出结果</span></span><br><span class="line">    <span class="type">int</span> total_paths = dfs(start_r - <span class="number">1</span>, start_c - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, total_paths);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
+<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
+<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
+<li><code>fill</code><ul>
+<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
 </ul>
 </li>
-<li>这道题翻译大概率不会有<code>$ra</code>的问题，因为虽然我全程使用的是栈传递，但是因为这个递归函数有返回值，所以每次返回前我都需要将返回值压栈，自然会想到返回地址的问题</li>
-<li>但是因为是多个条件的if判断，触发任何一个不满足条件直接跳出即可<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># read in new_r</span><br><span class="line">lw $t4, dir_r($t3)</span><br><span class="line">add $t4, $t4, $t0</span><br><span class="line"></span><br><span class="line"># 0 &lt;= new_r</span><br><span class="line">slt $t5 ,$t4, $zero </span><br><span class="line">bne $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># new_r &lt; row</span><br><span class="line">slt $t5, $t4, $s0 </span><br><span class="line">beq $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># read in new_c</span><br><span class="line">lw $t3, dir_c($t3) </span><br><span class="line">add $t3, $t3, $t1</span><br><span class="line"></span><br><span class="line"># 0 &lt;= new_c</span><br><span class="line">slt $t5, $t3, $zero </span><br><span class="line">bne $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># new_c &lt; col</span><br><span class="line">slt $t5, $t3, $s1 # new</span><br><span class="line">beq $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># !matrix[i][j]</span><br><span class="line">read_matrix($t4, $t3, $s1, $t5)</span><br><span class="line">bne $t5, $zero, if_end_2</span><br><span class="line"></span><br><span class="line"># !visited[i][j]</span><br><span class="line">read_visited($t4, $t3, $s1, $t5)</span><br><span class="line">bne $t5, $zero, if_end_2</span><br></pre></td></tr></table></figure></li>
-<li>虽然我没找到DP的写法，但是可以开一个数组<code>path[i][j]</code>表示<code>(i,j)</code>位置到<code>(end_r,end_c)</code>的路径数，这样如果这个值不是0就可以不用继续递归了，效率应该还是略低于DP（如果有的话），<strong>请教我DP！！！</strong></li>
-</ul>
-<hr>
-<h2 id="p2-extra-1-1206-418-factorial"><a href="#p2-extra-1-1206-418-factorial" class="headerlink" title="p2_extra_1 1206-418 factorial"></a>p2_extra_1 1206-418 factorial</h2><ul>
-<li>高精度！！！</li>
-<li>本题应该纯粹是考察高精度的，目测数据不强，<del>毕竟我只能算不到600位也过了</del>，测试数据应该是远远没有1000位的</li>
-<li>如果你选了6系人都爱的oop，你一定很喜欢java；如果你喜欢java，你就会知道里面有一个很有趣的类<code>BigInteger</code><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> signum; <span class="comment">//存储数字符号</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span>[] mag; <span class="comment">//存储二进制块</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>BigInteger</code>将大数字分为若干二进制块(unsigned)，动态调整存储这些二进制块的数组，<code>BigInteger</code>理论上可以表示任意大的数字（受限于java数组只能开<code>Integer.MAX_VALUE</code>大小，所以最大大概可以表示 $ (2 \times 2147483648) ^ {2147483648} $ </li>
-<li>显然，<code>BigInteger</code>挑选了一个很大的值作为基准，所以我们可以参考它的思想，也像它这样存储大数，不过因为我们<del>没有java那么nb</del>，我们算乘法的值不能超过32位，所以<code>base</code>可以适当地取得小一点例如我取了<code>10000</code>也就是每一个进制块只能表示<code>0 ~ 9999</code></li>
+<li><code>align</code><ul>
+<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
 </ul>
 </li>
-<li>最后，似乎大数乘法也有若干很神奇的优化，像什么<code>FFT</code>、<code>Karatsuba</code>什么什么算法，太高大上了看不懂怎么实现的（<del>找了一段<code>FFT + Karatsuba</code>的诡异代码</del>，明明每个操作都认识，放一起这么出来了这么奇怪的代码）</li>
-<li>所以我使用了最最朴素的乘法<code>*</code><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BASE 1000</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">multiply</span><span class="params">(<span class="type">int</span> mag[], <span class="type">int</span> *mag_size, <span class="type">int</span> num)</span> &#123;</span><br><span class="line">    <span class="type">int</span> carry = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; *mag_size; i++) &#123;</span><br><span class="line">        <span class="type">int</span> prod = mag[i] * num + carry;</span><br><span class="line">        mag[i] = prod % BASE;</span><br><span class="line">        carry = prod / BASE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (carry) &#123;</span><br><span class="line">        mag[(*mag_size)++] = carry % BASE;</span><br><span class="line">        carry /= BASE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>一个提醒<ul>
-<li>最开始我一直有一个点没过，我以为有一个超级超级强的数据，而且还放在第一个，<del>差点就回去看<code>FFT + Karatsuba</code></del>，后来发现我使用的<code>beq</code>指令，如果碰见计算<code>0!</code>下面这样的情况循环21亿多次才会结束（<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read_in($s0) # 读入n</span><br><span class="line">li $t0, 2 # 从2的阶乘开始算</span><br><span class="line">addi $s0, $s0, 1 # n = n + 1</span><br><span class="line"></span><br><span class="line">for_i_begin:</span><br><span class="line">    beq $t0, $s0, for_i_end</span><br><span class="line">for_i_end:</span><br></pre></td></tr></table></figure></li>
-<li>数据还是很弱的，没有真的到1000位，主要还是考查高精度吧，助教们真好</li>
+<li><code>sign</code><ul>
+<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>最小宽度，默认为字符串长度</li>
+</ul>
+</li>
+<li><code>precision</code><ul>
+<li>控制小数的精度范围，默认是小数点后六位</li>
+</ul>
+</li>
+<li><code>type</code><ul>
+<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
 </ul>
 </li>
 </ul>
-<hr>
-<h3 id="鬼点子"><a href="#鬼点子" class="headerlink" title="鬼点子"></a>鬼点子</h3><ul>
-<li>接下来的一切内容全部不保真，<del>仅供学习和交流使用</del></li>
-<li>例如上面两道附加题，大概都是需要自己写出C语言代码再进行翻译，当然不乏有巨佬完全不需要这样orz，所以是否可以使用gcc编译器汇编并用objdump进行反汇编得到汇编代码<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -O3 -funroll-loops -finline-functions -fomit-frame-pointer -march=native factorial.c -o factorial</span><br><span class="line">objdump -d factorial</span><br></pre></td></tr></table></figure></li>
-<li>然后观察生成的<code>x86-64</code>代码的思路，或者<del>直接将其修改为mips汇编</del>，感觉有可行性，但是不多，不过可以使用gcc编译器学一学汇编是真的，可以看编译器会这么使用寄存器和栈来实现一个结构、函数之类的</li>
-<li>不过也许或者大概可能课上不会出现强优化的题目？（味精）</li>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code>1___ 000002 $$$$11$$$$
+0012          3     34    
+</code></pre>
+<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
+<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
+<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
+<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
 </ul>
-<hr>
-<h2 id="P2推荐题目"><a href="#P2推荐题目" class="headerlink" title="P2推荐题目"></a>P2推荐题目</h2><p><a href="https://kie-chi.github.io/2024/10/09/CO_P2_extra/">偷摸地夹带私货</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>line= &#39;this is a test string&#39;
+a=3
+__123.34000___
+</code></pre>
 ]]></content>
       <categories>
-        <category>计算机组成原理</category>
-        <category>课下复习</category>
+        <category>Python</category>
       </categories>
       <tags>
-        <tag>计算机组成原理</tag>
+        <tag>Python基础</tag>
+        <tag>字符串</tag>
       </tags>
   </entry>
   <entry>
@@ -4399,13 +4520,17 @@
 <li><code>Lexer</code>构造方法因为有很多条件分支，导致所有都爆红</li>
 <li><code>Poly.toString</code>由于也是有将<strong>正数项</strong>提前，导致复杂度偏高</li>
 </ul>
-<h3 id="4-bug分析"><a href="#4-bug分析" class="headerlink" title="4.bug分析"></a>4.bug分析</h3><p>本次作业强测、互测均为出现bug</p>
-<h2 id="由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题-构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的"><a href="#由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题-构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的" class="headerlink" title="由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题- 构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的"></a>由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题<br>- 构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的</h2><h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><h3 id="1-架构设计"><a href="#1-架构设计" class="headerlink" title="1.架构设计"></a>1.架构设计</h3><p>就上次作业而言，本次作业新加入<code>递推函数</code>与<code>三角函数因子</code>，难度跨度相较前几年应该是较大，大概是从<code>hw1</code>跳转<code>hw3</code>左右。递推函数实则原先自定义函数+嵌套调用，三角函数内因子类型不限制，化简难度较大<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/class_2.png" alt="alt-text"><br>(.p.s虽然说<del>字符串替换是陋习</del>，但是在语法树层面的替换容易出现一些神奇的问题，比如形参的实参是形参。。。，除了递归搜索替换也没有其他好的方法)<br><code>funcDefiner类</code></p>
+<h3 id="4-bug分析"><a href="#4-bug分析" class="headerlink" title="4.bug分析"></a>4.bug分析</h3><p>本次作业强测、互测均为出现bug<br>由于本次作业是第一次迭代作业，主要搭好解析表达式的框架，作业中要求的多项式、单项式的结构也并不复杂，且显然存在最优解，故本次作业细心就不会出现任何问题</p>
+<ul>
+<li>构造数据后可以直接使用sympy对拍，对于多项式的处理sympy还是比较擅长的</li>
+</ul>
+<hr>
+<h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><h3 id="1-架构设计"><a href="#1-架构设计" class="headerlink" title="1.架构设计"></a>1.架构设计</h3><p>就上次作业而言，本次作业新加入<code>递推函数</code>与<code>三角函数因子</code>，难度跨度相较前几年应该是较大，大概是从<code>hw1</code>跳转<code>hw3</code>左右。递推函数实则原先自定义函数+嵌套调用，三角函数内因子类型不限制，化简难度较大<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/oo_images/class_2.png" alt="alt-text"><br>(.p.s虽然说<del>字符串替换是陋习</del>，但是在语法树层面的替换容易出现一些神奇的问题，比如形参的实参是形参。。。，除了递归搜索替换也没有其他好的方法)<br><code>funcDefiner类</code></p>
 <ul>
 <li>定义为工具类，内部全为静态方法</li>
-<li>存储所有递推函数信息（预防迭代）<br>
-
-  <code>funcMap: HashMap&lt;String, HashMap&lt;String, String&gt;&gt;</code><ul>
+<li>存储所有递推函数信息（预防迭代）<ul>
+<li><p><strong><code>funcMap: HashMap&lt;String, HashMap&lt;String, String&gt;&gt;</code></strong></p>
+<ul>
 <li>将函数名，与调用信息存起来</li>
 <li>第一步映射<code>函数名 -&gt; 函数体</code>，为了防止多个递推函数，使用<code>HashMap</code>存储</li>
 <li>第二步，针对不同情况下<code>n</code>的取值确定函数体，同样使用<code>HashMap</code>存储</li>
@@ -4425,47 +4550,55 @@
 <li>获取函数<code>g</code>的0的值 -&gt; <code>funcMap.get(&quot;g&quot;).get(&quot;0&quot;)</code></li>
 </ul>
 </li>
+<li><p><strong><code>paraMap: HashMap&lt;String, ArrayList&lt;String&gt;&gt;</code></strong></p>
+<ul>
+<li>将函数名，与形参列表存起来</li>
+<li><code>函数名 -&gt; 形参列表</code></li>
 </ul>
-<br>
-
-<pre><code>`paraMap: HashMap&lt;String, ArrayList&lt;String&gt;&gt;`
-- 将函数名，与形参列表存起来
-- `函数名 -&gt; 形参列表`
-</code></pre>
-<br>
-
-<pre><code>`setFunc(Scanner)`
-- 根据传入的`n`、三个递推式子，收集函数信息
-- 记得预处理，去除空白符号以及可能的连续正负号
-</code></pre>
-<br>
-
-<pre><code>`callFunc(funcName, n, Actualparas)`
-- `funcName`传入此次需要调用的函数
-- `n`传入此次递归函数的索引值`f&#123;3&#125;... -&gt; &quot;3&quot;...`
-- 若`n`不为`0 or 1`，否则直接使用函数体即可
-  - 找到函数体中所有`n`的位置，根据`n`位置后的符号与数字替换
-  - `n=3`,`f&#123;n-1&#125;(x,y^2)+f&#123;n-2&#125;(x^2,y)`
-    - `f&#123;2&#125;(x,y^2)+f&#123;1&#125;(x^2,y)`
-- 将形参替换为实参
-  - `ActualParas = [Factor1, Factor2]` 使用表达式因子，原因在后面，**使用Poly对象的`toString()`，因为有些情况可以化简，如果直接输出可能会卡爆堆**
-- &lt;font color=red&gt;记忆化递归：&lt;/font&gt;这里的递归我们`funcMap`没有存储`0,1,n`之外的值，事实上我们计算一个表达式的函数体可以先查表例如`3`，显然不在表内，所以根据`f&#123;n&#125;...`的递推式计算出`f&#123;3&#125;`对应的函数体，**然后把3加入表内，这样我们的表就变为`0,1,3,n`了**，下次需要使用`f&#123;3&#125;`时只需要查表即可，不需要重复替换
-</code></pre>
-<br>
-
-<pre><code>`parseFuncFactor`
-- 读入函数名、还有此次的n值
-- 读入实参列表时，请使用`parseExpr`后封装为`ExprFactor`，因为原有形参可能是幂函数，被替换一次后将不再是因子
-- `f&#123;n&#125;(x, y) = f&#123;n-1&#125;(x^2, y) + f&#123;n-2&#125;(x, y^2)`
-- 求`f&#123;3&#125;((x+1), x)`时
-- `n=3: (x+1), x`实参为表达式因子
-- `n=2: (x+1)^2, x; (x+1), x^2`出现非因子项，只能使用表达式表示
-</code></pre>
-<br>
-
-<pre><code>`ParaFactor`
-- 为了提高封装性，可以新建类代表实参因子，其他同理
-</code></pre>
+</li>
+<li><p><strong><code>setFunc(Scanner)</code></strong></p>
+<ul>
+<li>根据传入的<code>n</code>、三个递推式子，收集函数信息</li>
+<li>记得预处理，去除空白符号以及可能的连续正负号</li>
+</ul>
+</li>
+<li><p><strong><code>callFunc(funcName, n, Actualparas)</code></strong></p>
+<ul>
+<li><code>funcName</code>传入此次需要调用的函数</li>
+<li><code>n</code>传入此次递归函数的索引值<code>f&#123;3&#125;... -&gt; &quot;3&quot;...</code></li>
+<li>若<code>n</code>不为<code>0 or 1</code>，否则直接使用函数体即可<ul>
+<li>找到函数体中所有<code>n</code>的位置，根据<code>n</code>位置后的符号与数字替换</li>
+<li><code>n=3</code>,<code>f&#123;n-1&#125;(x,y^2)+f&#123;n-2&#125;(x^2,y)</code><ul>
+<li><code>f&#123;2&#125;(x,y^2)+f&#123;1&#125;(x^2,y)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>将形参替换为实参<ul>
+<li><code>ActualParas = [Factor1, Factor2]</code> 使用表达式因子，原因在后面，<strong>使用Poly对象的<code>toString()</code>，因为有些情况可以化简，如果直接输出可能会卡爆堆</strong></li>
+</ul>
+</li>
+<li><font color=red>记忆化递归：</font>这里的递归我们<code>funcMap</code>没有存储<code>0,1,n</code>之外的值，事实上我们计算一个表达式的函数体可以先查表例如<code>3</code>，显然不在表内，所以根据<code>f&#123;n&#125;...</code>的递推式计算出<code>f&#123;3&#125;</code>对应的函数体，<strong>然后把3加入表内，这样我们的表就变为<code>0,1,3,n</code>了</strong>，下次需要使用<code>f&#123;3&#125;</code>时只需要查表即可，不需要重复替换</li>
+</ul>
+</li>
+<li><p><strong><code>parseFuncFactor</code></strong></p>
+<ul>
+<li>读入函数名、还有此次的n值</li>
+<li>读入实参列表时，请使用<code>parseExpr</code>后封装为<code>ExprFactor</code>，因为原有形参可能是幂函数，被替换一次后将不再是因子</li>
+<li><code>f&#123;n&#125;(x, y) = f&#123;n-1&#125;(x^2, y) + f&#123;n-2&#125;(x, y^2)</code></li>
+<li>求<code>f&#123;3&#125;((x+1), x)</code>时</li>
+<li><code>n=3: (x+1), x</code>实参为表达式因子</li>
+<li><code>n=2: (x+1)^2, x; (x+1), x^2</code>出现非因子项，只能使用表达式表示</li>
+</ul>
+</li>
+<li><p><strong><code>ParaFactor</code></strong></p>
+<ul>
+<li>为了提高封装性，可以新建类代表实参因子，其他同理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h3 id="2-流程分析-1"><a href="#2-流程分析-1" class="headerlink" title="2.流程分析"></a>2.流程分析</h3><p>大部分内容和第一次作业是一致的，此处不再赘述，此次作业唯一不同的在于三角函数的化简内容。</p>
 <h4 id="三角函数化简"><a href="#三角函数化简" class="headerlink" title="三角函数化简"></a>三角函数化简</h4><blockquote>
 <p><code>Poly</code>代表多项式类，形如<code>Var1 + Var2 + Var3...</code><br><code>Var</code>代表单项式类，形如$coe\times x^{exp}\times\prod_{i&#x3D;1}^n{sin(expr_i)^{a_i}}\times\prod_{j&#x3D;1}^n{cos(expr_j)^{b_j}}$</p>
@@ -4831,127 +4964,6 @@
 </ul>
 </li>
 </ul>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python基础</tag>
-        <tag>字符串</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python基础--字符串(二)</title>
-    <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
-    <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
-<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
-<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
-</ul>
-<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
-<li><code>%s</code><ul>
-<li>适用于为字符串占位，<del>我本来就是啊</del></li>
-</ul>
-</li>
-<li><code>%d</code><ul>
-<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
-</ul>
-</li>
-<li><code>%f</code><ul>
-<li>适用于为浮点数占位</li>
-</ul>
-</li>
-<li><code>.precision</code><ul>
-<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
-</ul>
-</li>
-<li><code>width</code><ul>
-<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
-</ul>
-</li>
-<li><code>flags</code><ul>
-<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
-<li><code>0</code>，补充前导0</li>
-<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
-<li><code> </code>，方便正数与负数对齐</li>
-<li><code>+</code>，数字补齐符号</li>
-</ul>
-</li>
-<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
-
-<pre><code> 1234 +1234
--1234 -1234
-  12,  34,  3.10
-12  ,34  ,3.10  
-0012,0234,003.10
-12  ,234 ,3.10  
-</code></pre>
-<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
-<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
-<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
-<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-</ul>
-</li>
-<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
-<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-</ul>
-</li>
-<li>利用键值对传入参数，则括号中必须使用key值<ul>
-<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
-<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
-</ul>
-</li>
-<li>利用键值对和位置进行复杂传参<ul>
-<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
-</ul>
-</li>
-</ul>
-<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
-<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
-<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
-<li><code>fill</code><ul>
-<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
-</ul>
-</li>
-<li><code>align</code><ul>
-<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
-</ul>
-</li>
-<li><code>sign</code><ul>
-<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
-</ul>
-</li>
-<li><code>width</code><ul>
-<li>最小宽度，默认为字符串长度</li>
-</ul>
-</li>
-<li><code>precision</code><ul>
-<li>控制小数的精度范围，默认是小数点后六位</li>
-</ul>
-</li>
-<li><code>type</code><ul>
-<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
-
-<pre><code>1___ 000002 $$$$11$$$$
-0012          3     34    
-</code></pre>
-<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
-<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
-<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
-<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<pre><code>line= &#39;this is a test string&#39;
-a=3
-__123.34000___
-</code></pre>
 ]]></content>
       <categories>
         <category>Python</category>
