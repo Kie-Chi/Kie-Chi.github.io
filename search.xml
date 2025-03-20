@@ -1176,138 +1176,6 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P1推荐题汇总</title>
-    <url>/2024/09/30/CO_P1_extra/</url>
-    <content><![CDATA[<h1 id="北航计算机组成P1推荐题目汇总"><a href="#北航计算机组成P1推荐题目汇总" class="headerlink" title="北航计算机组成P1推荐题目汇总"></a>北航计算机组成P1推荐题目汇总</h1><h2 id="题目怎么来的"><a href="#题目怎么来的" class="headerlink" title="题目怎么来的"></a>题目怎么来的</h2><ul>
-<li><del>偷来的(搓手手</del></li>
-<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<del>爬虫而生的</del>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure></li>
-<li><code>PieId</code><ul>
-<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
-</ul>
-</li>
-<li><code>ProblemId</code><ul>
-<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
-<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
-</ul>
-</li>
-<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br><a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
-</ul>
-<hr>
-<h2 id="组合电路"><a href="#组合电路" class="headerlink" title="组合电路"></a>组合电路</h2><ul>
-<li>过于简单，仅有提示</li>
-</ul>
-<h3 id="1202-405-FloatType"><a href="#1202-405-FloatType" class="headerlink" title="1202-405 FloatType"></a>1202-405 FloatType</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h3 id="1202-202-Comparator"><a href="#1202-202-Comparator" class="headerlink" title="1202-202 Comparator"></a>1202-202 Comparator</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
-</ul>
-<h3 id="1202-424-Voter"><a href="#1202-424-Voter" class="headerlink" title="1202-424 Voter"></a>1202-424 Voter</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="1202-102-ALU"><a href="#1202-102-ALU" class="headerlink" title="1202-102 ALU"></a>1202-102 ALU</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>注意使用拓展位的减法电路实现比较即可</li>
-</ul>
-<hr>
-<h2 id="有限状态机"><a href="#有限状态机" class="headerlink" title="有限状态机"></a>有限状态机</h2><h3 id="1202-334-Drink"><a href="#1202-334-Drink" class="headerlink" title="1202-334 Drink"></a>1202-334 Drink</h3><ul>
-<li><del>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</del></li>
-<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
-<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text"></li>
-<li>提供一个我使用的新结构框架（<del>应该没有泄露源码之嫌</del>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-145-String"><a href="#1202-145-String" class="headerlink" title="1202-145 String"></a>1202-145 String</h3><ul>
-<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
-<li>多重括号的辨别使用一个变量寄存左括号数量即可<ul>
-<li>string状态没有分开，看起来有一点乱<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图"></li>
-<li>将带有左括号未匹配时单独分出状态，这样大概不会显得乱吧<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string.png" alt="wty赞助"></li>
-</ul>
-</li>
-</ul>
-<h3 id="1202-336-IntCheck"><a href="#1202-336-IntCheck" class="headerlink" title="1202-336 IntCheck"></a>1202-336 IntCheck</h3><ul>
-<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
-<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
-<li>第三，不要在小情侣后面码代码<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图"><a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
-  title="查看原图"><span>查看原图</span></a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>推荐题目</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>北航计算机组成P2推荐题汇总</title>
-    <url>/2024/10/09/CO_P2_extra/</url>
-    <content><![CDATA[<h1 id="北航计算机组成P2推荐题目汇总"><a href="#北航计算机组成P2推荐题目汇总" class="headerlink" title="北航计算机组成P2推荐题目汇总"></a>北航计算机组成P2推荐题目汇总</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>题目怎么来的就不再赘述，有感兴趣的同学可以走这里 <a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a></li>
-</ul>
-<h2 id="P2推荐题目汇总"><a href="#P2推荐题目汇总" class="headerlink" title="P2推荐题目汇总"></a>P2推荐题目汇总</h2><h3 id="1202-35-calculate"><a href="#1202-35-calculate" class="headerlink" title="1202-35 calculate"></a>1202-35 calculate</h3><ul>
-<li>注意题目要求的是按照<strong>输入的顺序</strong>输出计数的字符，不是按照<code>ascii</code>码表的位置</li>
-<li>我开了两个数组一个记录26个字母的数量，一个记录出现的顺序(<strong>重复出现的字母不会进行第二遍</strong>)，最后遍历记录出现顺序的数组即可</li>
-<li>还有一个小小的点：因为样例看起来是一行读入一个字符，实际测评机是一个接一个的字符读入，所以不需要处理<code>\n</code>(我刚开始就处理了，导致报了一个非法读入的错误)  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.macro read_chr(%chr)</span><br><span class="line">    li $v0, 12</span><br><span class="line">    syscall</span><br><span class="line">    move %chr, $v0</span><br><span class="line"></span><br><span class="line">    # 不需要处理字母后面的\n</span><br><span class="line">    # li $v0, 12</span><br><span class="line">    # syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure></li>
-<li>提供一个有处理是否有重复输入的代码块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">	for_z_begin: # 用于判断是否出现过这个字符</span><br><span class="line">		beq $t2, $s1, for_z_end # 对目前出现的所有字符遍历 </span><br><span class="line">		sll $t3, $t2, 2 </span><br><span class="line">		lw $t4, buffer($t3) # 读出第$t2个已有字符</span><br><span class="line">		sub $t4, $t4, $t1 # 判断是否为同一个字符</span><br><span class="line">		if_begin_1:</span><br><span class="line">			bne $t4, $zero, if_end_1 # 如果不是则跳转</span><br><span class="line">			j not_for_z_end # 如果是则直接结束这段内容</span><br><span class="line">		if_end_1:</span><br><span class="line">		addi $t2, $t2, 1</span><br><span class="line">		j for_z_begin</span><br><span class="line">	for_z_end:</span><br><span class="line">		sll $t3, $t2, 2 # 存入新读入的字符</span><br><span class="line">		sw $t1, buffer($t3)</span><br><span class="line">		addi $s1, $s1, 1</span><br><span class="line">	not_for_z_end:</span><br><span class="line">	</span><br><span class="line">	sll $t1, $t1, 2 # 找到指定字母的偏移字节</span><br><span class="line">	</span><br><span class="line">	lw $t2, num($t1)</span><br><span class="line">	addi $t2, $t2, 1 # 找到的字母加1</span><br><span class="line">	sw $t2, num($t1)</span><br><span class="line">	</span><br><span class="line">	addi $t0, $t0, 1 # 循环继续条件</span><br><span class="line">	j for_i_begin</span><br><span class="line">for_i_end:</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-52-add"><a href="#1202-52-add" class="headerlink" title="1202-52 add"></a>1202-52 add</h3><ul>
-<li>看上去有点麻烦而已，其实完全可以使用一个矩阵接收两次数字完成两次加法(因为所有内存起始值赋值为0)</li>
-<li>最后的转置也只是需要将原来的嵌套<code>for</code>循环中的<strong>先<code>row</code>后<code>col</code></strong> 改为 **先<code>col</code>后<code>row</code>**就可以了</li>
-<li>同样提供一个有大致思路的<code>main</code>模块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">read_in($s0) # 读入n</span><br><span class="line">read_in($s1) # 读入m</span><br><span class="line"></span><br><span class="line">li $s2, 2 # 直接设置读入两次</span><br><span class="line">li $t0, 0 # 设置循环变量i</span><br><span class="line"># 双重for循环读入</span><br><span class="line"></span><br><span class="line">print_str(hint) # 打印题目要求的hint信息</span><br><span class="line"># 双重for循环打印</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-53-full-reserved"><a href="#1202-53-full-reserved" class="headerlink" title="1202-53 full_reserved"></a>1202-53 full_reserved</h3><ul>
-<li>对于全排列问题(顺序)，可以考虑下面的思路(只想看汇编内容可以跳过，这里主要讲的是全排列是如何写的)<ul>
-<li>我们以<code>1234</code>四个数字举例，开头为<code>1</code>和<code>2</code>的情况</li>
-<li><code>1</code>:<code>1234 1243 1324 1342 1423 1432</code></li>
-<li><code>2</code>:<code>2134 2143 2314 2341 2413 2431</code></li>
-<li>可以发现，以某个数字开头的全排列其实是 以<strong>这个数字开头</strong>加上<strong>剩下所有数字按相对大小重新构成的数字队列</strong>的全排列 </li>
-<li>例如<code>1</code>与<code>234</code>的全排列构成<code>1234</code>以<code>1</code>开头的全排列;<code>2</code>与<code>134</code>的全排列构成了<code>1234</code>以<code>2</code>开头的全排列，所以就可以写递归程序了(雾)</li>
-<li>所以所给递归程序的<code>symbol</code>全局数组是用来记录这个<strong>开头的数字</strong></li>
-</ul>
-</li>
-<li>题目要求你改写<strong>逆序</strong>的全排列汇编程序<ul>
-<li>最方便的思路就是打印的时候不打印<code>array[i]</code>而打印<code>n+1-array[i]</code>这样相当于用<code>n....1</code>来全排列</li>
-<li>当然，如果你理解了这个C语言程序如何运作的，可以将<code>for</code>循环的顺序反过来，从最高位<code>n</code>来开始，思路同上面的讲解思路</li>
-</ul>
-</li>
-<li>仔细考虑入栈出栈情况，如果使用栈传递参数记得开始时就要先出栈，<code>$ra</code>的保留值在任何一个程序的返回点都要弹出，总之<strong>入栈则一定要出栈</strong>(虽然有点像废话，但某些地方真的必须考虑清楚)，切记</li>
-<li>给出一个可以参考的<code>FullArray</code>函数的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">full_array:</span><br><span class="line">    addi $sp, $sp, -8 # 给出一定的栈空间</span><br><span class="line">    sw $a0, 4($sp) # 压栈</span><br><span class="line">    sw $ra 0($sp) </span><br><span class="line">    move $t0, $a0 # t0代表index</span><br><span class="line">    if_begin:</span><br><span class="line">        sltu $t2, $t0, $s0 # 判断index与n的大小</span><br><span class="line">        bne $t2, $zero, if_end</span><br><span class="line">        </span><br><span class="line">        li $t1, 0 # 设置循环变量i</span><br><span class="line">        for_i_begin:</span><br><span class="line">            beq $t1, $s0, for_i_end </span><br><span class="line">            sll $t2, $t1, 2 </span><br><span class="line">            lw $t3, array($t2) # 得到array[i]</span><br><span class="line">            sub $t3, $zero, $t3</span><br><span class="line">            addi $t4, $s0, 1</span><br><span class="line">            add $t3, $t3, $t4 # 得到n+1-array[i]</span><br><span class="line">            print_int($t3) # 打印这个值</span><br><span class="line">            print_str(space) # 打印空格</span><br><span class="line">            addi $t1, $t1, 1 # 循环i继续条件</span><br><span class="line">            j for_i_begin</span><br><span class="line">        for_i_end:</span><br><span class="line">        print_str(enter) # 打印换行</span><br><span class="line">        add $sp, $sp ,8 # 注意出栈，这里可以不用弹出值，但是一定要栈空间减少</span><br><span class="line">        jr $ra # 返回</span><br><span class="line">    if_end:</span><br><span class="line">        </span><br><span class="line">    # else执行的for循环递归</span><br><span class="line">    addi $sp, $sp, 8 # 将刚开始保留的参数弹出</span><br><span class="line">    lw $a0, -4($sp)</span><br><span class="line">    lw $ra -8($sp)	</span><br><span class="line">    </span><br><span class="line">    jr $ra # 返回</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-329-sum"><a href="#1202-329-sum" class="headerlink" title="1202-329 sum"></a>1202-329 sum</h3><ul>
-<li>大概就是一个变量保留 $n!$ 的值，一个变量保留 $\sum\limits_{i&#x3D;1}^n i!$，然后进行递推就可以了，千万不要递归啊(雾，大概率会爆吧</li>
-<li>提供一个可参考的<code>main</code>模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read($s0)</span><br><span class="line">    li $s1, 0</span><br><span class="line">    li $s2, 1</span><br><span class="line">    li $t0, 1</span><br><span class="line">    li $s3, 1</span><br><span class="line">    for_start:</span><br><span class="line">        sltu $s3, $s0, $t0</span><br><span class="line">        bne $s3, $zero, for_end</span><br><span class="line">        multu $t0, $s2</span><br><span class="line">        mflo $s2</span><br><span class="line">        addu $s1, $s1, $s2</span><br><span class="line">        addi $t0, $t0, 1</span><br><span class="line">        j for_start</span><br><span class="line">    for_end:</span><br><span class="line">        printU($s1)</span><br><span class="line">        done</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-330-hanoi"><a href="#1202-330-hanoi" class="headerlink" title="1202-330 hanoi"></a>1202-330 hanoi</h3><ul>
-<li>诶呀，<del>是大一写的递归程序呢</del></li>
-<li>不论是C语言代码的理解和整体程序都没有难点，所以注意的只有压栈弹栈时候小心即可！</li>
-<li>因为函数参数过多，所以我采用了用栈传输参数的思路，所以要更加小心，哪些部分是保存参数、弹出参数，哪些部分是传递参数、接收参数</li>
-<li>本题给出了关于模板字符串的提示，虽然没法用占位符<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">format_str: .asciiz &quot;move disk D from C to C\n&quot;</span><br><span class="line">.macro print(%disk, %from, %to)</span><br><span class="line">    li $t7, 10</span><br><span class="line">    addi $t6, %disk, 48</span><br><span class="line">    sb $t6, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 17</span><br><span class="line">    sb %from, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 22</span><br><span class="line">    sb %to, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    la $a0, format_str</span><br><span class="line">    li $v0, 4</span><br><span class="line">    syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure></li>
-<li>同样，给出参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入n</span><br><span class="line">    li $t1, 65</span><br><span class="line">    li $t2, 66</span><br><span class="line">    li $t3, 67</span><br><span class="line">    la $sp, stack</span><br><span class="line">    addi $sp, $sp, 800 # 初始化参数与stack</span><br><span class="line">    </span><br><span class="line">    push($t0) # 传参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">hanoi:</span><br><span class="line">    pop($t3) # 接收参数</span><br><span class="line">    ...</span><br><span class="line">    push($ra) # 保存返回值</span><br><span class="line">    if_begin:</span><br><span class="line">        bne $t0, $zero, if_end</span><br><span class="line">        print($t0, $t1, $t2)</span><br><span class="line">        print($t0, $t2, $t3)</span><br><span class="line">        pop($ra) # 弹返回地址</span><br><span class="line">        jr $ra</span><br><span class="line">    if_end:</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 取出保留的参数</span><br><span class="line">    ...</span><br><span class="line">    print($t0, $t1, $t2)</span><br><span class="line">    </span><br><span class="line">    ...若干递归</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-415-bsearch"><a href="#1202-415-bsearch" class="headerlink" title="1202-415 bsearch"></a>1202-415 bsearch</h3><ul>
-<li>二分查找！！！</li>
-<li>因为已经给出了C语言参考模板了，没有的话或许有同学会因为不清楚<code>[low,high]</code>还是<code>[low,high)</code>两种查找方式的区别，而写出一些小bug</li>
-<li>注意<code>slt</code>与<code>sltu</code>因为如果查找的<code>key</code>比数组中最小的值还要小的话，那么最后得到的值是-1，但是-1在无符号数中是最大的，会出现死循环哦</li>
-<li>直接给出可参考的模板了<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">binary_search:</span><br><span class="line">    push($s1)</span><br><span class="line">    move $s1, $a0 # key</span><br><span class="line">    li $t0, 0 # low</span><br><span class="line">    addi $t1, $s0, -1 # high</span><br><span class="line">    li $t2, 0 # mid</span><br><span class="line">    </span><br><span class="line">    while_begin:</span><br><span class="line">        slt $t5, $t1, $t0</span><br><span class="line">        bne $t5, $zero, while_end</span><br><span class="line">        </span><br><span class="line">        add $t2, $t0, $t1</span><br><span class="line">        srl $t2, $t2, 1</span><br><span class="line">        </span><br><span class="line">        //判断arr[mid]与key的大小</span><br><span class="line">        j while_begin</span><br><span class="line">    while_end:</span><br><span class="line"></span><br><span class="line">    li $t5, 0</span><br><span class="line">    print($t5)</span><br><span class="line">    pop($s1)</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-416-flower"><a href="#1202-416-flower" class="headerlink" title="1202-416 flower"></a>1202-416 flower</h3><ul>
-<li>简单汇编，直接给出可参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入m</span><br><span class="line">    read_in($s0) # 读入n</span><br><span class="line">    </span><br><span class="line">    for_i_begin:</span><br><span class="line">        beq $t0, $s0, for_i_end</span><br><span class="line">        divu $t1, $t0, 100</span><br><span class="line">        </span><br><span class="line">        mul $t2, $t1, 100</span><br><span class="line">        sub $t4, $t0, $t2</span><br><span class="line">        divu $t2, $t4, 10</span><br><span class="line">        </span><br><span class="line">        mul $t3, $t2, 10</span><br><span class="line">        sub $t3, $t4, $t3</span><br><span class="line">        </span><br><span class="line">        mul $t4, $t1, $t1</span><br><span class="line">        mul $t4, $t4, $t1</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t2, $t2</span><br><span class="line">        mul $t5, $t5, $t2</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t3, $t3</span><br><span class="line">        mul $t5, $t5, $t3</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        if_begin:</span><br><span class="line">            bne $t4, $t0, if_end</span><br><span class="line">            print($t0)</span><br><span class="line">        if_end:</span><br><span class="line">        add $t0, $t0, 1</span><br><span class="line">        j for_i_begin</span><br><span class="line">    for_i_end:</span><br><span class="line">    end</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1202-419-josef"><a href="#1202-419-josef" class="headerlink" title="1202-419 josef"></a>1202-419 josef</h3><ul>
-<li>也是一道大一写的题目呢，<del>小海豚</del></li>
-<li>其实刚开始我想如果暴力数组没过的话就用循环链表了(没想都暴力可以直接过)</li>
-<li>这里主要通过一个数组记录某个编号是否已经被删除了</li>
-<li>计数就是数组下标加一，遇到等于数组长度时自动返回0</li>
-<li>给出一个可以参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read($s0) # 读入人数n</span><br><span class="line">read($s1) # 读入报数m</span><br><span class="line"></span><br><span class="line">li $t0, 0 # 报数的人的编号</span><br><span class="line">li $t1, 0 # 外层循环变量i,将所有人都出局为止</span><br><span class="line">li $t2, 1 # 设置第一次数数</span><br><span class="line">for_start_i:</span><br><span class="line">    beq $t1, $s0, for_end_i # 达到最大人数结束循环</span><br><span class="line">    for_start_j:</span><br><span class="line">        beq $t2, $s1, for_end_j # 达到报数最大值</span><br><span class="line">        </span><br><span class="line">        //使用while循环处理报数，去除已经out的人</span><br><span class="line">    for_end_j:</span><br><span class="line">        sll $t4, $t0, 2</span><br><span class="line">        li $t5, 1</span><br><span class="line">        sw $t5, people($t4) # 记录出局的人，置1</span><br><span class="line">        addi $t5, $t0, 1 # 打印出局的人的编号</span><br><span class="line">        print($t5)</span><br><span class="line">        li $t2, 0 # 设置每次j的</span><br><span class="line">        addi $t1, $t1, 1 # 循环继续条件</span><br><span class="line">        j for_start_i</span><br><span class="line">for_end_i:</span><br><span class="line">    done</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机组成原理</category>
-        <category>推荐题目</category>
-      </categories>
-      <tags>
-        <tag>计算机组成原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>北航计算机组成P1课下</title>
     <url>/2024/09/28/CO_P1/</url>
     <content><![CDATA[<h1 id="北航计算机组成原理P1课下"><a href="#北航计算机组成原理P1课下" class="headerlink" title="北航计算机组成原理P1课下"></a>北航计算机组成原理P1课下</h1><div class="note info simple"><p>通过阅读本文，你可以大致了解北京航空航天大学2023级计算机组成原理P1课下的相关内容，希望能对你有所帮助</p>
@@ -1531,78 +1399,132 @@
       </tags>
   </entry>
   <entry>
-    <title>北航计算机组成P4</title>
-    <url>/2024/11/13/CO_P4/</url>
-    <content><![CDATA[<h1 id="北航计算机组成P4"><a href="#北航计算机组成P4" class="headerlink" title="北航计算机组成P4"></a>北航计算机组成P4</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>咳咳，最近太忙了作业好多啊，搭完CPU每周还要迭代自己的测评机，原来CO也可以训练我们面向对象的能力</li>
+    <title>北航计算机组成P2推荐题汇总</title>
+    <url>/2024/10/09/CO_P2_extra/</url>
+    <content><![CDATA[<h1 id="北航计算机组成P2推荐题目汇总"><a href="#北航计算机组成P2推荐题目汇总" class="headerlink" title="北航计算机组成P2推荐题目汇总"></a>北航计算机组成P2推荐题目汇总</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>题目怎么来的就不再赘述，有感兴趣的同学可以走这里 <a href="/2024/09/30/CO_P1_extra/" title="北航计算机组成P1推荐题汇总">北航计算机组成P1推荐题汇总</a></li>
 </ul>
-<hr>
-<h2 id="课下"><a href="#课下" class="headerlink" title="课下"></a>课下</h2><ul>
-<li>其实P4就是把P3的电路图翻译成代码，整体上没有难度，如果你P3有好好设计你的CPU的话，<del>没有好好设计的话，就照着学长设计好的CPU翻译</del>，总之也是从一个一个的模块开始搭建，这里不赘述了</li>
+<h2 id="P2推荐题目汇总"><a href="#P2推荐题目汇总" class="headerlink" title="P2推荐题目汇总"></a>P2推荐题目汇总</h2><h3 id="1202-35-calculate"><a href="#1202-35-calculate" class="headerlink" title="1202-35 calculate"></a>1202-35 calculate</h3><ul>
+<li>注意题目要求的是按照<strong>输入的顺序</strong>输出计数的字符，不是按照<code>ascii</code>码表的位置</li>
+<li>我开了两个数组一个记录26个字母的数量，一个记录出现的顺序(<strong>重复出现的字母不会进行第二遍</strong>)，最后遍历记录出现顺序的数组即可</li>
+<li>还有一个小小的点：因为样例看起来是一行读入一个字符，实际测评机是一个接一个的字符读入，所以不需要处理<code>\n</code>(我刚开始就处理了，导致报了一个非法读入的错误)  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.macro read_chr(%chr)</span><br><span class="line">    li $v0, 12</span><br><span class="line">    syscall</span><br><span class="line">    move %chr, $v0</span><br><span class="line"></span><br><span class="line">    # 不需要处理字母后面的\n</span><br><span class="line">    # li $v0, 12</span><br><span class="line">    # syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure></li>
+<li>提供一个有处理是否有重复输入的代码块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">	for_z_begin: # 用于判断是否出现过这个字符</span><br><span class="line">		beq $t2, $s1, for_z_end # 对目前出现的所有字符遍历 </span><br><span class="line">		sll $t3, $t2, 2 </span><br><span class="line">		lw $t4, buffer($t3) # 读出第$t2个已有字符</span><br><span class="line">		sub $t4, $t4, $t1 # 判断是否为同一个字符</span><br><span class="line">		if_begin_1:</span><br><span class="line">			bne $t4, $zero, if_end_1 # 如果不是则跳转</span><br><span class="line">			j not_for_z_end # 如果是则直接结束这段内容</span><br><span class="line">		if_end_1:</span><br><span class="line">		addi $t2, $t2, 1</span><br><span class="line">		j for_z_begin</span><br><span class="line">	for_z_end:</span><br><span class="line">		sll $t3, $t2, 2 # 存入新读入的字符</span><br><span class="line">		sw $t1, buffer($t3)</span><br><span class="line">		addi $s1, $s1, 1</span><br><span class="line">	not_for_z_end:</span><br><span class="line">	</span><br><span class="line">	sll $t1, $t1, 2 # 找到指定字母的偏移字节</span><br><span class="line">	</span><br><span class="line">	lw $t2, num($t1)</span><br><span class="line">	addi $t2, $t2, 1 # 找到的字母加1</span><br><span class="line">	sw $t2, num($t1)</span><br><span class="line">	</span><br><span class="line">	addi $t0, $t0, 1 # 循环继续条件</span><br><span class="line">	j for_i_begin</span><br><span class="line">for_i_end:</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="组合逻辑建模"><a href="#组合逻辑建模" class="headerlink" title="组合逻辑建模"></a>组合逻辑建模</h3><ul>
-<li>我啰嗦一两句，最近几年课程组不知道在干什么（<del>明年等我当助教我也要搞得抽象</del>），考试喜欢考一些奇奇怪怪的组合逻辑，所以或许你需要根据你使用的建模逻辑稍微熟练一些Verilog的语法，这样课上的时候或许不会那么慌</li>
-<li>两种组合逻辑建模方式对于写CPU的思路还是有略微不同的，而且各有各的好处，见仁见智了</li>
+<h3 id="1202-52-add"><a href="#1202-52-add" class="headerlink" title="1202-52 add"></a>1202-52 add</h3><ul>
+<li>看上去有点麻烦而已，其实完全可以使用一个矩阵接收两次数字完成两次加法(因为所有内存起始值赋值为0)</li>
+<li>最后的转置也只是需要将原来的嵌套<code>for</code>循环中的<strong>先<code>row</code>后<code>col</code></strong> 改为 **先<code>col</code>后<code>row</code>**就可以了</li>
+<li>同样提供一个有大致思路的<code>main</code>模块<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> .text</span><br><span class="line">read_in($s0) # 读入n</span><br><span class="line">read_in($s1) # 读入m</span><br><span class="line"></span><br><span class="line">li $s2, 2 # 直接设置读入两次</span><br><span class="line">li $t0, 0 # 设置循环变量i</span><br><span class="line"># 双重for循环读入</span><br><span class="line"></span><br><span class="line">print_str(hint) # 打印题目要求的hint信息</span><br><span class="line"># 双重for循环打印</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a><code>assign</code></h4><ul>
-<li>最大的优点就是简洁、代码量很少，而且就是电路连线，从P3转过来会比较方便<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_add) ? A + B :</span><br><span class="line">                 (ALUOp == `ALU_sub) ? A - B :</span><br><span class="line">                 (ALUOp == `ALU_or) ? A | B :</span><br><span class="line">                 (ALUOp == `ALU_and) ? A &amp; B : <span class="number">32&#x27;b0</span>;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>一行就解决了ALU，反正就是挺爽的</li>
-</ul>
-</li>
-<li>缺点是对于复杂逻辑建模比较困难，所以<strong>强烈建议</strong>掌握<code>function</code>和<code>task</code>(这个或许不用嘛)的用法，反正考场上会用到的，比如我随便编一个指令，要求实现<code>gxadd rd, rs, rt</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gray(00): 00</span><br><span class="line">gray(01): 01</span><br><span class="line">gray(10): 11</span><br><span class="line">gray(11): 10</span><br><span class="line"></span><br><span class="line">temp1 &lt;- GPR[rs] + GPR[rt]</span><br><span class="line">for i in range(0,16):</span><br><span class="line">    temp2[2*i+1: 2*i] &lt;- gray(temp1[2*i+1: 2*i])</span><br><span class="line">temp2 &lt;- temp2 ^ temp1</span><br><span class="line">if temp2 &gt; temp1:</span><br><span class="line">    GPR[rd] = temp2</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = temp1</span><br></pre></td></tr></table></figure>
-<ul>
-<li>好，你现在用assign语句把它建模到ALU里面去（），是吧，这个时候<code>function</code>就要发力了，管他三七二十一全部丢进函数里面<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> [<span class="number">1</span>: <span class="number">0</span>] cal_gray;</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] origin;</span><br><span class="line">    <span class="keyword">if</span> (origin == <span class="number">2&#x27;b0</span>) cal_gray = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b1</span>) cal_gray = <span class="number">2&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b10</span>) cal_gray = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">else</span> cal_gray = <span class="number">2&#x27;b10</span>;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
-<li>其实也可以如果你熟悉掩码和格雷码的定义的话，例如<code>gray(x) = x ^ (x &gt;&gt; 1)</code>，又因为两位的二进制右移一位第一位一定是0，所以我们考虑将32位的数字的奇数位覆盖再整体右移，达到一次实现16次2位的异或<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">temp1 = A + B;</span><br><span class="line">temp2 = temp1 &amp; <span class="number">0xaaaaaaaa</span>;</span><br><span class="line"><span class="comment">//0xaaaaaaaa就是....10101010</span></span><br><span class="line"><span class="comment">//反正奇数位就这样被覆盖了</span></span><br><span class="line">temp2 = temp2 &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="comment">//相当于进行了上面的 x &gt;&gt; 1，反正奇数位都是0了</span></span><br><span class="line">temp2 = temp2 ^ temp1</span><br><span class="line"><span class="comment">//最终的temp2就是经历两位gray转化后的数字了</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_gxadd) ? </span><br><span class="line">(( ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) &gt; (A+B) ) ? ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) : (A+B))</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h4 id="always"><a href="#always" class="headerlink" title="always@(*)"></a><code>always@(*)</code></h4><ul>
-<li>最大的缺点是代码量可能会比上面大一些，也可能大很多，全面准备吧</li>
-<li>最大的优点就是适合复杂逻辑的建模，比如上面那个瞎编的指令</li>
-<li>不过还是建议掌握<code>function</code>，多好啊，变成纯纯面向过程的语言了</li>
-<li>讲一个经常会用的切片，好玩爱玩<ul>
-<li>假设你现在想要学lb、lh指令取出一个字中的某个字节或者半字，但是不想要一直if-else（考场上不会的话枚举是一个很好的选择），你想到了verilog可以切片<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span> h_adder;</span><br><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span>[<span class="number">1</span>: <span class="number">0</span>] b_adder;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] pos;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">0</span>: <span class="number">31</span>] neg;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"><span class="comment">//pos[b_adder * 8 + 7: b_adder * 8]</span></span><br><span class="line"><span class="comment">//错误用法，Verilog的切片两边要是常数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="comment">//定义高位到低位</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 + 15 取低16位，按照高位到低位排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 取高16位，但是还是按照从高到低排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义从低到高</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同上，但是从低到高排列</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同理</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br></pre></td></tr></table></figure></li>
+<h3 id="1202-53-full-reserved"><a href="#1202-53-full-reserved" class="headerlink" title="1202-53 full_reserved"></a>1202-53 full_reserved</h3><ul>
+<li>对于全排列问题(顺序)，可以考虑下面的思路(只想看汇编内容可以跳过，这里主要讲的是全排列是如何写的)<ul>
+<li>我们以<code>1234</code>四个数字举例，开头为<code>1</code>和<code>2</code>的情况</li>
+<li><code>1</code>:<code>1234 1243 1324 1342 1423 1432</code></li>
+<li><code>2</code>:<code>2134 2143 2314 2341 2413 2431</code></li>
+<li>可以发现，以某个数字开头的全排列其实是 以<strong>这个数字开头</strong>加上<strong>剩下所有数字按相对大小重新构成的数字队列</strong>的全排列 </li>
+<li>例如<code>1</code>与<code>234</code>的全排列构成<code>1234</code>以<code>1</code>开头的全排列;<code>2</code>与<code>134</code>的全排列构成了<code>1234</code>以<code>2</code>开头的全排列，所以就可以写递归程序了(雾)</li>
+<li>所以所给递归程序的<code>symbol</code>全局数组是用来记录这个<strong>开头的数字</strong></li>
 </ul>
 </li>
-</ul>
-<hr>
-<h2 id="课上"><a href="#课上" class="headerlink" title="课上"></a>课上</h2><h3 id="T1-eam"><a href="#T1-eam" class="headerlink" title="T1 eam"></a>T1 eam</h3><ul>
-<li><code>eam $rd, $rs, $rt</code></li>
-<li>R型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ext_imm &lt;- signed(GPR[rs][15: 0])</span><br><span class="line">res &lt;- ext_imm % 17</span><br><span class="line">if signed(GPR[rt]) &lt; 0:</span><br><span class="line">    GPR[rd] = one_ext(res)</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = zero_ext(res)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>将rs寄存器低16位截断为有符号数，这个数对17取模得到的<strong>正余数</strong>，然后根据另一个操作数的正负进行1或者0拓展</li>
+<li>题目要求你改写<strong>逆序</strong>的全排列汇编程序<ul>
+<li>最方便的思路就是打印的时候不打印<code>array[i]</code>而打印<code>n+1-array[i]</code>这样相当于用<code>n....1</code>来全排列</li>
+<li>当然，如果你理解了这个C语言程序如何运作的，可以将<code>for</code>循环的顺序反过来，从最高位<code>n</code>来开始，思路同上面的讲解思路</li>
 </ul>
 </li>
+<li>仔细考虑入栈出栈情况，如果使用栈传递参数记得开始时就要先出栈，<code>$ra</code>的保留值在任何一个程序的返回点都要弹出，总之<strong>入栈则一定要出栈</strong>(虽然有点像废话，但某些地方真的必须考虑清楚)，切记</li>
+<li>给出一个可以参考的<code>FullArray</code>函数的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">full_array:</span><br><span class="line">    addi $sp, $sp, -8 # 给出一定的栈空间</span><br><span class="line">    sw $a0, 4($sp) # 压栈</span><br><span class="line">    sw $ra 0($sp) </span><br><span class="line">    move $t0, $a0 # t0代表index</span><br><span class="line">    if_begin:</span><br><span class="line">        sltu $t2, $t0, $s0 # 判断index与n的大小</span><br><span class="line">        bne $t2, $zero, if_end</span><br><span class="line">        </span><br><span class="line">        li $t1, 0 # 设置循环变量i</span><br><span class="line">        for_i_begin:</span><br><span class="line">            beq $t1, $s0, for_i_end </span><br><span class="line">            sll $t2, $t1, 2 </span><br><span class="line">            lw $t3, array($t2) # 得到array[i]</span><br><span class="line">            sub $t3, $zero, $t3</span><br><span class="line">            addi $t4, $s0, 1</span><br><span class="line">            add $t3, $t3, $t4 # 得到n+1-array[i]</span><br><span class="line">            print_int($t3) # 打印这个值</span><br><span class="line">            print_str(space) # 打印空格</span><br><span class="line">            addi $t1, $t1, 1 # 循环i继续条件</span><br><span class="line">            j for_i_begin</span><br><span class="line">        for_i_end:</span><br><span class="line">        print_str(enter) # 打印换行</span><br><span class="line">        add $sp, $sp ,8 # 注意出栈，这里可以不用弹出值，但是一定要栈空间减少</span><br><span class="line">        jr $ra # 返回</span><br><span class="line">    if_end:</span><br><span class="line">        </span><br><span class="line">    # else执行的for循环递归</span><br><span class="line">    addi $sp, $sp, 8 # 将刚开始保留的参数弹出</span><br><span class="line">    lw $a0, -4($sp)</span><br><span class="line">    lw $ra -8($sp)	</span><br><span class="line">    </span><br><span class="line">    jr $ra # 返回</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="T2-cptl"><a href="#T2-cptl" class="headerlink" title="T2 cptl"></a>T2 cptl</h3><ul>
-<li><code>cptl $rs, $rt, label</code></li>
-<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">temp &lt;- PC + 4 + sign_ext(offset || 00)</span><br><span class="line">PC &lt;- temp</span><br><span class="line"></span><br><span class="line">if GPR[rs][17: 12] == 6&#x27;b111111 || ......GPR[rs][5: 0] == 6&#x27;b111111: </span><br><span class="line">    GPR[rt] &lt;- PC + 4</span><br><span class="line">else:</span><br><span class="line">    GPR[31] &lt;- PC + 4</span><br></pre></td></tr></table></figure>
-<ul>
-<li>跳转类指令，然后链接内容和rs寄存器低18位是否有6个连续的1有关系</li>
+<h3 id="1202-329-sum"><a href="#1202-329-sum" class="headerlink" title="1202-329 sum"></a>1202-329 sum</h3><ul>
+<li>大概就是一个变量保留 $n!$ 的值，一个变量保留 $\sum\limits_{i&#x3D;1}^n i!$，然后进行递推就可以了，千万不要递归啊(雾，大概率会爆吧</li>
+<li>提供一个可参考的<code>main</code>模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read($s0)</span><br><span class="line">    li $s1, 0</span><br><span class="line">    li $s2, 1</span><br><span class="line">    li $t0, 1</span><br><span class="line">    li $s3, 1</span><br><span class="line">    for_start:</span><br><span class="line">        sltu $s3, $s0, $t0</span><br><span class="line">        bne $s3, $zero, for_end</span><br><span class="line">        multu $t0, $s2</span><br><span class="line">        mflo $s2</span><br><span class="line">        addu $s1, $s1, $s2</span><br><span class="line">        addi $t0, $t0, 1</span><br><span class="line">        j for_start</span><br><span class="line">    for_end:</span><br><span class="line">        printU($s1)</span><br><span class="line">        done</span><br></pre></td></tr></table></figure></li>
 </ul>
-</li>
+<h3 id="1202-330-hanoi"><a href="#1202-330-hanoi" class="headerlink" title="1202-330 hanoi"></a>1202-330 hanoi</h3><ul>
+<li>诶呀，<del>是大一写的递归程序呢</del></li>
+<li>不论是C语言代码的理解和整体程序都没有难点，所以注意的只有压栈弹栈时候小心即可！</li>
+<li>因为函数参数过多，所以我采用了用栈传输参数的思路，所以要更加小心，哪些部分是保存参数、弹出参数，哪些部分是传递参数、接收参数</li>
+<li>本题给出了关于模板字符串的提示，虽然没法用占位符<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">format_str: .asciiz &quot;move disk D from C to C\n&quot;</span><br><span class="line">.macro print(%disk, %from, %to)</span><br><span class="line">    li $t7, 10</span><br><span class="line">    addi $t6, %disk, 48</span><br><span class="line">    sb $t6, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 17</span><br><span class="line">    sb %from, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    li $t7, 22</span><br><span class="line">    sb %to, format_str($t7)</span><br><span class="line">    </span><br><span class="line">    la $a0, format_str</span><br><span class="line">    li $v0, 4</span><br><span class="line">    syscall</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure></li>
+<li>同样，给出参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入n</span><br><span class="line">    li $t1, 65</span><br><span class="line">    li $t2, 66</span><br><span class="line">    li $t3, 67</span><br><span class="line">    la $sp, stack</span><br><span class="line">    addi $sp, $sp, 800 # 初始化参数与stack</span><br><span class="line">    </span><br><span class="line">    push($t0) # 传参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">hanoi:</span><br><span class="line">    pop($t3) # 接收参数</span><br><span class="line">    ...</span><br><span class="line">    push($ra) # 保存返回值</span><br><span class="line">    if_begin:</span><br><span class="line">        bne $t0, $zero, if_end</span><br><span class="line">        print($t0, $t1, $t2)</span><br><span class="line">        print($t0, $t2, $t3)</span><br><span class="line">        pop($ra) # 弹返回地址</span><br><span class="line">        jr $ra</span><br><span class="line">    if_end:</span><br><span class="line">    </span><br><span class="line">    push($t0) # 保存参数</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    addi $t0, $t0, -1</span><br><span class="line">    push($t0) # 传递参数</span><br><span class="line">    ...</span><br><span class="line">    jal hanoi</span><br><span class="line">    </span><br><span class="line">    pop($t3) # 取出保留的参数</span><br><span class="line">    ...</span><br><span class="line">    print($t0, $t1, $t2)</span><br><span class="line">    </span><br><span class="line">    ...若干递归</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="T3-olw"><a href="#T3-olw" class="headerlink" title="T3 olw"></a>T3 olw</h3><ul>
-<li><code>olw $rt, offset($base)</code></li>
-<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vadder &lt;- GPR[base] + sign_ext(offset || 00)</span><br><span class="line">temp &lt;- Mem[vadder[31: 2]]</span><br><span class="line"></span><br><span class="line">if func(temp):</span><br><span class="line">    GPR[rt] &lt;- temp</span><br><span class="line">else:</span><br><span class="line">    None</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果读出来的数据是单调不减的，那么才写入</li>
+<h3 id="1202-415-bsearch"><a href="#1202-415-bsearch" class="headerlink" title="1202-415 bsearch"></a>1202-415 bsearch</h3><ul>
+<li>二分查找！！！</li>
+<li>因为已经给出了C语言参考模板了，没有的话或许有同学会因为不清楚<code>[low,high]</code>还是<code>[low,high)</code>两种查找方式的区别，而写出一些小bug</li>
+<li>注意<code>slt</code>与<code>sltu</code>因为如果查找的<code>key</code>比数组中最小的值还要小的话，那么最后得到的值是-1，但是-1在无符号数中是最大的，会出现死循环哦</li>
+<li>直接给出可参考的模板了<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">binary_search:</span><br><span class="line">    push($s1)</span><br><span class="line">    move $s1, $a0 # key</span><br><span class="line">    li $t0, 0 # low</span><br><span class="line">    addi $t1, $s0, -1 # high</span><br><span class="line">    li $t2, 0 # mid</span><br><span class="line">    </span><br><span class="line">    while_begin:</span><br><span class="line">        slt $t5, $t1, $t0</span><br><span class="line">        bne $t5, $zero, while_end</span><br><span class="line">        </span><br><span class="line">        add $t2, $t0, $t1</span><br><span class="line">        srl $t2, $t2, 1</span><br><span class="line">        </span><br><span class="line">        //判断arr[mid]与key的大小</span><br><span class="line">        j while_begin</span><br><span class="line">    while_end:</span><br><span class="line"></span><br><span class="line">    li $t5, 0</span><br><span class="line">    print($t5)</span><br><span class="line">    pop($s1)</span><br><span class="line">    jr $ra</span><br></pre></td></tr></table></figure></li>
 </ul>
-</li>
+<h3 id="1202-416-flower"><a href="#1202-416-flower" class="headerlink" title="1202-416 flower"></a>1202-416 flower</h3><ul>
+<li>简单汇编，直接给出可参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    read_in($t0) # 读入m</span><br><span class="line">    read_in($s0) # 读入n</span><br><span class="line">    </span><br><span class="line">    for_i_begin:</span><br><span class="line">        beq $t0, $s0, for_i_end</span><br><span class="line">        divu $t1, $t0, 100</span><br><span class="line">        </span><br><span class="line">        mul $t2, $t1, 100</span><br><span class="line">        sub $t4, $t0, $t2</span><br><span class="line">        divu $t2, $t4, 10</span><br><span class="line">        </span><br><span class="line">        mul $t3, $t2, 10</span><br><span class="line">        sub $t3, $t4, $t3</span><br><span class="line">        </span><br><span class="line">        mul $t4, $t1, $t1</span><br><span class="line">        mul $t4, $t4, $t1</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t2, $t2</span><br><span class="line">        mul $t5, $t5, $t2</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        mul $t5, $t3, $t3</span><br><span class="line">        mul $t5, $t5, $t3</span><br><span class="line">        add $t4, $t4, $t5</span><br><span class="line">        </span><br><span class="line">        if_begin:</span><br><span class="line">            bne $t4, $t0, if_end</span><br><span class="line">            print($t0)</span><br><span class="line">        if_end:</span><br><span class="line">        add $t0, $t0, 1</span><br><span class="line">        j for_i_begin</span><br><span class="line">    for_i_end:</span><br><span class="line">    end</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>课上没什么好玩的，第一个指令注意要使用有符号，不然你就会像我一样疑惑了半个小时为什么这么取模都是0然后暴力while循环求余数。。。</li>
-<li>过两天会把P5好好更新的，顺便预告一下测评机，其实写好了，只是想等P6直接做一个流水线全的，over</li>
-<li>先不写题解了，亲爱的小羊找我看视频，我先溜了</li>
+<h3 id="1202-419-josef"><a href="#1202-419-josef" class="headerlink" title="1202-419 josef"></a>1202-419 josef</h3><ul>
+<li>也是一道大一写的题目呢，<del>小海豚</del></li>
+<li>其实刚开始我想如果暴力数组没过的话就用循环链表了(没想都暴力可以直接过)</li>
+<li>这里主要通过一个数组记录某个编号是否已经被删除了</li>
+<li>计数就是数组下标加一，遇到等于数组长度时自动返回0</li>
+<li>给出一个可以参考的模板<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read($s0) # 读入人数n</span><br><span class="line">read($s1) # 读入报数m</span><br><span class="line"></span><br><span class="line">li $t0, 0 # 报数的人的编号</span><br><span class="line">li $t1, 0 # 外层循环变量i,将所有人都出局为止</span><br><span class="line">li $t2, 1 # 设置第一次数数</span><br><span class="line">for_start_i:</span><br><span class="line">    beq $t1, $s0, for_end_i # 达到最大人数结束循环</span><br><span class="line">    for_start_j:</span><br><span class="line">        beq $t2, $s1, for_end_j # 达到报数最大值</span><br><span class="line">        </span><br><span class="line">        //使用while循环处理报数，去除已经out的人</span><br><span class="line">    for_end_j:</span><br><span class="line">        sll $t4, $t0, 2</span><br><span class="line">        li $t5, 1</span><br><span class="line">        sw $t5, people($t4) # 记录出局的人，置1</span><br><span class="line">        addi $t5, $t0, 1 # 打印出局的人的编号</span><br><span class="line">        print($t5)</span><br><span class="line">        li $t2, 0 # 设置每次j的</span><br><span class="line">        addi $t1, $t1, 1 # 循环继续条件</span><br><span class="line">        j for_start_i</span><br><span class="line">for_end_i:</span><br><span class="line">    done</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
       <categories>
         <category>计算机组成原理</category>
-        <category>课下复习</category>
-        <category>课上考试</category>
+        <category>推荐题目</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P1推荐题汇总</title>
+    <url>/2024/09/30/CO_P1_extra/</url>
+    <content><![CDATA[<h1 id="北航计算机组成P1推荐题目汇总"><a href="#北航计算机组成P1推荐题目汇总" class="headerlink" title="北航计算机组成P1推荐题目汇总"></a>北航计算机组成P1推荐题目汇总</h1><h2 id="题目怎么来的"><a href="#题目怎么来的" class="headerlink" title="题目怎么来的"></a>题目怎么来的</h2><ul>
+<li><del>偷来的(搓手手</del></li>
+<li>如果你看了一下推荐题目的<code>URL</code>的话，你会发现<code>cscore</code>简直是天生为<del>爬虫而生的</del>，甚至参数都已经写在<code>URL</code>里面了，这不是勾引是什么？<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://cscore.buaa.edu.cn/#/problem?ProblemId=334&amp;PieId=1202</span><br></pre></td></tr></table></figure></li>
+<li><code>PieId</code><ul>
+<li>似乎是每个P的编号，每年的都不一样，2306的<code>1202</code>代表推荐题目，其他的大都爬不到(悲</li>
+</ul>
+</li>
+<li><code>ProblemId</code><ul>
+<li>下辖的题目编号，额，毫无规律可言，建议遍历爬取</li>
+<li>但是似乎每年相同模块（例如推荐题目）的相同题目编号都有题目（未经</li>
+</ul>
+</li>
+<li>以及题目按照难度依次上升（笔者认为的，毫无参考价值（bushi ）<br><a href="https://github.com/Kie-Chi/cscore_crawl.git">源码获取</a></li>
+</ul>
+<hr>
+<h2 id="组合电路"><a href="#组合电路" class="headerlink" title="组合电路"></a>组合电路</h2><ul>
+<li>过于简单，仅有提示</li>
+</ul>
+<h3 id="1202-405-FloatType"><a href="#1202-405-FloatType" class="headerlink" title="1202-405 FloatType"></a>1202-405 FloatType</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> FloatType(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] num,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">4</span>: <span class="number">0</span>] float_type</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> zero = <span class="number">5&#x27;b1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] exponent;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">22</span>: <span class="number">0</span>] fraction;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        exponent = num[<span class="number">30</span>: <span class="number">23</span>];</span><br><span class="line">        fraction = num[<span class="number">22</span>: <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算次态</span></span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">8&#x27;b0</span> &amp;&amp; fraction == <span class="number">23&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">            float_type = zero;</span><br><span class="line">        ....</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="1202-202-Comparator"><a href="#1202-202-Comparator" class="headerlink" title="1202-202 Comparator"></a>1202-202 Comparator</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">cin = <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">0</span>] &amp; ~B[<span class="number">0</span>]) | (cin &amp; (A[<span class="number">0</span>] ^ ~B[<span class="number">0</span>]));</span><br><span class="line">cin = cout;                </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">1</span>] &amp; ~B[<span class="number">1</span>]) | (cin &amp; (A[<span class="number">1</span>] ^ ~B[<span class="number">1</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">cout = (A[<span class="number">2</span>] &amp; ~B[<span class="number">2</span>]) | (cin &amp; (A[<span class="number">2</span>] ^ ~B[<span class="number">2</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">S = A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>] ^ cin;</span><br><span class="line">cout = (A[<span class="number">3</span>] &amp; ~B[<span class="number">3</span>]) | (cin &amp; (A[<span class="number">3</span>] ^ ~B[<span class="number">3</span>]));</span><br><span class="line">cin = cout;    </span><br><span class="line"></span><br><span class="line">Out = S;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>核心就是一个四位的行波全加器，为了实现减法电路</li>
+</ul>
+<h3 id="1202-424-Voter"><a href="#1202-424-Voter" class="headerlink" title="1202-424 Voter"></a>1202-424 Voter</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> VoterPlus(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] np,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">7</span>: <span class="number">0</span>] vip,</span><br><span class="line">    <span class="keyword">input</span> vvip,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] result</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] np_vote, next_np_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] vip_vote, next_vip_vote;</span><br><span class="line">    <span class="keyword">reg</span> vvip_vote, next_vvip_vote;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">7</span>: <span class="number">0</span>] next_result;</span><br><span class="line">    <span class="keyword">integer</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认复位，注意题意要求</span></span><br><span class="line">        next_np_vote = np_vote | np;</span><br><span class="line">        next_vip_vote = vip_vote | vip;</span><br><span class="line">        next_vvip_vote = vvip_vote | vvip;</span><br><span class="line"></span><br><span class="line">        next_result = <span class="number">8&#x27;b0</span>;</span><br><span class="line">        <span class="comment">//计算次态，使用for循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="1202-102-ALU"><a href="#1202-102-ALU" class="headerlink" title="1202-102 ALU"></a>1202-102 ALU</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> alu(</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] A,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">31</span>: <span class="number">0</span>] B,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">2</span>: <span class="number">0</span>] ALUOp,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] C</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] ext_a, ext_b;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">32</span>: <span class="number">0</span>] sum;</span><br><span class="line">    <span class="keyword">reg</span> cout;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ALUOp)</span><br><span class="line">            sgtu: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;<span class="number">0</span>, A&#125;;</span><br><span class="line">                ext_b = &#123;<span class="number">0</span>, B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                </span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            sgt: <span class="keyword">begin</span></span><br><span class="line">                ext_a = &#123;A[<span class="number">31</span>], A&#125;;</span><br><span class="line">                ext_b = &#123;B[<span class="number">31</span>], B&#125;;</span><br><span class="line">                ext_a = ~ext_a;</span><br><span class="line">                sum = ext_a + ext_b + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                C = sum[<span class="number">32</span>];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                C = <span class="number">32&#x27;b0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意使用拓展位的减法电路实现比较即可</li>
+</ul>
+<hr>
+<h2 id="有限状态机"><a href="#有限状态机" class="headerlink" title="有限状态机"></a>有限状态机</h2><h3 id="1202-334-Drink"><a href="#1202-334-Drink" class="headerlink" title="1202-334 Drink"></a>1202-334 Drink</h3><ul>
+<li><del>为什么我航的售卖机没有一键退币功能，大一被坑了多少饮料</del></li>
+<li>本题似乎是一个<code>Moore</code>型优先状态机的问题，但是我决定使用我的新结构，所以我们使用<code>Mealy</code>机＋<code>Register</code>的方式解决输出不与状态同步的问题</li>
+<li>四个状态还是很好想的，<code>售货机没吞钱</code> <code>售货机吞0.5元</code> <code>售货机吞1元</code> <code>售货机吞1.5元</code>，然后就是状态转移方程了<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/p1_drink.png" alt="alt-text"></li>
+<li>提供一个我使用的新结构框架（<del>应该没有泄露源码之嫌</del>）<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> drink(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] coin,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> drink,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] back</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义状态</span></span><br><span class="line">    <span class="keyword">parameter</span> s0 = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义寄存器变量</span></span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] state, next_state; </span><br><span class="line">    <span class="keyword">reg</span> next_drink;</span><br><span class="line">    <span class="keyword">reg</span>[<span class="number">1</span>: <span class="number">0</span>] next_back;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//复位</span></span><br><span class="line">            ......</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//状态转移</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">            back &lt;= next_back;</span><br><span class="line">            drink &lt;= next_drink;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">//默认赋值</span></span><br><span class="line">        next_back = <span class="number">2&#x27;b0</span>;</span><br><span class="line">        next_drink = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        next_state = state;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            s0: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//状态转移</span></span><br><span class="line">                ......</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            ......</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">                <span class="comment">//......</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1202-145-String"><a href="#1202-145-String" class="headerlink" title="1202-145 String"></a>1202-145 String</h3><ul>
+<li>其实本质是课下题的升级版，对于左括号进行记录即可</li>
+<li>多重括号的辨别使用一个变量寄存左括号数量即可<ul>
+<li>string状态没有分开，看起来有一点乱<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string2.png" alt="状态转移图"></li>
+<li>将带有左括号未匹配时单独分出状态，这样大概不会显得乱吧<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_string.png" alt="wty赞助"></li>
+</ul>
+</li>
+</ul>
+<h3 id="1202-336-IntCheck"><a href="#1202-336-IntCheck" class="headerlink" title="1202-336 IntCheck"></a>1202-336 IntCheck</h3><ul>
+<li>第一，读到<code>;</code>语句才截止，所以要考虑每个状态遇到<code>;</code>的情况</li>
+<li>第二，多个标识符可以复用状态，详情请看下面状态转移图</li>
+<li>第三，不要在小情侣后面码代码<br><img src="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" alt="复杂图"><a class="btn-beautify " href="https://tsxb-top-pic.oss-cn-hangzhou.aliyuncs.com/chis/images/P1_int.svg" 
+  title="查看原图"><span>查看原图</span></a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>推荐题目</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
@@ -2208,6 +2130,84 @@
       <categories>
         <category>计算机组成原理</category>
         <category>课下复习</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>北航计算机组成P4</title>
+    <url>/2024/11/13/CO_P4/</url>
+    <content><![CDATA[<h1 id="北航计算机组成P4"><a href="#北航计算机组成P4" class="headerlink" title="北航计算机组成P4"></a>北航计算机组成P4</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>咳咳，最近太忙了作业好多啊，搭完CPU每周还要迭代自己的测评机，原来CO也可以训练我们面向对象的能力</li>
+</ul>
+<hr>
+<h2 id="课下"><a href="#课下" class="headerlink" title="课下"></a>课下</h2><ul>
+<li>其实P4就是把P3的电路图翻译成代码，整体上没有难度，如果你P3有好好设计你的CPU的话，<del>没有好好设计的话，就照着学长设计好的CPU翻译</del>，总之也是从一个一个的模块开始搭建，这里不赘述了</li>
+</ul>
+<h3 id="组合逻辑建模"><a href="#组合逻辑建模" class="headerlink" title="组合逻辑建模"></a>组合逻辑建模</h3><ul>
+<li>我啰嗦一两句，最近几年课程组不知道在干什么（<del>明年等我当助教我也要搞得抽象</del>），考试喜欢考一些奇奇怪怪的组合逻辑，所以或许你需要根据你使用的建模逻辑稍微熟练一些Verilog的语法，这样课上的时候或许不会那么慌</li>
+<li>两种组合逻辑建模方式对于写CPU的思路还是有略微不同的，而且各有各的好处，见仁见智了</li>
+</ul>
+<h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a><code>assign</code></h4><ul>
+<li>最大的优点就是简洁、代码量很少，而且就是电路连线，从P3转过来会比较方便<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_add) ? A + B :</span><br><span class="line">                 (ALUOp == `ALU_sub) ? A - B :</span><br><span class="line">                 (ALUOp == `ALU_or) ? A | B :</span><br><span class="line">                 (ALUOp == `ALU_and) ? A &amp; B : <span class="number">32&#x27;b0</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一行就解决了ALU，反正就是挺爽的</li>
+</ul>
+</li>
+<li>缺点是对于复杂逻辑建模比较困难，所以<strong>强烈建议</strong>掌握<code>function</code>和<code>task</code>(这个或许不用嘛)的用法，反正考场上会用到的，比如我随便编一个指令，要求实现<code>gxadd rd, rs, rt</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gray(00): 00</span><br><span class="line">gray(01): 01</span><br><span class="line">gray(10): 11</span><br><span class="line">gray(11): 10</span><br><span class="line"></span><br><span class="line">temp1 &lt;- GPR[rs] + GPR[rt]</span><br><span class="line">for i in range(0,16):</span><br><span class="line">    temp2[2*i+1: 2*i] &lt;- gray(temp1[2*i+1: 2*i])</span><br><span class="line">temp2 &lt;- temp2 ^ temp1</span><br><span class="line">if temp2 &gt; temp1:</span><br><span class="line">    GPR[rd] = temp2</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = temp1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>好，你现在用assign语句把它建模到ALU里面去（），是吧，这个时候<code>function</code>就要发力了，管他三七二十一全部丢进函数里面<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> [<span class="number">1</span>: <span class="number">0</span>] cal_gray;</span><br><span class="line">    <span class="keyword">input</span>[<span class="number">1</span>: <span class="number">0</span>] origin;</span><br><span class="line">    <span class="keyword">if</span> (origin == <span class="number">2&#x27;b0</span>) cal_gray = <span class="number">2&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b1</span>) cal_gray = <span class="number">2&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (origin == <span class="number">2&#x27;b10</span>) cal_gray = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">else</span> cal_gray = <span class="number">2&#x27;b10</span>;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
+<li>其实也可以如果你熟悉掩码和格雷码的定义的话，例如<code>gray(x) = x ^ (x &gt;&gt; 1)</code>，又因为两位的二进制右移一位第一位一定是0，所以我们考虑将32位的数字的奇数位覆盖再整体右移，达到一次实现16次2位的异或<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">temp1 = A + B;</span><br><span class="line">temp2 = temp1 &amp; <span class="number">0xaaaaaaaa</span>;</span><br><span class="line"><span class="comment">//0xaaaaaaaa就是....10101010</span></span><br><span class="line"><span class="comment">//反正奇数位就这样被覆盖了</span></span><br><span class="line">temp2 = temp2 &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="comment">//相当于进行了上面的 x &gt;&gt; 1，反正奇数位都是0了</span></span><br><span class="line">temp2 = temp2 ^ temp1</span><br><span class="line"><span class="comment">//最终的temp2就是经历两位gray转化后的数字了</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> ALU_out = (ALUOp == `ALU_gxadd) ? </span><br><span class="line">(( ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) &gt; (A+B) ) ? ((A+B) ^ (((A+B) &amp; <span class="number">32&#x27;haaaaaaaa</span>) &gt;&gt; <span class="number">1</span>)) : (A+B))</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="always"><a href="#always" class="headerlink" title="always@(*)"></a><code>always@(*)</code></h4><ul>
+<li>最大的缺点是代码量可能会比上面大一些，也可能大很多，全面准备吧</li>
+<li>最大的优点就是适合复杂逻辑的建模，比如上面那个瞎编的指令</li>
+<li>不过还是建议掌握<code>function</code>，多好啊，变成纯纯面向过程的语言了</li>
+<li>讲一个经常会用的切片，好玩爱玩<ul>
+<li>假设你现在想要学lb、lh指令取出一个字中的某个字节或者半字，但是不想要一直if-else（考场上不会的话枚举是一个很好的选择），你想到了verilog可以切片<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span> h_adder;</span><br><span class="line"><span class="keyword">input</span> <span class="keyword">wire</span>[<span class="number">1</span>: <span class="number">0</span>] b_adder;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">31</span>: <span class="number">0</span>] pos;</span><br><span class="line"><span class="keyword">reg</span>[<span class="number">0</span>: <span class="number">31</span>] neg;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"><span class="comment">//pos[b_adder * 8 + 7: b_adder * 8]</span></span><br><span class="line"><span class="comment">//错误用法，Verilog的切片两边要是常数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确写法</span></span><br><span class="line"><span class="comment">//定义高位到低位</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 + 15 取低16位，按照高位到低位排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line">pos[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//从h_adder * 16 取高16位，但是还是按照从高到低排列</span></span><br><span class="line"><span class="comment">//pos[h_adder * 16 + 15: h_adder * 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义从低到高</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> + <span class="number">15</span> -: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同上，但是从低到高排列</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br><span class="line">neg[h_adder * <span class="number">16</span> +: <span class="number">16</span>]</span><br><span class="line"><span class="comment">//同理</span></span><br><span class="line"><span class="comment">//neg[h_adder * 16: h_adder * 16 + 15]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="课上"><a href="#课上" class="headerlink" title="课上"></a>课上</h2><h3 id="T1-eam"><a href="#T1-eam" class="headerlink" title="T1 eam"></a>T1 eam</h3><ul>
+<li><code>eam $rd, $rs, $rt</code></li>
+<li>R型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ext_imm &lt;- signed(GPR[rs][15: 0])</span><br><span class="line">res &lt;- ext_imm % 17</span><br><span class="line">if signed(GPR[rt]) &lt; 0:</span><br><span class="line">    GPR[rd] = one_ext(res)</span><br><span class="line">else:</span><br><span class="line">    GPR[rd] = zero_ext(res)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将rs寄存器低16位截断为有符号数，这个数对17取模得到的<strong>正余数</strong>，然后根据另一个操作数的正负进行1或者0拓展</li>
+</ul>
+</li>
+</ul>
+<h3 id="T2-cptl"><a href="#T2-cptl" class="headerlink" title="T2 cptl"></a>T2 cptl</h3><ul>
+<li><code>cptl $rs, $rt, label</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">temp &lt;- PC + 4 + sign_ext(offset || 00)</span><br><span class="line">PC &lt;- temp</span><br><span class="line"></span><br><span class="line">if GPR[rs][17: 12] == 6&#x27;b111111 || ......GPR[rs][5: 0] == 6&#x27;b111111: </span><br><span class="line">    GPR[rt] &lt;- PC + 4</span><br><span class="line">else:</span><br><span class="line">    GPR[31] &lt;- PC + 4</span><br></pre></td></tr></table></figure>
+<ul>
+<li>跳转类指令，然后链接内容和rs寄存器低18位是否有6个连续的1有关系</li>
+</ul>
+</li>
+</ul>
+<h3 id="T3-olw"><a href="#T3-olw" class="headerlink" title="T3 olw"></a>T3 olw</h3><ul>
+<li><code>olw $rt, offset($base)</code></li>
+<li>I型指令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vadder &lt;- GPR[base] + sign_ext(offset || 00)</span><br><span class="line">temp &lt;- Mem[vadder[31: 2]]</span><br><span class="line"></span><br><span class="line">if func(temp):</span><br><span class="line">    GPR[rt] &lt;- temp</span><br><span class="line">else:</span><br><span class="line">    None</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果读出来的数据是单调不减的，那么才写入</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>课上没什么好玩的，第一个指令注意要使用有符号，不然你就会像我一样疑惑了半个小时为什么这么取模都是0然后暴力while循环求余数。。。</li>
+<li>过两天会把P5好好更新的，顺便预告一下测评机，其实写好了，只是想等P6直接做一个流水线全的，over</li>
+<li>先不写题解了，亲爱的小羊找我看视频，我先溜了</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机组成原理</category>
+        <category>课下复习</category>
+        <category>课上考试</category>
       </categories>
       <tags>
         <tag>计算机组成原理</tag>
@@ -4278,127 +4278,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python基础--字符串(二)</title>
-    <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
-    <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
-<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
-<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
-</ul>
-<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
-<li><code>%s</code><ul>
-<li>适用于为字符串占位，<del>我本来就是啊</del></li>
-</ul>
-</li>
-<li><code>%d</code><ul>
-<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
-</ul>
-</li>
-<li><code>%f</code><ul>
-<li>适用于为浮点数占位</li>
-</ul>
-</li>
-<li><code>.precision</code><ul>
-<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
-</ul>
-</li>
-<li><code>width</code><ul>
-<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
-</ul>
-</li>
-<li><code>flags</code><ul>
-<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
-<li><code>0</code>，补充前导0</li>
-<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
-<li><code> </code>，方便正数与负数对齐</li>
-<li><code>+</code>，数字补齐符号</li>
-</ul>
-</li>
-<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
-
-<pre><code> 1234 +1234
--1234 -1234
-  12,  34,  3.10
-12  ,34  ,3.10  
-0012,0234,003.10
-12  ,234 ,3.10  
-</code></pre>
-<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
-<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
-<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
-<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-</ul>
-</li>
-<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
-<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
-</ul>
-</li>
-<li>利用键值对传入参数，则括号中必须使用key值<ul>
-<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
-<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
-</ul>
-</li>
-<li>利用键值对和位置进行复杂传参<ul>
-<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
-</ul>
-</li>
-</ul>
-<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
-<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
-<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
-<li><code>fill</code><ul>
-<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
-</ul>
-</li>
-<li><code>align</code><ul>
-<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
-</ul>
-</li>
-<li><code>sign</code><ul>
-<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
-</ul>
-</li>
-<li><code>width</code><ul>
-<li>最小宽度，默认为字符串长度</li>
-</ul>
-</li>
-<li><code>precision</code><ul>
-<li>控制小数的精度范围，默认是小数点后六位</li>
-</ul>
-</li>
-<li><code>type</code><ul>
-<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
-
-<pre><code>1___ 000002 $$$$11$$$$
-0012          3     34    
-</code></pre>
-<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
-<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
-<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
-<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<pre><code>line= &#39;this is a test string&#39;
-a=3
-__123.34000___
-</code></pre>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python基础</tag>
-        <tag>字符串</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>面向对象u1</title>
     <url>/2025/03/19/OO_u1/</url>
     <content><![CDATA[<h1 id="北航2025面向对象第一单元"><a href="#北航2025面向对象第一单元" class="headerlink" title="北航2025面向对象第一单元"></a>北航2025面向对象第一单元</h1><p>[toc]</p>
@@ -4750,6 +4629,191 @@ __123.34000___
       </tags>
   </entry>
   <entry>
+    <title>面向对象u2-pre</title>
+    <url>/2025/03/20/OO_u2_pre/</url>
+    <content><![CDATA[<h1 id="OO-u2-pre"><a href="#OO-u2-pre" class="headerlink" title="OO_u2 pre"></a>OO_u2 pre</h1><p>现在刚好在U1与U2衔接的空档期，笔者正好写完了作业没事干，所以决定看看U2的内容。说实话虽然老早就知道多线程、多进程这样概念，平常写代码需要多线程最多就是直接使用进程池（<del>GPT把关版</del>），这样深入地学习多线程还是第一次。</p>
+<p>学习资料</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1yW4y1Y7Ms?spm_id_from=333.788.videopod.episodes&vd_source=485d89eda9f819b62d977d00a503da9d&p=135">B老师</a></li>
+<li><a href="https://chatgpt.com/">C老师</a></li>
+<li><a href="https://deepseek.com/">D老师</a></li>
+<li><a href="https://www.bilibili.com/video/BV1YE411D7nH?spm_id_from=333.788.videopod.episodes&vd_source=485d89eda9f819b62d977d00a503da9d&p=26">王老师</a></li>
+<li><a href="https://blog.csdn.net/qq_44715943/article/details/116714584">java多线程</a></li>
+</ul>
+<h2 id="1-多线程是什么"><a href="#1-多线程是什么" class="headerlink" title="1.多线程是什么"></a>1.多线程是什么</h2><p>在古早时代，面对多个需要执行的程序&#x2F;作业，计算机无法做到同时运行他们。于是程序只能一个一个地运行，像一个糖葫芦串一样一个接一个（<del>好饿</del>），这是程序的<strong>串行</strong>。<br>后来科学家们发现某些程序在运行时总是频繁地等待交互响应（一会需要打印机啊、一会需要输入机啊…），占用CPU资源。俗话说占着**不拉*，聪明的科学家想出了一个好办法，趁程序拉*（交互）的时候，剥夺其对CPU的使用权，交由其他程序使用，等到它拉完了又可以继续使用CPU了。由于它们交换CPU使用权又快又频繁，看起来<strong>像多个程序在同时运行</strong>。这是程序的<strong>并发</strong>。<br>后来随着资源越来越丰富，科学家想到给一个电脑多装几个CPU，这样程序不就能真正地一起运行了吗。所以发展出了<strong>多核CPU</strong>，两个&#x2F;多个程序可以同时占用CPU资源，有<strong>不同的核(CPU)<strong>为它们提供服务。这是程序的</strong>并行</strong></p>
+<p>所以科学家把这一个个<strong>并发&#x2F;并行</strong>的程序称为<strong>进程</strong>。在早期，进程既是系统分配资源的基本单位，也是执行的基本单元。后来，科学家们为了加大系统的并发度，又引入了<strong>线程</strong>，线程在进程之下，成为了<strong>执行的基本单元</strong>。而且由于线程的调度开销远小于进程，所以也得到了广泛的使用。多线程慢慢地不再是多进程的附庸，<del>跨越了jieji</del></p>
+<p>总之，多线程可以让我们的CPU跑的更充分。它明明可以上七休零，你要让它上五休二，不行，得狠狠压榨它</p>
+<h2 id="2-多线程-in-Java"><a href="#2-多线程-in-Java" class="headerlink" title="2.多线程 in Java"></a>2.多线程 in <code>Java</code></h2><p>作为流行的编程语言，<code>Java</code>自然也提供了原生的线程库<code>java.util.concurrent</code>简称<code>JUC</code>。我们可以调用其提供的<code>API</code>快速上手多线程编程</p>
+<h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p>在<code>Java</code>中有若干种方法创建一个线程，这里只介绍几种较为常用的方法</p>
+<h4 id="i-Thread"><a href="#i-Thread" class="headerlink" title="i. Thread"></a>i. Thread</h4><p><code>Thread</code>类是<code>JUC</code>中提前定义好的线程类，我们只需要继承此类并<strong>重写</strong><code>run</code>方法即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//MyThread.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//...需要这个线程执行的操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Main.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyThread</span>();</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyThread</span>();</span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>欸我们刚刚不是重写了<code>run</code>方法吗，为什么调用了<code>start</code>方法？</p>
+<ul>
+<li>虽然重写了<code>run</code>方法，但是如果直接调用的话，两个线程的执行实际上还是串行的，和我们之前写代码的逻辑是一样的</li>
+<li>但是调用了<code>start</code>方法后，线程将接受线程调度，可以并发执行，<code>start</code>方法内部也是调用了<code>run</code>方法的<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Thread.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">start</span><span class="params">()</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    group.add(<span class="built_in">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">started</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        start0();</span><br><span class="line">        started = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title function_">start0</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If this thread was constructed using a separate</span></span><br><span class="line"><span class="comment"> * &lt;code&gt;Runnable&lt;/code&gt; run object, then that</span></span><br><span class="line"><span class="comment"> * &lt;code&gt;Runnable&lt;/code&gt; object&#x27;s &lt;code&gt;run&lt;/code&gt; method is called;</span></span><br><span class="line"><span class="comment"> * otherwise, this method does nothing and returns.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * Subclasses of &lt;code&gt;Thread&lt;/code&gt; should override this method.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span>     #start()</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span>     #stop()</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span>     #Thread(ThreadGroup, Runnable, String)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (target != <span class="literal">null</span>) &#123;</span><br><span class="line">        target.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+确实可以看到<code>start</code>方法内部调用了<code>start0</code>方法，其创建系统级进程并启动<code>run</code>方法，不过似乎<strong>调用<code>run</code>方法前</strong>还做了一些什么事，难道线程不是<code>start</code>就启动了吗？这里先卖个关子后面在说</li>
+</ul>
+<h4 id="ii-Runnable"><a href="#ii-Runnable" class="headerlink" title="ii. Runnable"></a>ii. Runnable</h4><p>看到上面的源码也说了，如果线程使用了额外的<code>Runnable</code>实例对象，那么就会调用实例对象的<code>run</code>方法。所以我们启动线程的第二个方法就是通过<code>Runnable</code>对象传递给线程。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//MyRunnable.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRunnable</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Main.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">MyRunnble</span> <span class="variable">mr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Runnable</span>();</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(mr);</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(mr);</span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到这第二种方法还是有些许不一样的，例如需要重写<strong>接口</strong>的方法，同时传递给不同<code>Thread</code>类可以是同一个<code>Runnable</code>实例对象，看起来很神奇，难道我不是不同的线程吗，为什么用同一个对象</p>
+<ul>
+<li>线程可以访问共有对象，线程共用堆空间</li>
+<li>线程共用实例对象方法不会有影响，线程不共用栈空间，每个线程有独立的栈</li>
+<li>所以实际上是不同线程<strong>复用了同一个实例对象中方法的逻辑</strong>，两个方法的执行实际上是独立的</li>
+</ul>
+<p>当然我们这里使用的多线程方法都没法返回值。如果希望多线程计算等等，有兴趣的同学可以了解<code>Callable</code>和<code>Future</code>的使用，这里不涉及我们的作业，就不在此展开了。</p>
+<h4 id="iii-常用的属性与方法"><a href="#iii-常用的属性与方法" class="headerlink" title="iii. 常用的属性与方法"></a>iii. 常用的属性与方法</h4><p><code>setName(String) -&gt; void</code></p>
+<ul>
+<li>可以给你的线程取一个洋气的名字，默认是<code>Thread-x</code>（x是main线程开始后开启的线程序号0、1…）</li>
+</ul>
+<p><code>getName() -&gt; String</code></p>
+<ul>
+<li>同上，获取线程的名字</li>
+</ul>
+<p><code>Thread(String str)</code></p>
+<ul>
+<li>当然也可以在创建线程是直接给它一个名字</li>
+</ul>
+<p><code>&#123;static&#125; currentThread() -&gt; Thread</code></p>
+<ul>
+<li>执行到此语句时的线程对象，例如希望在<code>Runnable</code>对象中获取线程实例</li>
+</ul>
+<p><code>&#123;static&#125; sleep(int) -&gt; void</code></p>
+<ul>
+<li>让执行此条语句的线程陷入休眠（<code>TMIED_WATING</code>）状态</li>
+</ul>
+<p><code>setDaemon(Thread) -&gt; void</code></p>
+<ul>
+<li>为当前线程设置一个守护线程，当前线程结束，守护线程将逐步暂停</li>
+</ul>
+<p><code>setPriority(int) -&gt; void</code></p>
+<ul>
+<li>设置线程执行优先级，优先级越高，被执行的概率越大</li>
+<li>三个值<code>MIN_PRIORITY: 1</code>、<code>NORM_PRIORITY: 5</code>、<code>MAX_PRIORITY: 10</code></li>
+</ul>
+<h3 id="线程闹鬼事件"><a href="#线程闹鬼事件" class="headerlink" title="线程闹鬼事件"></a>线程闹鬼事件</h3><p>CVBB引入了一个马戏团，准备在下周五表演，CVBBer对此都十分感兴趣。为了照顾同学们宝贵的课余时间，主办方拜托小熊写一个多窗口的售票平台，方便同学们抢票。共计3个窗口，100张门票。事不宜迟，我们赶紧开始吧</p>
+<p>我们先浅浅地实现一个售票机</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//VendingMachine.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VendingMachine</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">ticket</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getTicket</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (canGetTicket()) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">canGetTicket</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (ticket &lt; <span class="number">100</span>) &#123;</span><br><span class="line">            ticket++;</span><br><span class="line">            System.out.println(<span class="string">&quot;ticket@&quot;</span> + ticket + <span class="string">&quot; sold!&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Main.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">VendingMachine</span> <span class="variable">vm</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">VendingMachine</span>();</span><br><span class="line">    vm.getTicket();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">1</span> sold!</span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">2</span> sold!</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">100</span> sold!</span><br></pre></td></tr></table></figure>
+<p>测试一下，嗯，果然运行地很好。现在我们把它改为多线程吧，无非就是实现<code>Runnable</code>罢了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VendingMachine</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">ticket</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (canGetTicket()) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Main.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">VendingMachine</span> <span class="variable">vm</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">VendingMachine</span>();</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(vm);</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(vm);</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(vm);</span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line">    t3.start();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">3</span> sold!</span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">3</span> sold!</span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">3</span> sold!</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">101</span> sold!</span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">102</span> sold!</span><br><span class="line">&gt;&gt;&gt; ticket@<span class="number">102</span> sold!</span><br></pre></td></tr></table></figure>
+<p>aaa，完蛋了。不仅票卖重复了，甚至还卖出了假票（），这究竟是怎么回事呢<br>我们观察<code>canGetTicket</code>方法内部的逻辑，当三个线程同时进入该方法后，按如下顺序继续执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">t1 -&gt; ticket++</span><br><span class="line">t2 -&gt; ticket++</span><br><span class="line">t3 -&gt; ticket++</span><br><span class="line">t1 -&gt; sout(...)</span><br><span class="line">t2 -&gt; sout(...)</span><br><span class="line">t3 -&gt; sout(...)</span><br></pre></td></tr></table></figure>
+<p>啊，原来线程<code>t1</code>执行完票号加一操作没有立刻打印出来，CPU执行权被截胡了，最后导致了悲剧的发生。那我们到底应该如何解决这个问题呢</p>
+<h3 id="数据安全"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全</h3><p>刚刚讲到了线程引发的赛博闹鬼事件。那么我们应该如何避免这种现象的发生呢<br>观察我们刚刚发现的问题</p>
+<ul>
+<li>多个相同的票号是因为 <strong><code>ticket</code>自增与打印值</strong>两个操作并非一气呵成的，也就是非<strong>原子操作</strong></li>
+<li>超出范围的票号是因为 <strong>判断<code>ticket</code>大小与<code>ticket</code>自增</strong>两个操作并非一气呵成的，也是因为非<strong>原子操作</strong></li>
+</ul>
+<p>我们当然很难去把这种操作实现为一个底层的汇编指令。虽然这样能从根本上解决什么原子、非原子问题。但是理论上我们需要的原子操作是无限的，但是指令集是有限的。<br>于是我们把原子操作放在某个对象上，对于这个对象的获取与释放是<strong>原子操作</strong>，这是互斥锁的一个简陋的描述</p>
+<h4 id="synchronized关键词"><a href="#synchronized关键词" class="headerlink" title="synchronized关键词"></a><code>synchronized</code>关键词</h4><p>关于<code>synchronized</code>的底层实现是极为复杂的，因为Java8之后，<code>synchronized</code>的实现进行了大量的优化操作，其中涉及到锁的升级等等。但是我们可以简单地认为它是通过原子操作请求和释放锁的</p>
+<h5 id="1-synchronized同步代码块解决互斥"><a href="#1-synchronized同步代码块解决互斥" class="headerlink" title="1. synchronized同步代码块解决互斥"></a>1. synchronized同步代码块解决互斥</h5><p>同一时间，只能有一个线程进入同步代码块执行操作，其余线程阻塞在外部<br>对于一个<strong>共有的变量</strong>上锁，通常可以使用<code>.class</code>文件</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Object</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="comment">//synchronized (VendingMachine.class)</span></span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            <span class="comment">//...</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-synchronized同步方法解决互斥"><a href="#2-synchronized同步方法解决互斥" class="headerlink" title="2. synchronized同步方法解决互斥"></a>2. synchronized同步方法解决互斥</h5><p>和上面同步代码块实际是一致的</p>
+<ul>
+<li>对于非静态方法，默认锁住<code>this</code>实例对象，即同一时间一个<strong>实例对象</strong>中所有的<code>synchronized</code>修饰的<strong>非静态</strong>方法中只能<strong>有一个方法被一个线程使用</strong></li>
+<li>对于静态方法，默认锁住<code>class</code>类对象，即同一时间一个<strong>类</strong>中所有<code>synchronized</code>修饰的<strong>静态</strong>方法只能<strong>有一个方法被一个线程使用</strong></li>
+<li><code>class</code>类对象和<code>this</code>对象显然非同一对象，所以<code>synchronized</code>修饰的静态和非静态方法之间并没有限制</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (canGetTicket(...)) </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="type">boolean</span> <span class="title function_">canGetTicket</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="wait、notify解决同步问题"><a href="#wait、notify解决同步问题" class="headerlink" title="wait、notify解决同步问题"></a>wait、notify解决同步问题</h5><p>在上述情况下，我们只关注对于<strong>共用资源</strong>的访问同一时刻只能由一个线程执行。但是在某些情况下，不仅这种资源的访问是互斥的，顺序也是需要依照一定的规律</p>
+<p><strong>吃青提</strong><br>小明的妈妈给他买了一盒阳光青提。妈妈开始洗青提，每洗好一个青提就会放在盘子中，直到盘子装满了为止。小明同时开始吃青提，直到盘子为空为止。已知共有50个青提，盘子最多盛放3个青提。<br>我们可以比较容易地看出可以为小明和妈妈都设置一个线程，一个负责放一个负责吃。而且对于盘子这个资源的访问应该是互斥的。这样是否就足够了呢？？？如果刚开始小明进程开始执行，发现盘子中没有青提，小明应该怎么办？</p>
+<ul>
+<li>首先盘子是<strong>共用的资源</strong>（临界资源），所以对盘子的访问是互斥的</li>
+<li>其次，线程结束的标志是青提洗完了？？？（真的是这个吗？）</li>
+<li>小明吃完了青提，想要再次吃的时候必须要阻塞（如何阻塞），要去唤醒妈妈继续洗（如何唤醒）</li>
+<li>盘子中装满了青提时，妈妈要是还想放也需要阻塞，要去通知小明吃青提</li>
+</ul>
+<p>首先是盘子，这个容器最好写了，不需要任何方法，定义一些属性即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Plate.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Plate</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">maxTimes</span> <span class="operator">=</span> <span class="number">50</span>; <span class="comment">//最多使用次数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">capacity</span> <span class="operator">=</span> <span class="number">3</span>; <span class="comment">//最大容量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">now</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">//当前容量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">Object</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>(); <span class="comment">//互斥锁对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其次就是妈妈，其实就是生产者，负责将东西放入盘子中</p>
+<ul>
+<li>生产者会一直尝试将东西放入盘子中，直到<strong>盘子放满则阻塞</strong>，<strong>次数耗尽则死亡</strong></li>
+<li><code>wait</code>方法会将当前线程“挂”在锁下，并释放锁，线程进入阻塞（<code>BLOCKED</code>）状态</li>
+<li><code>notifyAll</code>方法将唤醒所有被<strong>挂在该对象下的线程</strong>，但最终只能有一个线程获得执行权，其他线程继续进入阻塞状态，等待下一次唤醒抢夺CPU控制权</li>
+<li><strong>attention</strong>：<code>wait</code>方法需要在<code>while</code>循环中使用，因为有时线程会被“虚假唤醒”，莫名地就会执行后面的语句，极不安全<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (produce()) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">produce</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (Plate.lock) &#123;</span><br><span class="line">        <span class="keyword">if</span> (Plate.maxTimes == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (Plate.now &gt;= Plate.capacity) &#123;</span><br><span class="line">            Plate.lock.wait();</span><br><span class="line">        &#125;</span><br><span class="line">        Plate.now++;</span><br><span class="line">        Plate.maxTimes--;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; produce grape, with &quot;</span> + Plate.maxTimes + <span class="string">&quot; left&quot;</span>);</span><br><span class="line">        Plate.lock.notifyAll();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+最后是小明，第一次写还是有很多问题的（:sob:</li>
+<li>消费者进程会一直尝试从盘子中拿出食物，直到<strong>盘为空则阻塞？？？</strong>，<strong>次数耗尽则死亡？？？</strong></li>
+<li>结束的条件并不只是次数耗尽，次数耗尽指生产者已经全部生产完食物，但是消费者有没有消耗完呢？<ul>
+<li>假设生产者线程结束时，所有消费者都在consume方法开始，那么接下来每个消费者线程发现<code>Plate.maxTimes == 0</code>即退出，那么生产者最后生产的物品并没有被消耗</li>
+</ul>
+</li>
+<li>唤醒条件即当前盘是否为空，只有盘为空消费者才能继续执行下去吗？<ul>
+<li>假设现在生产者线程已经结束，有若干消费者进程在等待，其中一个消费者消耗了生产者最后生产的若干物品并正常退出了，剩下的消费者怎么办？？？**即使它们被唤醒，但是检查发现<code>Plate.now == 0</code>**又会继续等待，程序将无法终止</li>
+</ul>
+</li>
+<li>所以真正的条件应该如下，而非注释中的一般情况<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//run...</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">consume</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    <span class="comment">// Thread.sleep(20);</span></span><br><span class="line">    <span class="keyword">synchronized</span> (Plate.lock) &#123;</span><br><span class="line">        <span class="comment">// if (Plate.maxTimes == 0) ???</span></span><br><span class="line">        <span class="keyword">if</span> (Plate.maxTimes == <span class="number">0</span> &amp;&amp; Plate.now == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// while (Plate.now &lt;= 0) ???</span></span><br><span class="line">        <span class="keyword">while</span> (Plate.now &lt;= <span class="number">0</span> &amp;&amp; Plate.maxTimes != <span class="number">0</span>) &#123;</span><br><span class="line">            Plate.lock.wait();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (Plate.now &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Plate.now--;</span><br><span class="line">            index++;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot; consume grape&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Plate.lock.notifyAll();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a><code>ReentrantLock</code></h4><p><code>Lock</code>对象是<code>JUC</code>中的显式锁，需要用户手动上锁&#x2F;关锁，但是是一个接口，我们需要使用它的一个实现类<code>ReetrantLock</code><br>例如将上面代码改写</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Plate.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">Lock</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReetrantLock</span>();</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">Condition</span> <span class="variable">condition</span> <span class="operator">=</span> lock.newCondition();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Consumer.java</span></span><br><span class="line"><span class="comment">//上锁</span></span><br><span class="line">Plate.lock.lock();</span><br><span class="line">    <span class="keyword">if</span> (Plate.maxTimes == <span class="number">0</span> &amp;&amp; Plate.now == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (Plate.now &lt;= <span class="number">0</span> &amp;&amp; Plate.maxTimes != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//阻塞进程</span></span><br><span class="line">        Plate.condition.await();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (Plate.now &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        Plate.now--;</span><br><span class="line">        index++;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; consume grape&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//唤醒阻塞进程</span></span><br><span class="line">    Plate.condition.signalAll();</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"><span class="comment">//解锁</span></span><br><span class="line">Plate.lock.unlock();</span><br></pre></td></tr></table></figure>
+<p>再次运行程序，发现了神奇的一幕，程序无法结束了。这是为什么呢？</p>
+<ul>
+<li>我们查看刚刚改过的代码，发现<code>return true;</code>时没有<strong>把锁打开</strong>，导致了锁一直处于关闭状态</li>
+<li>我们应该使用<code>finally</code>块，使得无论如何都要将锁打开<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Plate.lock.lock();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    ....</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    Plate.lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="ReadWriteLock"><a href="#ReadWriteLock" class="headerlink" title="ReadWriteLock"></a><code>ReadWriteLock</code></h4><h5 id="读写锁手动实现"><a href="#读写锁手动实现" class="headerlink" title="读写锁手动实现"></a>读写锁手动实现</h5><p>读写锁，这个涉及到另一个经典的多线程问题————“读者与写者问题”</p>
+<ul>
+<li>对于一个文件的操作可以分为读、写两种线程</li>
+<li>读线程可以有多个同时一起读文件</li>
+<li>写线程必须与读线程和其他写线程互斥</li>
+</ul>
+<p>这个问题最有意思的一点在于，我们应该如何让多个读线程不互斥</p>
+<ul>
+<li>这个问题和刚刚的盘子容量有些类似，只是这次盘子的容量是无限大的，所以我们可以这样考虑：<strong>永远只给第一个读线程上锁，永远只给最后一个读线程解锁</strong><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//read</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">Lock</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReetrantLock</span>(); <span class="comment">//读写锁</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">// 记录所有的读进程</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">&#125;</span><br><span class="line">count++;</span><br><span class="line">read();<span class="comment">// 真正的读操作</span></span><br><span class="line">count--;</span><br><span class="line"><span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+但是这样还有问题，因为<code>count == 0</code>与<code>count++</code>不是原子操作，可能导致多个读者线程进入<code>if</code>区域尝试获取锁，导致读者们相互阻塞，并不是我们希望看到的。同理下方的<code>count</code>也需要保护<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//read</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="type">Lock</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReetrantLock</span>(); <span class="comment">//读写锁</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">Lock</span> <span class="variable">mutex</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReetrantLock</span>();</span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">// 记录所有的读进程</span></span><br><span class="line"></span><br><span class="line">mutex.lock();</span><br><span class="line"><span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">&#125;</span><br><span class="line">count++;</span><br><span class="line">mutex.unlock();</span><br><span class="line">read();<span class="comment">// 真正的读操作</span></span><br><span class="line">mutex.lock();</span><br><span class="line">count--;</span><br><span class="line"><span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">&#125;</span><br><span class="line">mutex.unlock();</span><br></pre></td></tr></table></figure>
+写进程也是同理了<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">lock.lock();</span><br><span class="line">write(); <span class="comment">// 真正的写操作</span></span><br><span class="line">lock.unlock();</span><br></pre></td></tr></table></figure>
+最后观察发现，我们实现的锁是非公平锁，甚至有些太不公平了。如果一直有读线程到来，写线程最终可能会饿死。所以我们可以多设置一个锁，保持公平。但是于此同时，程序的性能会受到一些影响。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="type">Lock</span> <span class="variable">priority</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReetrantLock</span>();</span><br><span class="line"></span><br><span class="line">priority.lock();</span><br><span class="line"><span class="comment">//写线程原有代码</span></span><br><span class="line">priority.unlock();</span><br><span class="line"></span><br><span class="line">priority.lock();</span><br><span class="line"><span class="comment">//读线程前半段获取读写锁内容</span></span><br><span class="line">priority.unlock();</span><br><span class="line">read(); <span class="comment">//真正的读线程</span></span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></li>
+<li>这样保证了如果在读者们读文件时，写者先到来，那么接下来会轮到写者执行，<code>priority</code>锁保证了读写操作的公平性。但是实际读写锁常用于读操作显著高于写操作频率时。</li>
+</ul>
+<h5 id="ReetrantReadWriteLock"><a href="#ReetrantReadWriteLock" class="headerlink" title="ReetrantReadWriteLock"></a><code>ReetrantReadWriteLock</code></h5><p>当然<code>JUC</code>已经实现了我们刚刚说的读写锁。而且性能、稳定性各方面都是碾压我们手写的（毕竟它底层实现不仅有众多原子操作优化、锁优化，还能享受到<code>JVM</code>级的一些优化</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">ReedWriteLock</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantReadWriteLock</span>();</span><br><span class="line"><span class="type">Lock</span> <span class="variable">rLock</span> <span class="operator">=</span> lock.readLock();</span><br><span class="line"><span class="type">Lock</span> <span class="variable">wLock</span> <span class="operator">=</span> lock.writeLock();</span><br><span class="line"></span><br><span class="line">rLock.lock();</span><br><span class="line">read();</span><br><span class="line">rLock.unlock();</span><br><span class="line"></span><br><span class="line">wLock.lock();</span><br><span class="line">write();</span><br><span class="line">wLock.unlock();</span><br></pre></td></tr></table></figure>
+<p>锁<del>升级</del>与降级<br>如果一个线程写完了之后发现自己还想读该怎么办，写锁降级为读锁</p>
+<ul>
+<li><code>ReetrantReadWriteLock</code>支持重入，一个获取到写锁的线程再去获取读锁并不会阻塞自己，而是可以正常地获取<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">wLock.lock();</span><br><span class="line">write();</span><br><span class="line"><span class="comment">//还想读</span></span><br><span class="line">rLock.lock();</span><br><span class="line">wLock.unlock();</span><br><span class="line">read();</span><br><span class="line">rLock.unlock();</span><br></pre></td></tr></table></figure>
+如果一个线程读完之后发现自己还想写该怎么办，读锁升级为写锁？？？</li>
+<li>错误的，获取到读锁的同时不允许同时再去获取写锁，这样可能导致同时在读取的线程发生数据不一致错误，必须先释放读锁然后再尝试获取写锁<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">rLock.lock();</span><br><span class="line">read();</span><br><span class="line">rLock.unlock();</span><br><span class="line">wLock.lock();</span><br><span class="line">write();</span><br><span class="line">wLock.unlock();</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a><code>Semaphore</code></h4><p>信号量是一个伟大的发明，<code>JUC</code>的信号量实际上就是记录型自变量。信号量声明了一个资源的多少，允许多个线程去获取这种资源，但是超过拥有资源的限制后，线程将被“挂”在信号量下，等待资源被其他线程释放。</p>
+<ul>
+<li>听着好熟悉，感觉和小明吃青提的问题很像。</li>
+<li>是的，其实解决生产者消费者问题的代码实现，是我手动模拟了一个信号量。还是那句话，既然<code>Java</code>已经实现好了我们用就是了</li>
+</ul>
+<p>思考一下信号量实现同步问题，因为获取信号量时如果没有默认会进入<code>wait</code>状态，而释放信号量时也默认会去通知被阻塞的进程。我们的代码实际可以写的更加简洁li</p>
+<ul>
+<li>细细分析一下生产者与消费者的同步关系，下面的“生产”、“消耗”对应着信号量的意义，是对于资源而言的</li>
+<li>消费者消耗完食物 -&gt; 通知生产者生产（消费者生产“空资源”， 生产者消耗“空资源”）</li>
+<li>生产者生产食物过剩 -&gt; 通知消费者消费（生产者生产“食物资源”，消费者消耗“食物资源”）</li>
+<li>所以我们不妨设置两个意义相反的信号量用于指代资源。那理所应当的，起始时空资源大小应该等于盘子的大小，食物资源的大小应该为0<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Plate</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">maxTimes</span> <span class="operator">=</span> <span class="number">100</span>; <span class="comment">//总的生产次数</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">Semaphore</span> <span class="variable">full</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Semaphore</span>(<span class="number">0</span>); <span class="comment">//食物资源，这里为了反义词</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; foods = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(); <span class="comment">//盘子</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">Semaphore</span> <span class="variable">empty</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Semaphore</span>(<span class="number">3</span>); <span class="comment">//空资源</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Consumer</span></span><br><span class="line"><span class="comment">//消耗食物资源</span></span><br><span class="line">Plate.full.acquire();</span><br><span class="line"><span class="keyword">synchronized</span> (Plate.class) &#123;</span><br><span class="line">    <span class="keyword">if</span> (Plate.maxTimes == <span class="number">0</span> &amp;&amp; Plate.foods.isEmpty()) &#123;</span><br><span class="line">        <span class="comment">//既然没用就归还资源</span></span><br><span class="line">        Plate.full.release();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> Plate.foods.remove(<span class="number">0</span>);</span><br><span class="line">    consumed.add(index);</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; consume grape@&quot;</span> + index);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//生产空资源</span></span><br><span class="line">Plate.empty.release();</span><br><span class="line"><span class="keyword">return</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Producer</span></span><br><span class="line"><span class="comment">//获取空资源</span></span><br><span class="line">Plate.empty.acquire();</span><br><span class="line"><span class="keyword">synchronized</span> (Plate.class) &#123;</span><br><span class="line">    <span class="keyword">if</span> (Plate.maxTimes == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//既然没用就归还资源</span></span><br><span class="line">        Plate.empty.release();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Plate.maxTimes--;</span><br><span class="line">    <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">100</span> - Plate.maxTimes;</span><br><span class="line">    Plate.foods.add(index);</span><br><span class="line">    produced.add(index);</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; produce grape@&quot;</span> + index);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//生产食物资源</span></span><br><span class="line">Plate.full.release();</span><br><span class="line"><span class="keyword">return</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+接下来我们运行发现，消费者消费完之后程序停不下来了。看看结束的情况，感觉也没问题啊，没用的资源还回去怎么会出问题呢</li>
+<li>这里还是假设生产者生成了最后三个食物资源后死亡。接下来有三个消费者线程分别消耗一个食物资源。此时刚好所有食物也消耗完了，是时候结束进程了。这是某一个消费者线程希望通过<code>if (Plate.maxTimes == 0 &amp;&amp; foods.isEmpty())</code>返回，但是它必须先获得一个食物资源<code>Plate.full.acquire</code>，此时生产者线程已经全部死亡，而我们分析食物资源也已经耗尽，程序陷入死锁状态</li>
+<li>解决方案<ul>
+<li>先判断一遍是否可以提前返回再获取资源（缺点：麻烦，在多个地方返回写同样的语句）<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (Plate.class) &#123;</span><br><span class="line">    <span class="keyword">if</span> (Plate.maxTimes == <span class="number">0</span> &amp;&amp; foods.isEmpty()) &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Plate.full.acquire();</span><br><span class="line"><span class="keyword">synchronized</span> (Plate.class) &#123;</span><br><span class="line">    <span class="keyword">if</span> (...) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>让生产者线程死亡前<strong>多留一个食物资源用于退出</strong>，使用<code>finally</code>即可<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Plate.empty.acquire();</span><br><span class="line">    <span class="keyword">synchronized</span> (Plate.class) &#123;</span><br><span class="line">        <span class="keyword">if</span> (...) &#123;</span><br><span class="line">            ....</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    Plate.full.release();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+我们显然可以证明，多留出多少个食物资源都不会影响消费者消耗的数量，因为<strong>正常情况下生产者还会将生产的食物放入<code>foods</code>中</strong>。所以前面的食物资源将最后的<code>food</code>消耗了之后，剩余的食物资源则被用于退出，而且退出前还会归还这个多余的食物资源，就算只有一个食物资源剩余，所有的消费者进程都是可以正常退出的不会受到任何影响！</li>
+</ul>
+</li>
+</ul>
+<p>最后还有一个小小的问题，为什么不能将获取资源的操作放在<strong>互斥锁</strong>内部</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (Plate.class) &#123;</span><br><span class="line">    Plate.full.acquire();</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>acquire()</code>、<code>release()</code>方法使用原子操作，线程安全不需要上锁</li>
+<li>放在内部会造成死锁现象，我们需要遵循额反正是一条避免死锁的原则，一个对象我们保证其先获得所有执行使用的资源再给他执行的机会，而不是一边给他资源，一边让他等其他资源。<ul>
+<li>假设现在消费者先拿到<strong>互斥锁</strong>，然后请求<strong>食物资源</strong>。食物资源没有了，于是消费者主动放弃了CPU执行权给生产者，希望生产者生产食物资源。但是因为生产者<strong>拿不到互斥锁</strong>，导致无法生产<strong>食物资源</strong>，二者陷入了死锁困境。</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>Java</code>多线程远不止这些:sob:，还有各种千奇百怪的锁(<code>自旋锁</code>等等)，<code>JUC</code>也提供了若干优化的策略，例如无锁原子操作<code>CompareAndSwap</code>、<code>TestAndSet</code>等等，还有锁使用策略例如轻量锁、自旋锁、重量锁等等。多线程永无止境！</p>
+]]></content>
+      <categories>
+        <category>OO</category>
+      </categories>
+      <tags>
+        <tag>OO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础--字符串(一)</title>
     <url>/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/</url>
     <content><![CDATA[<h1 id="Python基础之字符串-一"><a href="#Python基础之字符串-一" class="headerlink" title="Python基础之字符串(一)"></a>Python基础之字符串(一)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><font face="宋体">
@@ -4964,6 +5028,127 @@ __123.34000___
 </ul>
 </li>
 </ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python基础</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python基础--字符串(二)</title>
+    <url>/2024/09/26/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_2/</url>
+    <content><![CDATA[<h1 id="Python基础–字符串-二"><a href="#Python基础–字符串-二" class="headerlink" title="Python基础–字符串(二)"></a>Python基础–字符串(二)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>请确保你已经有一定的<code>Python</code>基础且对字符串有一定了解哦，今天我们依旧来探索字符串的秘密，发车了(<del>是因为笔者太懒才没有一次性写完的</del>)，完全不了解的小伙伴们也不用慌，移步<a href="/2024/09/21/Python_%E5%AD%97%E7%AC%A6%E4%B8%B2_1/" title="Python基础--字符串(一)">Python基础--字符串(一)</a></p>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><h3 id="传统式"><a href="#传统式" class="headerlink" title="%传统式"></a><code>%</code>传统式</h3><ul>
+<li>你是否看过这些特殊的字符串<code>%s</code>，<code>%d</code>呢，相信写过C语言的同学们一定不陌生了，如果没见过也没关系，他们都是一类特殊的字符串，我们称之为格式化字符串，常用于格式化我们的输出，那么我们就从最传统的<code>%</code>式格式化字符串讲解吧</li>
+</ul>
+<h4 id="常用的格式化字符串"><a href="#常用的格式化字符串" class="headerlink" title="常用的格式化字符串"></a>常用的格式化字符串</h4><ul>
+<li><code>%s</code><ul>
+<li>适用于为字符串占位，<del>我本来就是啊</del></li>
+</ul>
+</li>
+<li><code>%d</code><ul>
+<li>适用于为十进制数字占位，类似的还有<code>%x</code> <code>%o</code> <code>%b</code></li>
+</ul>
+</li>
+<li><code>%f</code><ul>
+<li>适用于为浮点数占位</li>
+</ul>
+</li>
+<li><code>.precision</code><ul>
+<li>适用于对浮点数精度控制，<code>%.2f</code>保留两位小数，默认是6位小数</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>指定占位符占据的宽度，<code>%5d</code>十进制整数至少占5个单位，不够补充</li>
+</ul>
+</li>
+<li><code>flags</code><ul>
+<li>指定填充位与对齐，与<code>width</code>位共同控制对齐问题</li>
+<li><code>0</code>，补充前导0</li>
+<li><code>-</code>，左对齐，默认是右对齐，将覆盖前导0</li>
+<li><code> </code>，方便正数与负数对齐</li>
+<li><code>+</code>，数字补齐符号</li>
+</ul>
+</li>
+<li>可以搭配使用，例如<code>%-5.2f</code>等等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (<span class="number">1234</span>, <span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% d %+d&quot;</span> % (-<span class="number">1234</span>, -<span class="number">1234</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%4d,%4d,%6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%-4d,%-4d,%-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">34</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%04d,%04d,%06.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;%0-4d,%0-4d,%0-6.2f&quot;</span> % (<span class="number">12</span>, <span class="number">234</span>, <span class="number">3.1</span>)) <span class="comment"># 产生覆盖行为</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> 1234 +1234
+-1234 -1234
+  12,  34,  3.10
+12  ,34  ,3.10  
+0012,0234,003.10
+12  ,234 ,3.10  
+</code></pre>
+<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><h4 id="默认格式化"><a href="#默认格式化" class="headerlink" title="默认格式化"></a>默认格式化</h4><ul>
+<li>不再通过<code>%</code>的形式指定，而是默认形式填充，我们只需要负责哪些位置填充什么字符即可</li>
+<li>大括号中默认格式填入我们指定的参数，默认顺序是依次填入<ul>
+<li><code>&quot;&#123;&#125; &#123;&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>有需求可以在大括号中填入参数位置，可以多次使用，每个大括号都要填入位置<ul>
+<li><code>&quot;&#123;0&#125; &#123;1&#125; &#123;1&#125; &#123;0&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+<li><code>&quot;&#123;0&#125; &#123;1&#125;&quot;.format(12, &quot;setdown&quot;)</code></li>
+</ul>
+</li>
+<li>利用键值对传入参数，则括号中必须使用key值<ul>
+<li><code>&quot;&#123;name&#125; &#123;age&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+<li><code>&quot;&#123;name&#125; &#123;age&#125; &#123;age&#125; &#123;name&#125;&quot;.format(name=&quot;setdown&quot;, age=12)</code></li>
+</ul>
+</li>
+<li>利用键值对和位置进行复杂传参<ul>
+<li><code>&quot;&#123;0[name]&#125; &#123;1[age]&#125; &#123;0[0]&#125; &#123;1[1]&#125;&quot;.format(&#123;&quot;name&quot;:&quot;setdown&quot;, &quot;age&quot;:12&#125;, [12, 34])</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="format-spec"><a href="#format-spec" class="headerlink" title="format_spec"></a>format_spec</h4><ul>
+<li>通过类似于<code>%</code>传统式格式化字符串规范要求</li>
+<li><code>:[[fill] align][sign][0][width][.precision][type]</code></li>
+<li><code>fill</code><ul>
+<li>填充内容，对于指定宽度填充什么字符，需要显式指定对齐方式</li>
+</ul>
+</li>
+<li><code>align</code><ul>
+<li>对齐方式，<code>&lt;</code> <code>^</code> <code>&gt;</code>分别是强制左、居中、右对齐</li>
+</ul>
+</li>
+<li><code>sign</code><ul>
+<li>展示符号，<code>+</code>正负数都展示符号，<code> </code>负数展示符号正数留空对齐</li>
+</ul>
+</li>
+<li><code>width</code><ul>
+<li>最小宽度，默认为字符串长度</li>
+</ul>
+</li>
+<li><code>precision</code><ul>
+<li>控制小数的精度范围，默认是小数点后六位</li>
+</ul>
+</li>
+<li><code>type</code><ul>
+<li>常用类型有<code>d</code> <code>f</code> <code>s</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:_&lt;4&#125; &#123;:0&gt;6&#125; &#123;:$^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">11</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;:04&#125; &#123;:10&#125; &#123;:^10&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">12</span>, <span class="number">3</span>, <span class="number">34</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code>1___ 000002 $$$$11$$$$
+0012          3     34    
+</code></pre>
+<h2 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h2><ul>
+<li>可以通过变量等方式直接转义进入字符串，经常使用，但是也可以使用<code>format_spec</code>来表达更加准确的字符串形式</li>
+<li>简易使用方式为<code>f&quot;&#123;name&#125; is about &#123;value&#125;&quot;</code></li>
+<li>使用占位的变量可以与<code>format_spec</code>嵌套使用更加灵活</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = <span class="string">&quot;this is a test string&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;line= &#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以起调试的作用</span></span><br><span class="line">a = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;a=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">width = <span class="number">14</span></span><br><span class="line">align = <span class="string">&quot;^&quot;</span></span><br><span class="line">value = <span class="number">123.34</span></span><br><span class="line">precision = <span class="number">5</span></span><br><span class="line">fill = <span class="string">&quot;_&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;value:&#123;fill&#125;</span><span class="subst">&#123;align&#125;</span><span class="subst">&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>line= &#39;this is a test string&#39;
+a=3
+__123.34000___
+</code></pre>
 ]]></content>
       <categories>
         <category>Python</category>
